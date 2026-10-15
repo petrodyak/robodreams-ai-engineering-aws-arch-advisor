@@ -2,14 +2,15 @@
 
 Uses the PDF's own bookmarks ("<Service> endpoints and quotas") to find page
 ranges, keeps sections of MIN..MAX pages, always keeps services from KEEP,
-and writes raw/<slug>.pdf plus raw/manifest.csv.
+and writes data/pool/<slug>.pdf plus data/pool/manifest.csv.
+The working subset (data/raw/) is then produced by scripts/select_docs.py.
 """
 import csv, re, sys
 from pathlib import Path
 from pypdf import PdfReader, PdfWriter
 
 SRC = Path(sys.argv[1] if len(sys.argv) > 1 else "data/source/aws-general-endpoints-and-quotas.pdf")
-OUT = Path("data/raw"); OUT.mkdir(exist_ok=True)
+OUT = Path("data/pool"); OUT.mkdir(exist_ok=True)
 MIN_PAGES, MAX_PAGES, TARGET = 3, 40, 100
 KEEP = ["Athena", "Aurora", "Glue", "OpenSearch", "Simple Storage Service", "Lambda",
         "Relational Database", "Lake Formation", "EMR", "Redshift", "Kinesis Data Streams",

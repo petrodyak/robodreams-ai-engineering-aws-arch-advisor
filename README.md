@@ -22,8 +22,9 @@ Well-Architected lenses for retrieval.
 
 ```
 data/source/   original AWS General Reference PDF (git-ignored, ~25 MB)
-data/raw/      100 per-service PDFs cut from it (git-ignored) + manifest.csv (committed)
-data/gold/     ground-truth quotas/endpoints per service, JSON (committed)
+data/pool/     100 per-service PDFs cut from it (git-ignored) + manifest.csv, profile.csv (committed)
+data/raw/      working subset: 30 PDFs (git-ignored) + extracted *.txt + manifest.csv (committed)
+data/gold/     ground-truth quotas/endpoints for 10 of the 30, JSON (committed)
 ```
 
 ## Reproduce the dataset
@@ -31,6 +32,8 @@ data/gold/     ground-truth quotas/endpoints per service, JSON (committed)
 ```bash
 # 1. download https://docs.aws.amazon.com/pdfs/general/latest/gr/aws-general.pdf
 #    into data/source/aws-general-endpoints-and-quotas.pdf
-# 2. split it by bookmarks
+# 2. split it by bookmarks -> data/pool/
 python scripts/split_pdf.py
+# 3. copy the 30 selected PDFs (data/raw/manifest.csv) -> data/raw/
+python scripts/select_docs.py
 ```

@@ -1,7 +1,8 @@
 # secrets
 .env
-# data: large and reproducible via scripts/split_pdf.py
+# data: large and reproducible via scripts/split_pdf.py + scripts/select_docs.py
 data/source/
+data/pool/*.pdf
 data/raw/*.pdf
 # python
 .venv/
@@ -11,3 +12,5 @@ __pycache__/
 .DS_Store
 .idea/
 .vscode/
+# claude.ai project context (CLAUDE.md is the in-repo source of truth)
+Context.md
