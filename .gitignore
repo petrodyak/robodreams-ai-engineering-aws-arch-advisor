@@ -1,0 +1,13 @@
+# secrets
+.env
+# data: large and reproducible via scripts/split_pdf.py
+data/source/
+data/raw/*.pdf
+# python
+.venv/
+__pycache__/
+*.pyc
+# os / ide
+.DS_Store
+.idea/
+.vscode/

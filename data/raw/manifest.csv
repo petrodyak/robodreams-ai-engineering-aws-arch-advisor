@@ -1,0 +1,101 @@
+file,service,start,end,pages,priority
+001-amazon-api-gateway.pdf,Amazon API Gateway,62,80,19,0
+002-amazon-appflow.pdf,Amazon AppFlow,126,135,10,0
+003-amazon-application-recovery-controller-arc.pdf,Amazon Application Recovery Controller (ARC),99,109,11,0
+004-amazon-athena.pdf,Amazon Athena,322,344,23,1
+005-amazon-aurora.pdf,Amazon Aurora,350,362,13,1
+006-amazon-aurora-dsql.pdf,Amazon Aurora DSQL,363,366,4,1
+007-amazon-bedrock-agentcore.pdf,Amazon Bedrock AgentCore,749,753,5,1
+008-amazon-braket.pdf,Amazon Braket,763,784,22,0
+009-amazon-chime-sdk.pdf,Amazon Chime SDK,797,826,30,0
+010-amazon-cloudfront.pdf,Amazon CloudFront,916,931,16,0
+011-amazon-cloudwatch.pdf,Amazon CloudWatch,977,998,22,0
+012-amazon-cloudwatch-events.pdf,Amazon CloudWatch Events,1014,1026,13,0
+013-amazon-cloudwatch-logs.pdf,Amazon CloudWatch Logs,1031,1053,23,0
+014-amazon-cloudwatch-observability-admin.pdf,Amazon CloudWatch Observability Admin,1063,1072,10,0
+015-amazon-cognito.pdf,Amazon Cognito,1146,1171,26,0
+016-amazon-comprehend.pdf,Amazon Comprehend,1172,1190,19,0
+017-amazon-dynamodb.pdf,Amazon DynamoDB,1513,1545,33,1
+018-amazon-ec2-auto-scaling.pdf,Amazon EC2 Auto Scaling,1593,1604,12,0
+019-amazon-ecr.pdf,Amazon ECR,1618,1635,18,0
+020-amazon-ecs.pdf,Amazon ECS,1641,1662,22,0
+021-amazon-elastic-block-store.pdf,Amazon Elastic Block Store,1558,1583,26,0
+022-amazon-elastic-file-system.pdf,Amazon Elastic File System,1676,1689,14,0
+023-amazon-elastic-kubernetes-service.pdf,Amazon Elastic Kubernetes Service,1663,1675,13,0
+024-amazon-elastic-vmware-service.pdf,Amazon Elastic VMware Service,1814,1824,11,0
+025-amazon-emr.pdf,Amazon EMR,1745,1776,32,1
+026-amazon-eventbridge.pdf,Amazon EventBridge,1777,1788,12,0
+027-amazon-eventbridge-scheduler.pdf,Amazon EventBridge Scheduler,1795,1808,14,0
+028-amazon-fsx.pdf,Amazon FSx,1879,1890,12,0
+029-amazon-gamelift-servers.pdf,Amazon GameLift Servers,1891,1901,11,0
+030-amazon-gamelift-streams.pdf,Amazon GameLift Streams,1902,1919,18,0
+031-amazon-interactive-video-service.pdf,Amazon Interactive Video Service,2345,2356,12,0
+032-amazon-keyspaces-for-apache-cassandra.pdf,Amazon Keyspaces (for Apache Cassandra),2364,2376,13,0
+033-amazon-kinesis-data-streams.pdf,Amazon Kinesis Data Streams,2406,2412,7,1
+034-amazon-kinesis-video-streams.pdf,Amazon Kinesis Video Streams,2413,2436,24,0
+035-amazon-macie.pdf,Amazon Macie,2565,2574,10,0
+036-amazon-managed-service-for-prometheus.pdf,Amazon Managed Service for Prometheus,2850,2869,20,0
+037-amazon-managed-workflows-for-apache-airflow.pdf,Amazon Managed Workflows for Apache Airflow,2597,2607,11,0
+038-amazon-opensearch-service.pdf,Amazon OpenSearch Service,2711,2731,21,1
+039-amazon-personalize.pdf,Amazon Personalize,2763,2781,19,0
+040-amazon-pinpoint.pdf,Amazon Pinpoint,2782,2806,25,0
+041-amazon-polly.pdf,Amazon Polly,2807,2818,12,0
+042-amazon-redshift.pdf,Amazon Redshift,2909,2928,20,1
+043-amazon-rekognition.pdf,Amazon Rekognition,2929,2952,24,0
+044-amazon-relational-database-service.pdf,Amazon Relational Database Service,2953,2968,16,1
+045-amazon-route-53.pdf,Amazon Route 53,3006,3024,19,0
+046-amazon-simple-email-service.pdf,Amazon Simple Email Service,3378,3396,19,0
+047-amazon-simple-notification-service.pdf,Amazon Simple Notification Service,3422,3437,16,0
+048-amazon-simple-queue-service.pdf,Amazon Simple Queue Service,3438,3452,15,0
+049-amazon-simple-storage-service.pdf,Amazon Simple Storage Service,3334,3372,39,1
+050-amazon-simple-workflow-service.pdf,Amazon Simple Workflow Service,3459,3481,23,0
+051-amazon-timestream.pdf,Amazon Timestream,3568,3579,12,0
+052-amazon-transcribe.pdf,Amazon Transcribe,3584,3610,27,0
+053-amazon-verified-permissions.pdf,Amazon Verified Permissions,3637,3647,11,0
+054-aws-amplify.pdf,AWS Amplify,51,61,11,0
+055-aws-app-mesh.pdf,AWS App Mesh,110,121,12,0
+056-aws-appconfig.pdf,AWS AppConfig,81,96,16,0
+057-aws-appsync.pdf,AWS AppSync,304,321,18,0
+058-aws-certificate-manager.pdf,AWS Certificate Manager,785,796,12,0
+059-aws-clean-rooms.pdf,AWS Clean Rooms,827,843,17,0
+060-aws-clean-rooms-ml.pdf,AWS Clean Rooms ML,844,870,27,0
+061-aws-cloudformation.pdf,AWS CloudFormation,892,915,24,0
+062-aws-cloudtrail.pdf,AWS CloudTrail,958,976,19,0
+063-aws-codebuild.pdf,AWS CodeBuild,1087,1097,11,0
+064-aws-codedeploy.pdf,AWS CodeDeploy,1104,1125,22,0
+065-aws-codepipeline.pdf,AWS CodePipeline,1131,1140,10,0
+066-aws-datasync.pdf,AWS DataSync,1455,1464,10,0
+067-aws-deadline-cloud.pdf,AWS Deadline Cloud,1473,1482,10,0
+068-aws-elastic-beanstalk.pdf,AWS Elastic Beanstalk,1546,1557,12,0
+069-aws-elemental-mediaconvert.pdf,AWS Elemental MediaConvert,2631,2648,18,0
+070-aws-elemental-mediapackage.pdf,AWS Elemental MediaPackage,2656,2669,14,0
+071-aws-end-user-messaging.pdf,AWS End User Messaging,1727,1744,18,0
+072-aws-fault-injection-service.pdf,AWS Fault Injection Service,1825,1841,17,0
+073-aws-firewall-manager.pdf,AWS Firewall Manager,1851,1861,11,0
+074-aws-global-accelerator.pdf,AWS Global Accelerator,1920,1932,13,0
+075-aws-glue.pdf,AWS Glue,1933,1944,12,1
+076-aws-glue-databrew.pdf,AWS Glue DataBrew,1945,1948,4,1
+077-aws-healthlake.pdf,AWS HealthLake,1971,1992,22,0
+078-aws-iam-identity-center.pdf,AWS IAM Identity Center,2009,2024,16,0
+079-aws-iot-device-defender.pdf,AWS IoT Device Defender,2174,2192,19,0
+080-aws-iot-greengrass-v1.pdf,AWS IoT Greengrass V1,2281,2290,10,0
+081-aws-iot-greengrass-v2.pdf,AWS IoT Greengrass V2,2291,2301,11,0
+082-aws-iot-sitewise.pdf,AWS IoT SiteWise,2302,2338,37,0
+083-aws-iot-wireless.pdf,AWS IoT Wireless,2253,2280,28,0
+084-aws-key-management-service.pdf,AWS Key Management Service,2377,2405,29,0
+085-aws-lake-formation.pdf,AWS Lake Formation,2437,2442,6,1
+086-aws-lambda.pdf,AWS Lambda,2443,2463,21,1
+087-aws-license-manager.pdf,AWS License Manager,2475,2497,23,0
+088-aws-network-firewall.pdf,AWS Network Firewall,2701,2710,10,0
+089-aws-private-certificate-authority.pdf,AWS Private Certificate Authority,2819,2849,31,0
+090-aws-resilience-hub.pdf,AWS Resilience Hub,2974,2988,15,0
+091-aws-resource-groups-and-tagging.pdf,AWS Resource Groups and Tagging,2989,2999,11,0
+092-aws-secrets-manager.pdf,AWS Secrets Manager,3284,3294,11,0
+093-aws-services.pdf,AWS services,28,45,18,0
+094-aws-signer.pdf,AWS Signer,3397,3412,16,0
+095-aws-step-functions.pdf,AWS Step Functions,3489,3514,26,1
+096-aws-systems-manager.pdf,AWS Systems Manager,3532,3556,25,0
+097-aws-systems-manager-incident-manager.pdf,AWS Systems Manager Incident Manager,2033,2050,18,0
+098-aws-waf.pdf,AWS WAF,3663,3677,15,0
+099-aws-x-ray.pdf,AWS X-Ray,3711,3730,20,0
+100-systems-manager-quick-setup.pdf,Systems Manager Quick Setup,2876,2895,20,0
