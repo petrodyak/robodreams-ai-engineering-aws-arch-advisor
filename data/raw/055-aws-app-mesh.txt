@@ -1,0 +1,687 @@
+AWS General Reference                                                                                      Reference guide
+
+northeast-1), and Asia Pacific (Sydney) (ap-southeast-2). Routing Controls provide five regional
+endpoints to ensure high availability, even in the face of failures. To achieve their full resilience,
+it's important to have retry logic that can use all five endpoints as necessary. To learn more, see
+Get and update routing control states using the API and  Best practices for Amazon Application
+Recovery Controller (ARC) in the Amazon Route 53 Application Recovery Controller Developer
+Guide.
+
+The following are examples of the Regional cluster endpoints for routing control in ARC.
+
+
+ Endpoint                                                                                         Region
+
+ https://aaaaaaaa.route53-recovery-cluster.eu-west-1.amazonaws.com                                eu-west-1
+
+ https://bbbbbbb.route53-recovery-cluster.ap-northeast-1.amazonaws.com                            ap-northeast-1
+
+ https://ccccccc.route53-recovery-cluster.us-west-2.amazonaws.com                                 us-west-2
+
+ https://ddddddd.route53-recovery-cluster.us-east-1.amazonaws.com                                 us-east-1
+
+ https://eeeeeee.route53-recovery-cluster.ap-southeast-2.amazonaws.com                            ap-southeast-2
+
+
+Service quotas
+
+For more information, see Quotas in Amazon Application Recovery Controller (ARC) in the Amazon
+Application Recovery Controller (ARC) Developer Guide.
+
+AWS App Mesh endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+
+
+Service quotas                                                                                               Version 1.0 84
+AWS General Reference                                                                             Reference guide
+Service endpoints
+
+
+
+ Region        Region        Endpoint                                               Protocol
+ Name
+
+ US East       us-east-2     appmesh.us-east-2.amazonaws.com                        HTTPS
+ (Ohio)
+                             appmesh-envoy-management-fips.us-eas                    HTTPS
+                             t-2.amazonaws.com
+                                                                                    HTTPS
+                             appmesh.us-east-2.api.aws
+                                                                                    HTTPS
+                             appmesh-envoy-management-fips.us-eas
+                             t-2.api.aws                                            HTTPS
+
+                             appmesh-envoy-management.us-east-2.a                   HTTPS
+
+                             mazonaws.com                                           HTTPS
+
+                             appmesh-envoy-management.us-east-2.a                   HTTPS
+                             pi.aws
+
+                             appmesh-fips.us-east-2.api.aws
+
+                             appmesh-fips.us-east-2.amazonaws.com
+
+ US            us-east-1     appmesh.us-east-1.amazonaws.com                        HTTPS
+ East (N.
+ Virginia)                   appmesh-envoy-management.us-east-1.a                   HTTPS
+                             pi.aws
+                                                                                    HTTPS
+                             appmesh-fips.us-east-1.amazonaws.com
+                                                                                    HTTPS
+                             appmesh-envoy-management-fips.us-eas
+                             t-1.api.aws                                            HTTPS
+
+                             appmesh-envoy-management.us-east-1.a                   HTTPS
+
+                             mazonaws.com                                           HTTPS
+
+                             appmesh.us-east-1.api.aws                              HTTPS
+
+                             appmesh-fips.us-east-1.api.aws
+
+
+
+Service endpoints                                                                                   Version 1.0 85
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                Protocol
+ Name
+
+                             appmesh-envoy-management-fips.us-eas
+                             t-1.amazonaws.com
+
+ US            us-           appmesh.us-west-1.amazonaws.com                         HTTPS
+ West (N.      west-1
+ Californi                   appmesh-envoy-management.us-west-1.a                    HTTPS
+ a)                          mazonaws.com
+                                                                                     HTTPS
+                             appmesh.us-west-1.api.aws
+                                                                                     HTTPS
+                             appmesh-fips.us-west-1.api.aws
+                                                                                     HTTPS
+                             appmesh-fips.us-west-1.amazonaws.com
+                                                                                     HTTPS
+                             appmesh-envoy-management.us-west-1.a
+                             pi.aws                                                  HTTPS
+
+                             appmesh-envoy-management-fips.us-wes                     HTTPS
+
+                             t-1.amazonaws.com
+
+                             appmesh-envoy-management-fips.us-wes
+                             t-1.api.aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 86
+AWS General Reference                                                                              Reference guide
+
+ Region        Region        Endpoint                                               Protocol
+ Name
+
+ US West       us-           appmesh.us-west-2.amazonaws.com                        HTTPS
+ (Oregon)      west-2
+                             appmesh-envoy-management.us-west-2.a                   HTTPS
+                             mazonaws.com
+                                                                                    HTTPS
+                             appmesh-envoy-management-fips.us-wes
+                             t-2.amazonaws.com                                      HTTPS
+
+                             appmesh-fips.us-west-2.amazonaws.com                   HTTPS
+
+                             appmesh.us-west-2.api.aws                              HTTPS
+
+                             appmesh-fips.us-west-2.api.aws                         HTTPS
+
+                             appmesh-envoy-management-fips.us-wes                    HTTPS
+
+                             t-2.api.aws
+
+                             appmesh-envoy-management.us-west-2.a
+                             pi.aws
+
+ Africa        af-south-     appmesh.af-south-1.amazonaws.com                       HTTPS
+ (Cape         1
+ Town)                       appmesh-envoy-management.af-south-1.                   HTTPS
+                             amazonaws.com
+                                                                                    HTTPS
+                             appmesh.af-south-1.api.aws
+                                                                                    HTTPS
+                             appmesh-envoy-management.af-south-1.
+                             api.aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 87
+AWS General Reference                                                                              Reference guide
+
+ Region        Region        Endpoint                                                Protocol
+ Name
+
+ Asia          ap-           appmesh.ap-east-1.amazonaws.com                         HTTPS
+ Pacific        east-1
+ (Hong                       appmesh.ap-east-1.api.aws                               HTTPS
+
+ Kong)                       appmesh-envoy-management.ap-east-1.a                    HTTPS
+
+                             pi.aws
+                                                                                     HTTPS
+                             appmesh-envoy-management.ap-east-1.a
+                             mazonaws.com
+
+ Asia          ap-           appmesh.ap-southeast-3.amazonaws.com                    HTTPS
+ Pacific        southe
+ (Jakarta)     ast-3         appmesh-envoy-management.ap-southeas                    HTTPS
+                             t-3.amazonaws.com
+                                                                                     HTTPS
+                             appmesh.ap-southeast-3.api.aws
+                                                                                     HTTPS
+                             appmesh-envoy-management.ap-southeas
+                             t-3.api.aws
+
+ Asia          ap-           appmesh.ap-south-1.amazonaws.com                        HTTPS
+ Pacific        south-1
+ (Mumbai)                    appmesh.ap-south-1.api.aws                              HTTPS
+
+                             appmesh-envoy-management.ap-south-1.                    HTTPS
+                             amazonaws.com
+                                                                                     HTTPS
+                             appmesh-envoy-management.ap-south-1.
+                             api.aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 88
+AWS General Reference                                                                              Reference guide
+
+ Region        Region        Endpoint                                                Protocol
+ Name
+
+ Asia          ap-           appmesh.ap-northeast-3.amazonaws.com                    HTTPS
+ Pacific        northe
+ (Osaka)       ast-3         appmesh-envoy-management.ap-northeas                    HTTPS
+                             t-3.amazonaws.com
+                                                                                     HTTPS
+                             appmesh-envoy-management.ap-northeas
+                             t-3.api.aws                                             HTTPS
+
+
+                             appmesh.ap-northeast-3.api.aws
+
+ Asia          ap-           appmesh.ap-northeast-2.amazonaws.com                    HTTPS
+ Pacific        northe
+ (Seoul)       ast-2         appmesh-envoy-management.ap-northeas                    HTTPS
+                             t-2.api.aws
+                                                                                     HTTPS
+                             appmesh-envoy-management.ap-northeas
+                             t-2.amazonaws.com                                       HTTPS
+
+
+                             appmesh.ap-northeast-2.api.aws
+
+ Asia          ap-           appmesh.ap-southeast-1.amazonaws.com                    HTTPS
+ Pacific        southe
+ (Singapor     ast-1         appmesh-envoy-management.ap-southeas                    HTTPS
+ e)                          t-1.api.aws
+                                                                                     HTTPS
+                             appmesh.ap-southeast-1.api.aws
+                                                                                     HTTPS
+                             appmesh-envoy-management.ap-southeas
+                             t-1.amazonaws.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 89
+AWS General Reference                                                                                Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-           appmesh.ap-southeast-2.amazonaws.com                     HTTPS
+ Pacific        southe
+ (Sydney)      ast-2         appmesh-envoy-management.ap-southeas                     HTTPS
+                             t-2.api.aws
+                                                                                      HTTPS
+                             appmesh-envoy-management.ap-southeas
+                             t-2.amazonaws.com                                        HTTPS
+
+
+                             appmesh.ap-southeast-2.api.aws
+
+ Asia          ap-           appmesh.ap-northeast-1.amazonaws.com                     HTTPS
+ Pacific        northe
+ (Tokyo)       ast-1         appmesh-envoy-management.ap-northeas                     HTTPS
+                             t-1.api.aws
+                                                                                      HTTPS
+                             appmesh-envoy-management.ap-northeas
+                             t-1.amazonaws.com                                        HTTPS
+
+
+                             appmesh.ap-northeast-1.api.aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 90
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ Canada        ca-centra     appmesh.ca-central-1.amazonaws.com                       HTTPS
+ (Central)     l-1
+                             appmesh-envoy-management-fips.ca-cen                      HTTPS
+                             tral-1.api.aws
+                                                                                      HTTPS
+                             appmesh.ca-central-1.api.aws
+                                                                                      HTTPS
+                             appmesh-envoy-management.ca-central-
+                             1.api.aws                                                HTTPS
+
+                             appmesh-fips.ca-central-1.amazonaws.com                  HTTPS
+
+                             appmesh-envoy-management.ca-central-                     HTTPS
+
+                             1.amazonaws.com                                          HTTPS
+
+                             appmesh-fips.ca-central-1.api.aws
+
+                             appmesh-envoy-management-fips.ca-cen
+                             tral-1.amazonaws.com
+
+ Europe        eu-           appmesh.eu-central-1.amazonaws.com                       HTTPS
+ (Frankfur     central-1
+ t)                          appmesh.eu-central-1.api.aws                             HTTPS
+
+                             appmesh-envoy-management.eu-central-                     HTTPS
+                             1.amazonaws.com
+                                                                                      HTTPS
+                             appmesh-envoy-management.eu-central-
+                             1.api.aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 91
+AWS General Reference                                                                             Reference guide
+
+ Region        Region        Endpoint                                               Protocol
+ Name
+
+ Europe        eu-           appmesh.eu-west-1.amazonaws.com                        HTTPS
+ (Ireland)     west-1
+                             appmesh-envoy-management.eu-west-1.a                   HTTPS
+                             pi.aws
+                                                                                    HTTPS
+                             appmesh-envoy-management.eu-west-1.a
+                             mazonaws.com                                           HTTPS
+
+
+                             appmesh.eu-west-1.api.aws
+
+ Europe        eu-           appmesh.eu-west-2.amazonaws.com                        HTTPS
+ (London)      west-2
+                             appmesh.eu-west-2.api.aws                              HTTPS
+
+                             appmesh-envoy-management.eu-west-2.a                   HTTPS
+                             mazonaws.com
+                                                                                    HTTPS
+                             appmesh-envoy-management.eu-west-2.a
+                             pi.aws
+
+ Europe        eu-           appmesh.eu-south-1.amazonaws.com                       HTTPS
+ (Milan)       south-1
+                             appmesh-envoy-management.eu-south-1.                   HTTPS
+                             api.aws
+                                                                                    HTTPS
+                             appmesh-envoy-management.eu-south-1.
+                             amazonaws.com                                          HTTPS
+
+
+                             appmesh.eu-south-1.api.aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                  Version 1.0 92
+AWS General Reference                                                                             Reference guide
+
+ Region        Region        Endpoint                                               Protocol
+ Name
+
+ Europe        eu-           appmesh.eu-west-3.amazonaws.com                        HTTPS
+ (Paris)       west-3
+                             appmesh-envoy-management.eu-west-3.a                   HTTPS
+                             mazonaws.com
+                                                                                    HTTPS
+                             appmesh-envoy-management.eu-west-3.a
+                             pi.aws                                                 HTTPS
+
+
+                             appmesh.eu-west-3.api.aws
+
+ Europe        eu-           appmesh.eu-south-2.amazonaws.com                       HTTPS
+ (Spain)       south-2
+                             appmesh-envoy-management.eu-south-2.                   HTTPS
+                             api.aws
+                                                                                    HTTPS
+                             appmesh.eu-south-2.api.aws
+                                                                                    HTTPS
+                             appmesh-envoy-management.eu-south-2.
+                             amazonaws.com
+
+ Europe        eu-           appmesh.eu-north-1.amazonaws.com                       HTTPS
+ (Stockhol     north-1
+ m)                          appmesh.eu-north-1.api.aws                             HTTPS
+
+                             appmesh-envoy-management.eu-north-1.                   HTTPS
+                             api.aws
+                                                                                    HTTPS
+                             appmesh-envoy-management.eu-north-1.
+                             amazonaws.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                  Version 1.0 93
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ Europe        eu-           appmesh.eu-central-2.amazonaws.com                       HTTPS
+ (Zurich)      central-2
+                             appmesh-envoy-management.eu-central-                     HTTPS
+                             2.amazonaws.com
+                                                                                      HTTPS
+                             appmesh-envoy-management.eu-central-
+                             2.api.aws                                                HTTPS
+
+
+                             appmesh.eu-central-2.api.aws
+
+ Israel        il-centra     appmesh.il-central-1.amazonaws.com                       HTTPS
+ (Tel Aviv)    l-1
+                             appmesh-envoy-management.il-central-                     HTTPS
+                             1.amazonaws.com
+                                                                                      HTTPS
+                             appmesh-envoy-management.il-central-
+                             1.api.aws                                                HTTPS
+
+
+                             appmesh.il-central-1.api.aws
+
+ Middle        me-           appmesh.me-south-1.amazonaws.com                         HTTPS
+ East          south-1
+ (Bahrain)                   appmesh-envoy-management.me-south-1.                     HTTPS
+                             api.aws
+                                                                                      HTTPS
+                             appmesh-envoy-management.me-south-1.
+                             amazonaws.com                                            HTTPS
+
+
+                             appmesh.me-south-1.api.aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 94
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ South          sa-east-1     appmesh.sa-east-1.amazonaws.com                           HTTPS
+ America
+ (São                         appmesh.sa-east-1.api.aws                                 HTTPS
+
+ Paulo)                       appmesh-envoy-management.sa-east-1.a                      HTTPS
+
+                              pi.aws
+                                                                                        HTTPS
+                              appmesh-envoy-management.sa-east-1.a
+                              mazonaws.com
+
+
+Service quotas
+
+
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Backends per virtual node                         Each supported           No      Number of backends per
+                                                   Region: 50                       virtual node
+
+ Connected Envoy processes per virtual             Each supported           Yes     Number of concurren
+ gateway                                           Region: 50                       tly connected Envoy
+                                                                                    processes per virtual
+                                                                                    gateway
+
+ Connected Envoy processes per virtual             Each supported           Yes     Number of concurren
+ node                                              Region: 50                       tly connected Envoy
+                                                                                    processes per virtual
+                                                                                    node
+
+ Gateway routes per virtual gateway                Each supported           Yes     Number of gateway
+                                                   Region: 10                       routes per virtual
+                                                                                    gateway
+
+ Meshes per account                                Each supported           Yes     Number of meshes per
+                                                   Region: 15                       account
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 95

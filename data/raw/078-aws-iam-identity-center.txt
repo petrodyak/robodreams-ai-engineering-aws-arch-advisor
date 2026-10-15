@@ -1,0 +1,843 @@
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Policy generations per day                          af-south-1: 5             No      The maximum number
+                                                                                       of policy generations per
+                                                     ap-east-1: 5                      day.
+
+                                                     ap-south-2: 5
+
+                                                     ap-southeast-3: 5
+
+                                                     ap-southeast-4: 5
+
+                                                     ca-west-1: 5
+
+                                                     eu-central-2: 5
+
+                                                     eu-south-1: 5
+
+                                                     eu-south-2: 5
+
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 50
+
+
+AWS IAM Identity Center endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+
+
+
+
+
+
+
+
+
+IAM Identity Center                                                                                       Version 1.0 1983
+AWS General Reference                                                                                  Reference guide
+Service endpoints
+
+IAM Identity Center
+
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2     sso.us-east-2.amazonaws.com                               HTTPS
+ (Ohio)
+                              sso-fips.us-east-2.api.aws                                 HTTPS
+
+                              sso.us-east-2.api.aws                                     HTTPS
+
+ US             us-east-1     sso.us-east-1.amazonaws.com                               HTTPS
+ East (N.
+ Virginia)                    sso-fips.us-east-1.api.aws                                 HTTPS
+
+                              sso.us-east-1.api.aws                                     HTTPS
+
+ US             us-           sso.us-west-1.amazonaws.com                               HTTPS
+ West (N.       west-1
+ Californi                    sso-fips.us-west-1.api.aws                                 HTTPS
+
+ a)                           sso.us-west-1.api.aws                                     HTTPS
+
+
+ US West        us-           sso.us-west-2.amazonaws.com                               HTTPS
+ (Oregon)       west-2
+                              sso-fips.us-west-2.api.aws                                 HTTPS
+
+                              sso.us-west-2.api.aws                                     HTTPS
+
+ Africa         af-south-     sso.af-south-1.amazonaws.com                              HTTPS
+ (Cape          1
+ Town)                        sso.af-south-1.api.aws                                    HTTPS
+
+
+ Asia           ap-           sso.ap-east-1.amazonaws.com                               HTTPS
+ Pacific         east-1
+ (Hong                        sso.ap-east-1.api.aws                                     HTTPS
+
+ Kong)
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1984
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           sso.ap-south-2.amazonaws.com                              HTTPS
+ Pacific         south-2
+ (Hyderaba                    sso.ap-south-2.api.aws                                    HTTPS
+
+ d)
+
+ Asia           ap-           sso.ap-southeast-3.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3         sso.ap-southeast-3.api.aws                                HTTPS
+
+
+ Asia           ap-           sso.ap-southeast-5.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Malaysia      ast-5         sso.ap-southeast-5.api.aws                                HTTPS
+
+ )
+
+ Asia           ap-           sso.ap-southeast-4.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Melbourn      ast-4         sso.ap-southeast-4.api.aws                                HTTPS
+
+ e)
+
+ Asia           ap-           sso.ap-south-1.amazonaws.com                              HTTPS
+ Pacific         south-1
+ (Mumbai)                     sso.ap-south-1.api.aws                                    HTTPS
+
+
+ Asia           ap-           sso.ap-southeast-6.amazonaws.com                          HTTPS
+ Pacific         southe
+ (New           ast-6         sso.ap-southeast-6.api.aws                                HTTPS
+
+ Zealand)
+
+ Asia           ap-           sso.ap-northeast-3.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Osaka)        ast-3         sso.ap-northeast-3.api.aws                                HTTPS
+
+
+ Asia           ap-           sso.ap-northeast-2.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Seoul)        ast-2         sso.ap-northeast-2.api.aws                                HTTPS
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1985
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           sso.ap-southeast-1.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Singapor      ast-1         sso.ap-southeast-1.api.aws                                 HTTPS
+
+ e)
+
+ Asia           ap-           sso.ap-southeast-2.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Sydney)       ast-2         sso.ap-southeast-2.api.aws                                 HTTPS
+
+
+ Asia           ap-           sso.ap-east-2.amazonaws.com                                HTTPS
+ Pacific         east-2
+ (Taipei)                     sso.ap-east-2.api.aws                                      HTTPS
+
+
+ Asia           ap-           sso.ap-southeast-7.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Thailand      ast-7         sso.ap-southeast-7.api.aws                                 HTTPS
+
+ )
+
+ Asia           ap-           sso.ap-northeast-1.amazonaws.com                           HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1         sso.ap-northeast-1.api.aws                                 HTTPS
+
+
+ Canada         ca-centra     sso.ca-central-1.amazonaws.com                             HTTPS
+ (Central)      l-1
+                              sso-fips.ca-central-1.api.aws                               HTTPS
+
+                              sso.ca-central-1.api.aws                                   HTTPS
+
+ Canada         ca-           sso.ca-west-1.amazonaws.com                                HTTPS
+ West           west-1
+ (Calgary)                    sso-fips.ca-west-1.api.aws                                  HTTPS
+
+                              sso.ca-west-1.api.aws                                      HTTPS
+
+ Europe         eu-           sso.eu-central-1.amazonaws.com                             HTTPS
+ (Frankfur      central-1
+ t)                           sso.eu-central-1.api.aws                                   HTTPS
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1986
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           sso.eu-west-1.amazonaws.com                               HTTPS
+ (Ireland)      west-1
+                              sso.eu-west-1.api.aws                                     HTTPS
+
+ Europe         eu-           sso.eu-west-2.amazonaws.com                               HTTPS
+ (London)       west-2
+                              sso.eu-west-2.api.aws                                     HTTPS
+
+ Europe         eu-           sso.eu-south-1.amazonaws.com                              HTTPS
+ (Milan)        south-1
+                              sso.eu-south-1.api.aws                                    HTTPS
+
+ Europe         eu-           sso.eu-west-3.amazonaws.com                               HTTPS
+ (Paris)        west-3
+                              sso.eu-west-3.api.aws                                     HTTPS
+
+ Europe         eu-           sso.eu-south-2.amazonaws.com                              HTTPS
+ (Spain)        south-2
+                              sso.eu-south-2.api.aws                                    HTTPS
+
+ Europe         eu-           sso.eu-north-1.amazonaws.com                              HTTPS
+ (Stockhol      north-1
+ m)                           sso.eu-north-1.api.aws                                    HTTPS
+
+
+ Europe         eu-           sso.eu-central-2.amazonaws.com                            HTTPS
+ (Zurich)       central-2
+                              sso.eu-central-2.api.aws                                  HTTPS
+
+ Israel         il-centra     sso.il-central-1.amazonaws.com                            HTTPS
+ (Tel Aviv)     l-1
+                              sso.il-central-1.api.aws                                  HTTPS
+
+ Mexico         mx-           sso.mx-central-1.amazonaws.com                            HTTPS
+ (Central)      central-1
+                              sso.mx-central-1.api.aws                                  HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1987
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Middle         me-           sso.me-south-1.amazonaws.com                              HTTPS
+ East           south-1
+ (Bahrain)                    sso.me-south-1.api.aws                                    HTTPS
+
+
+ Middle         me-           sso.me-central-1.amazonaws.com                            HTTPS
+ East           central-1
+ (UAE)                        sso.me-central-1.api.aws                                  HTTPS
+
+
+ South          sa-east-1     sso.sa-east-1.amazonaws.com                               HTTPS
+ America
+ (São                         sso.sa-east-1.api.aws                                     HTTPS
+
+ Paulo)
+
+ AWS            us-gov-       sso.us-gov-east-1.amazonaws.com                           HTTPS
+ GovCloud       east-1
+ (US-East)                    sso.us-gov-east-1.api.aws                                 HTTPS
+
+
+ AWS            us-gov-       sso.us-gov-west-1.amazonaws.com                           HTTPS
+ GovCloud       west-1
+ (US-                         sso.us-gov-west-1.api.aws                                 HTTPS
+
+ West)
+
+
+Identity Store
+
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2     identitystore.us-east-2.amazonaws.com                     HTTPS
+ (Ohio)
+                              identitystore.us-east-2.api.aws                           HTTPS
+
+                              identitystore-fips.us-east-2.api.aws                       HTTPS
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1988
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ US             us-east-1      identitystore.us-east-1.amazonaws.com                      HTTPS
+ East (N.
+ Virginia)                     identitystore.us-east-1.api.aws                            HTTPS
+
+                               identitystore-fips.us-east-1.api.aws                        HTTPS
+
+ US             us-            identitystore.us-west-1.amazonaws.com                      HTTPS
+ West (N.       west-1
+ Californi                     identitystore.us-west-1.api.aws                            HTTPS
+
+ a)                            identitystore-fips.us-west-1.api.aws                        HTTPS
+
+
+ US West        us-            identitystore.us-west-2.amazonaws.com                      HTTPS
+ (Oregon)       west-2
+                               identitystore.us-west-2.api.aws                            HTTPS
+
+                               identitystore-fips.us-west-2.api.aws                        HTTPS
+
+ Africa         af-south-      identitystore.af-south-1.amazonaws.com                     HTTPS
+ (Cape          1
+ Town)                         identitystore.af-south-1.api.aws                           HTTPS
+
+
+ Asia           ap-            identitystore.ap-east-1.amazonaws.com                      HTTPS
+ Pacific         east-1
+ (Hong                         identitystore.ap-east-1.api.aws                            HTTPS
+
+ Kong)
+
+ Asia           ap-            identitystore.ap-south-2.amazonaws.com                     HTTPS
+ Pacific         south-2
+ (Hyderaba                     identitystore.ap-south-2.api.aws                           HTTPS
+
+ d)
+
+ Asia           ap-            identitystore.ap-southeast-3.amazonaws.com                 HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3          identitystore.ap-southeast-3.api.aws                       HTTPS
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                        Version 1.0 1989
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-            identitystore.ap-southeast-5.amazonaws.com                 HTTPS
+ Pacific         southe
+ (Malaysia      ast-5          identitystore.ap-southeast-5.api.aws                       HTTPS
+
+ )
+
+ Asia           ap-            identitystore.ap-southeast-4.amazonaws.com                 HTTPS
+ Pacific         southe
+ (Melbourn      ast-4          identitystore.ap-southeast-4.api.aws                       HTTPS
+
+ e)
+
+ Asia           ap-            identitystore.ap-south-1.amazonaws.com                     HTTPS
+ Pacific         south-1
+ (Mumbai)                      identitystore.ap-south-1.api.aws                           HTTPS
+
+
+ Asia           ap-            identitystore.ap-southeast-6.amazonaws.com                 HTTPS
+ Pacific         southe
+ (New           ast-6          identitystore.ap-southeast-6.api.aws                       HTTPS
+
+ Zealand)
+
+ Asia           ap-            identitystore.ap-northeast-3.amazonaws.com                 HTTPS
+ Pacific         northe
+ (Osaka)        ast-3          identitystore.ap-northeast-3.api.aws                       HTTPS
+
+
+ Asia           ap-            identitystore.ap-northeast-2.amazonaws.com                 HTTPS
+ Pacific         northe
+ (Seoul)        ast-2          identitystore.ap-northeast-2.api.aws                       HTTPS
+
+
+ Asia           ap-            identitystore.ap-southeast-1.amazonaws.com                 HTTPS
+ Pacific         southe
+ (Singapor      ast-1          identitystore.ap-southeast-1.api.aws                       HTTPS
+
+ e)
+
+ Asia           ap-            identitystore.ap-southeast-2.amazonaws.com                 HTTPS
+ Pacific         southe
+ (Sydney)       ast-2          identitystore.ap-southeast-2.api.aws                       HTTPS
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 1990
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-            identitystore.ap-east-2.amazonaws.com                      HTTPS
+ Pacific         east-2
+ (Taipei)                      identitystore.ap-east-2.api.aws                            HTTPS
+
+
+ Asia           ap-            identitystore.ap-southeast-7.amazonaws.com                 HTTPS
+ Pacific         southe
+ (Thailand      ast-7          identitystore.ap-southeast-7.api.aws                       HTTPS
+
+ )
+
+ Asia           ap-            identitystore.ap-northeast-1.amazonaws.com                 HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1          identitystore.ap-northeast-1.api.aws                       HTTPS
+
+
+ Canada         ca-centra      identitystore.ca-central-1.amazonaws.com                   HTTPS
+ (Central)      l-1
+                               identitystore.ca-central-1.api.aws                         HTTPS
+
+                               identitystore-fips.ca-central-1.api.aws                     HTTPS
+
+ Canada         ca-            identitystore.ca-west-1.amazonaws.com                      HTTPS
+ West           west-1
+ (Calgary)                     identitystore.ca-west-1.api.aws                            HTTPS
+
+                               identitystore-fips.ca-west-1.api.aws                        HTTPS
+
+ Europe         eu-            identitystore.eu-central-1.amazonaws.com                   HTTPS
+ (Frankfur      central-1
+ t)                            identitystore.eu-central-1.api.aws                         HTTPS
+
+
+ Europe         eu-            identitystore.eu-west-1.amazonaws.com                      HTTPS
+ (Ireland)      west-1
+                               identitystore.eu-west-1.api.aws                            HTTPS
+
+ Europe         eu-            identitystore.eu-west-2.amazonaws.com                      HTTPS
+ (London)       west-2
+                               identitystore.eu-west-2.api.aws                            HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 1991
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Europe         eu-            identitystore.eu-south-1.amazonaws.com                     HTTPS
+ (Milan)        south-1
+                               identitystore.eu-south-1.api.aws                           HTTPS
+
+ Europe         eu-            identitystore.eu-west-3.amazonaws.com                      HTTPS
+ (Paris)        west-3
+                               identitystore.eu-west-3.api.aws                            HTTPS
+
+ Europe         eu-            identitystore.eu-south-2.amazonaws.com                     HTTPS
+ (Spain)        south-2
+                               identitystore.eu-south-2.api.aws                           HTTPS
+
+ Europe         eu-            identitystore.eu-north-1.amazonaws.com                     HTTPS
+ (Stockhol      north-1
+ m)                            identitystore.eu-north-1.api.aws                           HTTPS
+
+
+ Europe         eu-            identitystore.eu-central-2.amazonaws.com                   HTTPS
+ (Zurich)       central-2
+                               identitystore.eu-central-2.api.aws                         HTTPS
+
+ Israel         il-centra      identitystore.il-central-1.amazonaws.com                   HTTPS
+ (Tel Aviv)     l-1
+                               identitystore.il-central-1.api.aws                         HTTPS
+
+ Mexico         mx-            identitystore.mx-central-1.amazonaws.com                   HTTPS
+ (Central)      central-1
+                               identitystore.mx-central-1.api.aws                         HTTPS
+
+ Middle         me-            identitystore.me-south-1.amazonaws.com                     HTTPS
+ East           south-1
+ (Bahrain)                     identitystore.me-south-1.api.aws                           HTTPS
+
+
+ Middle         me-            identitystore.me-central-1.amazonaws.com                   HTTPS
+ East           central-1
+ (UAE)                         identitystore.me-central-1.api.aws                         HTTPS
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 1992
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ South          sa-east-1     identitystore.sa-east-1.amazonaws.com                     HTTPS
+ America
+ (São                         identitystore.sa-east-1.api.aws                           HTTPS
+
+ Paulo)
+
+ AWS            us-gov-       identitystore.us-gov-east-1.amazonaws.com                 HTTPS
+ GovCloud       east-1
+ (US-East)                    identitystore.us-gov-east-1.api.aws                       HTTPS
+
+
+ AWS            us-gov-       identitystore.us-gov-west-1.amazonaws.com                 HTTPS
+ GovCloud       west-1
+ (US-                         identitystore.us-gov-west-1.api.aws                       HTTPS
+
+ West)
+
+
+IAM Identity Center OpenID Connect (OIDC)
+
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2     oidc.us-east-2.amazonaws.com                              HTTPS
+ (Ohio)
+                              oidc-fips.us-east-2.api.aws                                HTTPS
+
+                              oidc.us-east-2.api.aws                                    HTTPS
+
+ US             us-east-1     oidc.us-east-1.amazonaws.com                              HTTPS
+ East (N.
+ Virginia)                    oidc-fips.us-east-1.api.aws                                HTTPS
+
+                              oidc.us-east-1.api.aws                                    HTTPS
+
+ US             us-           oidc.us-west-1.amazonaws.com                              HTTPS
+ West (N.       west-1
+ Californi                    oidc-fips.us-west-1.api.aws                                HTTPS
+
+ a)                           oidc.us-west-1.api.aws                                    HTTPS
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1993
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ US West        us-           oidc.us-west-2.amazonaws.com                               HTTPS
+ (Oregon)       west-2
+                              oidc-fips.us-west-2.api.aws                                 HTTPS
+
+                              oidc.us-west-2.api.aws                                     HTTPS
+
+ Africa         af-south-     oidc.af-south-1.amazonaws.com                              HTTPS
+ (Cape          1
+ Town)                        oidc.af-south-1.api.aws                                    HTTPS
+
+
+ Asia           ap-           oidc.ap-east-1.amazonaws.com                               HTTPS
+ Pacific         east-1
+ (Hong                        oidc.ap-east-1.api.aws                                     HTTPS
+
+ Kong)
+
+ Asia           ap-           oidc.ap-south-2.amazonaws.com                              HTTPS
+ Pacific         south-2
+ (Hyderaba                    oidc.ap-south-2.api.aws                                    HTTPS
+
+ d)
+
+ Asia           ap-           oidc.ap-southeast-3.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3         oidc.ap-southeast-3.api.aws                                HTTPS
+
+
+ Asia           ap-           oidc.ap-southeast-5.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Malaysia      ast-5         oidc.ap-southeast-5.api.aws                                HTTPS
+
+ )
+
+ Asia           ap-           oidc.ap-southeast-4.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Melbourn      ast-4         oidc.ap-southeast-4.api.aws                                HTTPS
+
+ e)
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1994
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           oidc.ap-south-1.amazonaws.com                              HTTPS
+ Pacific         south-1
+ (Mumbai)                     oidc.ap-south-1.api.aws                                    HTTPS
+
+
+ Asia           ap-           oidc.ap-southeast-6.amazonaws.com                          HTTPS
+ Pacific         southe
+ (New           ast-6         oidc.ap-southeast-6.api.aws                                HTTPS
+
+ Zealand)
+
+ Asia           ap-           oidc.ap-northeast-3.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Osaka)        ast-3         oidc.ap-northeast-3.api.aws                                HTTPS
+
+
+ Asia           ap-           oidc.ap-northeast-2.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Seoul)        ast-2         oidc.ap-northeast-2.api.aws                                HTTPS
+
+
+ Asia           ap-           oidc.ap-southeast-1.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Singapor      ast-1         oidc.ap-southeast-1.api.aws                                HTTPS
+
+ e)
+
+ Asia           ap-           oidc.ap-southeast-2.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Sydney)       ast-2         oidc.ap-southeast-2.api.aws                                HTTPS
+
+
+ Asia           ap-           oidc.ap-east-2.amazonaws.com                               HTTPS
+ Pacific         east-2
+ (Taipei)                     oidc.ap-east-2.api.aws                                     HTTPS
+
+
+ Asia           ap-           oidc.ap-southeast-7.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Thailand      ast-7         oidc.ap-southeast-7.api.aws                                HTTPS
+
+ )
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1995
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           oidc.ap-northeast-1.amazonaws.com                         HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1         oidc.ap-northeast-1.api.aws                               HTTPS
+
+
+ Canada         ca-centra     oidc.ca-central-1.amazonaws.com                           HTTPS
+ (Central)      l-1
+                              oidc-fips.ca-central-1.api.aws                             HTTPS
+
+                              oidc.ca-central-1.api.aws                                 HTTPS
+
+ Canada         ca-           oidc.ca-west-1.amazonaws.com                              HTTPS
+ West           west-1
+ (Calgary)                    oidc-fips.ca-west-1.api.aws                                HTTPS
+
+                              oidc.ca-west-1.api.aws                                    HTTPS
+
+ Europe         eu-           oidc.eu-central-1.amazonaws.com                           HTTPS
+ (Frankfur      central-1
+ t)                           oidc.eu-central-1.api.aws                                 HTTPS
+
+
+ Europe         eu-           oidc.eu-west-1.amazonaws.com                              HTTPS
+ (Ireland)      west-1
+                              oidc.eu-west-1.api.aws                                    HTTPS
+
+ Europe         eu-           oidc.eu-west-2.amazonaws.com                              HTTPS
+ (London)       west-2
+                              oidc.eu-west-2.api.aws                                    HTTPS
+
+ Europe         eu-           oidc.eu-south-1.amazonaws.com                             HTTPS
+ (Milan)        south-1
+                              oidc.eu-south-1.api.aws                                   HTTPS
+
+ Europe         eu-           oidc.eu-west-3.amazonaws.com                              HTTPS
+ (Paris)        west-3
+                              oidc.eu-west-3.api.aws                                    HTTPS
+
+ Europe         eu-           oidc.eu-south-2.amazonaws.com                             HTTPS
+ (Spain)        south-2
+                              oidc.eu-south-2.api.aws                                   HTTPS
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1996
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           oidc.eu-north-1.amazonaws.com                             HTTPS
+ (Stockhol      north-1
+ m)                           oidc.eu-north-1.api.aws                                   HTTPS
+
+
+ Europe         eu-           oidc.eu-central-2.amazonaws.com                           HTTPS
+ (Zurich)       central-2
+                              oidc.eu-central-2.api.aws                                 HTTPS
+
+ Israel         il-centra     oidc.il-central-1.amazonaws.com                           HTTPS
+ (Tel Aviv)     l-1
+                              oidc.il-central-1.api.aws                                 HTTPS
+
+ Mexico         mx-           oidc.mx-central-1.amazonaws.com                           HTTPS
+ (Central)      central-1
+                              oidc.mx-central-1.api.aws                                 HTTPS
+
+ Middle         me-           oidc.me-south-1.amazonaws.com                             HTTPS
+ East           south-1
+ (Bahrain)                    oidc.me-south-1.api.aws                                   HTTPS
+
+
+ Middle         me-           oidc.me-central-1.amazonaws.com                           HTTPS
+ East           central-1
+ (UAE)                        oidc.me-central-1.api.aws                                 HTTPS
+
+
+ South          sa-east-1     oidc.sa-east-1.amazonaws.com                              HTTPS
+ America
+ (São                         oidc.sa-east-1.api.aws                                    HTTPS
+
+ Paulo)
+
+ AWS            us-gov-       oidc.us-gov-east-1.amazonaws.com                          HTTPS
+ GovCloud       east-1
+ (US-East)                    oidc.us-gov-east-1.api.aws                                HTTPS
+
+
+ AWS            us-gov-       oidc.us-gov-west-1.amazonaws.com                          HTTPS
+ GovCloud       west-1
+ (US-                         oidc.us-gov-west-1.api.aws                                HTTPS
+
+ West)
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1997
+AWS General Reference                                                                                      Reference guide
+Service quotas
+
+
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ File size of service provider SAML 2.0              Each supported            No      The maximum file size (in
+ certificates (in PEM format)                         Region: 2                         KB) of service provider
+                                                     Kilobytes                         SAML 2.0 certificates (in
+                                                                                       PEM format).
+
+ Number of groups supported in IAM                   Each supported            Yes     The maximum number of
+ Identity Center                                     Region: 100,000                   groups supported in IAM
+                                                                                       Identity Center.
+
+ Number of permission sets allowed in                Each supported            Yes     The default number of
+ IAM Identity Center                                 Region: 3,500                     permission sets in IAM
+                                                                                       Identity Center.
+
+ Number of permission sets allowed per               Each supported            Yes     The default number of
+ AWS account                                         Region: 500                       permission sets allowed
+                                                                                       per AWS account.
+
+ Number of users supported in IAM                    Each supported            Yes     The default number of
+ Identity Center                                     Region: 200,000                   users supported in IAM
+                                                                                       Identity Center.
+
+ Total number of AWS accounts or                     Each supported            Yes     The default number
+ applications that can be configured                  Region: 7,000                     of AWS accounts or
+                                                                                       applications that can be
+                                                                                       configured. This quota
+                                                                                       applies separately to
+                                                                                       AWS accounts and to
+                                                                                       applications. You can
+                                                                                       configure up to 7000
+                                                                                       accounts and up to 7000
+                                                                                       applications.
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1998

@@ -1,0 +1,610 @@
+AWS General Reference                                                                                  Reference guide
+Amazon Aurora endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+Amazon Aurora MySQL-Compatible Edition
+
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2     rds.us-east-2.amazonaws.com                               HTTPS
+ (Ohio)
+
+ US             us-east-1     rds.us-east-1.amazonaws.com                               HTTPS
+ East (N.
+ Virginia)
+
+ US             us-           rds.us-west-1.amazonaws.com                               HTTPS
+ West (N.       west-1
+ Californi
+ a)
+
+ US West        us-           rds.us-west-2.amazonaws.com                               HTTPS
+ (Oregon)       west-2
+
+ Africa         af-south-     rds.af-south-1.amazonaws.com                              HTTPS
+ (Cape          1
+ Town)
+
+
+
+
+
+Aurora                                                                                                  Version 1.0 324
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-            rds.ap-east-1.amazonaws.com                               HTTPS
+ Pacific         east-1
+ (Hong
+ Kong)
+
+ Asia           ap-            rds.ap-south-2.amazonaws.com                              HTTPS
+ Pacific         south-2
+ (Hyderaba
+ d)
+
+ Asia           ap-            rds.ap-southeast-3.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3
+
+ Asia           ap-            rds.ap-southeast-5.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Malaysia      ast-5
+ )
+
+ Asia           ap-            rds.ap-southeast-4.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Melbourn      ast-4
+ e)
+
+ Asia           ap-            rds.ap-south-1.amazonaws.com                              HTTPS
+ Pacific         south-1
+ (Mumbai)
+
+ Asia           ap-            rds.ap-southeast-6.amazonaws.com                          HTTPS
+ Pacific         southe
+ (New           ast-6
+ Zealand)
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                        Version 1.0 325
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-            rds.ap-northeast-3.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Osaka)        ast-3
+
+ Asia           ap-            rds.ap-northeast-2.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Seoul)        ast-2
+
+ Asia           ap-            rds.ap-southeast-1.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Singapor      ast-1
+ e)
+
+ Asia           ap-            rds.ap-southeast-2.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Sydney)       ast-2
+
+ Asia           ap-            rds.ap-east-2.amazonaws.com                               HTTPS
+ Pacific         east-2
+ (Taipei)
+
+ Asia           ap-            rds.ap-southeast-7.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Thailand      ast-7
+ )
+
+ Asia           ap-            rds.ap-northeast-1.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1
+
+ Canada         ca-centra      rds.ca-central-1.amazonaws.com                            HTTPS
+ (Central)      l-1
+
+ Canada         ca-            rds.ca-west-1.amazonaws.com                               HTTPS
+ West           west-1
+ (Calgary)
+
+
+
+
+Service endpoints                                                                                        Version 1.0 326
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           rds.eu-central-1.amazonaws.com                            HTTPS
+ (Frankfur      central-1
+ t)
+
+ Europe         eu-           rds.eu-west-1.amazonaws.com                               HTTPS
+ (Ireland)      west-1
+
+ Europe         eu-           rds.eu-west-2.amazonaws.com                               HTTPS
+ (London)       west-2
+
+ Europe         eu-           rds.eu-south-1.amazonaws.com                              HTTPS
+ (Milan)        south-1
+
+ Europe         eu-           rds.eu-west-3.amazonaws.com                               HTTPS
+ (Paris)        west-3
+
+ Europe         eu-           rds.eu-south-2.amazonaws.com                              HTTPS
+ (Spain)        south-2
+
+ Europe         eu-           rds.eu-north-1.amazonaws.com                              HTTPS
+ (Stockhol      north-1
+ m)
+
+ Europe         eu-           rds.eu-central-2.amazonaws.com                            HTTPS
+ (Zurich)       central-2
+
+ Israel         il-centra     rds.il-central-1.amazonaws.com                            HTTPS
+ (Tel Aviv)     l-1
+
+ Mexico         mx-           rds.mx-central-1.amazonaws.com                            HTTPS
+ (Central)      central-1
+
+ Middle         me-           rds.me-south-1.amazonaws.com                              HTTPS
+ East           south-1
+ (Bahrain)
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 327
+AWS General Reference                                                                                Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Middle        me-            rds.me-central-1.amazonaws.com                           HTTPS
+ East          central-1
+ (UAE)
+
+ South         sa-east-1      rds.sa-east-1.amazonaws.com                              HTTPS
+ America
+ (São
+ Paulo)
+
+ AWS           us-gov-        rds.us-gov-east-1.amazonaws.com                          HTTPS
+ GovCloud      east-1
+ (US-East)
+
+ AWS           us-gov-        rds.us-gov-west-1.amazonaws.com                          HTTPS
+ GovCloud      west-1
+ (US-
+ West)
+
+
+Amazon Aurora PostgreSQL-Compatible Edition
+
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ US East       us-east-2      rds.us-east-2.amazonaws.com                              HTTPS
+ (Ohio)
+
+ US            us-east-1      rds.us-east-1.amazonaws.com                              HTTPS
+ East (N.
+ Virginia)
+
+ US            us-            rds.us-west-1.amazonaws.com                              HTTPS
+ West (N.      west-1
+ Californi
+ a)
+
+
+
+Service endpoints                                                                                     Version 1.0 328
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ US West        us-           rds.us-west-2.amazonaws.com                                HTTPS
+ (Oregon)       west-2
+
+ Africa         af-south-     rds.af-south-1.amazonaws.com                               HTTPS
+ (Cape          1
+ Town)
+
+ Asia           ap-           rds.ap-east-1.amazonaws.com                                HTTPS
+ Pacific         east-1
+ (Hong
+ Kong)
+
+ Asia           ap-           rds.ap-south-2.amazonaws.com                               HTTPS
+ Pacific         south-2
+ (Hyderaba
+ d)
+
+ Asia           ap-           rds.ap-southeast-3.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3
+
+ Asia           ap-           rds.ap-southeast-5.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Malaysia      ast-5
+ )
+
+ Asia           ap-           rds.ap-southeast-4.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Melbourn      ast-4
+ e)
+
+ Asia           ap-           rds.ap-south-1.amazonaws.com                               HTTPS
+ Pacific         south-1
+ (Mumbai)
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 329
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-            rds.ap-southeast-6.amazonaws.com                          HTTPS
+ Pacific         southe
+ (New           ast-6
+ Zealand)
+
+ Asia           ap-            rds.ap-northeast-3.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Osaka)        ast-3
+
+ Asia           ap-            rds.ap-northeast-2.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Seoul)        ast-2
+
+ Asia           ap-            rds.ap-southeast-1.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Singapor      ast-1
+ e)
+
+ Asia           ap-            rds.ap-southeast-2.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Sydney)       ast-2
+
+ Asia           ap-            rds.ap-east-2.amazonaws.com                               HTTPS
+ Pacific         east-2
+ (Taipei)
+
+ Asia           ap-            rds.ap-southeast-7.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Thailand      ast-7
+ )
+
+ Asia           ap-            rds.ap-northeast-1.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1
+
+
+
+
+
+
+
+Service endpoints                                                                                        Version 1.0 330
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Canada         ca-centra     rds.ca-central-1.amazonaws.com                            HTTPS
+ (Central)      l-1
+
+ Canada         ca-           rds.ca-west-1.amazonaws.com                               HTTPS
+ West           west-1
+ (Calgary)
+
+ Europe         eu-           rds.eu-central-1.amazonaws.com                            HTTPS
+ (Frankfur      central-1
+ t)
+
+ Europe         eu-           rds.eu-west-1.amazonaws.com                               HTTPS
+ (Ireland)      west-1
+
+ Europe         eu-           rds.eu-west-2.amazonaws.com                               HTTPS
+ (London)       west-2
+
+ Europe         eu-           rds.eu-south-1.amazonaws.com                              HTTPS
+ (Milan)        south-1
+
+ Europe         eu-           rds.eu-west-3.amazonaws.com                               HTTPS
+ (Paris)        west-3
+
+ Europe         eu-           rds.eu-south-2.amazonaws.com                              HTTPS
+ (Spain)        south-2
+
+ Europe         eu-           rds.eu-north-1.amazonaws.com                              HTTPS
+ (Stockhol      north-1
+ m)
+
+ Europe         eu-           rds.eu-central-2.amazonaws.com                            HTTPS
+ (Zurich)       central-2
+
+ Israel         il-centra     rds.il-central-1.amazonaws.com                            HTTPS
+ (Tel Aviv)     l-1
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 331
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Mexico         mx-           rds.mx-central-1.amazonaws.com                            HTTPS
+ (Central)      central-1
+
+ Middle         me-           rds.me-south-1.amazonaws.com                              HTTPS
+ East           south-1
+ (Bahrain)
+
+ Middle         me-           rds.me-central-1.amazonaws.com                            HTTPS
+ East           central-1
+ (UAE)
+
+ South          sa-east-1     rds.sa-east-1.amazonaws.com                               HTTPS
+ America
+ (São
+ Paulo)
+
+ AWS            us-gov-       rds.us-gov-east-1.amazonaws.com                           HTTPS
+ GovCloud       east-1
+ (US-East)
+
+ AWS            us-gov-       rds.us-gov-west-1.amazonaws.com                           HTTPS
+ GovCloud       west-1
+ (US-
+ West)
+
+
+Service quotas
+
+
+
+ Name                                              Default                 Adjustabl Description
+                                                                           e
+
+ Authorizations per DB security group              Each supported          No      Number of security
+                                                   Region: 20                      group authorizations per
+                                                                                   DB security group
+
+
+
+
+
+Service quotas                                                                                         Version 1.0 332
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Custom endpoints per DB cluster                     Each supported            Yes      The maximum number
+                                                     Region: 5                          of custom endpoints
+                                                                                        that you can create
+                                                                                        per Aurora DB cluster
+                                                                                        in this account in the
+                                                                                        current Region. This
+                                                                                        value reflects the highest
+                                                                                        number of custom
+                                                                                        endpoints in a DB cluster
+                                                                                        in the account. Other DB
+                                                                                        clusters in the account
+                                                                                        might have a lower
+                                                                                        number of custom
+                                                                                        endpoints.
+
+ Custom engine versions                              Each supported            Yes      The maximum number of
+                                                     Region: 40                         custom engine versions
+                                                                                        allowed in this account in
+                                                                                        the current Region
+
+ DB cluster parameter groups                         Each supported            Yes      The maximum number
+                                                     Region: 50                         of DB cluster parameter
+                                                                                        groups
+
+ DB clusters                                         Each supported            Yes      The maximum number of
+                                                     Region: 40                         Aurora clusters allowed
+                                                                                        in this account in the
+                                                                                        current Region
+
+ DB instances                                        ap-south-1: 20            Yes      The maximum number
+                                                                                        of DB instances allowed
+                                                     Each of the                        in this account in the
+                                                     other supported                    current Region
+                                                     Regions: 40
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 333
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ DB shard groups                                     Each supported           Yes      The maximum number
+                                                     Region: 5                         of DB shard groups
+                                                                                       for Aurora Limitless
+                                                                                       Database in this account
+                                                                                       in the current Region
+
+ DB subnet groups                                    ap-south-1: 20           Yes      The maximum number of
+                                                                                       DB subnet groups
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 50
+
+ Data API HTTP request body size                     Each supported           No       The maximum size
+                                                     Region: 4                         allowed for the HTTP
+                                                     Megabytes                         request body.
+
+ Data API maximum concurrent cluster-s               Each supported           No       The maximum number
+ ecret pairs                                         Region: 30                        of unique pairs of Aurora
+                                                                                       Serverless v1 DB clusters
+                                                                                       and secrets in concurrent
+                                                                                       Data API requests for this
+                                                                                       account in the current
+                                                                                       AWS Region.
+
+ Data API maximum concurrent requests                Each supported           No       The maximum number
+                                                     Region: 500                       of Data API requests to
+                                                                                       an Aurora Serverless
+                                                                                       v1 DB cluster that use
+                                                                                       the same secret and
+                                                                                       can be processed at the
+                                                                                       same time. Additional
+                                                                                       requests are queued and
+                                                                                       processed as in-process
+                                                                                       requests complete.
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 334
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Data API maximum result set size                    Each supported           No       The maximum size of the
+                                                     Region: 1                         database result set that
+                                                     Megabytes                         can be returned by the
+                                                                                       Data API.
+
+ Data API maximum size of JSON                       Each supported           No       The maximum size of the
+ response string                                     Region: 10                        simplified JSON response
+                                                     Megabytes                         string returned by the
+                                                                                       RDS Data API.
+
+ Data API requests per second                        Each supported           No       The maximum number
+                                                     Region: 1,000 per                 of requests to the Data
+                                                     second                            API per second allowed
+                                                                                       for this account in the
+                                                                                       current AWS Region. This
+                                                                                       quota only applies to
+                                                                                       Amazon Aurora Serverles
+                                                                                       s v1 clusters.
+
+ Event subscriptions                                 Each supported           Yes      The maximum number of
+                                                     Region: 20                        event subscriptions
+
+ IAM roles per DB cluster                            Each supported           Yes      The maximum number of
+                                                     Region: 5                         IAM roles associated with
+                                                                                       a DB cluster
+
+ IAM roles per DB instance                           Each supported           Yes      The maximum number of
+                                                     Region: 5                         IAM roles associated with
+                                                                                       a DB instance
+
+ Integrations                                        Each supported           No       The maximum number
+                                                     Region: 100                       of integrations allowed
+                                                                                       in this account in the
+                                                                                       current AWS Region
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 335
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Manual DB cluster snapshots                        Each supported           Yes     The maximum number
+                                                    Region: 100                      of manual DB cluster
+                                                                                     snapshots
+
+ Manual DB instance snapshots                       Each supported           Yes     The maximum number
+                                                    Region: 100                      of manual DB instance
+                                                                                     snapshots
+
+ Option groups                                      Each supported           Yes     The maximum number of
+                                                    Region: 20                       option groups
+
+ Parameter groups                                   ap-south-1: 20           Yes     The maximum number of
+                                                                                     parameter groups
+                                                    Each of the
+                                                    other supported
+                                                    Regions: 50
+
+ Proxies                                            Each supported           Yes     The maximum number
+                                                    Region: 20                       of proxies allowed in this
+                                                                                     account in the current
+                                                                                     AWS Region
+
+ Read replicas per primary                          Each supported           Yes     The maximum number of
+                                                    Region: 15                       read replicas per primary
+                                                                                     DB instance. This quota
+                                                                                     cant be adjusted for
+                                                                                     Amazon Aurora.
+
+ Reserved DB instances                              ap-south-1: 20           Yes     The maximum number
+                                                                                     of reserved DB instances
+                                                    Each of the                      allowed in this account in
+                                                    other supported                  the current AWS Region
+                                                    Regions: 40
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 336

@@ -1,0 +1,190 @@
+AWS General Reference                                                                                     Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+ Security groups                                    ap-south-1: 20            Yes     The maximum number of
+                                                                                      DB security groups
+                                                    Each of the
+                                                    other supported
+                                                    Regions: 25
+
+ Subnets per DB subnet group                        Each supported            No      The maximum number
+                                                    Region: 20                        of subnets per DB subnet
+                                                                                      group
+
+ Total storage for all DB instances                 Each supported            Yes     The maximum total
+                                                    Region: 100,000                   storage (in GB) on EBS
+                                                                                      volumes for all Amazon
+                                                                                      RDS DB instances added
+                                                                                      together. This quota does
+                                                                                      not apply to Amazon
+                                                                                      Aurora, which has a
+                                                                                      maximum cluster volume
+                                                                                      of 128 TiB for each DB
+                                                                                      cluster.
+
+
+Amazon Aurora DSQL endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+
+
+
+
+
+
+
+Aurora DSQL                                                                                               Version 1.0 337
+AWS General Reference                                                                                     Reference guide
+Service endpoints
+
+
+
+ Region         Region         Endpoint                                                    Protocol
+ Name
+
+ US East        us-east-2      dsql.us-east-2.api.aws                                      HTTPS
+ (Ohio)
+                               dsql-fips.us-east-2.api.aws                                  HTTPS
+
+ US             us-east-1      dsql.us-east-1.api.aws                                      HTTPS
+ East (N.
+ Virginia)                     dsql-fips.us-east-1.api.aws                                  HTTPS
+
+
+ US West        us-            dsql.us-west-2.api.aws                                      HTTPS
+ (Oregon)       west-2
+                               dsql-fips.us-west-2.api.aws                                  HTTPS
+
+ Asia           ap-            dsql.ap-east-1.api.aws                                      HTTPS
+ Pacific         east-1
+ (Hong
+ Kong)
+
+ Asia           ap-            dsql.ap-southeast-4.api.aws                                 HTTPS
+ Pacific         southe
+ (Melbourn      ast-4
+ e)
+
+ Asia           ap-            dsql.ap-south-1.api.aws                                     HTTPS
+ Pacific         south-1
+ (Mumbai)
+
+ Asia           ap-            dsql.ap-northeast-3.api.aws                                 HTTPS
+ Pacific         northe
+ (Osaka)        ast-3
+
+ Asia           ap-            dsql.ap-northeast-2.api.aws                                 HTTPS
+ Pacific         northe
+ (Seoul)        ast-2
+
+
+
+
+
+Service endpoints                                                                                         Version 1.0 338
+AWS General Reference                                                                                     Reference guide
+
+ Region         Region         Endpoint                                                    Protocol
+ Name
+
+ Asia           ap-            dsql.ap-southeast-1.api.aws                                 HTTPS
+ Pacific         southe
+ (Singapor      ast-1
+ e)
+
+ Asia           ap-            dsql.ap-southeast-2.api.aws                                 HTTPS
+ Pacific         southe
+ (Sydney)       ast-2
+
+ Asia           ap-            dsql.ap-northeast-1.api.aws                                 HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1
+
+ Canada         ca-centra      dsql.ca-central-1.api.aws                                   HTTPS
+ (Central)      l-1
+                               dsql-fips.ca-central-1.api.aws                               HTTPS
+
+ Canada         ca-            dsql.ca-west-1.api.aws                                      HTTPS
+ West           west-1
+ (Calgary)                     dsql-fips.ca-west-1.api.aws                                  HTTPS
+
+
+ Europe         eu-            dsql.eu-central-1.api.aws                                   HTTPS
+ (Frankfur      central-1
+ t)
+
+ Europe         eu-            dsql.eu-west-1.api.aws                                      HTTPS
+ (Ireland)      west-1
+
+ Europe         eu-            dsql.eu-west-2.api.aws                                      HTTPS
+ (London)       west-2
+
+ Europe         eu-            dsql.eu-west-3.api.aws                                      HTTPS
+ (Paris)        west-3
+
+ Europe         eu-            dsql.eu-south-2.api.aws                                     HTTPS
+ (Spain)        south-2
+
+
+
+
+
+Service endpoints                                                                                          Version 1.0 339
+AWS General Reference                                                                                      Reference guide
+
+ Region         Region         Endpoint                                                    Protocol
+ Name
+
+ Europe         eu-            dsql.eu-north-1.api.aws                                     HTTPS
+ (Stockhol      north-1
+ m)
+
+ South          sa-east-1      dsql.sa-east-1.api.aws                                      HTTPS
+ America
+ (São
+ Paulo)
+
+
+Service quotas
+
+
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Cluster size                                        Each supported           Yes      The maximum capacity
+                                                     Region: 10,000                    (in GB) for an Aurora
+                                                     Gigabytes                         DSQL cluster. This quota
+                                                                                       applies to both single-
+                                                                                       Region and multi-Region
+                                                                                       clusters.
+
+ Connections per cluster                             Each supported           Yes      The maximum number
+                                                     Region: 10,000                    of active connections
+                                                                                       per cluster that you can
+                                                                                       have in this account in
+                                                                                       the current Region.
+
+ Multi-Region clusters                               Each supported           Yes      The maximum number
+                                                     Region: 5                         of multi region clusters
+                                                                                       allowed per account.
+
+ Single-Region clusters                              Each supported           Yes      The maximum number
+                                                     Region: 20                        of active clusters allowed
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 340

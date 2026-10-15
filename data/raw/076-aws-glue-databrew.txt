@@ -1,0 +1,187 @@
+AWS General Reference                                                                                   Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Total concurrent machine learning task             Each supported           Yes     The total number of
+ runs for transforms per account                    Region: 30                       concurrent machine
+                                                                                     learning transform
+                                                                                     task runs for machine
+                                                                                     learning transforms for
+                                                                                     this account.
+
+
+
+For more information, see AWS Glue in the AWS GovCloud (US) User Guide.
+
+AWS Glue DataBrew endpoints and quotas
+
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2      databrew.us-east-2.amazonaws.com                          HTTPS
+ (Ohio)
+                               databrew-fips.us-east-2.amazonaws.com                      HTTPS
+
+ US             us-east-1      databrew.us-east-1.amazonaws.com                          HTTPS
+ East (N.
+ Virginia)                     databrew-fips.us-east-1.amazonaws.com                      HTTPS
+
+
+
+
+DataBrew                                                                                                Version 1.0 1919
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ US            us-            databrew.us-west-1.amazonaws.com                         HTTPS
+ West (N.      west-1
+ Californi                    databrew-fips.us-west-1.amazonaws.com                     HTTPS
+
+ a)
+
+ US West       us-            databrew.us-west-2.amazonaws.com                         HTTPS
+ (Oregon)      west-2
+                              databrew-fips.us-west-2.amazonaws.com                     HTTPS
+
+ Africa        af-south-      databrew.af-south-1.amazonaws.com                        HTTPS
+ (Cape         1
+ Town)
+
+ Asia          ap-            databrew.ap-east-1.amazonaws.com                         HTTPS
+ Pacific        east-1
+ (Hong
+ Kong)
+
+ Asia          ap-            databrew.ap-south-1.amazonaws.com                        HTTPS
+ Pacific        south-1
+ (Mumbai)
+
+ Asia          ap-            databrew.ap-northeast-2.amazonaws.com                    HTTPS
+ Pacific        northe
+ (Seoul)       ast-2
+
+ Asia          ap-            databrew.ap-southeast-1.amazonaws.com                    HTTPS
+ Pacific        southe
+ (Singapor     ast-1
+ e)
+
+ Asia          ap-            databrew.ap-southeast-2.amazonaws.com                    HTTPS
+ Pacific        southe
+ (Sydney)      ast-2
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1920
+AWS General Reference                                                                                Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-            databrew.ap-northeast-1.amazonaws.com                    HTTPS
+ Pacific        northe
+ (Tokyo)       ast-1
+
+ Canada        ca-centra      databrew.ca-central-1.amazonaws.com                      HTTPS
+ (Central)     l-1
+
+ Europe        eu-            databrew.eu-central-1.amazonaws.com                      HTTPS
+ (Frankfur     central-1
+ t)
+
+ Europe        eu-            databrew.eu-west-1.amazonaws.com                         HTTPS
+ (Ireland)     west-1
+
+ Europe        eu-            databrew.eu-west-2.amazonaws.com                         HTTPS
+ (London)      west-2
+
+ Europe        eu-            databrew.eu-south-1.amazonaws.com                        HTTPS
+ (Milan)       south-1
+
+ Europe        eu-            databrew.eu-west-3.amazonaws.com                         HTTPS
+ (Paris)       west-3
+
+ Europe        eu-            databrew.eu-north-1.amazonaws.com                        HTTPS
+ (Stockhol     north-1
+ m)
+
+ South         sa-east-1      databrew.sa-east-1.amazonaws.com                         HTTPS
+ America
+ (São
+ Paulo)
+
+ AWS           us-gov-        databrew.us-gov-west-1.amazonaws.com                     HTTPS
+ GovCloud      west-1
+ (US-
+ West)
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1921
+AWS General Reference                                                                                    Reference guide
+Service quotas
+
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Concurrent jobs per AWS account                    Each supported           Yes      The maximum number
+                                                    Region: 10                        of jobs that you can run
+                                                                                      at the same time in this
+                                                                                      AWS account.
+
+ Datasets per AWS account                           Each supported           Yes      The maximum number
+                                                    Region: 100                       of datasets that you
+                                                                                      can create in this AWS
+                                                                                      account.
+
+ Jobs per AWS account                               Each supported           Yes      The maximum number of
+                                                    Region: 100                       jobs that you can create
+                                                                                      in this AWS account.
+
+ Node capacity per AWS account                      Each supported           Yes      The maximum number
+                                                    Region: 300                       of nodes available to
+                                                                                      jobs running in this AWS
+                                                                                      account.
+
+ Open projects per AWS account                      Each supported           Yes      The maximum number
+                                                    Region: 10                        of projects that you can
+                                                                                      open concurrently in this
+                                                                                      AWS account.
+
+ Projects per AWS account                           Each supported           Yes      The maximum number
+                                                    Region: 100                       of projects that you
+                                                                                      can create in this AWS
+                                                                                      account.
+
+ Recipes per AWS account                            Each supported           Yes      The maximum number
+                                                    Region: 500                       of recipes that you
+                                                                                      can create in this AWS
+                                                                                      account.
+
+
+
+Service quotas                                                                                          Version 1.0 1922

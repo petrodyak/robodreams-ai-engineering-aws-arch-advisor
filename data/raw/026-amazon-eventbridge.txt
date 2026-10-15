@@ -1,0 +1,628 @@
+AWS General Reference                                                                                  Reference guide
+Amazon EventBridge endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ US East        us-east-2     events.us-east-2.amazonaws.com                             HTTPS
+ (Ohio)
+                              events-fips.us-east-2.api.aws                               HTTPS
+
+                              events-fips.us-east-2.amazonaws.com                         HTTPS
+
+                              events.us-east-2.api.aws                                   HTTPS
+
+ US             us-east-1     events.us-east-1.amazonaws.com                             HTTPS
+ East (N.
+ Virginia)                    events-fips.us-east-1.api.aws                               HTTPS
+
+                              events-fips.us-east-1.amazonaws.com                         HTTPS
+
+                              events.us-east-1.api.aws                                   HTTPS
+
+ US             us-           events.us-west-1.amazonaws.com                             HTTPS
+ West (N.       west-1
+ Californi                    events-fips.us-west-1.api.aws                               HTTPS
+
+ a)                           events-fips.us-west-1.amazonaws.com                         HTTPS
+
+
+                              events.us-west-1.api.aws                                   HTTPS
+
+
+
+EventBridge                                                                                            Version 1.0 1751
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US West        us-           events.us-west-2.amazonaws.com                            HTTPS
+ (Oregon)       west-2
+                              events-fips.us-west-2.api.aws                              HTTPS
+
+                              events-fips.us-west-2.amazonaws.com                        HTTPS
+
+                              events.us-west-2.api.aws                                  HTTPS
+
+ Africa         af-south-     events.af-south-1.amazonaws.com                           HTTPS
+ (Cape          1
+ Town)                        events.af-south-1.api.aws                                 HTTPS
+
+
+ Asia           ap-           events.ap-east-1.amazonaws.com                            HTTPS
+ Pacific         east-1
+ (Hong                        events.ap-east-1.api.aws                                  HTTPS
+
+ Kong)
+
+ Asia           ap-           events.ap-south-2.amazonaws.com                           HTTPS
+ Pacific         south-2
+ (Hyderaba                    events.ap-south-2.api.aws                                 HTTPS
+
+ d)
+
+ Asia           ap-           events.ap-southeast-3.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3         events.ap-southeast-3.api.aws                             HTTPS
+
+
+ Asia           ap-           events.ap-southeast-5.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Malaysia      ast-5         events.ap-southeast-5.api.aws                             HTTPS
+
+ )
+
+ Asia           ap-           events.ap-southeast-4.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Melbourn      ast-4         events.ap-southeast-4.api.aws                             HTTPS
+
+ e)
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1752
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           events.ap-south-1.amazonaws.com                           HTTPS
+ Pacific         south-1
+ (Mumbai)                     events.ap-south-1.api.aws                                 HTTPS
+
+
+ Asia           ap-           events.ap-southeast-6.amazonaws.com                       HTTPS
+ Pacific         southe
+ (New           ast-6         events.ap-southeast-6.api.aws                             HTTPS
+
+ Zealand)
+
+ Asia           ap-           events.ap-northeast-3.amazonaws.com                       HTTPS
+ Pacific         northe
+ (Osaka)        ast-3         events.ap-northeast-3.api.aws                             HTTPS
+
+
+ Asia           ap-           events.ap-northeast-2.amazonaws.com                       HTTPS
+ Pacific         northe
+ (Seoul)        ast-2         events.ap-northeast-2.api.aws                             HTTPS
+
+
+ Asia           ap-           events.ap-southeast-1.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Singapor      ast-1         events.ap-southeast-1.api.aws                             HTTPS
+
+ e)
+
+ Asia           ap-           events.ap-southeast-2.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Sydney)       ast-2         events.ap-southeast-2.api.aws                             HTTPS
+
+
+ Asia           ap-           events.ap-east-2.amazonaws.com                            HTTPS
+ Pacific         east-2
+ (Taipei)                     events.ap-east-2.api.aws                                  HTTPS
+
+
+ Asia           ap-           events.ap-southeast-7.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Thailand      ast-7         events.ap-southeast-7.api.aws                             HTTPS
+
+ )
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1753
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                 Protocol
+ Name
+
+ Asia           ap-           events.ap-northeast-1.amazonaws.com                      HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1         events.ap-northeast-1.api.aws                            HTTPS
+
+
+ Canada         ca-centra     events.ca-central-1.amazonaws.com                        HTTPS
+ (Central)      l-1
+                              events-fips.ca-central-1.api.aws                          HTTPS
+
+                              events-fips.ca-central-1.amazonaws.com                    HTTPS
+
+                              events.ca-central-1.api.aws                              HTTPS
+
+ Canada         ca-           events.ca-west-1.amazonaws.com                           HTTPS
+ West           west-1
+ (Calgary)                    events-fips.ca-west-1.api.aws                             HTTPS
+
+                              events-fips.ca-west-1.amazonaws.com                       HTTPS
+
+                              events.ca-west-1.api.aws                                 HTTPS
+
+ Europe         eu-           events.eu-central-1.amazonaws.com                        HTTPS
+ (Frankfur      central-1
+ t)                           events.eu-central-1.api.aws                              HTTPS
+
+
+ Europe         eu-           events.eu-west-1.amazonaws.com                           HTTPS
+ (Ireland)      west-1
+                              events.eu-west-1.api.aws                                 HTTPS
+
+ Europe         eu-           events.eu-west-2.amazonaws.com                           HTTPS
+ (London)       west-2
+                              events.eu-west-2.api.aws                                 HTTPS
+
+ Europe         eu-           events.eu-south-1.amazonaws.com                          HTTPS
+ (Milan)        south-1
+                              events.eu-south-1.api.aws                                HTTPS
+
+ Europe         eu-           events.eu-west-3.amazonaws.com                           HTTPS
+ (Paris)        west-3
+                              events.eu-west-3.api.aws                                 HTTPS
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1754
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           events.eu-south-2.amazonaws.com                           HTTPS
+ (Spain)        south-2
+                              events.eu-south-2.api.aws                                 HTTPS
+
+ Europe         eu-           events.eu-north-1.amazonaws.com                           HTTPS
+ (Stockhol      north-1
+ m)                           events.eu-north-1.api.aws                                 HTTPS
+
+
+ Europe         eu-           events.eu-central-2.amazonaws.com                         HTTPS
+ (Zurich)       central-2
+                              events.eu-central-2.api.aws                               HTTPS
+
+ Israel         il-centra     events.il-central-1.amazonaws.com                         HTTPS
+ (Tel Aviv)     l-1
+                              events.il-central-1.api.aws                               HTTPS
+
+ Mexico         mx-           events.mx-central-1.amazonaws.com                         HTTPS
+ (Central)      central-1
+                              events.mx-central-1.api.aws                               HTTPS
+
+ Middle         me-           events.me-south-1.amazonaws.com                           HTTPS
+ East           south-1
+ (Bahrain)                    events.me-south-1.api.aws                                 HTTPS
+
+
+ Middle         me-           events.me-central-1.amazonaws.com                         HTTPS
+ East           central-1
+ (UAE)                        events.me-central-1.api.aws                               HTTPS
+
+
+ South          sa-east-1     events.sa-east-1.amazonaws.com                            HTTPS
+ America
+ (São                         events.sa-east-1.api.aws                                  HTTPS
+
+ Paulo)
+
+ AWS            us-gov-       events.us-gov-east-1.amazonaws.com                        HTTPS
+ GovCloud       east-1
+ (US-East)                    events.us-gov-east-1.api.aws                              HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1755
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ AWS            us-gov-        events.us-gov-west-1.amazonaws.com                         HTTPS
+ GovCloud       west-1
+ (US-                          events.us-gov-west-1.api.aws                               HTTPS
+
+ West)
+
+
+Service quotas
+
+
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Api destinations                                   Each supported           Yes     The maximum number
+                                                    Region: 3,000                    of API destinations per
+                                                                                     account per Region.
+
+ Connections                                        Each supported           Yes     The maximum number of
+                                                    Region: 3,000                    connections per account
+                                                                                     per Region.
+
+ CreateEndpoint throttle limit in                   Each supported           No      The maximum number
+ transactions per second                            Region: 5 per                    of requests per second
+                                                    second                           for CreateEndpoint API.
+                                                                                     Additional requests are
+                                                                                     throttled.
+
+ DeleteEndpoint throttle limit in                   Each supported           No      The maximum number
+ transactions per second                            Region: 5 per                    of requests per second
+                                                    second                           for DeleteEndpoint API.
+                                                                                     Additional requests are
+                                                                                     throttled.
+
+ Endpoints                                          Each supported           Yes     The maximum number
+                                                    Region: 100                      of endpoints per account
+                                                                                     per Region.
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 1756
+AWS General Reference                                                                                          Reference guide
+
+ Name                                                  Default                    Adjustabl Description
+                                                                                  e
+
+ Event bus policy size                                 Each supported             Yes      Maximum policy size, in
+                                                       Region: 10,240                      characters. This policy
+                                                                                           size increases each time
+                                                                                           you grant access to
+                                                                                           another account. You can
+                                                                                           see your current policy
+                                                                                           and its size by using the
+                                                                                           DescribeEventBus API.
+
+ Event buses                                           Each supported             Yes      Maximum event buses
+                                                       Region: 100                         per account.
+
+ Event pattern size                                    Each supported             Yes      Maximum size of
+                                                       Region: 2,048                       an event pattern, in
+                                                                                           characters.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                 Version 1.0 1757
+AWS General Reference                                                                                           Reference guide
+
+ Name                                                  Default                    Adjustabl Description
+                                                                                  e
+
+ Invocations throttle limit in transacti               us-east-1: 18,750          Yes      An invocation is an event
+ ons per second                                        per second                          matching a rule and
+                                                                                           being sent on to the
+                                                       us-east-2: 4,500                    rules targets. After the
+                                                       per second                          limit is reached, the
+
+                                                       us-west-1: 2,250                    invocations are throttled
+                                                       per second                          ; that is, they still happen
+                                                                                           but they are delayed.
+                                                       us-west-2: 18,750
+                                                       per second
+
+                                                       ap-east-1: 1,100
+                                                       per second
+
+                                                       ap-northeast-1:
+                                                       2,250 per second
+
+                                                       ap-northeast-2:
+                                                       1,100 per second
+
+                                                       ap-south-1: 1,100
+                                                       per second
+
+                                                       ap-southeast-1:
+                                                       2,250 per second
+
+                                                       ap-southeast-2:
+                                                       2,250 per second
+
+                                                       ca-central-1:
+                                                       1,100 per second
+
+                                                       eu-central-1:
+                                                       4,500 per second
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                 Version 1.0 1758
+AWS General Reference                                                                                        Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+                                                      eu-north-1: 1,100
+                                                      per second
+
+                                                      eu-south-2: 4,500
+                                                      per second
+
+                                                      eu-west-1: 18,750
+                                                      per second
+
+                                                      eu-west-2: 2,250
+                                                      per second
+
+                                                      eu-west-3: 1,100
+                                                      per second
+
+                                                      sa-east-1: 1,100
+                                                      per second
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 750 per
+                                                      second
+
+ Number of rules                                      af-south-1: 100           Yes      Maximum number of
+                                                                                         rules an account can
+                                                      eu-south-1: 100                    have per event bus
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 300
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 1759
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+ PutEvents throttle limit in transactions             us-east-1: 10,000          Yes      Maximum number of
+ per second                                           per second                          requests per second for
+                                                                                          PutEvents API. Additional
+                                                      us-east-2: 2,400                    requests are throttled.
+                                                      per second
+
+                                                      us-west-1: 1,200
+                                                      per second
+
+                                                      us-west-2: 10,000
+                                                      per second
+
+                                                      ap-east-1: 600
+                                                      per second
+
+                                                      ap-northeast-1:
+                                                      1,200 per second
+
+                                                      ap-northeast-2:
+                                                      600 per second
+
+                                                      ap-south-1: 600
+                                                      per second
+
+                                                      ap-southeast-1:
+                                                      1,200 per second
+
+                                                      ap-southeast-2:
+                                                      1,200 per second
+
+                                                      ca-central-1: 600
+                                                      per second
+
+                                                      eu-central-1:
+                                                      2,400 per second
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 1760
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                  Default                   Adjustabl Description
+                                                                                 e
+
+                                                       eu-north-1: 600
+                                                       per second
+
+                                                       eu-south-2: 2,400
+                                                       per second
+
+                                                       eu-west-1: 10,000
+                                                       per second
+
+                                                       eu-west-2: 1,200
+                                                       per second
+
+                                                       eu-west-3: 600
+                                                       per second
+
+                                                       sa-east-1: 600 per
+                                                       second
+
+                                                       Each of the
+                                                       other supported
+                                                       Regions: 400 per
+                                                       second
+
+ Rate of invocations per API destination               Each supported            Yes      The maximum number of
+                                                       Region: 300 per                    invocations per second
+                                                       second                             to send to each API
+                                                                                          destination endpoint per
+                                                                                          account per Region. Once
+                                                                                          the quota is met, future
+                                                                                          invocations to that API
+                                                                                          endpoint are throttled.
+                                                                                          The invocations will still
+                                                                                          occur, but are delayed.
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                Version 1.0 1761
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Targets per rule                                    Each supported            No       Maximum number of
+                                                     Region: 5                          targets that can be
+                                                                                        associated with a rule
+
+ Throttle limit in transactions per                  Each supported            No       Maximum number of
+ second for control plane APIs                       Region: 50 per                     requests per second
+                                                     second                             for EventBridge control
+                                                                                        plane API operations.
+                                                                                        Additional requests are
+                                                                                        throttled.
+
+ UpdateEndpoint throttle limit in                    Each supported            No       The maximum number
+ transactions per second                             Region: 5 per                      of requests per second
+                                                     second                             for UpdateEndpoint API.
+                                                                                        Additional requests are
+                                                                                        throttled.
+
+ [EventsV2] Combined ingestion                       Each supported            No       The maximum event
+ throughput and count per Event Group                Region: 1,500 per                  throughput per Event
+ per second                                          second                             Group per Second.
+                                                                                        Counted as the sum
+                                                                                        of (number of events)
+                                                                                        + (total size of those
+                                                                                        events in KB) delivered
+                                                                                        to a given event group
+                                                                                        within any one-second
+                                                                                        window.
+
+ [EventsV2] Event Buses                              Each supported            Yes      The maximum number of
+                                                     Region: 5                          V2 Event Buses owned by
+                                                                                        this account per Region.
+                                                                                        Does not include buses
+                                                                                        shared with this account.
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1762

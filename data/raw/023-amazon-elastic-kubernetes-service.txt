@@ -1,0 +1,621 @@
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Fargate Spot vCPU resource count                    Each supported           Yes      The number of Fargate
+                                                     Region: 6                         vCPUs running concurren
+                                                                                       tly as Fargate Spot in this
+                                                                                       account in the current
+                                                                                       Region.
+
+
+
+
+      Note
+      The default values are the initial quotas set by AWS, which are separate from the actual
+      applied quota value and maximum possible service quota. For more information, see
+      Terminology in Service Quotas in the Service Quotas User Guide.
+
+
+
+
+      Note
+      Fargate additionally enforces Amazon ECS tasks and Amazon EKS pods launch rate limits.
+      For more information, see AWS Fargate throttling quotas in the Amazon ECS Developer
+      Guide.
+
+
+Amazon Elastic Kubernetes Service endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+
+
+
+
+
+
+Amazon EKS                                                                                                Version 1.0 1637
+AWS General Reference                                                                                Reference guide
+Service endpoints
+
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ US East       us-east-2      eks.us-east-2.amazonaws.com                              HTTPS
+ (Ohio)
+                              fips.eks.us-east-2.amazonaws.com                          HTTPS
+
+ US            us-east-1      eks.us-east-1.amazonaws.com                              HTTPS
+ East (N.
+ Virginia)                    fips.eks.us-east-1.amazonaws.com                          HTTPS
+
+
+ US            us-            eks.us-west-1.amazonaws.com                              HTTPS
+ West (N.      west-1
+ Californi                    fips.eks.us-west-1.amazonaws.com                          HTTPS
+
+ a)
+
+ US West       us-            eks.us-west-2.amazonaws.com                              HTTPS
+ (Oregon)      west-2
+                              fips.eks.us-west-2.amazonaws.com                          HTTPS
+
+ Africa        af-south-      eks.af-south-1.amazonaws.com                             HTTPS
+ (Cape         1
+ Town)
+
+ Asia          ap-            eks.ap-east-1.amazonaws.com                              HTTPS
+ Pacific        east-1
+ (Hong
+ Kong)
+
+ Asia          ap-            eks.ap-south-2.amazonaws.com                             HTTPS
+ Pacific        south-2
+ (Hyderaba
+ d)
+
+ Asia          ap-            eks.ap-southeast-3.amazonaws.com                         HTTPS
+ Pacific        southe
+ (Jakarta)     ast-3
+
+
+
+Service endpoints                                                                                    Version 1.0 1638
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           eks.ap-southeast-5.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Malaysia      ast-5
+ )
+
+ Asia           ap-           eks.ap-southeast-4.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Melbourn      ast-4
+ e)
+
+ Asia           ap-           eks.ap-south-1.amazonaws.com                               HTTPS
+ Pacific         south-1
+ (Mumbai)
+
+ Asia           ap-           eks.ap-southeast-6.amazonaws.com                           HTTPS
+ Pacific         southe
+ (New           ast-6
+ Zealand)
+
+ Asia           ap-           eks.ap-northeast-3.amazonaws.com                           HTTPS
+ Pacific         northe
+ (Osaka)        ast-3
+
+ Asia           ap-           eks.ap-northeast-2.amazonaws.com                           HTTPS
+ Pacific         northe
+ (Seoul)        ast-2
+
+ Asia           ap-           eks.ap-southeast-1.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Singapor      ast-1
+ e)
+
+ Asia           ap-           eks.ap-southeast-2.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Sydney)       ast-2
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1639
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           eks.ap-east-2.amazonaws.com                               HTTPS
+ Pacific         east-2
+ (Taipei)
+
+ Asia           ap-           eks.ap-southeast-7.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Thailand      ast-7
+ )
+
+ Asia           ap-           eks.ap-northeast-1.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1
+
+ Canada         ca-centra     eks.ca-central-1.amazonaws.com                            HTTPS
+ (Central)      l-1
+
+ Canada         ca-           eks.ca-west-1.amazonaws.com                               HTTPS
+ West           west-1
+ (Calgary)
+
+ Europe         eu-           eks.eu-central-1.amazonaws.com                            HTTPS
+ (Frankfur      central-1
+ t)
+
+ Europe         eu-           eks.eu-west-1.amazonaws.com                               HTTPS
+ (Ireland)      west-1
+
+ Europe         eu-           eks.eu-west-2.amazonaws.com                               HTTPS
+ (London)       west-2
+
+ Europe         eu-           eks.eu-south-1.amazonaws.com                              HTTPS
+ (Milan)        south-1
+
+ Europe         eu-           eks.eu-west-3.amazonaws.com                               HTTPS
+ (Paris)        west-3
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1640
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           eks.eu-south-2.amazonaws.com                              HTTPS
+ (Spain)        south-2
+
+ Europe         eu-           eks.eu-north-1.amazonaws.com                              HTTPS
+ (Stockhol      north-1
+ m)
+
+ Europe         eu-           eks.eu-central-2.amazonaws.com                            HTTPS
+ (Zurich)       central-2
+
+ Israel         il-centra     eks.il-central-1.amazonaws.com                            HTTPS
+ (Tel Aviv)     l-1
+
+ Mexico         mx-           eks.mx-central-1.amazonaws.com                            HTTPS
+ (Central)      central-1
+
+ Middle         me-           eks.me-south-1.amazonaws.com                              HTTPS
+ East           south-1
+ (Bahrain)
+
+ Middle         me-           eks.me-central-1.amazonaws.com                            HTTPS
+ East           central-1
+ (UAE)
+
+ South          sa-east-1     eks.sa-east-1.amazonaws.com                               HTTPS
+ America
+ (São
+ Paulo)
+
+ AWS            us-gov-       eks.us-gov-east-1.amazonaws.com                           HTTPS
+ GovCloud       east-1
+ (US-East)
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1641
+AWS General Reference                                                                                     Reference guide
+
+ Region         Region         Endpoint                                                    Protocol
+ Name
+
+ AWS            us-gov-        eks.us-gov-west-1.amazonaws.com                             HTTPS
+ GovCloud       west-1
+ (US-
+ West)
+
+
+
+Additionally, the EKS API has dual-stack endpoints. The dual-stack endpoint was introduced in
+August 2024. To use the dual-stack endpoints with the AWS CLI, see the Dual-stack and FIPS
+endpoints configuration in the AWS SDKs and Tools Reference Guide. The following lists the new
+endpoints:
+
+EKS API public endpoint
+
+   eks.region.api.aws
+IRSA OIDC Issuer URLs
+
+   oidc-eks.region.api.aws
+
+
+The following endpoint provides the Amazon EKS Auth API. The EKS Pod Identity Agent on your
+nodes connects to this endpoint to get the credentials for each pod.
+
+
+ Region         Region         Endpoint                                                    Protocol
+ Name
+
+ US East        us-east-2      eks-auth.us-east-2.api.aws                                  HTTPS
+ (Ohio)
+
+ US             us-east-1      eks-auth.us-east-1.api.aws                                  HTTPS
+ East (N.
+ Virginia)
+
+ US             us-            eks-auth.us-west-1.api.aws                                  HTTPS
+ West (N.       west-1
+ Californi
+ a)
+
+
+
+Service endpoints                                                                                        Version 1.0 1642
+AWS General Reference                                                                                      Reference guide
+
+ Region         Region         Endpoint                                                    Protocol
+ Name
+
+ US West        us-            eks-auth.us-west-2.api.aws                                  HTTPS
+ (Oregon)       west-2
+
+ Africa         af-south-      eks-auth.af-south-1.api.aws                                 HTTPS
+ (Cape          1
+ Town)
+
+ Asia           ap-            eks-auth.ap-east-1.api.aws                                  HTTPS
+ Pacific         east-1
+ (Hong
+ Kong)
+
+ Asia           ap-            eks-auth.ap-south-2.api.aws                                 HTTPS
+ Pacific         south-2
+ (Hyderaba
+ d)
+
+ Asia           ap-            eks-auth.ap-southeast-3.api.aws                             HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3
+
+ Asia           ap-            eks-auth.ap-southeast-5.api.aws                             HTTPS
+ Pacific         southe
+ (Malaysia      ast-5
+ )
+
+ Asia           ap-            eks-auth.ap-southeast-4.api.aws                             HTTPS
+ Pacific         southe
+ (Melbourn      ast-4
+ e)
+
+ Asia           ap-            eks-auth.ap-south-1.api.aws                                 HTTPS
+ Pacific         south-1
+ (Mumbai)
+
+
+
+
+
+
+
+Service endpoints                                                                                         Version 1.0 1643
+AWS General Reference                                                                                      Reference guide
+
+ Region         Region         Endpoint                                                     Protocol
+ Name
+
+ Asia           ap-            eks-auth.ap-southeast-6.api.aws                              HTTPS
+ Pacific         southe
+ (New           ast-6
+ Zealand)
+
+ Asia           ap-            eks-auth.ap-northeast-3.api.aws                              HTTPS
+ Pacific         northe
+ (Osaka)        ast-3
+
+ Asia           ap-            eks-auth.ap-northeast-2.api.aws                              HTTPS
+ Pacific         northe
+ (Seoul)        ast-2
+
+ Asia           ap-            eks-auth.ap-southeast-1.api.aws                              HTTPS
+ Pacific         southe
+ (Singapor      ast-1
+ e)
+
+ Asia           ap-            eks-auth.ap-southeast-2.api.aws                              HTTPS
+ Pacific         southe
+ (Sydney)       ast-2
+
+ Asia           ap-            eks-auth.ap-east-2.api.aws                                   HTTPS
+ Pacific         east-2
+ (Taipei)
+
+ Asia           ap-            eks-auth.ap-southeast-7.api.aws                              HTTPS
+ Pacific         southe
+ (Thailand      ast-7
+ )
+
+ Asia           ap-            eks-auth.ap-northeast-1.api.aws                              HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1
+
+
+
+
+
+
+
+Service endpoints                                                                                          Version 1.0 1644
+AWS General Reference                                                                                      Reference guide
+
+ Region         Region         Endpoint                                                    Protocol
+ Name
+
+ Canada         ca-centra      eks-auth.ca-central-1.api.aws                               HTTPS
+ (Central)      l-1
+
+ Canada         ca-            eks-auth.ca-west-1.api.aws                                  HTTPS
+ West           west-1
+ (Calgary)
+
+ Europe         eu-            eks-auth.eu-central-1.api.aws                               HTTPS
+ (Frankfur      central-1
+ t)
+
+ Europe         eu-            eks-auth.eu-west-1.api.aws                                  HTTPS
+ (Ireland)      west-1
+
+ Europe         eu-            eks-auth.eu-west-2.api.aws                                  HTTPS
+ (London)       west-2
+
+ Europe         eu-            eks-auth.eu-south-1.api.aws                                 HTTPS
+ (Milan)        south-1
+
+ Europe         eu-            eks-auth.eu-west-3.api.aws                                  HTTPS
+ (Paris)        west-3
+
+ Europe         eu-            eks-auth.eu-south-2.api.aws                                 HTTPS
+ (Spain)        south-2
+
+ Europe         eu-            eks-auth.eu-north-1.api.aws                                 HTTPS
+ (Stockhol      north-1
+ m)
+
+ Europe         eu-            eks-auth.eu-central-2.api.aws                               HTTPS
+ (Zurich)       central-2
+
+ Israel         il-centra      eks-auth.il-central-1.api.aws                               HTTPS
+ (Tel Aviv)     l-1
+
+
+
+
+
+
+
+Service endpoints                                                                                         Version 1.0 1645
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ Mexico         mx-            eks-auth.mx-central-1.api.aws                             HTTPS
+ (Central)      central-1
+
+ Middle         me-            eks-auth.me-south-1.api.aws                               HTTPS
+ East           south-1
+ (Bahrain)
+
+ Middle         me-            eks-auth.me-central-1.api.aws                             HTTPS
+ East           central-1
+ (UAE)
+
+ South          sa-east-1      eks-auth.sa-east-1.api.aws                                HTTPS
+ America
+ (São
+ Paulo)
+
+ AWS            us-gov-        eks-auth.us-gov-east-1.api.aws                            HTTPS
+ GovCloud       east-1
+ (US-East)
+
+ AWS            us-gov-        eks-auth.us-gov-west-1.api.aws                            HTTPS
+ GovCloud       west-1
+ (US-
+ West)
+
+
+Service quotas
+
+
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Access entries per cluster                         Each supported           No      The maximum number of
+                                                    Region: 3,000                    access entries per cluster.
+
+
+
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 1646
+AWS General Reference                                                                                     Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Clusters                                            Each supported           Yes      The maximum number
+                                                     Region: 100                       of EKS clusters in this
+                                                                                       account in the current
+                                                                                       Region.
+
+ Control plane security groups per                   Each supported           No       The maximum number
+ cluster                                             Region: 4                         of control plane security
+                                                                                       groups per cluster (these
+                                                                                       are specified when you
+                                                                                       create the cluster).
+
+ EKS Anywhere Enterprise Subscriptions               Each supported           Yes      The maximum number of
+                                                     Region: 10                        EKS Anywhere Enterpris
+                                                                                       e Subscriptions in this
+                                                                                       account in the current
+                                                                                       Region.
+
+ Fargate profiles per cluster                         Each supported           Yes      The maximum number
+                                                     Region: 10                        of Fargate profiles per
+                                                                                       cluster.
+
+ Label pairs per Fargate profile selector             Each supported           Yes      The maximum number
+                                                     Region: 5                         of label pairs per Fargate
+                                                                                       profile selector.
+
+ Managed node groups per cluster                     Each supported           Yes      The maximum number
+                                                     Region: 30                        of managed node groups
+                                                                                       per cluster.
+
+ Nodes per managed node group                        Each supported           Yes      The maximum number of
+                                                     Region: 450                       nodes per managed node
+                                                                                       group.
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1647
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Public endpoint access CIDR ranges per              Each supported            No       The maximum number
+ cluster                                             Region: 40                         of public endpoint access
+                                                                                        CIDR ranges per cluster
+                                                                                        (these are specified when
+                                                                                        you create or update the
+                                                                                        cluster).
+
+ Registered clusters                                 Each supported            Yes      The maximum number of
+                                                     Region: 10                         registered clusters in this
+                                                                                        account in the current
+                                                                                        Region.
+
+ Remote node networks per cluster                    Each supported            Yes      The maximum number
+                                                     Region: 15                         of remote node networks
+                                                                                        per cluster.
+
+ Remote pod networks per cluster                     Each supported            Yes      The maximum number of
+                                                     Region: 15                         remote pod networks per
+                                                                                        cluster.
+
+ Selectors per Fargate profile                        Each supported            Yes      The maximum number
+                                                     Region: 5                          of selectors per Fargate
+                                                                                        profile.
+
+
+
+
+      Note
+      The default values are the initial quotas set by AWS. These default values are separate
+      from the actual applied quota values and maximum possible service quotas. For more
+      information, see Terminology in Service Quotas in the Service Quotas User Guide.
+
+
+
+These service quotas are listed under  Amazon Elastic Kubernetes Service (Amazon EKS)  in the
+Service Quotas console. To request a quota increase for values that are shown as adjustable, see
+Requesting a quota increase in the Service Quotas User Guide.
+
+
+
+Service quotas                                                                                             Version 1.0 1648
+AWS General Reference                                                                                        Reference guide
+AWS Fargate service quotas
+
+The AWS Fargate service in the Service Quotas console lists several service quotas. The following
+table only describes the quota that is applicable to Amazon EKS.
+
+New AWS accounts might have lower initial quotas that can increase over time. Fargate constantly
+monitors the account usage within each AWS Region, and then automatically increases the quotas
+based on the usage. You can also request a quota increase for values that are shown as adjustable.
+For more information, see Requesting a quota increase in the Service Quotas User Guide.
+
+
+ Name                           Default                        Adjustable                    Description
+
+ Fargate On-Demand              6                              Yes                           The number of
+ vCPU resource count                                                                         Fargate vCPUs that
+                                                                                             can run concurren
+                                                                                             tly as Fargate On-
+                                                                                             Demand in this
+                                                                                             account in the current
+                                                                                             Region.
+
+
+
+
+      Note
+      The default values are the initial quotas set by AWS. These default values are separate
+      from the actual applied quota values and maximum possible service quotas. For more
+      information, see Terminology in Service Quotas in the Service Quotas User Guide.
+
+
+
+
+      Note
+      Fargate additionally enforces Amazon ECS tasks and Amazon EKS pods launch rate quotas.
+      For more information, see AWS Fargate throttling quotas in the Amazon Elastic Container
+      Service User Guide for AWS Fargate.
+
+
+
+
+
+
+
+
+
+
+
+
+AWS Fargate service quotas                                                                                  Version 1.0 1649

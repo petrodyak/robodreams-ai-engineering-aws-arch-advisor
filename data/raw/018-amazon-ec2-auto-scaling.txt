@@ -1,0 +1,633 @@
+AWS General Reference                                                                                   Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+                                                                                     dowsGuide/win-ami-
+                                                                                     config-fast-launch.html
+
+
+
+
+VM Import/Export
+
+The following quotas are for VM Import/Export.
+
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Concurrent task limit for ImportImage,             Each supported           Yes     The maximum number
+ ImportSnapshot, and ExportImage                    Region: 20                       of concurrent tasks for a
+                                                                                     given account initiated
+                                                                                     by the following VM
+                                                                                     Import/Export APIs:
+                                                                                     ImportImage, ImportSna
+                                                                                     pshot, and ExportImage.
+
+ Concurrent task limit for ImportIns                Each supported           Yes     The maximum number
+ tance, ImportVolume, and CreateIns                 Region: 5                        of concurrent tasks
+ tanceExportTask                                                                     for a given account
+                                                                                     initiated by the following
+                                                                                     VM Import/Export
+                                                                                     APIs: ImportInstance,
+                                                                                     ImportVolume, and
+                                                                                     CreateInstanceExpo
+                                                                                     rtTask.
+
+
+Amazon EC2 Auto Scaling endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+
+
+
+Amazon EC2 Auto Scaling                                                                                 Version 1.0 1567
+AWS General Reference                                                                                     Reference guide
+
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ US East        us-east-2      autoscaling.us-east-2.amazonaws.com                        HTTP
+ (Ohio)                                                                                   and
+                               autoscaling-fips.us-east-2.api.aws                          HTTPS
+
+                               autoscaling-fips.us-east-2.amazonaws.com                    HTTPS
+
+                               autoscaling.us-east-2.api.aws                              HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ US             us-east-1      autoscaling.us-east-1.amazonaws.com                        HTTP
+ East (N.                                                                                 and
+ Virginia)                     autoscaling-fips.us-east-1.api.aws                          HTTPS
+
+                               autoscaling-fips.us-east-1.amazonaws.com                    HTTPS
+
+                               autoscaling.us-east-1.api.aws                              HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ US             us-            autoscaling.us-west-1.amazonaws.com                        HTTP
+ West (N.       west-1                                                                    and
+                               autoscaling-fips.us-west-1.api.aws                          HTTPS
+
+
+
+Service endpoints                                                                                        Version 1.0 1568
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Californi                    autoscaling-fips.us-west-1.amazonaws.com                   HTTPS
+ a)
+                              autoscaling.us-west-1.api.aws                             HTTPS
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+
+ US West        us-           autoscaling.us-west-2.amazonaws.com                       HTTP
+ (Oregon)       west-2                                                                  and
+                              autoscaling-fips.us-west-2.api.aws                         HTTPS
+
+                              autoscaling-fips.us-west-2.amazonaws.com                   HTTPS
+
+                              autoscaling.us-west-2.api.aws                             HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Africa         af-south-     autoscaling.af-south-1.amazonaws.com                      HTTP
+ (Cape          1                                                                       and
+ Town)                        autoscaling.af-south-1.api.aws                            HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Asia           ap-           autoscaling.ap-east-1.amazonaws.com                       HTTP
+ Pacific         east-1                                                                  and
+ (Hong                        autoscaling.ap-east-1.api.aws                             HTTPS
+
+ Kong)
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1569
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-            autoscaling.ap-south-2.amazonaws.com                      HTTP
+ Pacific         south-2                                                                  and
+ (Hyderaba                     autoscaling.ap-south-2.api.aws                            HTTPS
+
+ d)
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-            autoscaling.ap-southeast-3.amazonaws.com                  HTTP
+ Pacific         southe                                                                   and
+ (Jakarta)      ast-3          autoscaling.ap-southeast-3.api.aws                        HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-            autoscaling.ap-southeast-5.amazonaws.com                  HTTP
+ Pacific         southe                                                                   and
+ (Malaysia      ast-5          autoscaling.ap-southeast-5.api.aws                        HTTPS
+
+ )
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-            autoscaling.ap-southeast-4.amazonaws.com                  HTTP
+ Pacific         southe                                                                   and
+ (Melbourn      ast-4          autoscaling.ap-southeast-4.api.aws                        HTTPS
+
+ e)
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 1570
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           autoscaling.ap-south-1.amazonaws.com                       HTTP
+ Pacific         south-1                                                                  and
+ (Mumbai)                     autoscaling.ap-south-1.api.aws                             HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           autoscaling.ap-southeast-6.amazonaws.com                   HTTP
+ Pacific         southe                                                                   and
+ (New           ast-6         autoscaling.ap-southeast-6.api.aws                         HTTPS
+
+ Zealand)
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           autoscaling.ap-northeast-3.amazonaws.com                   HTTP
+ Pacific         northe                                                                   and
+ (Osaka)        ast-3         autoscaling.ap-northeast-3.api.aws                         HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           autoscaling.ap-northeast-2.amazonaws.com                   HTTP
+ Pacific         northe                                                                   and
+ (Seoul)        ast-2         autoscaling.ap-northeast-2.api.aws                         HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1571
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-            autoscaling.ap-southeast-1.amazonaws.com                   HTTP
+ Pacific         southe                                                                    and
+ (Singapor      ast-1          autoscaling.ap-southeast-1.api.aws                         HTTPS
+
+ e)
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Asia           ap-            autoscaling.ap-southeast-2.amazonaws.com                   HTTP
+ Pacific         southe                                                                    and
+ (Sydney)       ast-2          autoscaling.ap-southeast-2.api.aws                         HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Asia           ap-            autoscaling.ap-east-2.amazonaws.com                        HTTP
+ Pacific         east-2                                                                    and
+ (Taipei)                      autoscaling.ap-east-2.api.aws                              HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Asia           ap-            autoscaling.ap-southeast-7.amazonaws.com                   HTTP
+ Pacific         southe                                                                    and
+ (Thailand      ast-7          autoscaling.ap-southeast-7.api.aws                         HTTPS
+
+ )
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 1572
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           autoscaling.ap-northeast-1.amazonaws.com                   HTTP
+ Pacific         northe                                                                   and
+ (Tokyo)        ast-1         autoscaling.ap-northeast-1.api.aws                         HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Canada         ca-centra     autoscaling.ca-central-1.amazonaws.com                     HTTP
+ (Central)      l-1                                                                      and
+                              autoscaling-fips.ca-central-1.api.aws                       HTTPS
+
+                              autoscaling-fips.ca-central-1.amazonaws.com                 HTTPS
+
+                              autoscaling.ca-central-1.api.aws                           HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Canada         ca-           autoscaling.ca-west-1.amazonaws.com                        HTTP
+ West           west-1                                                                   and
+ (Calgary)                    autoscaling-fips.ca-west-1.api.aws                          HTTPS
+
+                              autoscaling-fips.ca-west-1.amazonaws.com                    HTTPS
+
+                              autoscaling.ca-west-1.api.aws                              HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1573
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Europe         eu-           autoscaling.eu-central-1.amazonaws.com                     HTTP
+ (Frankfur      central-1                                                                and
+ t)                           autoscaling.eu-central-1.api.aws                           HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Europe         eu-           autoscaling.eu-west-1.amazonaws.com                        HTTP
+ (Ireland)      west-1                                                                   and
+                              autoscaling.eu-west-1.api.aws                              HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Europe         eu-           autoscaling.eu-west-2.amazonaws.com                        HTTP
+ (London)       west-2                                                                   and
+                              autoscaling.eu-west-2.api.aws                              HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Europe         eu-           autoscaling.eu-south-1.amazonaws.com                       HTTP
+ (Milan)        south-1                                                                  and
+                              autoscaling.eu-south-1.api.aws                             HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1574
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Europe         eu-           autoscaling.eu-west-3.amazonaws.com                        HTTP
+ (Paris)        west-3                                                                   and
+                              autoscaling.eu-west-3.api.aws                              HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Europe         eu-           autoscaling.eu-south-2.amazonaws.com                       HTTP
+ (Spain)        south-2                                                                  and
+                              autoscaling.eu-south-2.api.aws                             HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Europe         eu-           autoscaling.eu-north-1.amazonaws.com                       HTTP
+ (Stockhol      north-1                                                                  and
+ m)                           autoscaling.eu-north-1.api.aws                             HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Europe         eu-           autoscaling.eu-central-2.amazonaws.com                     HTTP
+ (Zurich)       central-2                                                                and
+                              autoscaling.eu-central-2.api.aws                           HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1575
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Israel         il-centra      autoscaling.il-central-1.amazonaws.com                     HTTP
+ (Tel Aviv)     l-1                                                                       and
+                               autoscaling.il-central-1.api.aws                           HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Mexico         mx-            autoscaling.mx-central-1.amazonaws.com                     HTTP
+ (Central)      central-1                                                                 and
+                               autoscaling.mx-central-1.api.aws                           HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Middle         me-            autoscaling.me-south-1.amazonaws.com                       HTTP
+ East           south-1                                                                   and
+ (Bahrain)                     autoscaling.me-south-1.api.aws                             HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Middle         me-            autoscaling.me-central-1.amazonaws.com                     HTTP
+ East           central-1                                                                 and
+ (UAE)                         autoscaling.me-central-1.api.aws                           HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 1576
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ South          sa-east-1     autoscaling.sa-east-1.amazonaws.com                       HTTP
+ America                                                                                and
+ (São                         autoscaling.sa-east-1.api.aws                             HTTPS
+
+ Paulo)
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ AWS            us-gov-       autoscaling.us-gov-east-1.amazonaws.com                   HTTP
+ GovCloud       east-1                                                                  and
+ (US-East)                    autoscaling.us-gov-east-1.api.aws                         HTTPS
+
+
+                                                                                        HTTPS
+
+ AWS            us-gov-       autoscaling.us-gov-west-1.amazonaws.com                   HTTP
+ GovCloud       west-1                                                                  and
+ (US-                         autoscaling.us-gov-west-1.api.aws                         HTTPS
+
+ West)
+                                                                                        HTTPS
+
+
+
+If you specify the general endpoint (autoscaling.amazonaws.com), Amazon EC2 Auto Scaling
+directs your request to the endpoint for us-east-1.
+
+Service quotas
+
+
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Auto Scaling groups per region                    Each supported           Yes     The maximum number
+                                                   Region: 500                      of Auto Scaling groups
+                                                                                    allowed for your AWS
+                                                                                    account
+
+
+
+
+
+
+
+
+Service quotas                                                                                         Version 1.0 1577
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Classic Load Balancers per Auto Scaling            Each supported           No       The maximum number
+ group                                              Region: 50                        of Classic Load Balancers
+                                                                                      per Auto Scaling group
+
+ Launch configurations per region                    Each supported           Yes      The maximum number
+                                                    Region: 200                       of launch configurations
+                                                                                      allowed for your AWS
+                                                                                      account
+
+ Lifecycle hooks per Auto Scaling group             Each supported           No       The maximum number of
+                                                    Region: 50                        lifecycle hooks per Auto
+                                                                                      Scaling group
+
+ SNS topics per Auto Scaling group                  Each supported           No       The maximum number
+                                                    Region: 10                        of SNS topics per Auto
+                                                                                      Scaling group
+
+ Scaling policies per Auto Scaling group            Each supported           No       The maximum number of
+                                                    Region: 50                        scaling policies per Auto
+                                                                                      Scaling group
+
+ Scheduled actions per Auto Scaling                 Each supported           No       The maximum number
+ group                                              Region: 125                       of scheduled actions per
+                                                                                      Auto Scaling group
+
+ Step adjustments per step scaling                  Each supported           No       The maximum number
+ policy                                             Region: 20                        of step adjustments per
+                                                                                      step scaling policy
+
+ Target groups per Auto Scaling group               Each supported           No       The maximum number of
+                                                    Region: 50                        target groups per Auto
+                                                                                      Scaling group
+
+
+
+For more information, see Quotas for Amazon EC2 Auto Scaling in the Amazon EC2 Auto Scaling
+User Guide.
+
+
+
+
+Service quotas                                                                                           Version 1.0 1578

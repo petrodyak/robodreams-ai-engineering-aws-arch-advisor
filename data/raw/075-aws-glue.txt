@@ -1,0 +1,613 @@
+AWS General Reference                                                                                   Reference guide
+AWS Glue endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ US East        us-east-2     glue.us-east-2.amazonaws.com                               HTTPS
+ (Ohio)
+                              glue-fips.us-east-2.api.aws                                 HTTPS
+
+                              glue-fips.us-east-2.amazonaws.com                           HTTPS
+
+                              glue.us-east-2.api.aws                                     HTTPS
+
+ US             us-east-1     glue.us-east-1.amazonaws.com                               HTTPS
+ East (N.
+ Virginia)                    glue-fips.us-east-1.api.aws                                 HTTPS
+
+                              glue-fips.us-east-1.amazonaws.com                           HTTPS
+
+                              glue.us-east-1.api.aws                                     HTTPS
+
+ US             us-           glue.us-west-1.amazonaws.com                               HTTPS
+ West (N.       west-1
+ Californi                    glue-fips.us-west-1.api.aws                                 HTTPS
+
+ a)                           glue-fips.us-west-1.amazonaws.com                           HTTPS
+
+
+                              glue.us-west-1.api.aws                                     HTTPS
+
+
+
+AWS Glue                                                                                               Version 1.0 1907
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US West        us-           glue.us-west-2.amazonaws.com                              HTTPS
+ (Oregon)       west-2
+                              glue-fips.us-west-2.api.aws                                HTTPS
+
+                              glue-fips.us-west-2.amazonaws.com                          HTTPS
+
+                              glue.us-west-2.api.aws                                    HTTPS
+
+ Africa         af-south-     glue.af-south-1.amazonaws.com                             HTTPS
+ (Cape          1
+ Town)                        glue.af-south-1.api.aws                                   HTTPS
+
+
+ Asia           ap-           glue.ap-east-1.amazonaws.com                              HTTPS
+ Pacific         east-1
+ (Hong                        glue.ap-east-1.api.aws                                    HTTPS
+
+ Kong)
+
+ Asia           ap-           glue.ap-south-2.amazonaws.com                             HTTPS
+ Pacific         south-2
+ (Hyderaba                    glue.ap-south-2.api.aws                                   HTTPS
+
+ d)
+
+ Asia           ap-           glue.ap-southeast-3.amazonaws.com                         HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3         glue.ap-southeast-3.api.aws                               HTTPS
+
+
+ Asia           ap-           glue.ap-southeast-5.amazonaws.com                         HTTPS
+ Pacific         southe
+ (Malaysia      ast-5         glue.ap-southeast-5.api.aws                               HTTPS
+
+ )
+
+ Asia           ap-           glue.ap-southeast-4.amazonaws.com                         HTTPS
+ Pacific         southe
+ (Melbourn      ast-4         glue.ap-southeast-4.api.aws                               HTTPS
+
+ e)
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1908
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           glue.ap-south-1.amazonaws.com                             HTTPS
+ Pacific         south-1
+ (Mumbai)                     glue.ap-south-1.api.aws                                   HTTPS
+
+
+ Asia           ap-           glue.ap-southeast-6.amazonaws.com                         HTTPS
+ Pacific         southe
+ (New           ast-6         glue.ap-southeast-6.api.aws                               HTTPS
+
+ Zealand)
+
+ Asia           ap-           glue.ap-northeast-3.amazonaws.com                         HTTPS
+ Pacific         northe
+ (Osaka)        ast-3         glue.ap-northeast-3.api.aws                               HTTPS
+
+
+ Asia           ap-           glue.ap-northeast-2.amazonaws.com                         HTTPS
+ Pacific         northe
+ (Seoul)        ast-2         glue.ap-northeast-2.api.aws                               HTTPS
+
+
+ Asia           ap-           glue.ap-southeast-1.amazonaws.com                         HTTPS
+ Pacific         southe
+ (Singapor      ast-1         glue.ap-southeast-1.api.aws                               HTTPS
+
+ e)
+
+ Asia           ap-           glue.ap-southeast-2.amazonaws.com                         HTTPS
+ Pacific         southe
+ (Sydney)       ast-2         glue.ap-southeast-2.api.aws                               HTTPS
+
+
+ Asia           ap-           glue.ap-east-2.amazonaws.com                              HTTPS
+ Pacific         east-2
+ (Taipei)                     glue.ap-east-2.api.aws                                    HTTPS
+
+
+ Asia           ap-           glue.ap-southeast-7.amazonaws.com                         HTTPS
+ Pacific         southe
+ (Thailand      ast-7         glue.ap-southeast-7.api.aws                               HTTPS
+
+ )
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1909
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                 Protocol
+ Name
+
+ Asia           ap-           glue.ap-northeast-1.amazonaws.com                        HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1         glue.ap-northeast-1.api.aws                              HTTPS
+
+
+ Canada         ca-centra     glue.ca-central-1.amazonaws.com                          HTTPS
+ (Central)      l-1
+                              glue-fips.ca-central-1.api.aws                            HTTPS
+
+                              glue-fips.ca-central-1.amazonaws.com                      HTTPS
+
+                              glue.ca-central-1.api.aws                                HTTPS
+
+ Canada         ca-           glue.ca-west-1.amazonaws.com                             HTTPS
+ West           west-1
+ (Calgary)                    glue-fips.ca-west-1.api.aws                               HTTPS
+
+                              glue-fips.ca-west-1.amazonaws.com                         HTTPS
+
+                              glue.ca-west-1.api.aws                                   HTTPS
+
+ Europe         eu-           glue.eu-central-1.amazonaws.com                          HTTPS
+ (Frankfur      central-1
+ t)                           glue.eu-central-1.api.aws                                HTTPS
+
+
+ Europe         eu-           glue.eu-west-1.amazonaws.com                             HTTPS
+ (Ireland)      west-1
+                              glue.eu-west-1.api.aws                                   HTTPS
+
+ Europe         eu-           glue.eu-west-2.amazonaws.com                             HTTPS
+ (London)       west-2
+                              glue.eu-west-2.api.aws                                   HTTPS
+
+ Europe         eu-           glue.eu-south-1.amazonaws.com                            HTTPS
+ (Milan)        south-1
+                              glue.eu-south-1.api.aws                                  HTTPS
+
+ Europe         eu-           glue.eu-west-3.amazonaws.com                             HTTPS
+ (Paris)        west-3
+                              glue.eu-west-3.api.aws                                   HTTPS
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1910
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           glue.eu-south-2.amazonaws.com                             HTTPS
+ (Spain)        south-2
+                              glue.eu-south-2.api.aws                                   HTTPS
+
+ Europe         eu-           glue.eu-north-1.amazonaws.com                             HTTPS
+ (Stockhol      north-1
+ m)                           glue.eu-north-1.api.aws                                   HTTPS
+
+
+ Europe         eu-           glue.eu-central-2.amazonaws.com                           HTTPS
+ (Zurich)       central-2
+                              glue.eu-central-2.api.aws                                 HTTPS
+
+ Israel         il-centra     glue.il-central-1.amazonaws.com                           HTTPS
+ (Tel Aviv)     l-1
+                              glue.il-central-1.api.aws                                 HTTPS
+
+ Mexico         mx-           glue.mx-central-1.amazonaws.com                           HTTPS
+ (Central)      central-1
+                              glue.mx-central-1.api.aws                                 HTTPS
+
+ Middle         me-           glue.me-south-1.amazonaws.com                             HTTPS
+ East           south-1
+ (Bahrain)                    glue.me-south-1.api.aws                                   HTTPS
+
+
+ Middle         me-           glue.me-central-1.amazonaws.com                           HTTPS
+ East           central-1
+ (UAE)                        glue.me-central-1.api.aws                                 HTTPS
+
+
+ South          sa-east-1     glue.sa-east-1.amazonaws.com                              HTTPS
+ America
+ (São                         glue.sa-east-1.api.aws                                    HTTPS
+
+ Paulo)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1911
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ AWS            us-gov-       glue.us-gov-east-1.amazonaws.com                           HTTPS
+ GovCloud       east-1
+ (US-East)                    glue-fips.us-gov-east-1.api.aws                             HTTPS
+
+                              glue-fips.us-gov-east-1.amazonaws.com                       HTTPS
+
+                              glue.us-gov-east-1.api.aws                                 HTTPS
+
+ AWS            us-gov-       glue.us-gov-west-1.amazonaws.com                           HTTPS
+ GovCloud       west-1
+ (US-                         glue-fips.us-gov-west-1.api.aws                             HTTPS
+
+ West)                        glue-fips.us-gov-west-1.amazonaws.com                       HTTPS
+
+
+                              glue.us-gov-west-1.api.aws                                 HTTPS
+
+
+Service quotas
+
+
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Concurrent compute capacity for                   Each supported           No       The maximum number
+ Ray worker instances in M-DPUs per                Region: 50                        of data processing units
+ account.                                                                            that can be concurren
+                                                                                     tly used by Ray jobs
+                                                                                     or interactive sessions
+                                                                                     in this account. The
+                                                                                     capacity provided by a
+                                                                                     Ray worker instance type
+                                                                                     is measured in memory
+                                                                                     optimized data processin
+                                                                                     g units (M-DPUs).
+
+ Concurrent machine learning task runs             Each supported           Yes      The maximum number
+ per transform                                     Region: 3                         of concurrent task runs
+
+
+
+Service quotas                                                                                         Version 1.0 1912
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+                                                                                      per machine learning
+                                                                                      transform for this
+                                                                                      account.
+
+ Global max tags                                    Each supported            Yes     Catalog: global max tags
+                                                    Region: 10,000
+
+ Global maximum administrators                      Each supported            Yes     Catalog: global
+                                                    Region: 100                       maximum administrators
+
+ Global maximum paths                               Each supported            Yes     Catalog: global
+                                                    Region: 30,000                    maximum paths
+
+ Global s3 path max length                          Each supported            Yes     Catalog: global s3 path
+                                                    Region: 2,000                     max length
+
+ Label file size                                     Each supported            Yes     The maximum file size
+                                                    Region: 10                        of an individual label file
+                                                    Megabytes                         that can be imported.
+
+ Max DPUs per dev endpoint                          Each supported            Yes     The maximum number of
+                                                    Region: 50                        DPUs in your developme
+                                                                                      nt endpoint.
+
+ Max Named Tag Expressions                          Each supported            Yes     The maximum number
+                                                    Region: 25,000                    of named tag expression
+                                                                                      allowed per account
+
+ Max concurrent data quality ruleset                Each supported            Yes     The maximum number of
+ evaluation runs per account                        Region: 50                        concurrent data quality
+                                                                                      ruleset evaluation runs in
+                                                                                      your account.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 1913
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Max concurrent data quality ruleset                Each supported           Yes     The maximum number of
+ recommendation runs per account                    Region: 25                       concurrent data quality
+                                                                                     ruleset recommendation
+                                                                                     runs in your account.
+
+ Max concurrent job runs per account                Each supported           Yes     The maximum number
+                                                    Region: 2,000                    of concurrent job runs in
+                                                                                     your account.
+
+ Max concurrent job runs per job                    Each supported           Yes     The maximum number of
+                                                    Region: 4,000                    concurrent job runs for a
+                                                                                     job.
+
+ Max concurrent observations generatio              Each supported           Yes     The maximum number of
+ n runs per account                                 Region: 10                       concurrent observations
+                                                                                     generation runs
+
+ Max connection per account                         Each supported           Yes     The maximum number
+                                                    Region: 1,000                    of connections in your
+                                                                                     account.
+
+ Max data quality rulesets per account              Each supported           Yes     The maximum number of
+                                                    Region: 1,000,000                data quality rulesets per
+                                                                                     account.
+
+ Max databases per account                          Each supported           Yes     The maximum number
+                                                    Region: 10,000                   of databases in your
+                                                                                     account.
+
+ Max databases per catalog                          Each supported           Yes     The maximum number of
+                                                    Region: 10,000                   databases per catalog.
+
+ Max development endpoint per                       Each supported           Yes     The maximum number of
+ account                                            Region: 25                       development endpoints
+                                                                                     in your account.
+
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 1914
+AWS General Reference                                                                                     Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+ Max functions per account                          Each supported            Yes     The maximum number
+                                                    Region: 100                       of functions in your
+                                                                                      account.
+
+ Max functions per database                         Each supported            Yes     The maximum number of
+                                                    Region: 100                       functions per database.
+
+ Max jobs per account                               Each supported            Yes     The maximum number of
+                                                    Region: 2,000                     jobs in your account.
+
+ Max jobs per trigger                               Each supported            Yes     The maximum number
+                                                    Region: 50                        of jobs that a trigger can
+                                                                                      start.
+
+ Max partitions per account                         Each supported            Yes     The maximum number
+                                                    Region: 20,000,00                 of partitions in your
+                                                    0                                 account.
+
+ Max partitions per table                           Each supported            Yes     The maximum number of
+                                                    Region: 10,000,00                 partitions per table.
+                                                    0
+
+ Max security configurations per                     Each supported            Yes     The maximum number of
+ account                                            Region: 250                       security configurations in
+                                                                                      your account.
+
+ Max spare compute capacity consumed                Each supported            Yes     The maximum spare
+ in data processing units (DPUs) per                Region: 4,000                     compute capacity in data
+ account.                                                                             processing units (DPUs)
+                                                                                      you can use concurrently
+                                                                                      in your account.
+
+ Max table versions per account                     Each supported            Yes     The maximum number
+                                                    Region: 1,000,000                 of table versions in your
+                                                                                      account.
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 1915
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Max table versions per table                        Each supported            Yes     The maximum number of
+                                                     Region: 100,000                   table versions per table.
+
+ Max tables per account                              Each supported            Yes     The maximum number of
+                                                     Region: 1,000,000                 tables in your account.
+
+ Max tables per database                             Each supported            Yes     The maximum number of
+                                                     Region: 200,000                   tables per database.
+
+ Max task DPUs per account                           us-east-1: 1,000          Yes     The maximum compute
+                                                                                       capacity in data
+                                                     us-east-2: 1,000                  processing units (DPUs)
+
+                                                     us-west-2: 1,000                  you can use concurrently
+                                                                                       in your account.
+                                                     ap-northeast-1:
+                                                     1,000
+
+                                                     ap-southeast-2:
+                                                     1,000
+
+                                                     eu-west-1: 1,000
+
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 500
+
+ Max triggers per account                            Each supported            Yes     The maximum number of
+                                                     Region: 1,000                     triggers in your account.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1916
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Maximum number of in-flight                         Each supported           Yes      The maximum number
+ completion requests allowed per                    Region: 10                        of concurrent generativ
+ account                                                                              e AI completion requests
+                                                                                      allowed per account
+                                                                                      in the current Region.
+                                                                                      These requests are used
+                                                                                      for code generation and
+                                                                                      Spark troubleshooting in
+                                                                                      AWS Glue.
+
+ Maximum number of queued job runs                  Each supported           Yes      Orchestration: maximum
+                                                    Region: 1,000                     number of queued job
+                                                                                      runs
+
+ Number of Schema Registries.                       Each supported           No       The maximum number
+                                                    Region: 100                       of Schema Registries
+                                                                                      per AWS Region for this
+                                                                                      account.
+
+ Number of Schema Versions.                         Each supported           No       The maximum number
+                                                    Region: 10,000                    of Schema Versions per
+                                                                                      AWS Region for this
+                                                                                      account.
+
+ Number of column statistics tasks                  Each supported           Yes      The maximum number
+ running concurrently per account                   Region: 50                        of column statistics tasks
+                                                                                      running concurrently in
+                                                                                      your account.
+
+ Number of connection types                         Each supported           Yes      The maximum number
+                                                    Region: 1,000                     of connection types per
+                                                                                      AWS Region for this
+                                                                                      account.
+
+
+
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 1917
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Number of crawlers per account                     Each supported           Yes     The maximum number of
+                                                    Region: 1,000                    crawlers in your account.
+
+ Number of crawlers running concurren               Each supported           Yes     The maximum number
+ tly per account                                    Region: 150                      of crawlers running
+                                                                                     concurrently in your
+                                                                                     account.
+
+ Number of integrations                             Each supported           Yes     The maximum number
+                                                    Region: 40                       of integrations per AWS
+                                                                                     Region for this account.
+
+ Number of machine learning transform               Each supported           Yes     The maximum number
+ s                                                  Region: 100                      of machine learning
+                                                                                     transforms for this
+                                                                                     account.
+
+ Number of metadata key value pairs                 Each supported           No      The maximum number
+ per Schema Version.                                Region: 10                       of Schema Version
+                                                                                     metadata key value pairs
+                                                                                     per Schema Version.
+
+ Number of workflows                                 Each supported           Yes     The maximum number
+                                                    Region: 1,000                    of workflows in your
+                                                                                     account.
+
+ The maximum number of concurrent                   Each supported           Yes     The maximum number of
+ materialized view refresh task runs.               Region: 50                       concurrent materialized
+                                                                                     view refresh task runs.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 1918

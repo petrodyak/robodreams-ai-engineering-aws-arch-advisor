@@ -1,0 +1,1063 @@
+AWS General Reference                                                                                   Reference guide
+AWS Network Security Manager endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ US             us-east-1     network-security-manager.us-east-1.api.aws                 HTTPS
+ East (N.
+ Virginia)                    network-security-manager-fips.us-east-1.api.a               HTTPS
+                              ws
+
+
+Amazon OpenSearch Service endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+OpenSearch Service API
+
+
+
+Network Security Manager                                                                               Version 1.0 2685
+AWS General Reference                                                                                 Reference guide
+
+
+ Region         Region        Endpoint                                                 Protocol
+ Name
+
+ US East        us-east-2     es.us-east-2.amazonaws.com                               HTTPS
+ (Ohio)
+                              es-fips.us-east-2.amazonaws.com                           HTTPS
+
+                              aos.us-east-2.api.aws                                    HTTPS
+
+ US             us-east-1     es.us-east-1.amazonaws.com                               HTTPS
+ East (N.
+ Virginia)                    es-fips.us-east-1.amazonaws.com                           HTTPS
+
+                              aos.us-east-1.api.aws                                    HTTPS
+
+ US             us-           es.us-west-1.amazonaws.com                               HTTPS
+ West (N.       west-1
+ Californi                    es-fips.us-west-1.amazonaws.com                           HTTPS
+
+ a)                           aos.us-west-1.api.aws                                    HTTPS
+
+
+ US West        us-           es.us-west-2.amazonaws.com                               HTTPS
+ (Oregon)       west-2
+                              es-fips.us-west-2.amazonaws.com                           HTTPS
+
+                              aos.us-west-2.api.aws                                    HTTPS
+
+ Africa         af-south-     es.af-south-1.amazonaws.com                              HTTPS
+ (Cape          1
+ Town)                        aos.af-south-1.api.aws                                   HTTPS
+
+
+ Asia           ap-           es.ap-east-1.amazonaws.com                               HTTPS
+ Pacific         east-1
+ (Hong                        aos.ap-east-1.api.aws                                    HTTPS
+
+ Kong)
+
+ Asia           ap-           es.ap-south-2.amazonaws.com                              HTTPS
+ Pacific         south-2
+ (Hyderaba                    aos.ap-south-2.api.aws                                   HTTPS
+
+ d)
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 2686
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           es.ap-southeast-3.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3         aos.ap-southeast-3.api.aws                                HTTPS
+
+
+ Asia           ap-           es.ap-southeast-5.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Malaysia      ast-5         aos.ap-southeast-5.api.aws                                HTTPS
+
+ )
+
+ Asia           ap-           es.ap-southeast-4.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Melbourn      ast-4         aos.ap-southeast-4.api.aws                                HTTPS
+
+ e)
+
+ Asia           ap-           es.ap-south-1.amazonaws.com                               HTTPS
+ Pacific         south-1
+ (Mumbai)                     aos.ap-south-1.api.aws                                    HTTPS
+
+
+ Asia           ap-           es.ap-southeast-6.amazonaws.com                           HTTPS
+ Pacific         southe
+ (New           ast-6         aos.ap-southeast-6.api.aws                                HTTPS
+
+ Zealand)
+
+ Asia           ap-           es.ap-northeast-3.amazonaws.com                           HTTPS
+ Pacific         northe
+ (Osaka)        ast-3         aos.ap-northeast-3.api.aws                                HTTPS
+
+
+ Asia           ap-           es.ap-northeast-2.amazonaws.com                           HTTPS
+ Pacific         northe
+ (Seoul)        ast-2         aos.ap-northeast-2.api.aws                                HTTPS
+
+
+ Asia           ap-           es.ap-southeast-1.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Singapor      ast-1         aos.ap-southeast-1.api.aws                                HTTPS
+
+ e)
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 2687
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           es.ap-southeast-2.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Sydney)       ast-2         aos.ap-southeast-2.api.aws                                HTTPS
+
+
+ Asia           ap-           es.ap-east-2.amazonaws.com                                HTTPS
+ Pacific         east-2
+ (Taipei)                     aos.ap-east-2.api.aws                                     HTTPS
+
+
+ Asia           ap-           es.ap-southeast-7.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Thailand      ast-7         aos.ap-southeast-7.api.aws                                HTTPS
+
+ )
+
+ Asia           ap-           es.ap-northeast-1.amazonaws.com                           HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1         aos.ap-northeast-1.api.aws                                HTTPS
+
+
+ Canada         ca-centra     es.ca-central-1.amazonaws.com                             HTTPS
+ (Central)      l-1
+                              aos.ca-central-1.api.aws                                  HTTPS
+
+ Canada         ca-           es.ca-west-1.amazonaws.com                                HTTPS
+ West           west-1
+ (Calgary)                    aos.ca-west-1.api.aws                                     HTTPS
+
+
+ Europe         eu-           es.eu-central-1.amazonaws.com                             HTTPS
+ (Frankfur      central-1
+ t)                           aos.eu-central-1.api.aws                                  HTTPS
+
+
+ Europe         eu-           es.eu-west-1.amazonaws.com                                HTTPS
+ (Ireland)      west-1
+                              aos.eu-west-1.api.aws                                     HTTPS
+
+ Europe         eu-           es.eu-west-2.amazonaws.com                                HTTPS
+ (London)       west-2
+                              aos.eu-west-2.api.aws                                     HTTPS
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 2688
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           es.eu-south-1.amazonaws.com                               HTTPS
+ (Milan)        south-1
+                              aos.eu-south-1.api.aws                                    HTTPS
+
+ Europe         eu-           es.eu-west-3.amazonaws.com                                HTTPS
+ (Paris)        west-3
+                              aos.eu-west-3.api.aws                                     HTTPS
+
+ Europe         eu-           es.eu-south-2.amazonaws.com                               HTTPS
+ (Spain)        south-2
+                              aos.eu-south-2.api.aws                                    HTTPS
+
+ Europe         eu-           es.eu-north-1.amazonaws.com                               HTTPS
+ (Stockhol      north-1
+ m)                           aos.eu-north-1.api.aws                                    HTTPS
+
+
+ Europe         eu-           es.eu-central-2.amazonaws.com                             HTTPS
+ (Zurich)       central-2
+                              aos.eu-central-2.api.aws                                  HTTPS
+
+ Israel         il-centra     es.il-central-1.amazonaws.com                             HTTPS
+ (Tel Aviv)     l-1
+                              aos.il-central-1.api.aws                                  HTTPS
+
+ Mexico         mx-           es.mx-central-1.amazonaws.com                             HTTPS
+ (Central)      central-1
+                              aos.mx-central-1.api.aws                                  HTTPS
+
+ Middle         me-           es.me-south-1.amazonaws.com                               HTTPS
+ East           south-1
+ (Bahrain)                    aos.me-south-1.api.aws                                    HTTPS
+
+
+ Middle         me-           es.me-central-1.amazonaws.com                             HTTPS
+ East           central-1
+ (UAE)                        aos.me-central-1.api.aws                                  HTTPS
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 2689
+AWS General Reference                                                                                Reference guide
+
+ Region        Region         Endpoint                                                Protocol
+ Name
+
+ South         sa-east-1      es.sa-east-1.amazonaws.com                              HTTPS
+ America
+ (São                         aos.sa-east-1.api.aws                                   HTTPS
+
+ Paulo)
+
+ AWS           us-gov-        es.us-gov-east-1.amazonaws.com                          HTTPS
+ GovCloud      east-1
+ (US-East)                    es-fips.us-gov-east-1.amazonaws.com                      HTTPS
+
+                              aos.us-gov-east-1.api.aws                               HTTPS
+
+ AWS           us-gov-        es.us-gov-west-1.amazonaws.com                          HTTPS
+ GovCloud      west-1
+ (US-                         es-fips.us-gov-west-1.amazonaws.com                      HTTPS
+
+ West)                        aos.us-gov-west-1.api.aws                               HTTPS
+
+
+
+OpenSearch Serverless API
+
+
+ Region        Region         Endpoint                                                Protocol
+ Name
+
+ US East       us-east-2      aoss.us-east-2.amazonaws.com                            HTTPS
+ (Ohio)
+                              dashboards.us-east-2.aoss-fips.amazo                    HTTPS
+                              naws.com
+                                                                                      HTTPS
+                              us-east-2.aoss.amazonaws.com
+                                                                                      HTTPS
+                              dashboards.us-east-2.aoss.amazonaws.com
+                                                                                      HTTPS
+                              us-east-2.aoss-fips.amazonaws.com
+
+ US            us-east-1      aoss.us-east-1.amazonaws.com                            HTTPS
+ East (N.
+ Virginia)                    us-east-1.aoss.amazonaws.com                            HTTPS
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 2690
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+                             dashboards.us-east-1.aoss.amazonaws.com                  HTTPS
+
+                             dashboards.us-east-1.aoss-fips.amazo                     HTTPS
+                             naws.com
+                                                                                      HTTPS
+                             us-east-1.aoss-fips.amazonaws.com
+
+ US            us-           aoss.us-west-1.amazonaws.com                             HTTPS
+ West (N.      west-1
+ Californi                   dashboards.us-west-1.aoss-fips.amazo                     HTTPS
+ a)                          naws.com
+                                                                                      HTTPS
+                             dashboards.us-west-1.aoss.amazonaws.com
+                                                                                      HTTPS
+                             us-west-1.aoss.amazonaws.com
+                                                                                      HTTPS
+                             us-west-1.aoss-fips.amazonaws.com
+
+ US West       us-           aoss.us-west-2.amazonaws.com                             HTTPS
+ (Oregon)      west-2
+                             dashboards.us-west-2.aoss-fips.amazo                     HTTPS
+                             naws.com
+                                                                                      HTTPS
+                             dashboards.us-west-2.aoss.amazonaws.com
+                                                                                      HTTPS
+                             us-west-2.aoss.amazonaws.com
+                                                                                      HTTPS
+                             us-west-2.aoss-fips.amazonaws.com
+
+ Asia          ap-           aoss.ap-east-1.amazonaws.com                             HTTPS
+ Pacific        east-1
+ (Hong                       ap-east-1.aoss.amazonaws.com                             HTTPS
+
+ Kong)                       dashboards.ap-east-1.aoss.amazonaws.com                  HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                  Version 1.0 2691
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-           aoss.ap-south-2.amazonaws.com                            HTTPS
+ Pacific        south-2
+ (Hyderaba                   dashboards.ap-south-2.aoss.amazonaws.com                 HTTPS
+
+ d)                          ap-south-2.aoss.amazonaws.com                            HTTPS
+
+
+ Asia          ap-           aoss.ap-south-1.amazonaws.com                            HTTPS
+ Pacific        south-1
+ (Mumbai)                    dashboards.ap-south-1.aoss.amazonaws.com                 HTTPS
+
+                             ap-south-1.aoss.amazonaws.com                            HTTPS
+
+ Asia          ap-           aoss.ap-northeast-3.amazonaws.com                        HTTPS
+ Pacific        northe
+ (Osaka)       ast-3         ap-northeast-3.aoss.amazonaws.com                        HTTPS
+
+                             dashboards.ap-northeast-3.aoss.amazo                     HTTPS
+                             naws.com
+
+ Asia          ap-           aoss.ap-northeast-2.amazonaws.com                        HTTPS
+ Pacific        northe
+ (Seoul)       ast-2         dashboards.ap-northeast-2.aoss.amazo                     HTTPS
+                             naws.com
+                                                                                      HTTPS
+                             ap-northeast-2.aoss.amazonaws.com
+
+ Asia          ap-           aoss.ap-southeast-1.amazonaws.com                        HTTPS
+ Pacific        southe
+ (Singapor     ast-1         dashboards.ap-southeast-1.aoss.amazo                     HTTPS
+ e)                          naws.com
+                                                                                      HTTPS
+                             ap-southeast-1.aoss.amazonaws.com
+
+ Asia          ap-           aoss.ap-southeast-2.amazonaws.com                        HTTPS
+ Pacific        southe
+ (Sydney)      ast-2         dashboards.ap-southeast-2.aoss.amazo                     HTTPS
+                             naws.com
+                                                                                      HTTPS
+                             ap-southeast-2.aoss.amazonaws.com
+
+
+
+
+Service endpoints                                                                                   Version 1.0 2692
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-           aoss.ap-northeast-1.amazonaws.com                        HTTPS
+ Pacific        northe
+ (Tokyo)       ast-1         dashboards.ap-northeast-1.aoss.amazo                     HTTPS
+                             naws.com
+                                                                                      HTTPS
+                             ap-northeast-1.aoss.amazonaws.com
+
+ Canada        ca-centra     aoss.ca-central-1.amazonaws.com                          HTTPS
+ (Central)     l-1
+                             ca-central-1.aoss-fips.amazonaws.com                      HTTPS
+
+                             dashboards.ca-central-1.aoss-fips.am                      HTTPS
+                             azonaws.com
+                                                                                      HTTPS
+                             dashboards.ca-central-1.aoss.amazonaws.com
+                                                                                      HTTPS
+                             ca-central-1.aoss.amazonaws.com
+
+ Europe        eu-           aoss.eu-central-1.amazonaws.com                          HTTPS
+ (Frankfur     central-1
+ t)                          dashboards.eu-central-1.aoss.amazonaws.com               HTTPS
+
+                             eu-central-1.aoss.amazonaws.com                          HTTPS
+
+ Europe        eu-           aoss.eu-west-1.amazonaws.com                             HTTPS
+ (Ireland)     west-1
+                             eu-west-1.aoss.amazonaws.com                             HTTPS
+
+                             dashboards.eu-west-1.aoss.amazonaws.com                  HTTPS
+
+ Europe        eu-           aoss.eu-west-2.amazonaws.com                             HTTPS
+ (London)      west-2
+                             eu-west-2.aoss.amazonaws.com                             HTTPS
+
+                             dashboards.eu-west-2.aoss.amazonaws.com                  HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 2693
+AWS General Reference                                                                              Reference guide
+
+ Region        Region        Endpoint                                                Protocol
+ Name
+
+ Europe        eu-           aoss.eu-south-1.amazonaws.com                           HTTPS
+ (Milan)       south-1
+                             eu-south-1.aoss.amazonaws.com                           HTTPS
+
+                             dashboards.eu-south-1.aoss.amazonaws.com                HTTPS
+
+ Europe        eu-           aoss.eu-west-3.amazonaws.com                            HTTPS
+ (Paris)       west-3
+                             eu-west-3.aoss.amazonaws.com                            HTTPS
+
+                             dashboards.eu-west-3.aoss.amazonaws.com                 HTTPS
+
+ Europe        eu-           aoss.eu-south-2.amazonaws.com                           HTTPS
+ (Spain)       south-2
+                             dashboards.eu-south-2.aoss.amazonaws.com                HTTPS
+
+                             eu-south-2.aoss.amazonaws.com                           HTTPS
+
+ Europe        eu-           aoss.eu-north-1.amazonaws.com                           HTTPS
+ (Stockhol     north-1
+ m)                          eu-north-1.aoss.amazonaws.com                           HTTPS
+
+                             dashboards.eu-north-1.aoss.amazonaws.com                HTTPS
+
+ Europe        eu-           aoss.eu-central-2.amazonaws.com                         HTTPS
+ (Zurich)      central-2
+                             eu-central-2.aoss.amazonaws.com                         HTTPS
+
+                             dashboards.eu-central-2.aoss.amazonaws.com              HTTPS
+
+ South         sa-east-1     aoss.sa-east-1.amazonaws.com                            HTTPS
+ America
+ (São                        sa-east-1.aoss.amazonaws.com                            HTTPS
+
+ Paulo)                      dashboards.sa-east-1.aoss.amazonaws.com                 HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                  Version 1.0 2694
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ AWS           us-gov-       aoss.us-gov-east-1.amazonaws.com                         HTTPS
+ GovCloud      east-1
+ (US-East)                   us-gov-east-1.aoss-fips.amazonaws.com                     HTTPS
+
+                             dashboards.us-gov-east-1.aoss-fips.a                      HTTPS
+                             mazonaws.com
+                                                                                      HTTPS
+                             us-gov-east-1.aoss.amazonaws.com
+                                                                                      HTTPS
+                             dashboards.us-gov-east-1.aoss.amazon
+                             aws.com
+
+ AWS           us-gov-       aoss.us-gov-west-1.amazonaws.com                         HTTPS
+ GovCloud      west-1
+ (US-                        dashboards.us-gov-west-1.aoss.amazon                     HTTPS
+ West)                       aws.com
+                                                                                      HTTPS
+                             us-gov-west-1.aoss-fips.amazonaws.com
+                                                                                      HTTPS
+                             us-gov-west-1.aoss.amazonaws.com
+                                                                                      HTTPS
+                             dashboards.us-gov-west-1.aoss-fips.a
+                             mazonaws.com
+
+
+
+OpenSearch Ingestion API
+
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ US East       us-east-2     osis.us-east-2.amazonaws.com                             HTTPS
+ (Ohio)
+
+ US            us-east-1     osis.us-east-1.amazonaws.com                             HTTPS
+ East (N.
+ Virginia)
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 2695
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ US             us-            osis.us-west-1.amazonaws.com                              HTTPS
+ West (N.       west-1
+ Californi
+ a)
+
+ US West        us-            osis.us-west-2.amazonaws.com                              HTTPS
+ (Oregon)       west-2
+
+ Asia           ap-            osis.ap-south-1.amazonaws.com                             HTTPS
+ Pacific         south-1
+ (Mumbai)
+
+ Asia           ap-            osis.ap-northeast-2.amazonaws.com                         HTTPS
+ Pacific         northe
+ (Seoul)        ast-2
+
+ Asia           ap-            osis.ap-southeast-1.amazonaws.com                         HTTPS
+ Pacific         southe
+ (Singapor      ast-1
+ e)
+
+ Asia           ap-            osis.ap-southeast-2.amazonaws.com                         HTTPS
+ Pacific         southe
+ (Sydney)       ast-2
+
+ Asia           ap-            osis.ap-northeast-1.amazonaws.com                         HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1
+
+ Canada         ca-centra      osis.ca-central-1.amazonaws.com                           HTTPS
+ (Central)      l-1
+
+ Europe         eu-            osis.eu-central-1.amazonaws.com                           HTTPS
+ (Frankfur      central-1
+ t)
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 2696
+AWS General Reference                                                                                Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Europe        eu-            osis.eu-west-1.amazonaws.com                             HTTPS
+ (Ireland)     west-1
+
+ Europe        eu-            osis.eu-west-2.amazonaws.com                             HTTPS
+ (London)      west-2
+
+ Europe        eu-            osis.eu-west-3.amazonaws.com                             HTTPS
+ (Paris)       west-3
+
+ Europe        eu-            osis.eu-south-2.amazonaws.com                            HTTPS
+ (Spain)       south-2
+
+ Europe        eu-            osis.eu-north-1.amazonaws.com                            HTTPS
+ (Stockhol     north-1
+ m)
+
+ South         sa-east-1      osis.sa-east-1.amazonaws.com                             HTTPS
+ America
+ (São
+ Paulo)
+
+ AWS           us-gov-        osis.us-gov-east-1.amazonaws.com                         HTTPS
+ GovCloud      east-1
+ (US-East)
+
+ AWS           us-gov-        osis.us-gov-west-1.amazonaws.com                         HTTPS
+ GovCloud      west-1
+ (US-
+ West)
+
+
+
+OpenSearch UI
+
+Service quotas
+
+For more information, see Amazon OpenSearch Service quotas.
+
+
+
+
+Service quotas                                                                                       Version 1.0 2697
+AWS General Reference                                                                                  Reference guide
+OpenSearch Service domain and instance quotas
+
+Your AWS account has the following quotas related to OpenSearch Service domains:
+
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Dedicated master instances per domain             Each supported           No      The maximum number
+                                                   Region: 5                        of dedicated master
+                                                                                    instances in a single
+                                                                                    Amazon OpenSearch
+                                                                                    Service domain.
+
+ Domains per Region                                Each supported           Yes     The maximum number
+                                                   Region: 500                      of Amazon OpenSearc
+                                                                                    h Service domains you
+                                                                                    can create in each AWS
+                                                                                    Region.
+
+ Instances per domain                              Each supported           Yes     The maximum number
+                                                   Region: 200                      of instances in a single
+                                                                                    Amazon OpenSearch
+                                                                                    Service domain. You can
+                                                                                    request an increase up
+                                                                                    to 1002 instances per
+                                                                                    domain.
+
+ Instances per domain (T2 instance                 Each supported           No      The maximum number of
+ type)                                             Region: 10                       T2 instances in a single
+                                                                                    Amazon OpenSearch
+                                                                                    Service domain.
+
+ Warm instances per domain                         Each supported           No      The maximum number of
+                                                   Region: 150                      warm nodes in a single
+                                                                                    Amazon OpenSearch
+                                                                                    Service cluster.
+
+
+
+
+
+
+
+Service quotas                                                                                         Version 1.0 2698
+AWS General Reference                                                                                    Reference guide
+
+Your AWS account has the following additional OpenSearch Service limits:
+
+
+ Name                     Default                                    Adjustable               Notes
+
+ Total storage per        3 PiB                                      No                       This maximum
+ domain                                                                                       is the sum of all
+                                                                                              data nodes and
+                                                                                              warm nodes.
+                                                                                              For example,
+                                                                                              your domain
+                                                                                              might have 45
+                                                                                              r6gd.16xl
+                                                                                              arge.search
+                                                                                              instances and
+                                                                                              140 ultrawarm
+                                                                                              1.large.s
+                                                                                              earch     instances
+                                                                                              for a total of 2.88
+                                                                                              PiB of storage.
+
+ Custom packages          25                                         No
+ per Region
+
+ Custom packages          20                                         No
+ per domain
+
+
+OpenSearch Serverless quotas
+
+Your AWS account has the following quotas related to OpenSearch Serverless resources.
+
+To view the quotas for OpenSearch Serverless, open the Service Quotas console. In the navigation
+pane, choose AWS services and select Amazon OpenSearch Serverless.
+
+
+ Name                     Default                                    Adjustable               Notes
+
+ Default indexing         10                                         No
+ capacity (OCUs)
+
+
+
+Service quotas                                                                                          Version 1.0 2699
+AWS General Reference                                                                                      Reference guide
+
+ Name                      Default                                    Adjustable                Notes
+
+ Default search            10                                         No
+ capacity (OCUs)
+
+ Maximum                   1,700                                      No
+ indexing capacity
+ (OCUs)
+
+ Maximum search            1,700                                      No
+ capacity (OCUs)
+
+ Data access               500                                        No
+ policies
+
+ Encryption                150                                        No
+ policies
+
+ Network policies          500                                        No
+
+ SAML providers            50                                         No
+
+ Data access policy        10,240 bytes                               No
+ size
+
+ Network policy            10,240 bytes                               No
+ size
+
+ SAML provider             51,200 bytes                               No
+ size
+
+ Encryption policy         10,240 bytes                               No
+ size
+
+
+
+Your AWS account has the following additional OpenSearch Serverless limits:
+
+
+ Name                      Default                                    Adjustable                Notes
+
+ Collection tags           50                                         No
+
+
+
+Service quotas                                                                                            Version 1.0 2700
+AWS General Reference                                                                                           Reference guide
+
+ Name                       Default                                      Adjustable                 Notes
+
+ Collections per            1,500                                        No                         The maximum
+ collection group                                                                                   number of
+ (Classic)                                                                                          collections per
+                                                                                                    Classic collectio
+                                                                                                    n group. The
+                                                                                                    actual number of
+                                                                                                    collections can be
+                                                                                                    further limited by
+                                                                                                    MaxOCUs based
+                                                                                                    on the size of
+                                                                                                    collections.
+
+ Collections per            10,000                                       Yes                        The maximum
+ collection group                                                                                   number of
+ (NextGen)                                                                                          collections per
+                                                                                                    NextGen collectio
+                                                                                                    n group. You
+                                                                                                    can request an
+                                                                                                    increase through
+                                                                                                    the Service
+                                                                                                    Quotas console.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                 Version 1.0 2701
+AWS General Reference                                                                                        Reference guide
+
+ Name                       Default                                     Adjustable                Notes
+
+ Collections with           Maximum OCU/2                               No                        This limit only
+ unique KMS keys                                                                                  applies to
+ (not in a collectio                                                                              collections that
+ n group)                                                                                         are not part of a
+                                                                                                  collection group.
+                                                                                                  It depends on
+                                                                                                  the maximum
+                                                                                                  number of OCUs
+                                                                                                  you set and how
+                                                                                                  many OCUs are
+                                                                                                  already in use.
+                                                                                                  Collections within
+                                                                                                  a collection group
+                                                                                                  have a separate
+                                                                                                  limit of 1,500
+                                                                                                  collections per
+                                                                                                  group, regardless
+                                                                                                  of the number of
+                                                                                                  unique KMS keys
+                                                                                                  used.
+
+ OpenSearc                  50                                          No                        This limit only
+ h Serverless-                                                                                    applies to
+ managed VPC                                                                                      OpenSearc
+ endpoints                                                                                        h Serverless-
+                                                                                                  managed VPC
+                                                                                                  endpoints. It
+                                                                                                  doesn't include
+                                                                                                  OpenSearch
+                                                                                                  Service-managed
+                                                                                                  VPC endpoints.
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 2702
+AWS General Reference                                                                                    Reference guide
+
+ Name                     Default                                    Adjustable               Notes
+
+ Indexes per              1000                                       No                       The maximum
+ Amazon                                                                                       number of
+ OpenSearc                                                                                    indexes per
+ h Serverless                                                                                 Amazon
+ collection                                                                                   OpenSearc
+                                                                                              h Serverless
+                                                                                              collection is 1000.
+
+ Index templates          500                                        No                       The maximum
+ per Amazon                                                                                   number of
+ OpenSearc                                                                                    index templates
+ h Serverless                                                                                 per Amazon
+ collection                                                                                   OpenSearc
+                                                                                              h Serverless
+                                                                                              collection is 500.
+
+ Maximum                  300                                        No                       The maximum
+ collection groups                                                                            number of
+                                                                                              collection groups
+                                                                                              per account.
+
+
+OpenSearch Ingestion quotas
+
+Your AWS account has the following quotas related to OpenSearch Ingestion resources. Unless
+otherwise noted, each quota is Region-specific.
+
+
+ Name                          Default                            Adjustable                 Notes
+
+ Connected VPCs per            Each supported Region: 1           No
+ pipeline
+
+ Pipelines connected           Each supported Region: 50          No
+ to a single VPC
+ domain
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 2703
+AWS General Reference                                                                                          Reference guide
+
+ Name                            Default                              Adjustable                  Notes
+
+ Pipelines                       Each supported Region: 50            No
+
+ Characters per                  Each supported Region:               No
+ pipeline configuration           24000
+
+ Sources per pipeline            Each supported Region:               No                          This limit only
+                                 100000                                                           applies to plugin
+                                                                                                  sources, such as
+                                                                                                  HTTP, OTel, or
+                                                                                                  S3. You can still
+                                                                                                  chain sub-pipelines
+                                                                                                  together within a
+                                                                                                  single OpenSearch
+                                                                                                  Ingestion pipeline
+                                                                                                  configuration.
+
+ Unique OpenSearch               Each supported Region: 1             No                          This limit only
+ sinks per pipeline                                                                               applies to
+                                                                                                  OpenSearch
+                                                                                                  domain and
+                                                                                                  collection sinks.
+                                                                                                  You can still chain
+                                                                                                  sub-pipelines
+                                                                                                  together within a
+                                                                                                  single OpenSearch
+                                                                                                  Ingestion pipeline
+                                                                                                  configuration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                Version 1.0 2704
+AWS General Reference                                                                                      Reference guide
+
+ Name                           Default                             Adjustable                 Notes
+
+ Total OpenSearch               Each supported Region: 50           No                         This limit refers
+ sinks per pipeline                                                                            to the number of
+                                                                                               times that you can
+                                                                                               specify the same
+                                                                                               OpenSearch sink
+                                                                                               within a pipeline
+                                                                                               configuration
+                                                                                               file. The number
+                                                                                               of non "pipeline
+                                                                                               " sinks within
+                                                                                               the pipelineC
+                                                                                               onfigurat
+                                                                                               ionBody       must
+                                                                                               be between 1
+                                                                                               and 20, inclusive
+                                                                                               of OpenSearch
+                                                                                               Ingestion pipelines.
+
+ Minimum Ingestion              Each supported Region: 1            No
+ OCUs per pipeline
+
+ Maximum Ingestion              Each supported Region: 96           No                         See Stateless
+ OCUs per stateless                                                                            versus stateful
+ pipeline                                                                                      processors.
+
+ Maximum Ingestion              Each supported Region: 48           No                         See Stateless
+ OCUs per stateful                                                                             versus stateful
+ pipeline                                                                                      processors.
+
+
+OpenSearch UI quotas
+
+Your AWS account has the following quotas related to OpenSearch UI. Unless otherwise noted,
+each quota is Region-specific.
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 2705

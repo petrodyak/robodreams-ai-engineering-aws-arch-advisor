@@ -1,0 +1,1574 @@
+AWS General Reference                                                                                     Reference guide
+
+ Resource                                Default quota                           Eligible for increase
+
+ Number of characters in a               3,000 billable characters, in           No
+ voice message                           words that are spoken
+
+                                         6,000 characters total,
+                                         including billable characters
+                                         and SSML tags
+
+ Number of configuration sets             10,000 voice configuration               No
+                                         sets
+
+
+
+For more information, see Quotas for AWS End User Messaging SMS in the AWS End User
+Messaging SMS User Guide.
+
+AWS End User Messaging Social Service Quotas
+
+The following quotas apply to the Social messaging channel.
+
+
+ Resource                                                    Default
+
+ WhatsApp Business Account (WABA)                            25 per region
+
+
+
+For more information, see Quotas for AWS End User Messaging Social in the AWS End User
+Messaging Social User Guide.
+
+Amazon EMR endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+
+
+Amazon EMR                                                                                               Version 1.0 1719
+AWS General Reference                                                                                 Reference guide
+Service endpoints
+
+
+
+ Region         Region        Endpoint                                                 Protocol
+ Name
+
+ US East        us-east-2     elasticmapreduce.us-east-2.amazonaws.com                 HTTPS
+ (Ohio)
+                              elasticmapreduce-fips.us-east-2.amaz                     HTTPS
+                              onaws.com
+                                                                                       HTTPS
+                              elasticmapreduce.us-east-2.api.aws
+
+ US             us-east-1     elasticmapreduce.us-east-1.amazonaws.com                 HTTPS
+ East (N.
+ Virginia)                    elasticmapreduce-fips.us-east-1.amaz                     HTTPS
+                              onaws.com
+                                                                                       HTTPS
+                              elasticmapreduce.us-east-1.api.aws
+
+ US             us-           elasticmapreduce.us-west-1.amazonaws.com                 HTTPS
+ West (N.       west-1
+ Californi                    elasticmapreduce-fips.us-west-1.amaz                     HTTPS
+ a)                           onaws.com
+                                                                                       HTTPS
+                              elasticmapreduce.us-west-1.api.aws
+
+ US West        us-           elasticmapreduce.us-west-2.amazonaws.com                 HTTPS
+ (Oregon)       west-2
+                              elasticmapreduce-fips.us-west-2.amaz                     HTTPS
+                              onaws.com
+                                                                                       HTTPS
+                              elasticmapreduce.us-west-2.api.aws
+
+ Africa         af-south-     elasticmapreduce.af-south-1.amazonaws.com                HTTPS
+ (Cape          1
+ Town)                        elasticmapreduce.af-south-1.api.aws                      HTTPS
+
+
+ Asia           ap-           elasticmapreduce.ap-east-1.amazonaws.com                 HTTPS
+ Pacific         east-1
+                              elasticmapreduce.ap-east-1.api.aws                       HTTPS
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1720
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ (Hong
+ Kong)
+
+ Asia           ap-           elasticmapreduce.ap-south-2.amazonaws.com                 HTTPS
+ Pacific         south-2
+ (Hyderaba                    elasticmapreduce.ap-south-2.api.aws                       HTTPS
+
+ d)
+
+ Asia           ap-           elasticmapreduce.ap-southeast-3.amaz                      HTTPS
+ Pacific         southe        onaws.com
+ (Jakarta)      ast-3                                                                   HTTPS
+                              elasticmapreduce.ap-southeast-3.api.aws
+
+ Asia           ap-           elasticmapreduce.ap-southeast-5.amaz                      HTTPS
+ Pacific         southe        onaws.com
+ (Malaysia      ast-5                                                                   HTTPS
+ )                            elasticmapreduce.ap-southeast-5.api.aws
+
+
+ Asia           ap-           elasticmapreduce.ap-southeast-4.amaz                      HTTPS
+ Pacific         southe        onaws.com
+ (Melbourn      ast-4                                                                   HTTPS
+ e)                           elasticmapreduce.ap-southeast-4.api.aws
+
+
+ Asia           ap-           elasticmapreduce.ap-south-1.amazonaws.com                 HTTPS
+ Pacific         south-1
+ (Mumbai)                     elasticmapreduce.ap-south-1.api.aws                       HTTPS
+
+
+ Asia           ap-           elasticmapreduce.ap-southeast-6.amaz                      HTTPS
+ Pacific         southe        onaws.com
+ (New           ast-6                                                                   HTTPS
+ Zealand)                     elasticmapreduce.ap-southeast-6.api.aws
+
+
+ Asia           ap-           elasticmapreduce.ap-northeast-3.amaz                      HTTPS
+ Pacific         northe        onaws.com
+ (Osaka)        ast-3                                                                   HTTPS
+                              elasticmapreduce.ap-northeast-3.api.aws
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1721
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           elasticmapreduce.ap-northeast-2.amaz                       HTTPS
+ Pacific         northe        onaws.com
+ (Seoul)        ast-2                                                                    HTTPS
+                              elasticmapreduce.ap-northeast-2.api.aws
+
+ Asia           ap-           elasticmapreduce.ap-southeast-1.amaz                       HTTPS
+ Pacific         southe        onaws.com
+ (Singapor      ast-1                                                                    HTTPS
+ e)                           elasticmapreduce.ap-southeast-1.api.aws
+
+
+ Asia           ap-           elasticmapreduce.ap-southeast-2.amaz                       HTTPS
+ Pacific         southe        onaws.com
+ (Sydney)       ast-2                                                                    HTTPS
+                              elasticmapreduce.ap-southeast-2.api.aws
+
+ Asia           ap-           elasticmapreduce.ap-east-2.amazonaws.com                   HTTPS
+ Pacific         east-2
+ (Taipei)                     elasticmapreduce.ap-east-2.api.aws                         HTTPS
+
+
+ Asia           ap-           elasticmapreduce.ap-southeast-7.amaz                       HTTPS
+ Pacific         southe        onaws.com
+ (Thailand      ast-7                                                                    HTTPS
+ )                            elasticmapreduce.ap-southeast-7.api.aws
+
+
+ Asia           ap-           elasticmapreduce.ap-northeast-1.amaz                       HTTPS
+ Pacific         northe        onaws.com
+ (Tokyo)        ast-1                                                                    HTTPS
+                              elasticmapreduce.ap-northeast-1.api.aws
+
+ Canada         ca-centra     elasticmapreduce.ca-central-1.amazon                       HTTPS
+ (Central)      l-1           aws.com
+                                                                                         HTTPS
+                              elasticmapreduce-fips.ca-central-1.a
+                              mazonaws.com                                               HTTPS
+
+
+                              elasticmapreduce.ca-central-1.api.aws
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1722
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Canada        ca-            elasticmapreduce.ca-west-1.amazonaws.com                 HTTPS
+ West          west-1
+ (Calgary)                    elasticmapreduce-fips.ca-west-1.amaz                     HTTPS
+                              onaws.com
+                                                                                       HTTPS
+                              elasticmapreduce.ca-west-1.api.aws
+
+ Europe        eu-            elasticmapreduce.eu-central-1.amazon                     HTTPS
+ (Frankfur     central-1      aws.com
+ t)                                                                                    HTTPS
+                              elasticmapreduce.eu-central-1.api.aws
+
+ Europe        eu-            elasticmapreduce.eu-west-1.amazonaws.com                 HTTPS
+ (Ireland)     west-1
+                              elasticmapreduce.eu-west-1.api.aws                       HTTPS
+
+ Europe        eu-            elasticmapreduce.eu-west-2.amazonaws.com                 HTTPS
+ (London)      west-2
+                              elasticmapreduce.eu-west-2.api.aws                       HTTPS
+
+ Europe        eu-            elasticmapreduce.eu-south-1.amazonaws.com                HTTPS
+ (Milan)       south-1
+                              elasticmapreduce.eu-south-1.api.aws                      HTTPS
+
+ Europe        eu-            elasticmapreduce.eu-west-3.amazonaws.com                 HTTPS
+ (Paris)       west-3
+                              elasticmapreduce.eu-west-3.api.aws                       HTTPS
+
+ Europe        eu-            elasticmapreduce.eu-south-2.amazonaws.com                HTTPS
+ (Spain)       south-2
+                              elasticmapreduce.eu-south-2.api.aws                      HTTPS
+
+ Europe        eu-            elasticmapreduce.eu-north-1.amazonaws.com                HTTPS
+ (Stockhol     north-1
+ m)                           elasticmapreduce.eu-north-1.api.aws                      HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1723
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Europe         eu-           elasticmapreduce.eu-central-2.amazon                       HTTPS
+ (Zurich)       central-2     aws.com
+                                                                                         HTTPS
+                              elasticmapreduce.eu-central-2.api.aws
+
+ Israel         il-centra     elasticmapreduce.il-central-1.amazonaws.com                HTTPS
+ (Tel Aviv)     l-1
+                              elasticmapreduce.il-central-1.api.aws                      HTTPS
+
+ Mexico         mx-           elasticmapreduce.mx-central-1.amazon                       HTTPS
+ (Central)      central-1     aws.com
+                                                                                         HTTPS
+                              elasticmapreduce.mx-central-1.api.aws
+
+ Middle         me-           elasticmapreduce.me-south-1.amazonaw                       HTTPS
+ East           south-1       s.com
+ (Bahrain)                                                                               HTTPS
+                              elasticmapreduce.me-south-1.api.aws
+
+ Middle         me-           elasticmapreduce.me-central-1.amazon                       HTTPS
+ East           central-1     aws.com
+ (UAE)                                                                                   HTTPS
+                              elasticmapreduce.me-central-1.api.aws
+
+ South          sa-east-1     elasticmapreduce.sa-east-1.amazonaws.com                   HTTPS
+ America
+ (São                         elasticmapreduce.sa-east-1.api.aws                         HTTPS
+
+ Paulo)
+
+ AWS            us-gov-       elasticmapreduce.us-gov-east-1.amazo                       HTTPS
+ GovCloud       east-1        naws.com
+ (US-East)                                                                               HTTPS
+                              elasticmapreduce.us-gov-east-1.api.aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1724
+AWS General Reference                                                                                     Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ AWS            us-gov-        elasticmapreduce.us-gov-west-1.amazo                       HTTPS
+ GovCloud       west-1         naws.com
+ (US-                                                                                     HTTPS
+ West)                         elasticmapreduce.us-gov-west-1.api.aws
+
+
+
+If you specify the general endpoint (elasticmapreduce.amazonaws.com), Amazon EMR directs your
+request to an endpoint in the default Region. For accounts created on or after March 8, 2013, the
+default Region is us-west-2; for older accounts, the default Region is us-east-1.
+
+Service quotas
+
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+ EMR WAL workspaces                                 Each supported            No      The maximum number
+                                                    Region: 20                        of Amazon EMR write-
+                                                                                      ahead log (EMR WAL)
+                                                                                      workspaces that can be
+                                                                                      used at the same time
+                                                                                      in this account in the
+                                                                                      current Region.
+
+ Replenishment rate of AddInstan                    Each supported            Yes     The Rate at which
+ ceFleet calls                                      Region: 0.5                       tokens are added to the
+                                                                                      AddInstanceFleet bucket
+
+ Replenishment rate of AddInstan                    Each supported            Yes     The Rate at which
+ ceGroups calls                                     Region: 0.2                       tokens are added to
+                                                                                      the AddInstanceGroups
+                                                                                      bucket
+
+ Replenishment rate of AddJobFlo                    Each supported            Yes     The Rate at which
+ wSteps calls                                       Region: 0.5                       tokens are added to the
+                                                                                      AddJobFlowSteps bucket
+
+
+
+Service quotas                                                                                           Version 1.0 1725
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Replenishment rate of AddTags calls                 Each supported            Yes      The Rate at which
+                                                     Region: 0.5                        tokens are added to the
+                                                                                        AddTags bucket
+
+ Replenishment rate of CancelJobRun                  Each supported            Yes      The Rate at which
+ calls                                               Region: 0.5                        tokens are added to the
+                                                                                        CancelJobRun bucket
+
+ Replenishment rate of CancelSteps                   Each supported            Yes      The Rate at which
+ calls                                               Region: 0.5                        tokens are added to the
+                                                                                        CancelSteps bucket
+
+ Replenishment rate of CreateMan                     Each supported            Yes      The Rate at which
+ agedCluster calls                                   Region: 0.5                        tokens are added to the
+                                                                                        CreateManagedCluster
+                                                                                        bucket
+
+ Replenishment rate of CreateSec                     Each supported            Yes      The Rate at which
+ urityConfiguration calls                            Region: 0.5                        tokens are added to
+                                                                                        the CreateSecurityConf
+                                                                                        iguration bucket
+
+ Replenishment rate of DeleteSec                     Each supported            Yes      The Rate at which
+ urityConfiguration calls                            Region: 0.5                        tokens are added to
+                                                                                        the DeleteSecurityConf
+                                                                                        iguration bucket
+
+ Replenishment rate of DescribeCluster               Each supported            Yes      The Rate at which
+ calls                                               Region: 1                          tokens are added to the
+                                                                                        DescribeCluster bucket
+
+ Replenishment rate of DescribeJ                     Each supported            Yes      The Rate at which
+ obFlows calls                                       Region: 0.2                        tokens are added to the
+                                                                                        DescribeJobFlows bucket
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1726
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Replenishment rate of DescribeJobRun                Each supported            Yes      The Rate at which
+ calls                                               Region: 2                          tokens are added to the
+                                                                                        DescribeJobRun bucket
+
+ Replenishment rate of DescribeM                     Each supported            Yes      The Rate at which
+ anagedCluster calls                                 Region: 2                          tokens are added to the
+                                                                                        DescribeManagedCluster
+                                                                                        bucket
+
+ Replenishment rate of DescribeS                     Each supported            Yes      The Rate at which
+ ecurityConfiguration calls                           Region: 0.5                        tokens are added to
+                                                                                        the DescribeSecurityCo
+                                                                                        nfiguration bucket
+
+ Replenishment rate of DescribeStep                  Each supported            Yes      The Rate at which
+ calls                                               Region: 0.5                        tokens are added to the
+                                                                                        DescribeStep bucket
+
+ Replenishment rate of GetAutoTe                     Each supported            Yes      The Rate at which
+ rminationPolicy calls                               Region: 0.5                        tokens are added to the
+                                                                                        GetAutoTermination
+                                                                                        Policy bucket
+
+ Replenishment rate of GetBlockP                     Each supported            Yes      The Rate at which
+ ublicAccessConfiguration calls                       Region: 0.5                        tokens are added to
+                                                                                        the GetBlockPublicAcce
+                                                                                        ssConfiguration bucket
+
+ Replenishment rate of GetCluste                     Each supported            Yes      The Rate at which
+ rSessionCredentials calls                           Region: 0.5                        tokens are added to
+                                                                                        the GetClusterSessionC
+                                                                                        redentials bucket
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1727
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                    Adjustabl Description
+                                                                                e
+
+ Replenishment rate of GetJobRun                     Each supported             Yes     The Rate at which
+ QueryResults calls                                  Region: 2                          tokens are added to the
+                                                                                        GetJobRunQueryResults
+                                                                                        bucket
+
+ Replenishment rate of GetManage                     Each supported             Yes     The Rate at which
+ dScalingPolicy calls                                Region: 0.5                        tokens are added to the
+                                                                                        GetManagedScalingP
+                                                                                        olicy bucket
+
+ Replenishment rate of GetResour                     Each supported             Yes     The Rate at which
+ ceDashboard calls                                   Region: 2                          tokens are added to the
+                                                                                        GetResourceDashboard
+                                                                                        bucket
+
+ Replenishment rate of ListBoots                     Each supported             Yes     The Rate at which
+ trapActions calls                                   Region: 1                          tokens are added to the
+                                                                                        ListBootstrapActions
+                                                                                        bucket
+
+ Replenishment rate of ListClusters calls            Each supported             Yes     The Rate at which
+                                                     Region: 0.5                        tokens are added to the
+                                                                                        ListClusters bucket
+
+ Replenishment rate of ListInsta                     Each supported             Yes     The Rate at which tokens
+ nceFleets calls                                     Region: 0.5                        are added to the ListInsta
+                                                                                        nceFleets bucket
+
+ Replenishment rate of ListInsta                     Each supported             Yes     The Rate at which tokens
+ nceGroups calls                                     Region: 1                          are added to the ListInsta
+                                                                                        nceGroups bucket
+
+ Replenishment rate of ListInstances                 Each supported             Yes     The Rate at which tokens
+ calls                                               Region: 0.5                        are added to the ListInsta
+                                                                                        nces bucket
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 1728
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ Replenishment rate of ListJobRuns                    Each supported            Yes     The Rate at which
+ calls                                                Region: 1                         tokens are added to the
+                                                                                        ListJobRuns bucket
+
+ Replenishment rate of ListManag                      Each supported            Yes     The Rate at which
+ edClusters calls                                     Region: 1                         tokens are added to the
+                                                                                        ListManagedClusters
+                                                                                        bucket
+
+ Replenishment rate of ListRelea                      Each supported            Yes     The Rate at which
+ seLabels calls                                       Region: 0.5                       tokens are added to the
+                                                                                        ListReleaseLabels bucket
+
+ Replenishment rate of ListSecur                      Each supported            Yes     The Rate at which
+ ityConfigurations calls                               Region: 0.5                       tokens are added to
+                                                                                        the ListSecurityConfig
+                                                                                        urations bucket
+
+ Replenishment rate of ListSteps calls                Each supported            Yes     The Rate at which
+                                                      Region: 0.5                       tokens are added to the
+                                                                                        ListSteps bucket
+
+ Replenishment rate of ListSuppo                      Each supported            Yes     The Rate at which
+ rtedInstanceTypes calls                              Region: 0.5                       tokens are added to
+                                                                                        the ListSupportedInsta
+                                                                                        nceTypes bucket
+
+ Replenishment rate of ModifyCluster                  Each supported            Yes     The Rate at which
+ calls                                                Region: 0.5                       tokens are added to the
+                                                                                        ModifyCluster bucket
+
+ Replenishment rate of ModifyIns                      Each supported            Yes     The Rate at which
+ tanceFleet calls                                     Region: 0.5                       tokens are added to the
+                                                                                        ModifyInstanceFleet
+                                                                                        bucket
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 1729
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Replenishment rate of ModifyIns                     Each supported            Yes     The Rate at which
+ tanceGroups calls                                   Region: 0.5                       tokens are added to the
+                                                                                       ModifyInstanceGroups
+                                                                                       bucket
+
+ Replenishment rate of PutAutoSc                     Each supported            Yes     The Rate at which
+ alingPolicy calls                                   Region: 0.5                       tokens are added to the
+                                                                                       PutAutoScalingPolicy
+                                                                                       bucket
+
+ Replenishment rate of PutAutoTe                     Each supported            Yes     The Rate at which
+ rminationPolicy calls                               Region: 0.5                       tokens are added to the
+                                                                                       PutAutoTermination
+                                                                                       Policy bucket
+
+ Replenishment rate of PutBlockP                     Each supported            Yes     The Rate at which
+ ublicAccessConfiguration calls                       Region: 0.5                       tokens are added to
+                                                                                       the PutBlockPublicAcce
+                                                                                       ssConfiguration bucket
+
+ Replenishment rate of PutManage                     Each supported            Yes     The Rate at which
+ dScalingPolicy calls                                Region: 0.5                       tokens are added to the
+                                                                                       PutManagedScalingP
+                                                                                       olicy bucket
+
+ Replenishment rate of RemoveAut                     Each supported            Yes     The Rate at which
+ oScalingPolicy calls                                Region: 0.5                       tokens are added to the
+                                                                                       RemoveAutoScalingP
+                                                                                       olicy bucket
+
+ Replenishment rate of RemoveAut                     Each supported            Yes     The Rate at which
+ oTerminationPolicy calls                            Region: 0.5                       tokens are added to the
+                                                                                       RemoveAutoTerminat
+                                                                                       ionPolicy bucket
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1730
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Replenishment rate of RemoveTags                    Each supported           Yes      The Rate at which
+ calls                                               Region: 0.5                       tokens are added to the
+                                                                                       RemoveTags bucket
+
+ Replenishment rate of RunJobFlow                    Each supported           Yes      The Rate at which
+ calls                                               Region: 0.5                       tokens are added to the
+                                                                                       RunJobFlow bucket
+
+ Replenishment rate of SetKeepJo                     Each supported           Yes      The Rate at which
+ bFlowAliveWhenNoSteps calls                         Region: 0.5                       tokens are added to the
+                                                                                       SetKeepJobFlowAliv
+                                                                                       eWhenNoSteps bucket
+
+ Replenishment rate of SetKeepJo                     Each supported           Yes      The Rate at which
+ bFlowAliveWhenNoSteps calls                         Region: 0.5                       tokens are added to the
+                                                                                       RemoveManagedScali
+                                                                                       ngPolicy bucket.
+
+ Replenishment rate of SetTermin                     Each supported           Yes      The Rate at which
+ ationProtection calls                               Region: 0.2                       tokens are added to
+                                                                                       the SetTerminationProt
+                                                                                       ection bucket
+
+ Replenishment rate of SetVisibl                     Each supported           Yes      The Rate at which
+ eToAllUsers calls                                   Region: 0.2                       tokens are added to the
+                                                                                       SetVisibleToAllUsers
+                                                                                       bucket
+
+ Replenishment rate of StartJobRun                   Each supported           Yes      The Rate at which
+ calls                                               Region: 0.5                       tokens are added to the
+                                                                                       StartJobRun bucket
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1731
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Replenishment rate of Terminate                     Each supported           Yes      The Rate at which
+ JobFlows calls                                      Region: 0.5                       tokens are added to
+                                                                                       the TerminateJobFlows
+                                                                                       bucket
+
+ Replenishment rate of Terminate                     Each supported           Yes      The Rate at which
+ ManagedCluster calls                                Region: 0.5                       tokens are added to the
+                                                                                       TerminateManagedCl
+                                                                                       uster bucket
+
+ The maximum number of API requests                  Each supported           Yes      The maximum number
+ that you can make per second.                       Region: 200 per                   of requests per second
+                                                     second                            that you can perform
+                                                                                       in this account in the
+                                                                                       current Region for all
+                                                                                       EMR operations.
+
+ The maximum number of AddInstan                     Each supported           Yes      The maximum number
+ ceFleet API requests that you can make              Region: 5 per                     of AddInstanceFleet
+ per second.                                         second                            requests per second that
+                                                                                       you can perform in this
+                                                                                       account in the current
+                                                                                       Region. AddInstanceFleet
+                                                                                       adds an instance fleet to
+                                                                                       a running cluster.
+
+ The maximum number of AddInstan                     Each supported           Yes      The maximum number
+ ceGroups API requests that you can                  Region: 5 per                     of AddInstanceGroups
+ make per second.                                    second                            requests per second that
+                                                                                       you can perform in this
+                                                                                       account in the current
+                                                                                       Region. Adds one or
+                                                                                       more instance groups to
+                                                                                       a running cluster.
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1732
+AWS General Reference                                                                                     Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+ The maximum number of AddJobFlo                    Each supported            Yes     The maximum number
+ wSteps API requests that you can make              Region: 10 per                    of AddJobFlowSteps
+ per second.                                        second                            requests per second that
+                                                                                      you can perform in this
+                                                                                      account in the current
+                                                                                      Region. AddJobFlo
+                                                                                      wSteps adds new steps
+                                                                                      to a running cluster.
+
+ The maximum number of AddTags API                  Each supported            Yes     The maximum number
+ requests that you can make per second.             Region: 5 per                     of AddTags requests
+                                                    second                            per second that you can
+                                                                                      perform in this account
+                                                                                      in the current Region.
+                                                                                      Adds tags to an Amazon
+                                                                                      EMR resource.
+
+ The maximum number of CancelJob                    Each supported            Yes     The maximum number of
+ Run API requests that you can make                 Region: 10 per                    CancelJobRun requests
+ per second.                                        second                            per second that you can
+                                                                                      perform in this account
+                                                                                      in the current Region.
+                                                                                      CancelJobRun cancels
+                                                                                      a running job run on a
+                                                                                      managed cluster.
+
+ The maximum number of CancelSte                    Each supported            Yes     The maximum number
+ ps API requests that you can make per              Region: 10 per                    of CancelSteps requests
+ second.                                            second                            per second that you can
+                                                                                      perform in this account
+                                                                                      in the current Region.
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 1733
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ The maximum number of CreateMan                     Each supported            Yes      The maximum number of
+ agedCluster API requests that you can               Region: 10 per                     CreateManagedCluster
+ make per second.                                    second                             requests per second that
+                                                                                        you can perform in this
+                                                                                        account in the current
+                                                                                        Region. CreateMan
+                                                                                        agedCluster creates and
+                                                                                        starts running a new
+                                                                                        managed cluster.
+
+ The maximum number of CreateSec                     Each supported            Yes      The maximum number
+ urityConfiguration API requests that                Region: 5 per                      of CreateSecurityConf
+ you can make per second.                            second                             iguration requests per
+                                                                                        second that you can
+                                                                                        perform in this account
+                                                                                        in the current Region.
+                                                                                        CreateSecurityConf
+                                                                                        iguration creates a
+                                                                                        security configuration,
+                                                                                        which is stored in the
+                                                                                        service and can be
+                                                                                        specified when a cluster
+                                                                                        is created.
+
+ The maximum number of DeleteSec                     Each supported            Yes      The maximum number
+ urityConfiguration API requests that                Region: 5 per                      of DeleteSecurityConf
+ you can make per second.                            second                             iguration requests per
+                                                                                        second that you can
+                                                                                        perform in this account
+                                                                                        in the current Region.
+                                                                                        DeleteSecurityConf
+                                                                                        iguration deletes a
+                                                                                        security configuration.
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1734
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ The maximum number of DescribeC                     Each supported            Yes      The maximum number of
+ luster API requests that you can make               Region: 10 per                     DescribeCluster requests
+ per second.                                         second                             per second that you
+                                                                                        can perform in this
+                                                                                        account in the current
+                                                                                        Region. DescribeCluster
+                                                                                        provides cluster-level
+                                                                                        details including status,
+                                                                                        hardware and software
+                                                                                        configuration, VPC
+                                                                                        settings, and so on.
+
+ The maximum number of DescribeJ                     Each supported            Yes      The maximum number
+ obFlows API requests that you can                   Region: 20 per                     of DescribeJobFlows
+ make per second.                                    second                             requests per second
+                                                                                        that you can perform
+                                                                                        in this account in the
+                                                                                        current Region. This API
+                                                                                        is deprecated and will
+                                                                                        eventually be removed.
+                                                                                        We recommend you use
+                                                                                        ListClusters, DescribeC
+                                                                                        luster, ListSteps, ListInsta
+                                                                                        nceGroups and ListBoots
+                                                                                        trapActions instead.
+
+ The maximum number of DescribeJ                     Each supported            Yes      The maximum number of
+ obRun API requests that you can make                Region: 20 per                     DescribeJobRun requests
+ per second.                                         second                             per second that you can
+                                                                                        perform in this account
+                                                                                        in the current Region.
+                                                                                        DescribeJobRun provides
+                                                                                        job-run-level details
+                                                                                        including status.
+
+
+
+
+Service quotas                                                                                             Version 1.0 1735
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ The maximum number of DescribeM                     Each supported            Yes     The maximum number of
+ anagedCluster API requests that you                 Region: 20 per                    DescribeManagedCluster
+ can make per second.                                second                            requests per second that
+                                                                                       you can perform in this
+                                                                                       account in the current
+                                                                                       Region. DescribeM
+                                                                                       anagedCluster provides
+                                                                                       managed-cluster-level
+                                                                                       details including status
+                                                                                       and configuration.
+
+ The maximum number of DescribeS                     Each supported            Yes     The maximum number
+ ecurityConfiguration API requests that               Region: 5 per                     of DescribeSecurityCo
+ you can make per second.                            second                            nfiguration requests
+                                                                                       per second that you
+                                                                                       can perform in this
+                                                                                       account in the current
+                                                                                       Region. DescribeS
+                                                                                       ecurityConfiguration
+                                                                                       provides the details of a
+                                                                                       security configuration by
+                                                                                       returning the configura
+                                                                                       tion JSON.
+
+ The maximum number of DescribeS                     Each supported            Yes     The maximum number
+ tep API requests that you can make per              Region: 10 per                    of DescribeStep requests
+ second.                                             second                            per second that you can
+                                                                                       perform in this account
+                                                                                       in the current Region.
+                                                                                       DescribeStep provides
+                                                                                       more detail about the
+                                                                                       cluster step.
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1736
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ The maximum number of GetAutoTe                     Each supported            Yes      The maximum number
+ rminationPolicy API requests that you               Region: 5 per                      of GetAutoTermination
+ can make per second.                                second                             Policy requests per
+                                                                                        second that you can
+                                                                                        perform in this account
+                                                                                        in the current Region.
+                                                                                        GetAutoTermination
+                                                                                        Policy returns the auto-
+                                                                                        termination policy for an
+                                                                                        Amazon EMR cluster.
+
+ The maximum number of GetBlockP                     Each supported            Yes      The maximum number
+ ublicAccessConfiguration API requests                Region: 5 per                      of GetBlockPublicAcce
+ that you can make per second.                       second                             ssConfiguration requests
+                                                                                        per second that you can
+                                                                                        perform in this account
+                                                                                        in the current Region.
+                                                                                        GetBlockPublicAcce
+                                                                                        ssConfiguration returns
+                                                                                        the Amazon EMR block
+                                                                                        public access configura
+                                                                                        tion for the account in
+                                                                                        the current region.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1737
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ The maximum number of GetCluste                      Each supported            Yes     The maximum number
+ rSessionCredentials API requests that                Region: 5 per                     of GetClusterSessionC
+ you can make per second.                             second                            redentials requests per
+                                                                                        second that you can
+                                                                                        perform in this account
+                                                                                        in the current Region.
+                                                                                        GetClusterSessionC
+                                                                                        redentials provides
+                                                                                        temporary, HTTP basic
+                                                                                        credentials that are
+                                                                                        associated with a given
+                                                                                        runtime IAM role and
+                                                                                        used by a cluster with
+                                                                                        fine-grained access
+                                                                                        control activated.
+
+ The maximum number of GetJobRun                      Each supported            Yes     The maximum number of
+ QueryResults API requests that you can               Region: 20 per                    GetJobRunQueryResults
+ make per second.                                     second                            requests per second that
+                                                                                        you can perform in this
+                                                                                        account in the current
+                                                                                        Region. GetJobRun
+                                                                                        QueryResults retrieves
+                                                                                        query results for a job
+                                                                                        run.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 1738
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ The maximum number of GetManage                     Each supported            Yes     The maximum number
+ dScalingPolicy API requests that you                Region: 5 per                     of GetManagedScalingP
+ can make per second.                                second                            olicy requests per
+                                                                                       second that you can
+                                                                                       perform in this account
+                                                                                       in the current Region.
+                                                                                       GetManagedScalingP
+                                                                                       olicy fetches the
+                                                                                       attached managed
+                                                                                       scaling policy for an
+                                                                                       Amazon EMR cluster.
+
+ The maximum number of GetResour                     Each supported            Yes     The maximum number
+ ceDashboard API requests that you can               Region: 20 per                    of GetResourceDashboa
+ make per second.                                    second                            rd requests per second
+                                                                                       that you can perform
+                                                                                       in this account in
+                                                                                       the current Region.
+                                                                                       GetResourceDashboa
+                                                                                       rd retrieves resource
+                                                                                       dashboard information
+                                                                                       for a managed cluster.
+
+ The maximum number of ListBoots                     Each supported            Yes     The maximum number
+ trapActions API requests that you can               Region: 10 per                    of ListBootstrapActio
+ make per second.                                    second                            ns requests per second
+                                                                                       that you can perform
+                                                                                       in this account in the
+                                                                                       current Region. ListBoots
+                                                                                       trapActions provides
+                                                                                       information about
+                                                                                       the bootstrap actions
+                                                                                       associated with a cluster.
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1739
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+ The maximum number of ListClusters                   Each supported             Yes      The maximum number
+ API requests that you can make per                   Region: 20 per                      of ListClusters requests
+ second.                                              second                              per second that you can
+                                                                                          perform in this account
+                                                                                          in the current Region.
+                                                                                          ListClusters provides
+                                                                                          the status of all clusters
+                                                                                          visible to this AWS
+                                                                                          account.
+
+ The maximum number of ListInsta                      Each supported             Yes      The maximum number
+ nceFleets API requests that you can                  Region: 5 per                       of ListInstanceFleets
+ make per second.                                     second                              requests per second
+                                                                                          that you can perform
+                                                                                          in this account in the
+                                                                                          current Region. ListInsta
+                                                                                          nceFleets lists all
+                                                                                          available details about
+                                                                                          the instance fleets in a
+                                                                                          cluster.
+
+ The maximum number of ListInsta                      Each supported             Yes      The maximum number
+ nceGroups API requests that you can                  Region: 10 per                      of ListInstanceGroups
+ make per second.                                     second                              requests per second
+                                                                                          that you can perform
+                                                                                          in this account in the
+                                                                                          current Region. ListInsta
+                                                                                          nceGroups provides all
+                                                                                          available details about
+                                                                                          the instance groups in a
+                                                                                          cluster.
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 1740
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                    Adjustabl Description
+                                                                                e
+
+ The maximum number of ListInstances                 Each supported             Yes     The maximum number
+ API requests that you can make per                  Region: 10 per                     of ListInstances requests
+ second.                                             second                             per second that you can
+                                                                                        perform in this account
+                                                                                        in the current Region.
+                                                                                        ListInstances provides
+                                                                                        information for all active
+                                                                                        EC2 instances and EC2
+                                                                                        instances terminated in
+                                                                                        the last 30 days, up to a
+                                                                                        maximum of 2,000.
+
+ The maximum number of ListJobRu                     Each supported             Yes     The maximum number
+ ns API requests that you can make per               Region: 20 per                     of ListJobRuns requests
+ second.                                             second                             per second that you can
+                                                                                        perform in this account
+                                                                                        in the current Region.
+                                                                                        ListJobRuns provides the
+                                                                                        status of all job runs on a
+                                                                                        managed cluster.
+
+ The maximum number of ListManag                     Each supported             Yes     The maximum number
+ edClusters API requests that you can                Region: 20 per                     of ListManagedClusters
+ make per second.                                    second                             requests per second that
+                                                                                        you can perform in this
+                                                                                        account in the current
+                                                                                        Region. ListManag
+                                                                                        edClusters provides the
+                                                                                        status of all managed
+                                                                                        clusters visible to this
+                                                                                        AWS account.
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 1741
+AWS General Reference                                                                                        Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ The maximum number of ListRelea                      Each supported            Yes      The maximum number
+ seLabels API requests that you can                   Region: 5 per                      of ListReleaseLabels
+ make per second.                                     second                             requests per second that
+                                                                                         you can perform in this
+                                                                                         account in the current
+                                                                                         Region. ListReleaseLabels
+                                                                                         retrieves release labels of
+                                                                                         Amazon EMR services in
+                                                                                         the region.
+
+ The maximum number of ListSecur                      Each supported            Yes      The maximum number
+ ityConfigurations API requests that you               Region: 5 per                      of ListSecurityConfig
+ can make per second.                                 second                             urations requests per
+                                                                                         second that you can
+                                                                                         perform in this account
+                                                                                         in the current Region.
+                                                                                         ListSecurityConfig
+                                                                                         urations lists all the
+                                                                                         security configurations
+                                                                                         visible to this account,
+                                                                                         providing their creation
+                                                                                         dates and times, and
+                                                                                         their names.
+
+ The maximum number of ListSteps API                  Each supported            Yes      The maximum number
+ requests that you can make per second.               Region: 10 per                     of ListSteps requests
+                                                      second                             per second that you can
+                                                                                         perform in this account
+                                                                                         in the current Region.
+                                                                                         ListSteps provides a list
+                                                                                         of steps for the cluster in
+                                                                                         reverse order.
+
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 1742
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ The maximum number of ListSuppo                     Each supported            Yes     The maximum number
+ rtedInstanceTypes API requests that                 Region: 5 per                     of ListSupportedInsta
+ you can make per second.                            second                            nceTypes requests per
+                                                                                       second that you can
+                                                                                       perform in this account
+                                                                                       in the current Region.
+                                                                                       ListSupportedInsta
+                                                                                       nceTypes lists the
+                                                                                       instance types that
+                                                                                       Amazon EMR supports.
+
+ The maximum number of ModifyClu                     Each supported            Yes     The maximum number of
+ ster API requests that you can make per             Region: 10 per                    ModifyCluster requests
+ second.                                             second                            per second that you can
+                                                                                       perform in this account
+                                                                                       in the current Region.
+                                                                                       ModifyCluster modifies
+                                                                                       the number of steps
+                                                                                       that can be executed
+                                                                                       concurrently for the
+                                                                                       cluster specified using
+                                                                                       ClusterID.
+
+ The maximum number of ModifyIns                     Each supported            Yes     The maximum number
+ tanceFleet API requests that you can                Region: 5 per                     of ModifyInstanceFleet
+ make per second.                                    second                            requests per second that
+                                                                                       you can perform in this
+                                                                                       account in the current
+                                                                                       Region. ModifyIns
+                                                                                       tanceFleet modifies the
+                                                                                       target On-Demand and
+                                                                                       target Spot capacities for
+                                                                                       the instance fleet.
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1743
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ The maximum number of ModifyIns                     Each supported            Yes      The maximum number
+ tanceGroups API requests that you can               Region: 5 per                      of ModifyInstanceGroups
+ make per second.                                    second                             requests per second that
+                                                                                        you can perform in this
+                                                                                        account in the current
+                                                                                        Region. ModifyIns
+                                                                                        tanceGroups modifies
+                                                                                        the number of nodes and
+                                                                                        configuration settings of
+                                                                                        an instance group.
+
+ The maximum number of PutAutoSc                     Each supported            Yes      The maximum number
+ alingPolicy API requests that you can               Region: 5 per                      of PutAutoScalingPolicy
+ make per second.                                    second                             requests per second that
+                                                                                        you can perform in this
+                                                                                        account in the current
+                                                                                        Region. PutAutoSc
+                                                                                        alingPolicy creates or
+                                                                                        updates an automatic
+                                                                                        scaling policy for a core
+                                                                                        instance group or task
+                                                                                        instance group in an
+                                                                                        Amazon EMR cluster.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1744
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ The maximum number of PutAutoTe                     Each supported            Yes     The maximum number
+ rminationPolicy API requests that you               Region: 5 per                     of PutAutoTermination
+ can make per second.                                second                            Policy requests per
+                                                                                       second that you can
+                                                                                       perform in this account
+                                                                                       in the current Region.
+                                                                                       PutAutoTermination
+                                                                                       Policy creates or updates
+                                                                                       an auto-termination
+                                                                                       policy for an Amazon
+                                                                                       EMR cluster.
+
+ The maximum number of PutBlockP                     Each supported            Yes     The maximum number
+ ublicAccessConfiguration API requests                Region: 5 per                     of PutBlockPublicAcce
+ that you can make per second.                       second                            ssConfiguration requests
+                                                                                       per second that you can
+                                                                                       perform in this account
+                                                                                       in the current Region.
+                                                                                       PutBlockPublicAcce
+                                                                                       ssConfiguration creates
+                                                                                       or updates an Amazon
+                                                                                       EMR block public access
+                                                                                       configuration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1745
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ The maximum number of PutManage                     Each supported            Yes     The maximum number
+ dScalingPolicy API requests that you                Region: 5 per                     of PutManagedScalingP
+ can make per second.                                second                            olicy requests per
+                                                                                       second that you can
+                                                                                       perform in this account
+                                                                                       in the current Region.
+                                                                                       PutManagedScalingP
+                                                                                       olicy creates or updates
+                                                                                       a managed scaling policy
+                                                                                       for an Amazon EMR
+                                                                                       cluster.
+
+ The maximum number of RemoveAut                     Each supported            Yes     The maximum number
+ oScalingPolicy API requests that you                Region: 5 per                     of RemoveAutoScalingP
+ can make per second.                                second                            olicy requests per
+                                                                                       second that you can
+                                                                                       perform in this account
+                                                                                       in the current Region.
+                                                                                       RemoveAutoScalingP
+                                                                                       olicy removes an
+                                                                                       automatic scaling policy
+                                                                                       from a specified instance
+                                                                                       group within an EMR
+                                                                                       cluster.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1746
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ The maximum number of RemoveAut                    Each supported           Yes      The maximum number
+ oTerminationPolicy API requests that               Region: 5 per                     of RemoveAutoTerminat
+ you can make per second.                           second                            ionPolicy requests per
+                                                                                      second that you can
+                                                                                      perform in this account
+                                                                                      in the current Region.
+                                                                                      RemoveAutoTerminat
+                                                                                      ionPolicy removes an
+                                                                                      auto-termination policy
+                                                                                      from an Amazon EMR
+                                                                                      cluster.
+
+ The maximum number of RemoveMan                    Each supported           Yes      The maximum number
+ agedScalingPolicy API requests that                Region: 5 per                     of RemoveManagedScali
+ you can make per second.                           second                            ngPolicy requests per
+                                                                                      second that you can
+                                                                                      perform in this account
+                                                                                      in the current Region.
+                                                                                      PutManagedScalingP
+                                                                                      olicy removes a managed
+                                                                                      scaling policy from a
+                                                                                      specified Amazon EMR
+                                                                                      cluster.
+
+ The maximum number of RemoveTag                    Each supported           Yes      The maximum number
+ s API requests that you can make per               Region: 5 per                     of RemoveTags requests
+ second.                                            second                            per second that you can
+                                                                                      perform in this account
+                                                                                      in the current Region.
+                                                                                      Removes tags from an
+                                                                                      Amazon EMR resource.
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 1747
+AWS General Reference                                                                                     Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ The maximum number of RunJobFlo                     Each supported           Yes      The maximum number
+ w API requests that you can make per                Region: 10 per                    of RunJobFlow requests
+ second.                                             second                            per second that you can
+                                                                                       perform in this account
+                                                                                       in the current Region.
+                                                                                       RunJobFlow creates and
+                                                                                       starts running a new
+                                                                                       cluster (job flow).
+
+ The maximum number of SetKeepJo                     Each supported           Yes      The maximum number
+ bFlowAliveWhenNoSteps API requests                  Region: 5 per                     of SetKeepJobFlowAliv
+ that you can make per second.                       second                            eWhenNoSteps per
+                                                                                       second that you can
+                                                                                       perform in this account
+                                                                                       in the current Region
+
+ The maximum number of SetTermin                     Each supported           Yes      The maximum number
+ ationProtection API requests that you               Region: 5 per                     of SetTerminationProt
+ can make per second.                                second                            ection requests per
+                                                                                       second that you can
+                                                                                       perform in this account
+                                                                                       in the current Region.
+                                                                                       SetTerminationProt
+                                                                                       ection locks a cluster
+                                                                                       (job flow) so the EC2
+                                                                                       instances in the cluster
+                                                                                       cannot be terminated.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1748
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ The maximum number of SetVisibi                     Each supported            Yes      The maximum number
+ leToAllUsers API requests that you can              Region: 5 per                      of SetVisibleToAllUse
+ make per second.                                    second                             rs requests per second
+                                                                                        that you can perform
+                                                                                        in this account in the
+                                                                                        current Region. Sets
+                                                                                        the VisibleToAllUsers
+                                                                                        value, which determine
+                                                                                        s whether the cluster is
+                                                                                        visible to all IAM users
+                                                                                        of the AWS account
+                                                                                        associated with the
+                                                                                        cluster.
+
+ The maximum number of StartJobR                     Each supported            Yes      The maximum number
+ un API requests that you can make per               Region: 10 per                     of StartJobRun requests
+ second.                                             second                             per second that you
+                                                                                        can perform in this
+                                                                                        account in the current
+                                                                                        Region. StartJobRun
+                                                                                        submits a new job run to
+                                                                                        a managed cluster.
+
+ The maximum number of Terminate                     Each supported            Yes      The maximum number
+ JobFlows API requests that you can                  Region: 10 per                     of TerminateJobFlows
+ make per second.                                    second                             requests per second that
+                                                                                        you can perform in this
+                                                                                        account in the current
+                                                                                        Region. Terminate
+                                                                                        JobFlows shuts a list
+                                                                                        of clusters (job flows)
+                                                                                        down.
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1749
+AWS General Reference                                                                                     Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+ The maximum number of Terminate                    Each supported            Yes      The maximum number
+ ManagedCluster API requests that you               Region: 10 per                     of TerminateManagedCl
+ can make per second.                               second                             uster requests per
+                                                                                       second that you can
+                                                                                       perform in this account
+                                                                                       in the current Region.
+                                                                                       TerminateManagedCl
+                                                                                       uster shuts down a
+                                                                                       managed cluster.
+
+ The maximum number of active                       Each supported            Yes      The maximum number of
+ clusters can be run at the same time               Region: 500                        active clusters can be run
+                                                                                       at the same time.
+
+ The maximum number of active                       Each supported            Yes      The maximum number
+ instances per instance group                       Region: 2,000                      of active instances per
+                                                                                       instance group.
+
+ The maximum rate at which your                     Each supported            Yes      The maximum rate
+ bucket replenishes for all EMR                     Region: 50                         at which your bucket
+ operations.                                                                           replenishes for all EMR
+                                                                                       operations.
+
+ Write-ahead logs (EMR WAL)                         Each supported            No       The maximum number of
+                                                    Region: 20,000                     Amazon EMR write-ahe
+                                                                                       ad logs (EMR WAL) that
+                                                                                       can be used at the same
+                                                                                       time in this account in
+                                                                                       the current Region.
+
+
+
+Amazon EMR throttles the following API requests for each AWS account on a per-Region basis. For
+more information about how throttling is applied, see API Request Throttling in the Amazon EC2
+API Reference.
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 1750

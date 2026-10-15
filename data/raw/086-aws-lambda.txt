@@ -1,0 +1,1084 @@
+AWS General Reference                                                                                    Reference guide
+Service quotas
+
+
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Length of a path that can be registered            Each supported           Yes      The maximum length
+                                                    Region: 700                       of a path that can be
+                                                                                      registered per catalog.
+
+ Number of data lake administrators                 Each supported           Yes      The maximum number of
+                                                    Region: 30                        data lake administrators
+                                                                                      per catalog.
+
+ Number of lf tag per account                       Each supported           Yes      The maximum number of
+                                                    Region: 1,000                     lf tag per account
+
+ Number of lf tag policy per principal              Each supported           Yes      The maximum number of
+ per resource type                                  Region: 50                        lf tag policy per principal
+                                                                                      per resource type
+
+ Number of registered paths                         Each supported           Yes      The maximum number
+                                                    Region: 10,000                    of registered paths per
+                                                                                      catalog.
+
+ Number of subfolders in an Amazon S3               Each supported           Yes      The maximum number of
+ path                                               Region: 20                        subfolders in an Amazon
+                                                                                      S3 path per catalog.
+
+ Number of tag values per lf tag                    Each supported           Yes      The maximum number of
+                                                    Region: 1,000                     tag values per lf tag.
+
+
+AWS Lambda endpoints and quotas
+
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+
+
+Service quotas                                                                                          Version 1.0 2417
+AWS General Reference                                                                                 Reference guide
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+
+ Region         Region        Endpoint                                                 Protocol
+ Name
+
+ US East        us-east-2     lambda.us-east-2.amazonaws.com                           HTTPS
+ (Ohio)
+                              lambda-fips.us-east-2.amazonaws.com                       HTTPS
+
+                              lambda.us-east-2.api.aws                                 HTTPS
+
+ US             us-east-1     lambda.us-east-1.amazonaws.com                           HTTPS
+ East (N.
+ Virginia)                    lambda-fips.us-east-1.amazonaws.com                       HTTPS
+
+                              lambda.us-east-1.api.aws                                 HTTPS
+
+ US             us-           lambda.us-west-1.amazonaws.com                           HTTPS
+ West (N.       west-1
+ Californi                    lambda-fips.us-west-1.amazonaws.com                       HTTPS
+
+ a)                           lambda.us-west-1.api.aws                                 HTTPS
+
+
+ US West        us-           lambda.us-west-2.amazonaws.com                           HTTPS
+ (Oregon)       west-2
+                              lambda-fips.us-west-2.amazonaws.com                       HTTPS
+
+                              lambda.us-west-2.api.aws                                 HTTPS
+
+ Africa         af-south-     lambda.af-south-1.amazonaws.com                          HTTPS
+ (Cape          1
+ Town)                        lambda.af-south-1.api.aws                                HTTPS
+
+
+ Asia           ap-           lambda.ap-east-1.amazonaws.com                           HTTPS
+ Pacific         east-1
+                              lambda.ap-east-1.api.aws                                 HTTPS
+
+
+
+Service endpoints                                                                                    Version 1.0 2418
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ (Hong
+ Kong)
+
+ Asia          ap-            lambda.ap-south-2.amazonaws.com                          HTTPS
+ Pacific        south-2
+ (Hyderaba                    lambda.ap-south-2.api.aws                                HTTPS
+
+ d)
+
+ Asia          ap-            lambda.ap-southeast-3.amazonaws.com                      HTTPS
+ Pacific        southe
+ (Jakarta)     ast-3          lambda.ap-southeast-3.api.aws                            HTTPS
+
+
+ Asia          ap-            lambda.ap-southeast-5.amazonaws.com                      HTTPS
+ Pacific        southe
+ (Malaysia     ast-5          lambda.ap-southeast-5.api.aws                            HTTPS
+
+ )
+
+ Asia          ap-            lambda.ap-southeast-4.amazonaws.com                      HTTPS
+ Pacific        southe
+ (Melbourn     ast-4          lambda.ap-southeast-4.api.aws                            HTTPS
+
+ e)
+
+ Asia          ap-            lambda.ap-south-1.amazonaws.com                          HTTPS
+ Pacific        south-1
+ (Mumbai)                     lambda.ap-south-1.api.aws                                HTTPS
+
+
+ Asia          ap-            lambda.ap-southeast-6.amazonaws.com                      HTTPS
+ Pacific        southe
+ (New          ast-6          lambda.ap-southeast-6.api.aws                            HTTPS
+
+ Zealand)
+
+ Asia          ap-            lambda.ap-northeast-3.amazonaws.com                      HTTPS
+ Pacific        northe
+ (Osaka)       ast-3          lambda.ap-northeast-3.api.aws                            HTTPS
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 2419
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-            lambda.ap-northeast-2.amazonaws.com                      HTTPS
+ Pacific        northe
+ (Seoul)       ast-2          lambda.ap-northeast-2.api.aws                            HTTPS
+
+
+ Asia          ap-            lambda.ap-southeast-1.amazonaws.com                      HTTPS
+ Pacific        southe
+ (Singapor     ast-1          lambda.ap-southeast-1.api.aws                            HTTPS
+
+ e)
+
+ Asia          ap-            lambda.ap-southeast-2.amazonaws.com                      HTTPS
+ Pacific        southe
+ (Sydney)      ast-2          lambda.ap-southeast-2.api.aws                            HTTPS
+
+
+ Asia          ap-            lambda.ap-east-2.amazonaws.com                           HTTPS
+ Pacific        east-2
+ (Taipei)                     lambda.ap-east-2.api.aws                                 HTTPS
+
+
+ Asia          ap-            lambda.ap-southeast-7.amazonaws.com                      HTTPS
+ Pacific        southe
+ (Thailand     ast-7          lambda.ap-southeast-7.api.aws                            HTTPS
+
+ )
+
+ Asia          ap-            lambda.ap-northeast-1.amazonaws.com                      HTTPS
+ Pacific        northe
+ (Tokyo)       ast-1          lambda.ap-northeast-1.api.aws                            HTTPS
+
+
+ Canada        ca-centra      lambda.ca-central-1.amazonaws.com                        HTTPS
+ (Central)     l-1
+                              lambda.ca-central-1.api.aws                              HTTPS
+
+ Canada        ca-            lambda.ca-west-1.amazonaws.com                           HTTPS
+ West          west-1
+ (Calgary)                    lambda.ca-west-1.api.aws                                 HTTPS
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 2420
+AWS General Reference                                                                                Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Europe        eu-            lambda.eu-central-1.amazonaws.com                        HTTPS
+ (Frankfur     central-1
+ t)                           lambda.eu-central-1.api.aws                              HTTPS
+
+
+ Europe        eu-            lambda.eu-west-1.amazonaws.com                           HTTPS
+ (Ireland)     west-1
+                              lambda.eu-west-1.api.aws                                 HTTPS
+
+ Europe        eu-            lambda.eu-west-2.amazonaws.com                           HTTPS
+ (London)      west-2
+                              lambda.eu-west-2.api.aws                                 HTTPS
+
+ Europe        eu-            lambda.eu-south-1.amazonaws.com                          HTTPS
+ (Milan)       south-1
+                              lambda.eu-south-1.api.aws                                HTTPS
+
+ Europe        eu-            lambda.eu-west-3.amazonaws.com                           HTTPS
+ (Paris)       west-3
+                              lambda.eu-west-3.api.aws                                 HTTPS
+
+ Europe        eu-            lambda.eu-south-2.amazonaws.com                          HTTPS
+ (Spain)       south-2
+                              lambda.eu-south-2.api.aws                                HTTPS
+
+ Europe        eu-            lambda.eu-north-1.amazonaws.com                          HTTPS
+ (Stockhol     north-1
+ m)                           lambda.eu-north-1.api.aws                                HTTPS
+
+
+ Europe        eu-            lambda.eu-central-2.amazonaws.com                        HTTPS
+ (Zurich)      central-2
+                              lambda.eu-central-2.api.aws                              HTTPS
+
+ Israel        il-centra      lambda.il-central-1.amazonaws.com                        HTTPS
+ (Tel Aviv)    l-1
+                              lambda.il-central-1.api.aws                              HTTPS
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 2421
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ Mexico        mx-           lambda.mx-central-1.amazonaws.com                        HTTPS
+ (Central)     central-1
+                             lambda.mx-central-1.api.aws                              HTTPS
+
+ Middle        me-           lambda.me-south-1.amazonaws.com                          HTTPS
+ East          south-1
+ (Bahrain)                   lambda.me-south-1.api.aws                                HTTPS
+
+
+ Middle        me-           lambda.me-central-1.amazonaws.com                        HTTPS
+ East          central-1
+ (UAE)                       lambda.me-central-1.api.aws                              HTTPS
+
+
+ South         sa-east-1     lambda.sa-east-1.amazonaws.com                           HTTPS
+ America
+ (São                        lambda.sa-east-1.api.aws                                 HTTPS
+
+ Paulo)
+
+ AWS           us-gov-       lambda.us-gov-east-1.amazonaws.com                       HTTPS
+ GovCloud      east-1
+ (US-East)                   lambda-fips.us-gov-east-1.amazonaws.com                   HTTPS
+
+                             lambda.us-gov-east-1.api.aws                             HTTPS
+
+ AWS           us-gov-       lambda.us-gov-west-1.amazonaws.com                       HTTPS
+ GovCloud      west-1
+ (US-                        lambda-fips.us-gov-west-1.amazonaws.com                   HTTPS
+
+ West)                       lambda.us-gov-west-1.api.aws                             HTTPS
+
+
+Service quotas
+
+
+
+      Important
+      New AWS accounts have reduced concurrency and memory quotas. AWS raises these
+      quotas automatically based on your usage. You can also request a quota increase.
+
+
+
+
+
+
+Service quotas                                                                                     Version 1.0 2422
+AWS General Reference                                                                                    Reference guide
+
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Arm vCPUs for all Web Functions                    Each supported           No      The Arm64 vCPU
+                                                    Region: 2,000                    capacity for Lambda
+                                                                                     Web Function execution
+                                                                                     environments in this
+                                                                                     account in the current
+                                                                                     Region.
+
+ Asynchronous invocation request                    Each supported           Yes     The maximum invoke
+ throughput on Lambda Managed                       Region: 5                        request throughput
+ Instances                                          Megabytes/                       (MB/s) for asynchronous
+                                                    Second                           invocations on Lambda
+                                                                                     Managed Instances.
+                                                                                     Asynchronous invocatio
+                                                                                     ns occur when Lambda
+                                                                                     functions are invoked by
+                                                                                     services such as Amazon
+                                                                                     S3 or Amazon SNS.
+
+ Asynchronous payload                               Each supported           No      The maximum size of an
+                                                    Region: 1,024                    incoming asynchronous
+                                                    Kilobytes                        invocation request.
+
+ Burst rate of CreateMicrovmAuthToken               Each supported           Yes     The maximum number
+ API requests                                       Region: 50                       of CreateMicrovmAuthT
+                                                                                     oken API requests that
+                                                                                     can be sent in one burst.
+
+ Burst rate of CreateMicrovmShell                   Each supported           Yes     The maximum number
+ AuthToken API requests                             Region: 5                        of CreateMicrovmShell
+                                                                                     AuthToken API requests
+                                                                                     that can be sent in one
+                                                                                     burst.
+
+ Burst rate of GetMicrovm API requests              Each supported           Yes     The maximum number of
+                                                    Region: 100                      GetMicrovm API requests
+
+
+
+Service quotas                                                                                          Version 1.0 2423
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+                                                                                       that can be sent in one
+                                                                                       burst.
+
+ Burst rate of ResumeMicrovm API                     Each supported           Yes      The maximum number
+ requests                                            Region: 5                         of ResumeMicrovm API
+                                                                                       requests that can be sent
+                                                                                       in one burst.
+
+ Burst rate of RunMicrovm API requests               Each supported           Yes      The maximum number of
+                                                     Region: 5                         RunMicrovm API requests
+                                                                                       that can be sent in one
+                                                                                       burst.
+
+ Burst rate of SuspendMicrovm API                    Each supported           Yes      The maximum number
+ requests                                            Region: 2                         of SuspendMicrovm API
+                                                                                       requests that can be sent
+                                                                                       in one burst.
+
+ Burst rate of TerminateMicrovm API                  Each supported           Yes      The maximum number
+ requests                                            Region: 10                        of TerminateMicrovm API
+                                                                                       requests that can be sent
+                                                                                       in one burst.
+
+ Capacity providers                                  Each supported           Yes      The maximum number
+                                                     Region: 1,000                     of capacity providers
+                                                                                       that can be created in an
+                                                                                       account.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 2424
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Concurrency scaling rate                            Each supported           No       The maximum
+                                                     Region: 1,000                     immediate increase
+                                                                                       in function concurren
+                                                                                       cy that can occur in
+                                                                                       response to an increase
+                                                                                       in traffic or execution
+                                                                                       duration. Every 10
+                                                                                       seconds, each synchrono
+                                                                                       usly invoked Lambda
+                                                                                       function can scale by
+                                                                                       an additional 1,000
+                                                                                       concurrent executions
+                                                                                       until the total concurren
+                                                                                       cy across your functions
+                                                                                       in a Region reaches the
+                                                                                       account concurrency
+                                                                                       limit.
+
+ Concurrent connections per 1 vCPU                   Each supported           No       Maximum number of
+ MicroVM                                             Region: 8 Count                   concurrent connectio
+                                                                                       ns per MicroVM with 1
+                                                                                       vCPUs.
+
+ Concurrent connections per 16 vCPU                  Each supported           No       Maximum number of
+ MicroVM                                             Region: 128                       concurrent connectio
+                                                     Count                             ns per MicroVM with 16
+                                                                                       vCPUs.
+
+ Concurrent connections per 2 vCPU                   Each supported           No       Maximum number of
+ MicroVM                                             Region: 16 Count                  concurrent connectio
+                                                                                       ns per MicroVM with 2
+                                                                                       vCPUs.
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 2425
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Concurrent connections per 4 vCPU                  Each supported           No       Maximum number of
+ MicroVM                                            Region: 32 Count                  concurrent connectio
+                                                                                      ns per MicroVM with 4
+                                                                                      vCPUs.
+
+ Concurrent connections per 8 vCPU                  Each supported           No       Maximum number of
+ MicroVM                                            Region: 64 Count                  concurrent connectio
+                                                                                      ns per MicroVM with 8
+                                                                                      vCPUs.
+
+ Concurrent executions                              Each supported           Yes      The maximum number of
+                                                    Region: 1,000                     events that functions can
+                                                    Count                             process simultaneously
+                                                                                      in the current Region.
+
+ Deployment package size (console                   Each supported           No       The maximum size of a
+ editor)                                            Region: 3                         deployment package or
+                                                    Megabytes                         layer archive when you
+                                                                                      upload it through the
+                                                                                      console editor. Upload
+                                                                                      larger files with Amazon
+                                                                                      S3.
+
+ Deployment package size (direct                    Each supported           No       The maximum size of
+ upload)                                            Region: 50                        a deployment package
+                                                    Megabytes                         or layer archive when
+                                                                                      you upload it directly to
+                                                                                      Lambda. Upload larger
+                                                                                      files with Amazon S3.
+
+ Deployment package size (unzipped)                 Each supported           No       The maximum size of the
+                                                    Region: 250                       contents of a deploymen
+                                                    Megabytes                         t package or layer archive
+                                                                                      when its unzipped.
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 2426
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Durable execution storage written in               Each supported           No       The maximum cumulativ
+ megabytes                                          Region: 100                       e amount of data
+                                                    Megabytes                         persisted per durable
+                                                                                      execution, including
+                                                                                      input and output
+                                                                                      payloads, checkpoints
+                                                                                      and error data, measured
+                                                                                      in megabytes.
+
+ DynamoDB Event Source Mapping                      Each supported           Yes      The maximum data
+ throughput on Lambda Managed                       Region: 10                        throughput (MB/s) per
+ Instances                                          Megabytes/                        DynamoDB event source
+                                                    Second                            mapping on Lambda
+                                                                                      Managed Instances.
+
+ Elastic network interfaces per VPC                 Each supported           Yes      The maximum number
+                                                    Region: 3,000                     of network interfaces
+                                                                                      that Lambda creates for
+                                                                                      a VPC with functions
+                                                                                      attached. Lambda
+                                                                                      creates a network
+                                                                                      interface for each
+                                                                                      combination of subnet
+                                                                                      and security group that
+                                                                                      functions connect to.
+
+ Endpoints per Web Function                         Each supported           No       The maximum number
+                                                    Region: 10                        of endpoints allowed per
+                                                                                      Lambda Web Function.
+
+ Environment variable size                          Each supported           No       The maximum combined
+                                                    Region: 4                         size of environme
+                                                    Kilobytes                         nt variables that are
+                                                                                      configured on a function.
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 2427
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ File descriptors                                    Each supported            No       The maximum number
+                                                     Region: 1,024                      of file descriptors that a
+                                                                                        function can have open.
+
+ Function and layer storage                          Each supported            Yes      The amount of storage
+                                                     Region: 300                        thats available for
+                                                     Gigabytes                          deployment packages
+                                                                                        and layer archives in the
+                                                                                        current Region.
+
+ Function invocation rate to initiate                us-east-1: 6,000          Yes      The maximum number of
+ durable executions                                                                     new durable executions
+                                                     us-west-2: 6,000                   that you can initiate per
+
+                                                     eu-west-1: 6,000                   second.
+
+
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 3,000
+
+ Function layers                                     Each supported            No       The maximum number of
+                                                     Region: 5                          layers that you can add
+                                                                                        to your function.
+
+ Function resource-based policy                      Each supported            No       The maximum combined
+                                                     Region: 20                         size of resource-
+                                                     Kilobytes                          based policies that are
+                                                                                        configured on a function.
+
+ Function timeout                                    Each supported            No       The maximum timeout
+                                                     Region: 900                        that you can configure
+                                                                                        for a function.
+
+ Function versions per capacity provider             Each supported            No       The maximum number
+                                                     Region: 100                        of function versions per
+                                                                                        capacity provider.
+
+
+
+
+Service quotas                                                                                             Version 1.0 2428
+AWS General Reference                                                                                   Reference guide
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Kafka Event Source Mappings in                    Each supported           No       The maximum number
+ default mode on Lambda Managed                    Region: 100                       of Kafka event source
+ Instances                                                                           mappings in default
+                                                                                     mode on Lambda
+                                                                                     Managed Instances.
+
+ Kafka Stream Event Source Mapping                 Each supported           No       The maximum data
+ throughput in non-provisioned mode                Region: 5                         throughput (MB/s) per
+                                                   Megabytes/                        Kafka Stream event
+                                                   Second                            source mapping in non-
+                                                                                     provisioned mode.
+
+ Kinesis Event Source Mapping                      Each supported           Yes      The maximum data
+ throughput on Lambda Managed                      Region: 25                        throughput (MB/s) per
+ Instances                                         Megabytes/                        Kinesis event source
+                                                   Second                            mapping on Lambda
+                                                                                     Managed Instances.
+
+ Max Execution Duration of a MicroVM               Each supported           No       The maximum execution
+ (in Hours)                                        Region: 8                         duration of a MicroVM (in
+                                                                                     Hours).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                         Version 1.0 2429
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Max allocated ARM_64 MicroVM                        us-east-1: 1,024          Yes      The maximum total
+ memory                                              Gigabytes                          configured baseline
+                                                                                        memory across all
+                                                     us-east-2: 1,024                   concurrently running
+                                                     Gigabytes                          ARM_64 MicroVMs, per
+
+                                                     us-west-2: 1,024                   account, per region.
+                                                     Gigabytes                          Individual MicroVMs
+                                                                                        can burst up to 4x their
+                                                     ap-northeast-1:                    configured baseline
+                                                     1,024 Gigabytes                    memory.
+
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 400
+                                                     Gigabytes
+
+ Maximum number of durable operation                 Each supported            No       The maximum number
+ s per durable execution                             Region: 30,000                     of durable operation
+                                                                                        s (including customer-
+                                                                                        initiated operations and
+                                                                                        automatic retries) that
+                                                                                        trigger state persistence
+                                                                                        within a single durable
+                                                                                        execution.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 2430
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+ Maximum running durable executions                 us-east-1:                Yes     The maximum number
+                                                    10,000,000                        of durable execution
+                                                                                      s that can be running
+                                                    us-west-2:                        simultaneously in the
+                                                    10,000,000                        current region.
+
+                                                    eu-west-1:
+                                                    10,000,000
+
+                                                    Each of the
+                                                    other supported
+                                                    Regions:
+                                                    5,000,000
+
+ Network bandwidth per execution                    Each supported            Yes     The maximum sustained
+ environment                                        Region: 625                       network bandwidth, in
+                                                    Megabits/Second                   megabits per second,
+                                                                                      for a Lambda functions
+                                                                                      execution environment
+                                                                                      that is not attached to a
+                                                                                      VPC.
+
+ Network connectors                                 Each supported            No      Number of Network
+                                                    Region: 1,000                     Connectors per account
+
+ Number of MicroVM images                           Each supported            Yes     Number of MicroVM
+                                                    Region: 100                       images per account per
+                                                    Count                             region
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 2431
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Number of concurrent MicroVM image                 us-east-1: 10            Yes      Number of concurrent
+ builds                                             Count                             MicroVM image builds
+                                                                                      per account per region
+                                                    us-east-2: 10
+                                                    Count
+
+                                                    us-west-2: 10
+                                                    Count
+
+                                                    ap-northeast-1:
+                                                    10 Count
+
+                                                    Each of the
+                                                    other supported
+                                                    Regions: 5 Count
+
+ Processes and threads                              Each supported           No       The maximum combined
+                                                    Region: 1,024                     number of processes and
+                                                                                      threads that a function
+                                                                                      can have open.
+
+ RPS per 16 vCPU MicroVm                            Each supported           No       Maximum number of
+                                                    Region: 160                       requests per second per
+                                                    Count                             MicroVM with 16 vCPUs /
+                                                                                      32 GB.
+
+ RPS per 4 vCPU MicroVm                             Each supported           No       Maximum number of
+                                                    Region: 40 Count                  requests per second per
+                                                                                      MicroVM with 4 vCPUs /
+                                                                                      8 GB.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 2432
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Rate of CheckpointDurableExecution                 us-east-1: 20,000        Yes      The maximum number
+ API requests                                                                         of CheckpointDurableE
+                                                    us-west-2: 20,000                 xecution API requests per
+
+                                                    eu-west-1: 20,000                 second.
+
+
+                                                    Each of the
+                                                    other supported
+                                                    Regions: 10,000
+
+ Rate of CreateMicrovmAuthToken API                 Each supported           Yes      The maximum number
+ requests                                           Region: 50                        of CreateMicrovmAuthT
+                                                                                      oken API requests per
+                                                                                      second.
+
+ Rate of CreateMicrovmShellAuthToken                Each supported           Yes      The maximum number
+ API requests                                       Region: 5                         of CreateMicrovmShell
+                                                                                      AuthToken API requests
+                                                                                      per second in this
+                                                                                      account in the current
+                                                                                      Region.
+
+ Rate of GetDurableExecution API                    Each supported           Yes      The maximum number of
+ requests                                           Region: 30                        GetDurableExecution API
+                                                                                      requests per second.
+
+ Rate of GetDurableExecutionHistory                 Each supported           Yes      The maximum number
+ API requests                                       Region: 15                        of GetDurableExecutio
+                                                                                      nHistory API requests per
+                                                                                      second.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 2433
+AWS General Reference                                                                                   Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Rate of GetDurableExecutionState API               us-east-1: 20,000        Yes     The maximum number
+ requests                                                                            of GetDurableExecutio
+                                                    us-west-2: 20,000                nState API requests per
+
+                                                    eu-west-1: 20,000                second.
+
+
+                                                    Each of the
+                                                    other supported
+                                                    Regions: 10,000
+
+ Rate of GetFunction API requests                   Each supported           No      The maximum number of
+                                                    Region: 100                      GetFunction API requests
+                                                                                     per second.
+
+ Rate of GetMicrovm API requests                    Each supported           Yes     The maximum number of
+                                                    Region: 100                      GetMicrovm API requests
+                                                                                     per second.
+
+ Rate of GetPolicy API requests                     Each supported           No      The maximum number
+                                                    Region: 15                       of GetPolicy API requests
+                                                                                     per second.
+
+ Rate of ListDurableExecutionsByFunc                Each supported           Yes     The maximum number
+ tion API requests                                  Region: 15                       of ListDurableExecuti
+                                                                                     onsByFunction API
+                                                                                     requests per second.
+
+ Rate of ResumeMicrovm API requests                 Each supported           Yes     The maximum number
+                                                    Region: 5                        of ResumeMicrovm API
+                                                                                     requests per second.
+
+ Rate of RunMicrovm API requests                    Each supported           Yes     The maximum number of
+                                                    Region: 5                        RunMicrovm API requests
+                                                                                     per second
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 2434
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Rate of SendDurableExecutionCallbac                 us-east-1: 6,000          Yes     The maximum number
+ kFailure API requests                                                                 of SendDurableExecuti
+                                                     us-west-2: 6,000                  onCallbackFailure API
+
+                                                     eu-west-1: 6,000                  requests per second.
+
+
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 3,000
+
+ Rate of SendDurableExecutionCallbac                 us-east-1: 6,000          Yes     The maximum number
+ kHeartbeat API requests                                                               of SendDurableExecuti
+                                                     us-west-2: 6,000                  onCallbackHeartbeat API
+
+                                                     eu-west-1: 6,000                  requests per second.
+
+
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 3,000
+
+ Rate of SendDurableExecutionCallbac                 us-east-1: 6,000          Yes     The maximum number
+ kSuccess API requests                                                                 of SendDurableExecuti
+                                                     us-west-2: 6,000                  onCallbackSuccess API
+
+                                                     eu-west-1: 6,000                  requests per second.
+
+
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 3,000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 2435
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Rate of StopDurableExecution API                    us-east-1: 600           Yes      The maximum number
+ requests                                                                              of StopDurableExecution
+                                                     us-west-2: 600                    API requests per second.
+
+                                                     eu-west-1: 600
+
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 300
+
+ Rate of SuspendMicrovm API requests                 Each supported           Yes      The maximum number
+                                                     Region: 2                         of SuspendMicrovm API
+                                                                                       requests per second.
+
+ Rate of TerminateMicrovm API requests               Each supported           Yes      The maximum number
+                                                     Region: 10                        of TerminateMicrovm API
+                                                                                       requests per second.
+
+ Rate of capacity provider read API                  Each supported           No       The maximum combined
+ requests                                            Region: 15                        rate (requests per
+                                                                                       second) for all capacity
+                                                                                       provider read APIs.
+
+ Rate of capacity provider write API                 Each supported           No       The maximum combined
+ requests                                            Region: 1                         rate (requests per
+                                                                                       second) for all capacity
+                                                                                       provider write APIs.
+
+ Rate of control plane API requests                  Each supported           No       The maximum number of
+ (excludes invocation, GetFunction, and              Region: 15                        API requests per second
+ GetPolicy requests)                                                                   (excluding invocatio
+                                                                                       n, GetFunction, and
+                                                                                       GetPolicy requests).
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 2436
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Rate of requests per Web Function                  Each supported           No       The maximum number
+ Endpoint                                           Region: 10,000                    of requests per second
+                                                                                      allowed for a single
+                                                                                      Lambda Web Function
+                                                                                      endpoint.
+
+ Rate of requests to Web Functions                  Each supported           No       The maximum number
+                                                    Region: 100,000                   of requests per second
+                                                                                      allowed across all your
+                                                                                      Lambda Web Function
+                                                                                      endpoints in this account
+                                                                                      in the current Region.
+
+ Revisions per Web Function                         Each supported           No       The maximum number
+                                                    Region: 50                        of revisions retained per
+                                                                                      Lambda Web Function.
+                                                                                      When this limit is
+                                                                                      reached, the oldest
+                                                                                      revisions not reference
+                                                                                      d by any endpoint are
+                                                                                      automatically deleted.
+
+ SQS Event Source Mapping throughpu                 Each supported           No       The maximum data
+ t in default mode on Lambda Managed                Region: 5                         throughput (MB/s)
+ Instances                                          Megabytes/                        per SQS event source
+                                                    Second                            mapping in default mode
+                                                                                      on Lambda Managed
+                                                                                      Instances.
+
+ Synchronous payload                                Each supported           No       The maximum size of
+                                                    Region: 6                         an incoming synchrono
+                                                    Megabytes                         us invocation request or
+                                                                                      outgoing response.
+
+
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 2437

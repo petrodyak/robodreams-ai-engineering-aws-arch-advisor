@@ -1,0 +1,313 @@
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ TURN session expiration                            Each supported           No       The maximum valid
+                                                    Region: 300                       duration of TURN session
+                                                    Seconds                           credentials in this
+                                                                                      account in the current
+                                                                                      Region.
+
+
+
+For more information, see Kinesis Video Streams quotas in the Amazon Kinesis Video Streams
+Developer Guide.
+
+AWS Lake Formation endpoints and quotas
+
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ US East        us-east-2      lakeformation.us-east-2.amazonaws.com                      HTTPS
+ (Ohio)
+                               lakeformation-fips.us-east-2.api.aws                        HTTPS
+
+                               lakeformation-fips.us-east-2.amazonaws.com                  HTTPS
+
+                               lakeformation.us-east-2.api.aws                            HTTPS
+
+
+
+
+Lake Formation                                                                                          Version 1.0 2411
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US             us-east-1     lakeformation.us-east-1.amazonaws.com                     HTTPS
+ East (N.
+ Virginia)                    lakeformation-fips.us-east-1.api.aws                       HTTPS
+
+                              lakeformation-fips.us-east-1.amazonaws.com                 HTTPS
+
+                              lakeformation.us-east-1.api.aws                           HTTPS
+
+ US             us-           lakeformation.us-west-1.amazonaws.com                     HTTPS
+ West (N.       west-1
+ Californi                    lakeformation-fips.us-west-1.api.aws                       HTTPS
+
+ a)                           lakeformation-fips.us-west-1.amazonaws.com                 HTTPS
+
+
+                              lakeformation.us-west-1.api.aws                           HTTPS
+
+ US West        us-           lakeformation.us-west-2.amazonaws.com                     HTTPS
+ (Oregon)       west-2
+                              lakeformation-fips.us-west-2.api.aws                       HTTPS
+
+                              lakeformation-fips.us-west-2.amazonaws.com                 HTTPS
+
+                              lakeformation.us-west-2.api.aws                           HTTPS
+
+ Africa         af-south-     lakeformation.af-south-1.amazonaws.com                    HTTPS
+ (Cape          1
+ Town)                        lakeformation.af-south-1.api.aws                          HTTPS
+
+
+ Asia           ap-           lakeformation.ap-east-1.amazonaws.com                     HTTPS
+ Pacific         east-1
+ (Hong                        lakeformation.ap-east-1.api.aws                           HTTPS
+
+ Kong)
+
+ Asia           ap-           lakeformation.ap-south-2.amazonaws.com                    HTTPS
+ Pacific         south-2
+ (Hyderaba                    lakeformation.ap-south-2.api.aws                          HTTPS
+
+ d)
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 2412
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           lakeformation.ap-southeast-3.amazona                       HTTPS
+ Pacific         southe        ws.com
+ (Jakarta)      ast-3                                                                    HTTPS
+                              lakeformation.ap-southeast-3.api.aws
+
+ Asia           ap-           lakeformation.ap-southeast-5.amazona                       HTTPS
+ Pacific         southe        ws.com
+ (Malaysia      ast-5                                                                    HTTPS
+ )                            lakeformation.ap-southeast-5.api.aws
+
+
+ Asia           ap-           lakeformation.ap-southeast-4.amazona                       HTTPS
+ Pacific         southe        ws.com
+ (Melbourn      ast-4                                                                    HTTPS
+ e)                           lakeformation.ap-southeast-4.api.aws
+
+
+ Asia           ap-           lakeformation.ap-south-1.amazonaws.com                     HTTPS
+ Pacific         south-1
+ (Mumbai)                     lakeformation.ap-south-1.api.aws                           HTTPS
+
+
+ Asia           ap-           lakeformation.ap-southeast-6.amazona                       HTTPS
+ Pacific         southe        ws.com
+ (New           ast-6                                                                    HTTPS
+ Zealand)                     lakeformation.ap-southeast-6.api.aws
+
+
+ Asia           ap-           lakeformation.ap-northeast-3.amazona                       HTTPS
+ Pacific         northe        ws.com
+ (Osaka)        ast-3                                                                    HTTPS
+                              lakeformation.ap-northeast-3.api.aws
+
+ Asia           ap-           lakeformation.ap-northeast-2.amazona                       HTTPS
+ Pacific         northe        ws.com
+ (Seoul)        ast-2                                                                    HTTPS
+                              lakeformation.ap-northeast-2.api.aws
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 2413
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           lakeformation.ap-southeast-1.amazona                       HTTPS
+ Pacific         southe        ws.com
+ (Singapor      ast-1                                                                    HTTPS
+ e)                           lakeformation.ap-southeast-1.api.aws
+
+
+ Asia           ap-           lakeformation.ap-southeast-2.amazona                       HTTPS
+ Pacific         southe        ws.com
+ (Sydney)       ast-2                                                                    HTTPS
+                              lakeformation.ap-southeast-2.api.aws
+
+ Asia           ap-           lakeformation.ap-east-2.amazonaws.com                      HTTPS
+ Pacific         east-2
+ (Taipei)                     lakeformation.ap-east-2.api.aws                            HTTPS
+
+
+ Asia           ap-           lakeformation.ap-southeast-7.amazona                       HTTPS
+ Pacific         southe        ws.com
+ (Thailand      ast-7                                                                    HTTPS
+ )                            lakeformation.ap-southeast-7.api.aws
+
+
+ Asia           ap-           lakeformation.ap-northeast-1.amazona                       HTTPS
+ Pacific         northe        ws.com
+ (Tokyo)        ast-1                                                                    HTTPS
+                              lakeformation.ap-northeast-1.api.aws
+
+ Canada         ca-centra     lakeformation.ca-central-1.amazonaws.com                   HTTPS
+ (Central)      l-1
+                              lakeformation-fips.ca-central-1.api.aws                     HTTPS
+
+                              lakeformation-fips.ca-central-1.amaz                        HTTPS
+                              onaws.com
+                                                                                         HTTPS
+                              lakeformation.ca-central-1.api.aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 2414
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Canada        ca-            lakeformation.ca-west-1.amazonaws.com                    HTTPS
+ West          west-1
+ (Calgary)                    lakeformation-fips.ca-west-1.api.aws                      HTTPS
+
+                              lakeformation-fips.ca-west-1.amazonaws.com                HTTPS
+
+                              lakeformation.ca-west-1.api.aws                          HTTPS
+
+ Europe        eu-            lakeformation.eu-central-1.amazonaws.com                 HTTPS
+ (Frankfur     central-1
+ t)                           lakeformation.eu-central-1.api.aws                       HTTPS
+
+
+ Europe        eu-            lakeformation.eu-west-1.amazonaws.com                    HTTPS
+ (Ireland)     west-1
+                              lakeformation.eu-west-1.api.aws                          HTTPS
+
+ Europe        eu-            lakeformation.eu-west-2.amazonaws.com                    HTTPS
+ (London)      west-2
+                              lakeformation.eu-west-2.api.aws                          HTTPS
+
+ Europe        eu-            lakeformation.eu-south-1.amazonaws.com                   HTTPS
+ (Milan)       south-1
+                              lakeformation.eu-south-1.api.aws                         HTTPS
+
+ Europe        eu-            lakeformation.eu-west-3.amazonaws.com                    HTTPS
+ (Paris)       west-3
+                              lakeformation.eu-west-3.api.aws                          HTTPS
+
+ Europe        eu-            lakeformation.eu-south-2.amazonaws.com                   HTTPS
+ (Spain)       south-2
+                              lakeformation.eu-south-2.api.aws                         HTTPS
+
+ Europe        eu-            lakeformation.eu-north-1.amazonaws.com                   HTTPS
+ (Stockhol     north-1
+ m)                           lakeformation.eu-north-1.api.aws                         HTTPS
+
+
+ Europe        eu-            lakeformation.eu-central-2.amazonaws.com                 HTTPS
+ (Zurich)      central-2
+                              lakeformation.eu-central-2.api.aws                       HTTPS
+
+
+
+
+Service endpoints                                                                                    Version 1.0 2415
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Israel         il-centra     lakeformation.il-central-1.amazonaws.com                  HTTPS
+ (Tel Aviv)     l-1
+                              lakeformation.il-central-1.api.aws                        HTTPS
+
+ Mexico         mx-           lakeformation.mx-central-1.amazonaws.com                  HTTPS
+ (Central)      central-1
+                              lakeformation.mx-central-1.api.aws                        HTTPS
+
+ Middle         me-           lakeformation.me-south-1.amazonaws.com                    HTTPS
+ East           south-1
+ (Bahrain)                    lakeformation.me-south-1.api.aws                          HTTPS
+
+
+ Middle         me-           lakeformation.me-central-1.amazonaws.com                  HTTPS
+ East           central-1
+ (UAE)                        lakeformation.me-central-1.api.aws                        HTTPS
+
+
+ South          sa-east-1     lakeformation.sa-east-1.amazonaws.com                     HTTPS
+ America
+ (São                         lakeformation.sa-east-1.api.aws                           HTTPS
+
+ Paulo)
+
+ AWS            us-gov-       lakeformation.us-gov-east-1.amazonaws.com                 HTTPS
+ GovCloud       east-1
+ (US-East)                    lakeformation-fips.us-gov-east-1.api.aws                   HTTPS
+
+                              lakeformation-fips.us-gov-east-1.ama                       HTTPS
+                              zonaws.com
+                                                                                        HTTPS
+                              lakeformation.us-gov-east-1.api.aws
+
+ AWS            us-gov-       lakeformation.us-gov-west-1.amazonaws.com                 HTTPS
+ GovCloud       west-1
+ (US-                         lakeformation-fips.us-gov-west-1.api.aws                   HTTPS
+
+ West)                        lakeformation-fips.us-gov-west-1.ama                       HTTPS
+
+                              zonaws.com
+                                                                                        HTTPS
+                              lakeformation.us-gov-west-1.api.aws
+
+
+
+
+Service endpoints                                                                                     Version 1.0 2416

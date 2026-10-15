@@ -1,0 +1,663 @@
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Stream groups                                      Each supported           Yes     The maximum number
+                                                    Region: 5                        of stream groups that
+                                                                                     you can create in this
+                                                                                     account, per AWS Region.
+                                                                                     A stream group is a
+                                                                                     collection of compute
+                                                                                     resources that stream
+                                                                                     your application to end
+                                                                                     users.
+
+
+AWS Global Accelerator endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoint (global)
+
+
+
+ Region         Region         Endpoint                                                  Protocol       Amazon
+ Name                                                                                                   Route 53
+                                                                                                        Hosted
+                                                                                                        Zone ID*
+
+ US West        us-            globalaccelerator.amazonaws.com                           HTTPS          Z2BJ6XQ5F
+ (Oregon)       west-2                                                                                  K7U4H
+ Region
+
+
+
+
+
+Global Accelerator                                                                                      Version 1.0 1894
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol      Amazon
+ Name                                                                                                 Route 53
+                                                                                                      Hosted
+                                                                                                      Zone ID*
+
+ US West        us-           globalaccelerator-fips.us-west-2.ama                       HTTPS         Z01882459
+ (Oregon)       west-2        zonaws.com                                                              3QZ67JH63
+ Region                                                                                               2G
+
+
+Service quotas
+
+
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Cross-account attachments per AWS                 Each supported           Yes     The maximum number of
+ account                                           Region: 10                       cross-account attachmen
+                                                                                    ts for each AWS account.
+
+ Custom routing accelerators per AWS               Each supported           Yes     The maximum number
+ account                                           Region: 10                       of custom routing
+                                                                                    accelerators for each
+                                                                                    AWS account.
+
+ Endpoint groups per accelerator                   Each supported           No      The maximum number
+                                                   Region: 42                       of endpoint groups per
+                                                                                    accelerator.
+
+ Endpoint resources per cross-account              Each supported           No      The maximum number of
+ attachment                                        Region: 500                      endpoint resources per
+                                                                                    cross-account attachmen
+                                                                                    t.
+
+ Endpoints per endpoint group -                    Each supported           No      The maximum number
+ Application Load Balancers                        Region: 10                       of Application Load
+                                                                                    Balancers in an endpoint
+
+
+
+
+
+
+
+Service quotas                                                                                        Version 1.0 1895
+AWS General Reference                                                                                     Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+                                                                                       group containing only
+                                                                                       ALB endpoints.
+
+ Endpoints per endpoint group - EC2                 Each supported            Yes      The maximum number
+ instances                                          Region: 10                         of EC2 instances in an
+                                                                                       endpoint group containin
+                                                                                       g only EC2 instance
+                                                                                       endpoints.
+
+ Endpoints per endpoint group - Elastic             Each supported            Yes      The maximum number of
+ IP addresses                                       Region: 10                         Elastic IP addresses in an
+                                                                                       endpoint group containin
+                                                                                       g only Elastic IP address
+                                                                                       endpoints.
+
+ Endpoints per endpoint group -                     Each supported            Yes      The maximum number of
+ Network Load Balancers                             Region: 10                         Network Load Balancers
+                                                                                       in an endpoint group
+                                                                                       containing only NLB
+                                                                                       endpoints.
+
+ Endpoints per endpoint group - VPC                 Each supported            Yes      The maximum number
+ subnets                                            Region: 10                         of VPC subnets in an
+                                                                                       endpoint group containin
+                                                                                       g only subnet endpoints.
+
+ Endpoints per endpoint group - more                Each supported            No       The maximum number of
+ than one endpoint type                             Region: 10                         endpoints in an endpoint
+                                                                                       group containing more
+                                                                                       than one endpoint type.
+
+ Listeners per accelerator                          Each supported            Yes      The maximum number
+                                                    Region: 10                         of listeners for each
+                                                                                       accelerator.
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1896
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Port overrides per endpoint group                  Each supported           Yes      The maximum number of
+                                                    Region: 10                        port overrides for each
+                                                                                      endpoint group.
+
+ Port ranges per listener                           Each supported           No       The maximum number
+                                                    Region: 10                        of port ranges for each
+                                                                                      listener.
+
+ Principals per cross-account attachmen             Each supported           Yes      The maximum number of
+ t                                                  Region: 10                        principals per cross-acc
+                                                                                      ount attachment.
+
+ Standard accelerators per AWS account              Each supported           Yes      The maximum number of
+                                                    Region: 20                        standard accelerators for
+                                                                                      each AWS account.
+
+ Tags per accelerator                               Each supported           No       The maximum number of
+                                                    Region: 50                        tags for each accelerator.
+
+
+AWS Global Networks for Transit Gateways Quotas (Network
+Manager)
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+
+
+
+
+
+
+
+
+
+Global Networks for Transit Gateways                                                                    Version 1.0 1897
+AWS General Reference                                                                              Reference guide
+Service endpoints
+
+
+
+ Region        Region        Endpoint                                               Protocol
+ Name
+
+ US East       us-east-2     networkmanager.us-west-2.amazonaws.com                 HTTPS
+ (Ohio)
+                             networkmanager-fips.us-west-2.api.aws                   HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                    HTTPS
+                             aws.com
+                                                                                    HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ US            us-east-1     networkmanager.us-west-2.amazonaws.com                 HTTPS
+ East (N.
+ Virginia)                   networkmanager-fips.us-west-2.api.aws                   HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                    HTTPS
+                             aws.com
+                                                                                    HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ US            us-           networkmanager.us-west-2.amazonaws.com                 HTTPS
+ West (N.      west-1
+ Californi                   networkmanager-fips.us-west-2.api.aws                   HTTPS
+
+ a)                          networkmanager-fips.us-west-2.amazon                    HTTPS
+
+                             aws.com
+                                                                                    HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ US West       us-           networkmanager.us-west-2.amazonaws.com                 HTTPS
+ (Oregon)      west-2
+                             networkmanager-fips.us-west-2.api.aws                   HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                    HTTPS
+                             aws.com
+                                                                                    HTTPS
+                             networkmanager.us-west-2.api.aws
+
+
+
+
+
+
+Service endpoints                                                                                 Version 1.0 1898
+AWS General Reference                                                                              Reference guide
+
+ Region        Region        Endpoint                                                Protocol
+ Name
+
+ Africa        af-south-     networkmanager.us-west-2.amazonaws.com                  HTTPS
+ (Cape         1
+ Town)                       networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Asia          ap-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ Pacific        east-1
+ (Hong                       networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+ Kong)                       networkmanager-fips.us-west-2.amazon                     HTTPS
+
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Asia          ap-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ Pacific        south-2
+ (Hyderaba                   networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+ d)                          networkmanager-fips.us-west-2.amazon                     HTTPS
+
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Asia          ap-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ Pacific        southe
+ (Jakarta)     ast-3         networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                  Version 1.0 1899
+AWS General Reference                                                                              Reference guide
+
+ Region        Region        Endpoint                                                Protocol
+ Name
+
+ Asia          ap-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ Pacific        southe
+ (Malaysia     ast-5         networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+ )                           networkmanager-fips.us-west-2.amazon                     HTTPS
+
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Asia          ap-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ Pacific        southe
+ (Melbourn     ast-4         networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+ e)                          networkmanager-fips.us-west-2.amazon                     HTTPS
+
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Asia          ap-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ Pacific        south-1
+ (Mumbai)                    networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Asia          ap-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ Pacific        southe
+ (New          ast-6         networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+ Zealand)                    networkmanager-fips.us-west-2.amazon                     HTTPS
+
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                  Version 1.0 1900
+AWS General Reference                                                                              Reference guide
+
+ Region        Region        Endpoint                                                Protocol
+ Name
+
+ Asia          ap-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ Pacific        northe
+ (Osaka)       ast-3         networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Asia          ap-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ Pacific        northe
+ (Seoul)       ast-2         networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Asia          ap-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ Pacific        southe
+ (Singapor     ast-1         networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+ e)                          networkmanager-fips.us-west-2.amazon                     HTTPS
+
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Asia          ap-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ Pacific        southe
+ (Sydney)      ast-2         networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                  Version 1.0 1901
+AWS General Reference                                                                              Reference guide
+
+ Region        Region        Endpoint                                                Protocol
+ Name
+
+ Asia          ap-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ Pacific        east-2
+ (Taipei)                    networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Asia          ap-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ Pacific        southe
+ (Thailand     ast-7         networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+ )                           networkmanager-fips.us-west-2.amazon                     HTTPS
+
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Asia          ap-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ Pacific        northe
+ (Tokyo)       ast-1         networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Canada        ca-centra     networkmanager.us-west-2.amazonaws.com                  HTTPS
+ (Central)     l-1
+                             networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                  Version 1.0 1902
+AWS General Reference                                                                              Reference guide
+
+ Region        Region        Endpoint                                                Protocol
+ Name
+
+ Canada        ca-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ West          west-1
+ (Calgary)                   networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Europe        eu-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ (Frankfur     central-1
+ t)                          networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Europe        eu-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ (Ireland)     west-1
+                             networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Europe        eu-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ (London)      west-2
+                             networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                 Version 1.0 1903
+AWS General Reference                                                                              Reference guide
+
+ Region        Region        Endpoint                                               Protocol
+ Name
+
+ Europe        eu-           networkmanager.us-west-2.amazonaws.com                 HTTPS
+ (Milan)       south-1
+                             networkmanager-fips.us-west-2.api.aws                   HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                    HTTPS
+                             aws.com
+                                                                                    HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Europe        eu-           networkmanager.us-west-2.amazonaws.com                 HTTPS
+ (Paris)       west-3
+                             networkmanager-fips.us-west-2.api.aws                   HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                    HTTPS
+                             aws.com
+                                                                                    HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Europe        eu-           networkmanager.us-west-2.amazonaws.com                 HTTPS
+ (Spain)       south-2
+                             networkmanager-fips.us-west-2.api.aws                   HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                    HTTPS
+                             aws.com
+                                                                                    HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Europe        eu-           networkmanager.us-west-2.amazonaws.com                 HTTPS
+ (Stockhol     north-1
+ m)                          networkmanager-fips.us-west-2.api.aws                   HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                    HTTPS
+                             aws.com
+                                                                                    HTTPS
+                             networkmanager.us-west-2.api.aws
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                 Version 1.0 1904
+AWS General Reference                                                                              Reference guide
+
+ Region        Region        Endpoint                                                Protocol
+ Name
+
+ Europe        eu-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ (Zurich)      central-2
+                             networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Israel        il-centra     networkmanager.us-west-2.amazonaws.com                  HTTPS
+ (Tel Aviv)    l-1
+                             networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Mexico        mx-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ (Central)     central-1
+                             networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ Middle        me-           networkmanager.us-west-2.amazonaws.com                  HTTPS
+ East          south-1
+ (Bahrain)                   networkmanager-fips.us-west-2.api.aws                    HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                     HTTPS
+                             aws.com
+                                                                                     HTTPS
+                             networkmanager.us-west-2.api.aws
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                  Version 1.0 1905
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ Middle        me-           networkmanager.us-west-2.amazonaws.com                   HTTPS
+ East          central-1
+ (UAE)                       networkmanager-fips.us-west-2.api.aws                     HTTPS
+
+                             networkmanager-fips.us-west-2.amazon                      HTTPS
+                             aws.com
+                                                                                      HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ South         sa-east-1     networkmanager.us-west-2.amazonaws.com                   HTTPS
+ America
+ (São                        networkmanager-fips.us-west-2.api.aws                     HTTPS
+
+ Paulo)                      networkmanager-fips.us-west-2.amazon                      HTTPS
+
+                             aws.com
+                                                                                      HTTPS
+                             networkmanager.us-west-2.api.aws
+
+ AWS           us-gov-       networkmanager.us-gov-west-1.amazona                     HTTPS
+ GovCloud      east-1        ws.com
+ (US-East)                                                                            HTTPS
+                             networkmanager.us-gov-west-1.api.aws
+
+ AWS           us-gov-       networkmanager.us-gov-west-1.amazona                     HTTPS
+ GovCloud      west-1        ws.com
+ (US-                                                                                 HTTPS
+ West)                       networkmanager.us-gov-west-1.api.aws
+
+
+Service quotas
+
+For a list of the quotas, see AWS Global Networks for Transit Gateways Quotas in the AWS Global
+Networks for Transit Gateways User Guide.
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                      Version 1.0 1906

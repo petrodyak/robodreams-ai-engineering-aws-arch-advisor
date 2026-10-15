@@ -1,0 +1,569 @@
+AWS General Reference                                                                                  Reference guide
+AWS DataSync endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+Topics
+• DataSync transfers
+
+
+DataSync transfers
+
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ US East        us-east-2     datasync.us-east-2.amazonaws.com                           HTTPS
+ (Ohio)
+                              datasync-fips.us-east-2.api.aws                             HTTPS
+
+                              datasync.us-east-2.api.aws                                 HTTPS
+
+                              datasync-fips.us-east-2.amazonaws.com                       HTTPS
+
+ US             us-east-1     datasync.us-east-1.amazonaws.com                           HTTPS
+ East (N.
+ Virginia)                    datasync-fips.us-east-1.api.aws                             HTTPS
+
+                              datasync-fips.us-east-1.amazonaws.com                       HTTPS
+
+                              datasync.us-east-1.api.aws                                 HTTPS
+
+ US             us-           datasync.us-west-1.amazonaws.com                           HTTPS
+ West (N.       west-1
+
+
+
+DataSync                                                                                               Version 1.0 1429
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Californi                    datasync.us-west-1.api.aws                                HTTPS
+ a)
+                              datasync-fips.us-west-1.api.aws                            HTTPS
+
+                              datasync-fips.us-west-1.amazonaws.com                      HTTPS
+
+ US West        us-           datasync.us-west-2.amazonaws.com                          HTTPS
+ (Oregon)       west-2
+                              datasync-fips.us-west-2.api.aws                            HTTPS
+
+                              datasync.us-west-2.api.aws                                HTTPS
+
+                              datasync-fips.us-west-2.amazonaws.com                      HTTPS
+
+ Africa         af-south-     datasync.af-south-1.amazonaws.com                         HTTPS
+ (Cape          1
+ Town)                        datasync.af-south-1.api.aws                               HTTPS
+
+
+ Asia           ap-           datasync.ap-east-1.amazonaws.com                          HTTPS
+ Pacific         east-1
+ (Hong                        datasync.ap-east-1.api.aws                                HTTPS
+
+ Kong)
+
+ Asia           ap-           datasync.ap-south-2.amazonaws.com                         HTTPS
+ Pacific         south-2
+ (Hyderaba                    datasync.ap-south-2.api.aws                               HTTPS
+
+ d)
+
+ Asia           ap-           datasync.ap-southeast-3.amazonaws.com                     HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3         datasync.ap-southeast-3.api.aws                           HTTPS
+
+
+ Asia           ap-           datasync.ap-southeast-5.amazonaws.com                     HTTPS
+ Pacific         southe
+ (Malaysia      ast-5         datasync.ap-southeast-5.api.aws                           HTTPS
+
+ )
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1430
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           datasync.ap-southeast-4.amazonaws.com                     HTTPS
+ Pacific         southe
+ (Melbourn      ast-4         datasync.ap-southeast-4.api.aws                           HTTPS
+
+ e)
+
+ Asia           ap-           datasync.ap-south-1.amazonaws.com                         HTTPS
+ Pacific         south-1
+ (Mumbai)                     datasync.ap-south-1.api.aws                               HTTPS
+
+
+ Asia           ap-           datasync.ap-southeast-6.amazonaws.com                     HTTPS
+ Pacific         southe
+ (New           ast-6         datasync.ap-southeast-6.api.aws                           HTTPS
+
+ Zealand)
+
+ Asia           ap-           datasync.ap-northeast-3.amazonaws.com                     HTTPS
+ Pacific         northe
+ (Osaka)        ast-3         datasync.ap-northeast-3.api.aws                           HTTPS
+
+
+ Asia           ap-           datasync.ap-northeast-2.amazonaws.com                     HTTPS
+ Pacific         northe
+ (Seoul)        ast-2         datasync.ap-northeast-2.api.aws                           HTTPS
+
+
+ Asia           ap-           datasync.ap-southeast-1.amazonaws.com                     HTTPS
+ Pacific         southe
+ (Singapor      ast-1         datasync.ap-southeast-1.api.aws                           HTTPS
+
+ e)
+
+ Asia           ap-           datasync.ap-southeast-2.amazonaws.com                     HTTPS
+ Pacific         southe
+ (Sydney)       ast-2         datasync.ap-southeast-2.api.aws                           HTTPS
+
+
+ Asia           ap-           datasync.ap-east-2.amazonaws.com                          HTTPS
+ Pacific         east-2
+ (Taipei)                     datasync.ap-east-2.api.aws                                HTTPS
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1431
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           datasync.ap-southeast-7.amazonaws.com                     HTTPS
+ Pacific         southe
+ (Thailand      ast-7         datasync.ap-southeast-7.api.aws                           HTTPS
+
+ )
+
+ Asia           ap-           datasync.ap-northeast-1.amazonaws.com                     HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1         datasync.ap-northeast-1.api.aws                           HTTPS
+
+
+ Canada         ca-centra     datasync.ca-central-1.amazonaws.com                       HTTPS
+ (Central)      l-1
+                              datasync.ca-central-1.api.aws                             HTTPS
+
+                              datasync-fips.ca-central-1.amazonaws.com                   HTTPS
+
+                              datasync-fips.ca-central-1.api.aws                         HTTPS
+
+ Canada         ca-           datasync.ca-west-1.amazonaws.com                          HTTPS
+ West           west-1
+ (Calgary)                    datasync.ca-west-1.api.aws                                HTTPS
+
+                              datasync-fips.ca-west-1.amazonaws.com                      HTTPS
+
+                              datasync-fips.ca-west-1.api.aws                            HTTPS
+
+ Europe         eu-           datasync.eu-central-1.amazonaws.com                       HTTPS
+ (Frankfur      central-1
+ t)                           datasync.eu-central-1.api.aws                             HTTPS
+
+
+ Europe         eu-           datasync.eu-west-1.amazonaws.com                          HTTPS
+ (Ireland)      west-1
+                              datasync.eu-west-1.api.aws                                HTTPS
+
+ Europe         eu-           datasync.eu-west-2.amazonaws.com                          HTTPS
+ (London)       west-2
+                              datasync.eu-west-2.api.aws                                HTTPS
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1432
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           datasync.eu-south-1.amazonaws.com                         HTTPS
+ (Milan)        south-1
+                              datasync.eu-south-1.api.aws                               HTTPS
+
+ Europe         eu-           datasync.eu-west-3.amazonaws.com                          HTTPS
+ (Paris)        west-3
+                              datasync.eu-west-3.api.aws                                HTTPS
+
+ Europe         eu-           datasync.eu-south-2.amazonaws.com                         HTTPS
+ (Spain)        south-2
+                              datasync.eu-south-2.api.aws                               HTTPS
+
+ Europe         eu-           datasync.eu-north-1.amazonaws.com                         HTTPS
+ (Stockhol      north-1
+ m)                           datasync.eu-north-1.api.aws                               HTTPS
+
+
+ Europe         eu-           datasync.eu-central-2.amazonaws.com                       HTTPS
+ (Zurich)       central-2
+                              datasync.eu-central-2.api.aws                             HTTPS
+
+ Israel         il-centra     datasync.il-central-1.amazonaws.com                       HTTPS
+ (Tel Aviv)     l-1
+                              datasync.il-central-1.api.aws                             HTTPS
+
+ Mexico         mx-           datasync.mx-central-1.amazonaws.com                       HTTPS
+ (Central)      central-1
+                              datasync.mx-central-1.api.aws                             HTTPS
+
+ Middle         me-           datasync.me-south-1.amazonaws.com                         HTTPS
+ East           south-1
+ (Bahrain)                    datasync.me-south-1.api.aws                               HTTPS
+
+
+ Middle         me-           datasync.me-central-1.amazonaws.com                       HTTPS
+ East           central-1
+ (UAE)                        datasync.me-central-1.api.aws                             HTTPS
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1433
+AWS General Reference                                                                                Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ South         sa-east-1      datasync.sa-east-1.amazonaws.com                         HTTPS
+ America
+ (São                         datasync.sa-east-1.api.aws                               HTTPS
+
+ Paulo)
+
+ AWS           us-gov-        datasync.us-gov-east-1.amazonaws.com                     HTTPS
+ GovCloud      east-1
+ (US-East)                    datasync.us-gov-east-1.api.aws                           HTTPS
+
+                              datasync-fips.us-gov-east-1.amazonaws.com                 HTTPS
+
+                              datasync-fips.us-gov-east-1.api.aws                       HTTPS
+
+ AWS           us-gov-        datasync.us-gov-west-1.amazonaws.com                     HTTPS
+ GovCloud      west-1
+ (US-                         datasync-fips.us-gov-west-1.amazonaws.com                 HTTPS
+
+ West)                        datasync-fips.us-gov-west-1.api.aws                       HTTPS
+
+
+                              datasync.us-gov-west-1.api.aws                           HTTPS
+
+
+Service quotas
+
+Topics
+
+• DataSync task quotas
+
+
+DataSync task quotas
+
+The following table describes the quotas for DataSync tasks in a specific AWS account and AWS
+Region.
+
+
+ Resource                                                 Quota                                 Adjustable
+
+ Maximum number of tasks you can create                   100                                   Yes
+
+
+
+
+
+Service quotas                                                                                       Version 1.0 1434
+AWS General Reference                                                                                            Reference guide
+
+ Resource                                                        Quota                                     Adjustable
+
+ (Enhanced mode tasks) Maximum number of                         Virtually unlimited                       N/A
+ source and destination objects that DataSync
+ can work with per task execution
+
+ For more information, see How DataSync
+ transfers files, objects, and directories
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                  Version 1.0 1435
+AWS General Reference                                                                                         Reference guide
+
+ Resource                                                      Quota                                    Adjustable
+
+ (Basic mode tasks) Maximum number of                          50 million                               Yes
+ source and destination files, objects, and
+ directories that DataSync can work with per                          Important                                Tip
+ task execution between self-managed storage                          Remember the                             Instead
+ or other clouds and AWS services                                     following about this                     of
+
+ For more information, see How DataSync                               quota:                                   requestin
+ transfers files, objects, and directories                                                                      g an
+                                                                      •  If you transfer                       increase,
+                                                                         Amazon S3 objects                     you
+                                                                         with prefixes, the                     can
+                                                                         prefixes are treated                   create
+                                                                         as directories and                    tasks
+                                                                         count towards the                     that
+                                                                         quota. For example,                   focus
+                                                                         DataSync would                        on
+                                                                         considers3://                         specific
+                                                                         bucket/foo/                           directori
+                                                                         bar.txt       as two                  es
+                                                                         directories (./ and                   using
+                                                                         ./foo/) and one                       include
+                                                                         object (bar.txt).                     and
+                                                                      •  If your task is                       exclude
+                                                                         transferring more                     filters.
+                                                                         than 20 million                       For
+                                                                         files, objects, or                     more
+                                                                         directories, make                     informati
+                                                                         sure that you                         on,
+                                                                         allocate a minimum                    see
+                                                                         of 64 GB of RAM                       Filtering
+                                                                         to your DataSync                      the
+                                                                         agent. For more                       data
+                                                                         information, see                      transferr
+                                                                                                               ed by
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 1436
+AWS General Reference                                                                                                     Reference guide
+
+ Resource                                                             Quota                                         Adjustable
+
+                                                                                 agent requirements                        AWS
+                                                                                 for transfers.                            DataSync.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                           Version 1.0 1437
+AWS General Reference                                                                                         Reference guide
+
+ Resource                                                      Quota                                     Adjustable
+
+ (Basic mode tasks) Maximum number of                          25 million                                Yes
+ source and destination files, objects, and
+ directories that DataSync can work with per                          Important                                Tip
+ task execution between AWS storage services                          If you transfer                          Instead
+
+ For more information, see How DataSync                               Amazon S3 objects                        of
+ transfers files, objects, and directories                             with prefixes, the                        requestin
+                                                                      prefixes are treated                      g an
+                                                                      as directories and                       increase,
+                                                                      count towards the                        you
+                                                                      quota. For example,                      can
+                                                                      DataSync would                           create
+                                                                      considers3://buck                        tasks
+                                                                      et/foo/bar.txt                           that
+                                                                      as two directories (./                   focus
+                                                                      and ./foo/) and one                      on
+                                                                      object (bar.txt).                        specific
+                                                                                                               directori
+                                                                                                               es
+                                                                                                               using
+                                                                                                               include
+                                                                                                               and
+                                                                                                               exclude
+                                                                                                               filters.
+                                                                                                               For
+                                                                                                               more
+                                                                                                               informati
+                                                                                                               on,
+                                                                                                               see
+                                                                                                               Filtering
+                                                                                                               the
+                                                                                                               data
+                                                                                                               transferr
+                                                                                                               ed by
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 1438

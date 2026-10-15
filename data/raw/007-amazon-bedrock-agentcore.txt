@@ -1,0 +1,238 @@
+AWS General Reference                                                                                     Reference guide
+
+      •  If a quota is marked as No, you can submit a request through the limit increase form to
+         be considered for an increase.
+
+      •  For any model, you can request an increase for the following quotas together:
+
+         • Cross-Region InvokeModel tokens per minute for ${model}
+
+         • Cross-Region InvokeModel requests per minute for ${model}
+
+         • On-demand InvokeModel tokens per minute for ${model}
+
+         • On-demand InvokeModel requests per minute for ${model}
+
+         To request an increase for any combination of these quotas, request an increase for the
+         Cross-Region InvokeModel tokens per minute for ${model} quota by following the
+         steps at Requesting a Quota Increase in the Service Quotas User Guide. After you do so,
+         the support team will reach out and offer you the option of also increasing the other
+         three quotas. Due to overwhelming demand, priority will be given to customers who
+         generate traffic that consumes their existing quota allocation. Your request might be
+         denied if you don't meet this condition.
+
+
+Amazon Bedrock AgentCore endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+Amazon Bedrock AgentCore control plane APIs
+
+The following table provides a list of Region-specific endpoints that Amazon Bedrock AgentCore
+supports for calling control plane operations.
+
+
+
+
+Amazon Bedrock AgentCore                                                                                  Version 1.0 723
+AWS General Reference                                                                                  Reference guide
+
+
+ Region Name            Region                 Endpoint                                       Protocol
+
+ US East (N.            us-east-1              bedrock-agentcore-control.us-                  HTTPS
+ Virginia)                                     east-1.amazonaws.com
+
+ US East (Ohio)         us-east-2              bedrock-agentcore-control.us-                  HTTPS
+                                               east-2.amazonaws.com
+
+ US West                us-west-2              bedrock-agentcore-control.us-                  HTTPS
+ (Oregon)                                      west-2.amazonaws.com
+
+ Asia Pacific            ap-southeast-1         bedrock-agentcore-control. ap-                 HTTPS
+ (Singapore)                                   southeast-1.amazonaws.com
+
+ Asia Pacific            ap-southeast-2         bedrock-agentcore-control.ap-                  HTTPS
+ (Sydney)                                      southeast-2.amazonaws.com
+
+ Asia Pacific            ap-south-1             bedrock-agentcore-control.ap-                  HTTPS
+ (Mumbai)                                      south-1.amazonaws.com
+
+ Asia Pacific            ap-northeast-1         bedrock-agentcore-control.ap-                  HTTPS
+ (Tokyo)                                       northeast-1.amazonaws.com
+
+ Europe (Ireland)       eu-west-1              bedrock-agentcore-control.eu-                  HTTPS
+                                               west-1.amazonaws.com
+
+ Europe (Frankfur       eu-central-1           bedrock-agentcore-control.eu-                  HTTPS
+ t)                                            central-1.amazonaws.com
+
+
+Amazon Bedrock AgentCore data plane APIs
+
+The following table provides a list of Region-specific endpoints that Amazon Bedrock AgentCore
+supports for calling data plane operations.
+
+
+ Region Name            Region                 Endpoint                                       Protocol
+
+ US East (N.            us-east-1              bedrock-agentcore.us-east-1                    HTTPS
+ Virginia)                                     .amazonaws.com
+
+
+
+Service endpoints                                                                                      Version 1.0 724
+AWS General Reference                                                                                 Reference guide
+
+ Region Name            Region                 Endpoint                                      Protocol
+
+ US East (Ohio)         us-east-2              bedrock-agentcore.us-east-2                   HTTPS
+                                               .amazonaws.com
+
+ US West                us-west-2              bedrock-agentcore.us-west-2                   HTTPS
+ (Oregon)                                      .amazonaws.com
+
+ Asia Pacific            ap-southeast-1         bedrock-agentcore.ap-southe                   HTTPS
+ (Singapore)                                   ast-1.amazonaws.com
+
+ Asia Pacific            ap-southeast-2         bedrock-agentcore.ap-southe                   HTTPS
+ (Sydney)                                      ast-2.amazonaws.com
+
+ Asia Pacific            ap-south-1             bedrock-agentcore.ap-south-                   HTTPS
+ (Mumbai)                                      1.amazonaws.com
+
+ Asia Pacific            ap-northeast-1         bedrock-agentcore.ap-northe                   HTTPS
+ (Tokyo)                                       ast-1.amazonaws.com
+
+ Europe (Ireland)       eu-west-1              bedrock-agentcore.eu-west-1                   HTTPS
+                                               .amazonaws.com
+
+ Europe (Frankfur       eu-central-1           bedrock-agentcore.eu-centra                   HTTPS
+ t)                                            l-1.amazonaws.com
+
+
+Amazon Bedrock AgentCore Gateway data plane APIs
+
+The following table provides a list of Region-specific endpoints that Amazon Bedrock AgentCore
+Gateway supports for invoking a gateway.
+
+Replace gatewayId with the ID of your gateway.
+
+
+ Region Name            Region                 Endpoint                                      Protocol
+
+ US East (N.            us-east-1              gatewayId      .gateway.bedrock-a             HTTPS
+ Virginia)                                     gentcore.us-east-1.amazonaws.com
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 725
+AWS General Reference                                                                               Reference guide
+
+ Region Name            Region                Endpoint                                      Protocol
+
+ US East (Ohio)         us-east-2             gatewayId      .gateway.bedrock-a             HTTPS
+                                              gentcore.us-east-2.amazonaws.com
+
+ US West                us-west-2             gatewayId      .gateway.bedrock-a             HTTPS
+ (Oregon)                                     gentcore.us-west-2.amazonaws.com
+
+ Europe (Frankfur       eu-central-1          gatewayId      .gateway.bedrock-              HTTPS
+ t)                                           agentcore.eu-central-1.amazo
+                                              naws.com
+
+ Europe (Ireland)       eu-west-1             gatewayId      .gateway.bedrock-a             HTTPS
+                                              gentcore.eu-west-1.amazonaws.com
+
+ Asia Pacific            ap-northeast-1        gatewayId      .gateway.bedrock-              HTTPS
+ (Tokyo)                                      agentcore.ap-northeast-1.ama
+                                              zonaws.com
+
+ Asia Pacific            ap-south-1            gatewayId      .gateway.bedrock-              HTTPS
+ (Mumbai)                                     agentcore.ap-south-1.amazona
+                                              ws.com
+
+ Asia Pacific            ap-southeast-1        gatewayId      .gateway.bedrock-              HTTPS
+ (Singapore)                                  agentcore.ap-southeast-1.ama
+                                              zonaws.com
+
+ Asia Pacific            ap-southeast-2        gatewayId      .gateway.bedrock-              HTTPS
+ (Sydney)                                     agentcore.ap-southeast-2.ama
+                                              zonaws.com
+
+ US West (N.            us-west-1             gatewayId      .gateway.bedrock-a             HTTPS
+ California)                                  gentcore.us-west-1.amazonaws.com
+
+ Europe (London)        eu-west-2             gatewayId      .gateway.bedrock-a             HTTPS
+                                              gentcore.eu-west-2.amazonaws.com
+
+ Europe (Paris)         eu-west-3             gatewayId      .gateway.bedrock-a             HTTPS
+                                              gentcore.eu-west-3.amazonaws.com
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 726
+AWS General Reference                                                                                Reference guide
+
+ Region Name            Region                 Endpoint                                     Protocol
+
+ Europe (Milan)         eu-south-1             gatewayId      .gateway.bedrock-             HTTPS
+                                               agentcore.eu-south-1.amazona
+                                               ws.com
+
+ Europe (Spain)         eu-south-2             gatewayId      .gateway.bedrock-             HTTPS
+                                               agentcore.eu-south-2.amazona
+                                               ws.com
+
+ Europe                 eu-north-1             gatewayId      .gateway.bedrock-             HTTPS
+ (Stockholm)                                   agentcore.eu-north-1.amazona
+                                               ws.com
+
+ Asia Pacific            ap-northeast-2         gatewayId      .gateway.bedrock-             HTTPS
+ (Seoul)                                       agentcore.ap-northeast-2.ama
+                                               zonaws.com
+
+ Asia Pacific            ap-south-2             gatewayId      .gateway.bedrock-             HTTPS
+ (Hyderabad)                                   agentcore.ap-south-2.amazona
+                                               ws.com
+
+ Asia Pacific            ap-southeast-5         gatewayId      .gateway.bedrock-             HTTPS
+ (Malaysia)                                    agentcore.ap-southeast-5.ama
+                                               zonaws.com
+
+ Asia Pacific            ap-southeast-7         gatewayId      .gateway.bedrock-             HTTPS
+ (Thailand)                                    agentcore.ap-southeast-7.ama
+                                               zonaws.com
+
+ Canada (Central)       ca-central-1           gatewayId      .gateway.bedrock-             HTTPS
+                                               agentcore.ca-central-1.amazo
+                                               naws.com
+
+ South America          sa-east-1              gatewayId      .gateway.bedrock-a            HTTPS
+ (São Paulo)                                   gentcore.sa-east-1.amazonaws.com
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 727

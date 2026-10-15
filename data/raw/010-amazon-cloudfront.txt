@@ -1,0 +1,766 @@
+AWS General Reference                                                                                  Reference guide
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Wait Condition Signal Data Size                   Each supported           No      The maximum size of
+                                                   Region: 4,096                    signal data that cfn-signa
+                                                   Bytes                            l can submit in a wait
+                                                                                    condition signal
+
+
+
+For more information, see CloudFormation Quotas in the AWS CloudFormation User Guide.
+
+Amazon CloudFront endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+Amazon CloudFront
+
+
+ Region           Region          Endpoint                          Protocol        Amazon Route 53
+ Name                                                                               Hosted Zone ID*
+
+ US East (N.      us-east-1
+ Virginia)                        cloudfront.amazona                HTTPS           Z2FDTNDATAQYW2
+ Region                           ws.com
+                                                                    HTTPS
+                                  cloudfront-fips.am
+                                  azonaws.com
+
+                                  cloudfront.global.api.aws         HTTPS           Z04532621ON9XYH9VV
+                                                                                    43R
+
+
+
+CloudFront                                                                                              Version 1.0 890
+AWS General Reference                                                                                  Reference guide
+
+ Region           Region          Endpoint                          Protocol        Amazon Route 53
+ Name                                                                               Hosted Zone ID*
+
+                                  cloudfront-fips.gl                 HTTPS           Z0169911SZ2QDT2H6O
+                                  obal.api.aws                                      C8
+
+
+
+Amazon CloudFront KeyValueStore
+
+CloudFront KeyValueStore is a global service. Specify your AWS account ID for the endpoint.
+
+
+ Endpoint                                       Protocol               Amazon Route 53 Hosted Zone ID*
+
+
+ AWS account.cloudfront-kvs.gl                  HTTPS                  The root host zone is the following.
+ obal.api.aws                                                          Each customer endpoint  has its own
+                                                                       hosted zone.
+
+                                                                       Z024645223JLTKL21A7KJ
+
+
+Service quotas
+
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Alternate domain names (CNAMEs) per               Each supported           Yes     The maximum number of
+ distribution                                      Region: 100                      alternate domain names
+                                                                                    (CNAMEs) per distribut
+                                                                                    ion.
+
+ Anycast static IP lists per AWS account           Each supported           Yes     The maximum number of
+                                                   Region: 0                        Anycast static IP lists per
+                                                                                    AWS account.
+
+ Cache behaviors per distribution                  Each supported           Yes     The maximum number
+                                                   Region: 75                       of cache behaviors per
+                                                                                    distribution.
+
+
+
+Service quotas                                                                                          Version 1.0 891
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+ Cache policies per AWS account                     Each supported            Yes     The maximum number of
+                                                    Region: 20                        cache policies per AWS
+                                                                                      account.
+
+ CloudFront Functions: Maximum                      Each supported            Yes     The maximum number of
+ number of distributions associated with            Region: 100                       CloudFront distributions
+ a single function                                                                    associated with a single
+                                                                                      CloudFront function.
+
+ Connection attempts per origin                     Each supported            No      The number of connectio
+                                                    Region: 3                         n attempts per origin
+                                                                                      (1-3).
+
+ Connection timeout per origin                      Each supported            No      The connection timeout
+                                                    Region: 10                        per origin (1-10 seconds).
+                                                    Seconds
+
+ Continuous deployment policies per                 Each supported            Yes     The maximum number of
+ AWS account                                        Region: 20                        continuous deploymen
+                                                                                      t policies that you can
+                                                                                      have for an AWS account.
+
+ Cookies per cache policy                           Each supported            Yes     The maximum number of
+                                                    Region: 10                        cookies per cache policy.
+
+ Cookies per origin request policy                  Each supported            Yes     The maximum number
+                                                    Region: 10                        of cookies per origin
+                                                                                      request policy.
+
+ Custom headers per response headers                Each supported            Yes     The maximum number
+ policy                                             Region: 10                        of custom headers per
+                                                                                      response headers policy.
+
+ Custom headers: maximum length of a                Each supported            No      The maximum length
+ header name                                        Region: 256                       of a header name in
+                                                                                      characters.
+
+
+
+
+Service quotas                                                                                            Version 1.0 892
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Custom headers: maximum length of a                 Each supported           No       The maximum length
+ header value                                        Region: 1,783                     of a header value in
+                                                                                       characters.
+
+ Custom headers: maximum length of                   Each supported           No       The maximum length
+ all header values and names combined                Region: 10,240                    of all header values and
+                                                                                       names combined.
+
+ Custom headers: maximum number of                   Each supported           Yes      The maximum number of
+ custom headers that you can configure                Region: 30                        custom headers that you
+ CloudFront to add to origin requests                                                  can configure CloudFront
+                                                                                       to add to origin requests.
+
+ Data transfer rate per distribution                 Each supported           Yes      The maximum data
+                                                     Region: 150                       transfer rate (in Gbps)
+                                                                                       per distribution.
+
+ Distributions associated with a single              Each supported           Yes      The maximum number of
+ key group                                           Region: 100                       distributions associated
+                                                                                       with a single key group.
+
+ Distributions associated with the same              Each supported           No       The maximum number of
+ VPC origin                                          Region: 50                        distributions that can be
+                                                                                       associated with a single
+                                                                                       VPC origin.
+
+ Distributions associated with the same              Each supported           No       The maximum number
+ cache policy                                        Region: 100                       of distributions associate
+                                                                                       d with the same cache
+                                                                                       policy.
+
+ Distributions associated with the same              Each supported           Yes      The maximum number
+ origin access control                               Region: 100                       of distributions that you
+                                                                                       can associate with an
+                                                                                       origin access control.
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 893
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Distributions associated with the same              Each supported            No       The maximum number
+ origin request policy                               Region: 100                        of distributions associate
+                                                                                        d with the same origin
+                                                                                        request policy.
+
+ Distributions associated with the same              Each supported            Yes      The maximum number
+ response headers policy                             Region: 100                        of distributions that you
+                                                                                        can associate with the
+                                                                                        same response headers
+                                                                                        policy.
+
+ Distributions per AWS account that you              Each supported            Yes      The maximum number
+ can create triggers for                             Region: 500                        of distributions per AWS
+                                                                                        account that you can
+                                                                                        create triggers for.
+
+ File invalidation: maximum number of                Each supported            No       The maximum number of
+ active wildcard invalidations allowed               Region: 15                         active wildcard invalidat
+                                                                                        ions allowed.
+
+ File invalidation: maximum number                   Each supported            No       The maximum number
+ of files allowed in active invalidation              Region: 3,000                      of files allowed in active
+ requests, excluding wildcard invalidat                                                 invalidation requests,
+ ions                                                                                   excluding wildcard
+                                                                                        invalidations.
+
+ Function memory size (Viewer request                Each supported            No       The maximum function
+ and response event)                                 Region: 128                        memory size (in MB).
+                                                     Megabytes                          (Viewer request and
+                                                                                        response event)
+
+ Function timeout (Origin request and                Each supported            No       The maximum function
+ response event)                                     Region: 30                         timeout (in seconds).
+                                                     Seconds                            (Origin request and
+                                                                                        response event)
+
+
+
+
+Service quotas                                                                                              Version 1.0 894
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Function timeout for a viewer request               Each supported            No       The maximum function
+ and response event                                  Region: 5 Seconds                  timeout (in seconds).
+                                                                                        (Viewer request and
+                                                                                        response event)
+
+ Headers per cache policy                            Each supported            Yes      The maximum number of
+                                                     Region: 10                         headers per cache policy.
+
+ Headers per origin request policy                   Each supported            Yes      The maximum number
+                                                     Region: 10                         of headers per origin
+                                                                                        request policy.
+
+ Keep-alive timeout for a custom origin              Each supported            Yes      How long (in seconds)
+ associated with distribution                        Region: 120                        CloudFront tries to
+                                                     Seconds                            maintain a connectio
+                                                                                        n to your distributions
+                                                                                        custom origin after it
+                                                                                        gets the last packet of a
+                                                                                        response.
+
+ Key groups associated with a single                 Each supported            Yes      The maximum number
+ distribution                                        Region: 4                          of key groups associated
+                                                                                        with a single distribution.
+
+ Key groups per AWS account                          Each supported            Yes      The maximum number
+                                                     Region: 10                         of key groups per AWS
+                                                                                        account.
+
+ Length of the content security policy               Each supported            Yes      The maximum length
+ value in a response headers policy                  Region: 1,783                      of the content security
+                                                                                        policy value in a
+                                                                                        response headers policy.
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 895
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Maximum CA bundle size per trust                    Each supported            Yes     The maximum size (in
+ store                                               Region: 64                        KB) of a CA bundle that
+                                                     Kilobytes                         can be uploaded to a
+                                                                                       trust store.
+
+ Maximum certificate size in trust store              Each supported            Yes     The maximum size (in
+ CA bundle                                           Region: 16                        KB) of an individual
+                                                     Kilobytes                         certificate within a trust
+                                                                                       stores CA bundle.
+
+ Maximum compressed size of a Lambda                 Each supported            No      The maximum compresse
+ function and any included libraries.                Region: 50                        d size (in MB) of a
+ (Origin request and response event)                 Megabytes                         Lambda function and
+                                                                                       any included libraries
+                                                                                       . (Origin request and
+                                                                                       response event)
+
+ Maximum compressed size of a Lambda                 Each supported            No      The maximum compresse
+ function and any included libraries.                Region: 50                        d size (in MB) of a
+ (Viewer request and response event)                 Megabytes                         Lambda function and
+                                                                                       any included libraries
+                                                                                       . (Viewer request and
+                                                                                       response event)
+
+ Maximum file size for HTTP GET, POST,                Each supported            No      The maximum file size (in
+ and PUT requests                                    Region: 50                        GB) for HTTP GET, POST,
+                                                     Gigabytes                         and PUT requests.
+
+ Maximum length of a URL                             Each supported            No      The maximum length of
+                                                     Region: 8,192                     a URL (in bytes).
+                                                     Bytes
+
+ Maximum length of a field to encrypt                 Each supported            No      The maximum length (in
+                                                     Region: 16                        KB) of a field to encrypt.
+                                                     Kilobytes
+
+
+
+
+Service quotas                                                                                             Version 1.0 896
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Maximum length of a request body                    Each supported           No       The maximum length
+ when field-level encryption is configure              Region: 1                         (in MB) of a request
+ d                                                   Megabytes                         body when field-level
+                                                                                       encryption is configured.
+
+ Maximum length of a request,                        Each supported           No       The maximum length
+ including headers and query strings,                Region: 20,480                    of a request (in bytes),
+ but not including the body content                  Bytes                             including headers and
+                                                                                       query strings, but not
+                                                                                       including the body
+                                                                                       content.
+
+ Maximum number of CloudFront                        Each supported           No       The maximum number of
+ distributions that can be associated                Region: 20                        CloudFront distributions
+ with a field-level encryption configura                                                 that can be associate
+ tion                                                                                  d with a field-level
+                                                                                       encryption configuration.
+
+ Maximum number of aliases per                       Each supported           Yes      The maximum number of
+ distribution tenant                                 Region: 100                       aliases that you can have
+                                                                                       for a distribution tenant.
+
+ Maximum number of associations per                  Each supported           Yes      The maximum number
+ web ACL                                             Region: 100                       of resources that can be
+                                                                                       associated with a single
+                                                                                       web ACL.
+
+ Maximum number of certificates per                   Each supported           Yes      The maximum number of
+ trust store                                         Region: 25                        certificates that you can
+                                                                                       have for a trust store.
+
+ Maximum number of characters in a                   Each supported           No       The maximum number of
+ whitelisted query string                            Region: 128                       characters in a whitelist
+                                                                                       ed query string.
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 897
+AWS General Reference                                                                                     Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+ Maximum number of characters total                 Each supported            No      The maximum number
+ for all whitelisted query strings in the           Region: 512                       of characters total for all
+ same parameter                                                                       whitelisted query strings
+                                                                                      in the same parameter.
+
+ Maximum number of connection                       Each supported            Yes     The maximum number
+ functions per AWS account                          Region: 0                         of connection functions
+                                                                                      that you can have for an
+                                                                                      AWS account.
+
+ Maximum number of connection                       Each supported            Yes     The maximum number of
+ groups per AWS account                             Region: 100                       connection groups that
+                                                                                      you can have for an AWS
+                                                                                      account.
+
+ Maximum number of connection                       Each supported            Yes     The maximum number of
+ groups per Anycast static IP list                  Region: 5                         connection groups that
+                                                                                      can be associated with
+                                                                                      the same Anycast static
+                                                                                      IP list.
+
+ Maximum number of distribution                     Each supported            Yes     The maximum number of
+ tenants per AWS account                            Region: 10,000                    distribution tenants that
+                                                                                      you can have for an AWS
+                                                                                      account.
+
+ Maximum number of distributions                    Each supported            Yes     The maximum number of
+ associated with the same trust store               Region: 25                        distributions that can be
+                                                                                      associated with a single
+                                                                                      trust store.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 898
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Maximum number of field-level                       Each supported           No       The maximum number
+ encryption configurations that can be               Region: 10                        of field-level encryption
+ associated with one AWS account                                                      configurations that can
+                                                                                      be associated with one
+                                                                                      AWS account.
+
+ Maximum number of field-level                       Each supported           No       The maximum number
+ encryption profiles that can be                     Region: 10                        of field-level encryptio
+ associated with one AWS account                                                      n profiles that can be
+                                                                                      associated with one AWS
+                                                                                      account.
+
+ Maximum number of fields in a request               Each supported           No       The maximum number
+ body when field-level encryption is                 Region: 10                        of fields in a request
+ configured                                                                            body when field-level
+                                                                                      encryption is configured.
+
+ Maximum number of fields to encrypt                 Each supported           No       The maximum number
+ that can be specified in one profile                 Region: 10                        of fields to encrypt that
+                                                                                      can be specified in one
+                                                                                      profile.
+
+ Maximum number of multi-tenant                     Each supported           Yes      The maximum number
+ distributions per AWS account                      Region: 20                        of multi-tenant distribut
+                                                                                      ions that you can have
+                                                                                      for an AWS account.
+
+ Maximum number of parameters in a                  Each supported           Yes      The maximum number of
+ field in a multi-tenant distribution                Region: 2                         parameters that you can
+                                                                                      have in a field in a multi-
+                                                                                      tenant distribution.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 899
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Maximum number of parameters per                   Each supported           Yes      The maximum number
+ distribution tenant                                Region: 5                         of parameters that you
+                                                                                      can have for a distribut
+                                                                                      ion tenant.
+
+ Maximum number of parameters per                   Each supported           Yes      The maximum number of
+ multi-tenant distribution                          Region: 5                         parameters that you can
+                                                                                      have for a multi-tenant
+                                                                                      distribution.
+
+ Maximum number of public keys that                 Each supported           No       The maximum number
+ can be added to one AWS account                    Region: 10                        of public keys that can
+                                                                                      be added to one AWS
+                                                                                      account.
+
+ Maximum number of query argument                   Each supported           No       The maximum number of
+ profile mappings that can be included               Region: 5                         query argument profile
+ in a field-level encryption configuration                                              mappings that can be
+                                                                                      included in a field-level
+                                                                                      encryption configuration.
+
+ Maximum number of trust stores per                 Each supported           Yes      The maximum number of
+ AWS account                                        Region: 20                        trust stores that you can
+                                                                                      have for an AWS account.
+
+ Origin access identities per account               Each supported           Yes      The maximum number
+                                                    Region: 100                       of origin access identities
+                                                                                      per account.
+
+ Origin groups per distribution                     Each supported           Yes      The maximum number
+                                                    Region: 10                        of origin groups per
+                                                                                      distribution.
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 900
+AWS General Reference                                                                                        Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ Origin request policies per AWS                      Each supported            Yes      The maximum number
+ account                                              Region: 20                         of origin request policies
+                                                                                         per AWS account.
+
+ Origin response timeout (idle timeout)               Each supported            No       The maximum origin
+                                                      Region: 10                         response timeout (idle
+                                                                                         timeout) in minutes.
+                                                                                         If CloudFront hasn’t
+                                                                                         detected any bytes sent
+                                                                                         from the origin to the
+                                                                                         client within the past 10
+                                                                                         minutes, the connection
+                                                                                         is assumed to be idle and
+                                                                                         is closed.
+
+ Origins per distribution                             Each supported            Yes      The maximum number of
+                                                      Region: 100                        origins per distribution.
+
+ Public keys in a single key group                    Each supported            Yes      The maximum number
+                                                      Region: 5                          of public keys in a single
+                                                                                         key group.
+
+ Query strings per cache policy                       Each supported            Yes      The maximum number of
+                                                      Region: 10                         query strings per cache
+                                                                                         policy.
+
+ Query strings per origin request policy              Each supported            Yes      The maximum number of
+                                                      Region: 10                         query strings per origin
+                                                                                         request policy.
+
+ Range of file sizes that CloudFront                   Each supported            No       The range of file sizes (in
+ compresses                                           Region: 10,000,00                  bytes) that CloudFron
+                                                      0 Bytes                            t compresses (1,000 to
+                                                                                         10,000,000).
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 901
+AWS General Reference                                                                                     Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Removing headers from a response                    Each supported           Yes      The maximum number
+ headers policy                                      Region: 10                        of headers that you can
+                                                                                       remove in a response
+                                                                                       headers policy.
+
+ Request body size for origin requests               Each supported           No       The maximum request
+ exposed to a Lambda@Edge function.                  Region: 1                         body size (in MB) for
+                                                     Megabytes                         origin requests exposed
+                                                                                       to a Lambda@Edge
+                                                                                       function.
+
+ Request body size for origin requests               Each supported           No       The maximum request
+ when returning from a Lambda                        Region: 1.33                      body size (in KB) for
+ function (base64 encoding)                          Megabytes                         origin requests when
+                                                                                       returning from a Lambda
+                                                                                       function. (base64
+                                                                                       encoding)
+
+ Request body size for origin requests               Each supported           No       The maximum request
+ when returning from a Lambda                        Region: 1                         body size (in KB) for
+ function (text encoding)                            Megabytes                         origin requests when
+                                                                                       returning from a Lambda
+                                                                                       function. (text encoding)
+
+ Request body size for viewer requests               Each supported           No       The maximum request
+ exposed to a Lambda@Edge function.                  Region: 40                        body size (in KB) for
+                                                     Kilobytes                         viewer requests exposed
+                                                                                       to a Lambda@Edge
+                                                                                       function.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 902
+AWS General Reference                                                                                     Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Request body size for viewer requests               Each supported           No       The maximum request
+ when returning from a Lambda                        Region: 53.2                      body size (in KB) for
+ function (base64 encoding)                          Kilobytes                         viewer requests when
+                                                                                       returning from a Lambda
+                                                                                       function. (base64
+                                                                                       encoding)
+
+ Request body size for viewer requests               Each supported           No       The maximum request
+ when returning from a Lambda                        Region: 40                        body size (in KB) for
+ function (text encoding)                            Kilobytes                         viewer requests when
+                                                                                       returning from a Lambda
+                                                                                       function. (text encoding)
+
+ Requests per second per distribution                Each supported           Yes      The maximum number of
+                                                     Region: 250,000                   requests per second per
+                                                                                       distribution.
+
+ Response headers policies                           Each supported           Yes      The maximum number of
+                                                     Region: 20                        response headers policies
+                                                                                       per AWS account.
+
+ Response timeout per origin                         Each supported           Yes      The response timeout
+                                                     Region: 120                       per origin (1-120
+                                                     Seconds                           seconds).
+
+ SSL certificates per AWS account                     Each supported           Yes      The maximum number of
+ when serving HTTPS requests using                   Region: 2                         SSL certificates per AWS
+ dedicated IP addresses                                                                account when serving
+                                                                                       HTTPS requests using
+                                                                                       dedicated IP addresses
+                                                                                       (no quota when serving
+                                                                                       HTTPS requests using
+                                                                                       SNI).
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 903
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                    Adjustabl Description
+                                                                                e
+
+ SSL certificates that can be associated              Each supported             No      The maximum number
+ with a CloudFront web distribution                  Region: 1                          of SSL certificates that
+                                                                                        can be associated with a
+                                                                                        CloudFront web distribut
+                                                                                        ion.
+
+ Size of a response that is generated by             Each supported             No      The maximum size
+ a Lambda function, including headers                Region: 1                          (in MB) of a response
+ and body (Origin request and response               Megabytes                          that is generated by
+ event)                                                                                 a Lambda function,
+                                                                                        including headers and
+                                                                                        body. (Origin request and
+                                                                                        response event)
+
+ Size of a response that is generated by             Each supported             No      The maximum size
+ a Lambda function, including headers                Region: 40                         (in KB) of a response
+ and body (Viewer request and response               Kilobytes                          that is generated by
+ event)                                                                                 a Lambda function,
+                                                                                        including headers and
+                                                                                        body. (Viewer request
+                                                                                        and response event)
+
+ Staging distributions per AWS account               Each supported             Yes     The maximum number of
+                                                     Region: 20                         staging distributions that
+                                                                                        you can have for an AWS
+                                                                                        account.
+
+ Tags that can be added to a distribut               Each supported             No      The maximum number of
+ ion                                                 Region: 50                         tags that can be added
+                                                                                        to a distribution.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 904
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Total length of the URI including query             Each supported            No      The maximum total
+ string in a Lambda@Edge function                    Region: 8,192                     length in characters
+                                                                                       of the URI including
+                                                                                       the query string in a
+                                                                                       Lambda@Edge function.
+
+ Total number of bytes in whitelisted                Each supported            No      The total number of
+ cookie names (doesn’t apply if you                  Region: 512 Bytes                 bytes in whitelisted
+ configure CloudFront to forward all                                                    cookie names (doesn’t
+ cookies to the origin)                                                                apply if you configure
+                                                                                       CloudFront to forward
+                                                                                       all cookies to the origin).
+                                                                                       512 minus the number of
+                                                                                       whitelisted cookies.
+
+ Triggers per distribution                           Each supported            Yes     The maximum number of
+                                                     Region: 100                       triggers per distribution.
+
+ VPC origins per AWS account                         Each supported            Yes     The maximum number
+                                                     Region: 25                        of VPC origins per AWS
+                                                                                       account.
+
+ Web distributions per AWS account                   Each supported            Yes     The maximum number
+                                                     Region: 500                       of web distributions per
+                                                                                       AWS account.
+
+ Whitelisted cookies per cache behavior              Each supported            Yes     The maximum number of
+                                                     Region: 10                        whitelisted cookies per
+                                                                                       cache behavior.
+
+ Whitelisted headers per cache behavior              Each supported            Yes     The maximum number of
+                                                     Region: 10                        whitelisted headers per
+                                                                                       cache behavior.
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 905

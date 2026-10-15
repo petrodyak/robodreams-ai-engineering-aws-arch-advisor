@@ -1,0 +1,820 @@
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ South          sa-east-1     sdb.sa-east-1.amazonaws.com                                HTTP
+ America                                                                                 and
+ (São                                                                                    HTTPS
+ Paulo)
+
+
+Service quotas
+
+
+
+ Resource                                                                      Default
+
+ Domains                                                                       250
+
+
+
+For more information, see Amazon SimpleDB Quotas in the Amazon SimpleDB Developer Guide.
+
+Amazon Simple Notification Service endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, IPv6 endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global
+endpoints. For more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+Service endpoints allow you to connect to other AWS services. The following endpoints support
+both standard and FIFO topics.
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                         Version 1.0 3396
+AWS General Reference                                                                                   Reference guide
+
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2      sns.us-east-2.amazonaws.com                               HTTP
+ (Ohio)                                                                                  and
+                               sns-fips.us-east-2.api.aws                                 HTTPS
+
+                               sns.us-east-2.api.aws                                     HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ US             us-east-1      sns.us-east-1.amazonaws.com                               HTTP
+ East (N.                                                                                and
+ Virginia)                     sns-fips.us-east-1.api.aws                                 HTTPS
+
+                               sns.us-east-1.api.aws                                     HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ US             us-            sns.us-west-1.amazonaws.com                               HTTP
+ West (N.       west-1                                                                   and
+ Californi                     sns-fips.us-west-1.api.aws                                 HTTPS
+
+ a)                            sns.us-west-1.api.aws
+                                                                                         HTTPS
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ US West        us-            sns.us-west-2.amazonaws.com                               HTTP
+ (Oregon)       west-2                                                                   and
+                               sns-fips.us-west-2.api.aws                                 HTTPS
+
+                               sns.us-west-2.api.aws                                     HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 3397
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Africa         af-south-     sns.af-south-1.amazonaws.com                               HTTP
+ (Cape          1                                                                        and
+ Town)                        sns.af-south-1.api.aws                                     HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sns.ap-east-1.amazonaws.com                                HTTP
+ Pacific         east-1                                                                   and
+ (Hong                        sns.ap-east-1.api.aws                                      HTTPS
+
+ Kong)
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sns.ap-south-2.amazonaws.com                               HTTP
+ Pacific         south-2                                                                  and
+ (Hyderaba                    sns.ap-south-2.api.aws                                     HTTPS
+
+ d)
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sns.ap-southeast-3.amazonaws.com                           HTTP
+ Pacific         southe                                                                   and
+ (Jakarta)      ast-3         sns.ap-southeast-3.api.aws                                 HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 3398
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           sns.ap-southeast-5.amazonaws.com                           HTTP
+ Pacific         southe                                                                   and
+ (Malaysia      ast-5         sns.ap-southeast-5.api.aws                                 HTTPS
+
+ )
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sns.ap-southeast-4.amazonaws.com                           HTTP
+ Pacific         southe                                                                   and
+ (Melbourn      ast-4         sns.ap-southeast-4.api.aws                                 HTTPS
+
+ e)
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sns.ap-south-1.amazonaws.com                               HTTP
+ Pacific         south-1                                                                  and
+ (Mumbai)                     sns.ap-south-1.api.aws                                     HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sns.ap-southeast-6.amazonaws.com                           HTTP
+ Pacific         southe                                                                   and
+ (New           ast-6         sns.ap-southeast-6.api.aws                                 HTTPS
+
+ Zealand)
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 3399
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           sns.ap-northeast-3.amazonaws.com                           HTTP
+ Pacific         northe                                                                   and
+ (Osaka)        ast-3         sns.ap-northeast-3.api.aws                                 HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sns.ap-northeast-2.amazonaws.com                           HTTP
+ Pacific         northe                                                                   and
+ (Seoul)        ast-2         sns.ap-northeast-2.api.aws                                 HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sns.ap-southeast-1.amazonaws.com                           HTTP
+ Pacific         southe                                                                   and
+ (Singapor      ast-1         sns.ap-southeast-1.api.aws                                 HTTPS
+
+ e)
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sns.ap-southeast-2.amazonaws.com                           HTTP
+ Pacific         southe                                                                   and
+ (Sydney)       ast-2         sns.ap-southeast-2.api.aws                                 HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 3400
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-            sns.ap-east-2.amazonaws.com                                HTTP
+ Pacific         east-2                                                                    and
+ (Taipei)                      sns.ap-east-2.api.aws                                      HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Asia           ap-            sns.ap-southeast-7.amazonaws.com                           HTTP
+ Pacific         southe                                                                    and
+ (Thailand      ast-7          sns.ap-southeast-7.api.aws                                 HTTPS
+
+ )
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Asia           ap-            sns.ap-northeast-1.amazonaws.com                           HTTP
+ Pacific         northe                                                                    and
+ (Tokyo)        ast-1          sns.ap-northeast-1.api.aws                                 HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Canada         ca-centra      sns.ca-central-1.amazonaws.com                             HTTP
+ (Central)      l-1                                                                       and
+                               sns-fips.ca-central-1.api.aws                               HTTPS
+
+                               sns.ca-central-1.api.aws                                   HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 3401
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Canada         ca-           sns.ca-west-1.amazonaws.com                               HTTP
+ West           west-1                                                                  and
+ (Calgary)                    sns-fips.ca-west-1.api.aws                                 HTTPS
+
+                              sns.ca-west-1.api.aws                                     HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Europe         eu-           sns.eu-central-1.amazonaws.com                            HTTP
+ (Frankfur      central-1                                                               and
+ t)                           sns.eu-central-1.api.aws                                  HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Europe         eu-           sns.eu-west-1.amazonaws.com                               HTTP
+ (Ireland)      west-1                                                                  and
+                              sns.eu-west-1.api.aws                                     HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Europe         eu-           sns.eu-west-2.amazonaws.com                               HTTP
+ (London)       west-2                                                                  and
+                              sns.eu-west-2.api.aws                                     HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 3402
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           sns.eu-south-1.amazonaws.com                              HTTP
+ (Milan)        south-1                                                                 and
+                              sns.eu-south-1.api.aws                                    HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Europe         eu-           sns.eu-west-3.amazonaws.com                               HTTP
+ (Paris)        west-3                                                                  and
+                              sns.eu-west-3.api.aws                                     HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Europe         eu-           sns.eu-south-2.amazonaws.com                              HTTP
+ (Spain)        south-2                                                                 and
+                              sns.eu-south-2.api.aws                                    HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Europe         eu-           sns.eu-north-1.amazonaws.com                              HTTP
+ (Stockhol      north-1                                                                 and
+ m)                           sns.eu-north-1.api.aws                                    HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 3403
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Europe         eu-            sns.eu-central-2.amazonaws.com                             HTTP
+ (Zurich)       central-2                                                                 and
+                               sns.eu-central-2.api.aws                                   HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Israel         il-centra      sns.il-central-1.amazonaws.com                             HTTP
+ (Tel Aviv)     l-1                                                                       and
+                               sns.il-central-1.api.aws                                   HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Mexico         mx-            sns.mx-central-1.amazonaws.com                             HTTP
+ (Central)      central-1                                                                 and
+                               sns.mx-central-1.api.aws                                   HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Middle         me-            sns.me-south-1.amazonaws.com                               HTTP
+ East           south-1                                                                   and
+ (Bahrain)                     sns.me-south-1.api.aws                                     HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 3404
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Middle         me-           sns.me-central-1.amazonaws.com                            HTTP
+ East           central-1                                                               and
+ (UAE)                        sns.me-central-1.api.aws                                  HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ South          sa-east-1     sns.sa-east-1.amazonaws.com                               HTTP
+ America                                                                                and
+ (São                         sns.sa-east-1.api.aws                                     HTTPS
+
+ Paulo)
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ AWS            us-gov-       sns.us-gov-east-1.amazonaws.com                           HTTPS
+ GovCloud       east-1
+ (US-East)                    sns.us-gov-east-1.api.aws                                 HTTPS
+
+
+ AWS            us-gov-       sns.us-gov-west-1.amazonaws.com                           HTTPS
+ GovCloud       west-1
+ (US-                         sns.us-gov-west-1.api.aws                                 HTTPS
+
+ West)
+
+
+Service quotas
+
+The following quotas determine how many Amazon SNS resources you can create in your AWS
+account, and they determine the rate at which you can issue Amazon SNS API requests.
+
+Amazon SNS resource
+
+To request an increase, submit an SNS quota increase request.
+
+
+
+
+
+
+
+Service quotas                                                                                        Version 1.0 3405
+AWS General Reference                                                                                        Reference guide
+
+
+ Resource                                                                          Default
+
+ Topics                                                                            •  Standard: 100,000 per
+                                                                                      account
+                                                                                   •  FIFO: 1,000 per account
+
+ Subscriptions                                                                     •  Standard: 12,500,000 per
+                                                                                      topic
+
+                                                                                      For Firehose delivery
+                                                                                      streams, 5 per topic, per
+                                                                                      subscription owner
+                                                                                   •  FIFO: 100 per topic
+
+ Pending subscriptions                                                             5,000 per account
+
+ Account spend threshold for SMS                                                   1.00 USD per account
+
+ Delivery rate for promotional SMS messages                                        20 messages per second
+
+ Delivery rate for transactional SMS messages                                      20 messages per second
+
+ Delivery rate for email messages                                                  10 messages per second per
+                                                                                   email or email-json subscript
+                                                                                   ion. This is a hard limit and
+                                                                                   can't be increased.
+
+ Maximum number of messages in PublishBatchRequest                                 10 PublishBatchReques
+                                                                                   tEntries
+
+ Subscription filter policies                                                       •  200 filter policies per topic
+                                                                                   •  10,000 filter policies per
+                                                                                      AWS account
+
+ Message header                                                                    The maximum header size is
+                                                                                   16,384 bytes (16 KiB).
+
+ Message size                                                                      The default maximum
+                                                                                   message size is 262,144 bytes
+
+
+
+Service quotas                                                                                              Version 1.0 3406
+AWS General Reference                                                                                   Reference guide
+
+ Resource                                                                      Default
+
+                                                                               (256 KiB). You can increase
+                                                                               the maximum message size
+                                                                               up to 1,048,576 bytes (1
+                                                                               MiB) by setting the topic's
+                                                                               MaximumMessageSize
+                                                                               attribute. For more informati
+                                                                               on, see Publishing large
+                                                                               messages with Amazon SNS.
+                                                                               To publish messages larger
+                                                                               than 1 MiB, you can use the
+                                                                               Amazon SNS Extended Client
+                                                                               Libraries. The maximum
+                                                                               payload size is 2 GB.
+
+
+Amazon SNS API throttling
+
+The following quotas throttle the rate at which you can issue Amazon SNS API requests.
+
+Hard
+
+The following quotas cannot be increased.
+
+
+ API                                                        Transactions per second
+
+ AddPermission                                              10
+
+ CheckIfPhoneNumberIsOptedOut                               50
+
+ CreateSMSSandboxPhoneNumber                                1
+
+ DeleteSMSSandboxPhoneNumber                                1
+
+ GetSMSAttributes                                           20
+
+ GetSMSSandboxAccountStatus                                 10
+
+ ListEndpointsByPlatformApplication                         30
+
+
+
+Service quotas                                                                                          Version 1.0 3407
+AWS General Reference                                                                                   Reference guide
+
+ API                                                        Transactions per second
+
+ ListOriginationNumbers                                     1
+
+ ListPhoneNumbersOptedOut                                   10
+
+ ListPlatformApplications                                   15
+
+ ListSMSSandboxPhoneNumbers                                 1
+
+ ListSubscriptions                                          30
+
+ ListSubscriptionsByTopic                                   30
+
+ ListTagsForResource                                        10
+
+ ListTopics                                                 30
+
+ OptInPhoneNumber                                           20
+
+ RemovePermission                                           10
+
+ SetSMSAttributes                                           1
+
+ Subscribe                                                  100
+
+ TagResource                                                10
+
+ Unsubscribe                                                100
+
+ UntagResource                                              10
+
+ VerifySMSSandboxPhoneNumber                                1
+
+
+
+Soft
+
+The following quotas vary by AWS Region. The messages per second quota is based on the
+number of messages published to an Amazon SNS region, per account, combining Publish and
+PublishBatch API requests including both standard and FIFO topic types. To request a soft limit
+increase, submit an SNS quota increase request.
+
+
+
+
+
+Service quotas                                                                                         Version 1.0 3408
+AWS General Reference                                                                                       Reference guide
+
+For example, if your regional quota is 30,000 messages per second, per account, there are a few
+ways this quota can be reached:
+
+• Using the Publish action at a rate of 30,000 API requests per second to publish 30,000
+  messages (one message per API request).
+• Using the PublishBatch action at a rate of 3,000 API requests per second to publish 30,000
+  messages (10 messages per batch API request).
+• Using the Publish action at a rate of 10,000 API requests per second to publish 10,000
+  messages (one message per API request) and the PublishBatch action at a rate of 2,000 API
+  requests per second to publish 20,000 messages (10 messages per batch API request) for a total
+  of 30,000 messages published per second.
+
+
+Publish API throttling per account
+
+ AWS Regions                              Standard topics                         FIFO topics*
+
+ US East (N. Virginia) Region             30,000 messages per second              30,000 messages per second
+
+ US West (Oregon) Region                  9,000 messages per second               9,000 messages per second
+
+ Europe (Ireland) Region
+
+ US East (Ohio) Region                    1,500 messages per second               3,000 messages per second
+
+ US West (N. California) Region
+
+ Asia Pacific (Mumbai) Region
+
+ Asia Pacific (Seoul) Region
+
+ Asia Pacific (Singapore)
+ Region
+
+ Asia Pacific (Sydney) Region
+
+ Asia Pacific (Tokyo) Region
+
+ Europe (Frankfurt) Region
+
+ All other supported Regions              300 messages per second                 3,000 messages per second
+
+
+
+Service quotas                                                                                             Version 1.0 3409
+AWS General Reference                                                                                     Reference guide
+
+*Amazon SNS FIFO per topic limits exceed the default per account limit when
+FifoThroughputScope is set to MessageGroup. Amazon SNS FIFO topics have a maximum
+per message group limit of 300 messages per second, and Amazon SNS FIFO topics per topic
+throughput defaults to a limit of 3,000 messages per second or 20MB per second, which ever
+comes first, when FifoThroughputScope is set to Topic. Amazon SNS FIFO topics can
+experience reduced throughput within a message group for cross Regional deliveries due to the
+added latency between Regions, and the need to maintain the strict order of messages.
+
+Other API throttling
+
+ APIs                                    AWS Regions                             Transactions per second
+
+ ConfirmSubscription                      US East (N. Virginia) Region            3,000
+
+ CreatePlatformApplication               US West (Oregon) Region                 900
+
+ CreatePlatformEndpoint                  Europe (Ireland) Region
+
+ CreateTopic                             US East (Ohio) Region                   150
+
+ DeleteEndpoint                          US West (N. California) Region
+
+ DeletePlatformApplication               Asia Pacific (Mumbai) Region
+
+ DeleteTopic                             Asia Pacific (Seoul) Region
+
+ GetEndpointAttributes                   Asia Pacific (Singapore)
+ GetDataProtectionPolicy                 Region
+
+ GetPlatformApplicationAttri             Asia Pacific (Sydney) Region
+
+ butes                                   Asia Pacific (Tokyo) Region
+
+ GetSubscriptionAttributes               Europe (Frankfurt) Region
+
+ GetTopicAttributes                      Africa (Cape Town) Region               30
+
+ SetEndpointAttributes                   Asia Pacific (Hong Kong)
+ SetPlatformApplicationAttri             Region
+
+ butes                                   Asia Pacific (Hyderabad)
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 3410
+AWS General Reference                                                                                      Reference guide
+
+ APIs                                    AWS Regions                             Transactions per second
+
+ SetSubscriptionAttributes               Asia Pacific (Osaka) Region
+
+ SetTopicAttributes                      Canada (Central) Region
+
+                                         China (Beijing) Region
+
+                                         China (Ningxia) Region
+
+                                         Europe (London) Region
+
+                                         Europe (Milan) Region
+
+                                         Europe (Paris) Region
+
+                                         Europe (Spain)
+
+                                         Europe (Stockholm) Region
+
+                                         Israel (Tel Aviv) Region
+
+                                         Middle East (Bahrain) Region
+
+                                         South America (São Paulo)
+                                         Region
+
+
+ PutDataProtectionPolicy                 All Commercial Regions                  1
+
+
+
+Message Archiving and Replay
+
+ Policy                        AWS Regions                   Standard topics               FIFO topics
+
+ ArchivePolicy                 All Commercial                N/A                           Yes
+                               Regions
+
+                               AWS GovCloud (US)             N/A                           Yes
+                               Regions
+
+ ReplayPolicy                  All Commercial                N/A                           Yes
+                               Regions
+
+
+Service quotas                                                                                            Version 1.0 3411

@@ -1,0 +1,790 @@
+AWS General Reference                                                                                  Reference guide
+
+ Policy                       AWS Regions                  Standard topics              FIFO topics
+
+                              AWS GovCloud (US)            N/A                          Yes
+                              Regions
+
+
+Amazon Simple Queue Service endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, IPv6 endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global
+endpoints. For more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+Amazon SQS
+
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2     sqs.us-east-2.amazonaws.com                               HTTP
+ (Ohio)                                                                                 and
+                              sqs-fips.us-east-2.api.aws                                 HTTPS
+
+                              sqs-fips.us-east-2.amazonaws.com                           HTTPS
+
+                              sqs.us-east-2.api.aws                                     HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ US             us-east-1     sqs.us-east-1.amazonaws.com                               HTTP
+ East (N.                                                                               and
+ Virginia)                    sqs-fips.us-east-1.api.aws                                 HTTPS
+
+
+
+Amazon SQS                                                                                            Version 1.0 3412
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+                              sqs-fips.us-east-1.amazonaws.com                           HTTPS
+
+                              sqs.us-east-1.api.aws                                     HTTPS
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+
+ US             us-           sqs.us-west-1.amazonaws.com                               HTTP
+ West (N.       west-1                                                                  and
+ Californi                    sqs-fips.us-west-1.api.aws                                 HTTPS
+
+ a)                           sqs-fips.us-west-1.amazonaws.com
+                                                                                        HTTPS
+
+                              sqs.us-west-1.api.aws                                     HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ US West        us-           sqs.us-west-2.amazonaws.com                               HTTP
+ (Oregon)       west-2                                                                  and
+                              sqs-fips.us-west-2.api.aws                                 HTTPS
+
+                              sqs-fips.us-west-2.amazonaws.com                           HTTPS
+
+                              sqs.us-west-2.api.aws                                     HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 3413
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Africa         af-south-     sqs.af-south-1.amazonaws.com                               HTTP
+ (Cape          1                                                                        and
+ Town)                        sqs.af-south-1.api.aws                                     HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sqs.ap-east-1.amazonaws.com                                HTTP
+ Pacific         east-1                                                                   and
+ (Hong                        sqs.ap-east-1.api.aws                                      HTTPS
+
+ Kong)
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sqs.ap-south-2.amazonaws.com                               HTTP
+ Pacific         south-2                                                                  and
+ (Hyderaba                    sqs.ap-south-2.api.aws                                     HTTPS
+
+ d)
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sqs.ap-southeast-3.amazonaws.com                           HTTP
+ Pacific         southe                                                                   and
+ (Jakarta)      ast-3         sqs.ap-southeast-3.api.aws                                 HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 3414
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           sqs.ap-southeast-5.amazonaws.com                           HTTP
+ Pacific         southe                                                                   and
+ (Malaysia      ast-5         sqs.ap-southeast-5.api.aws                                 HTTPS
+
+ )
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sqs.ap-southeast-4.amazonaws.com                           HTTP
+ Pacific         southe                                                                   and
+ (Melbourn      ast-4         sqs.ap-southeast-4.api.aws                                 HTTPS
+
+ e)
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sqs.ap-south-1.amazonaws.com                               HTTP
+ Pacific         south-1                                                                  and
+ (Mumbai)                     sqs.ap-south-1.api.aws                                     HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sqs.ap-southeast-6.amazonaws.com                           HTTP
+ Pacific         southe                                                                   and
+ (New           ast-6         sqs.ap-southeast-6.api.aws                                 HTTPS
+
+ Zealand)
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 3415
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           sqs.ap-northeast-3.amazonaws.com                           HTTP
+ Pacific         northe                                                                   and
+ (Osaka)        ast-3         sqs.ap-northeast-3.api.aws                                 HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sqs.ap-northeast-2.amazonaws.com                           HTTP
+ Pacific         northe                                                                   and
+ (Seoul)        ast-2         sqs.ap-northeast-2.api.aws                                 HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sqs.ap-southeast-1.amazonaws.com                           HTTP
+ Pacific         southe                                                                   and
+ (Singapor      ast-1         sqs.ap-southeast-1.api.aws                                 HTTPS
+
+ e)
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-           sqs.ap-southeast-2.amazonaws.com                           HTTP
+ Pacific         southe                                                                   and
+ (Sydney)       ast-2         sqs.ap-southeast-2.api.aws                                 HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 3416
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-            sqs.ap-east-2.amazonaws.com                               HTTP
+ Pacific         east-2                                                                   and
+ (Taipei)                      sqs.ap-east-2.api.aws                                     HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-            sqs.ap-southeast-7.amazonaws.com                          HTTP
+ Pacific         southe                                                                   and
+ (Thailand      ast-7          sqs.ap-southeast-7.api.aws                                HTTPS
+
+ )
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Asia           ap-            sqs.ap-northeast-1.amazonaws.com                          HTTP
+ Pacific         northe                                                                   and
+ (Tokyo)        ast-1          sqs.ap-northeast-1.api.aws                                HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+ Canada         ca-centra      sqs.ca-central-1.amazonaws.com                            HTTP
+ (Central)      l-1                                                                      and
+                               sqs-fips.ca-central-1.api.aws                              HTTPS
+
+                               sqs-fips.ca-central-1.amazonaws.com                        HTTPS
+
+                               sqs.ca-central-1.api.aws                                  HTTPS
+
+
+                                                                                         HTTP
+                                                                                         and
+                                                                                         HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 3417
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Canada         ca-           sqs.ca-west-1.amazonaws.com                               HTTP
+ West           west-1                                                                  and
+ (Calgary)                    sqs-fips.ca-west-1.api.aws                                 HTTPS
+
+                              sqs-fips.ca-west-1.amazonaws.com                           HTTPS
+
+                              sqs.ca-west-1.api.aws                                     HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Europe         eu-           sqs.eu-central-1.amazonaws.com                            HTTP
+ (Frankfur      central-1                                                               and
+ t)                           sqs.eu-central-1.api.aws                                  HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Europe         eu-           sqs.eu-west-1.amazonaws.com                               HTTP
+ (Ireland)      west-1                                                                  and
+                              sqs.eu-west-1.api.aws                                     HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Europe         eu-           sqs.eu-west-2.amazonaws.com                               HTTP
+ (London)       west-2                                                                  and
+                              sqs.eu-west-2.api.aws                                     HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 3418
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           sqs.eu-south-1.amazonaws.com                              HTTP
+ (Milan)        south-1                                                                 and
+                              sqs.eu-south-1.api.aws                                    HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Europe         eu-           sqs.eu-west-3.amazonaws.com                               HTTP
+ (Paris)        west-3                                                                  and
+                              sqs.eu-west-3.api.aws                                     HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Europe         eu-           sqs.eu-south-2.amazonaws.com                              HTTP
+ (Spain)        south-2                                                                 and
+                              sqs.eu-south-2.api.aws                                    HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Europe         eu-           sqs.eu-north-1.amazonaws.com                              HTTP
+ (Stockhol      north-1                                                                 and
+ m)                           sqs.eu-north-1.api.aws                                    HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 3419
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Europe         eu-            sqs.eu-central-2.amazonaws.com                             HTTP
+ (Zurich)       central-2                                                                 and
+                               sqs.eu-central-2.api.aws                                   HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Israel         il-centra      sqs.il-central-1.amazonaws.com                             HTTP
+ (Tel Aviv)     l-1                                                                       and
+                               sqs.il-central-1.api.aws                                   HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Mexico         mx-            sqs.mx-central-1.amazonaws.com                             HTTP
+ (Central)      central-1                                                                 and
+                               sqs.mx-central-1.api.aws                                   HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+ Middle         me-            sqs.me-south-1.amazonaws.com                               HTTP
+ East           south-1                                                                   and
+ (Bahrain)                     sqs.me-south-1.api.aws                                     HTTPS
+
+
+                                                                                          HTTP
+                                                                                          and
+                                                                                          HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 3420
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Middle         me-           sqs.me-central-1.amazonaws.com                            HTTP
+ East           central-1                                                               and
+ (UAE)                        sqs.me-central-1.api.aws                                  HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ South          sa-east-1     sqs.sa-east-1.amazonaws.com                               HTTP
+ America                                                                                and
+ (São                         sqs.sa-east-1.api.aws                                     HTTPS
+
+ Paulo)
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ AWS            us-gov-       sqs.us-gov-east-1.amazonaws.com                           HTTP
+ GovCloud       east-1                                                                  and
+ (US-East)                    sqs.us-gov-east-1.api.aws                                 HTTPS
+
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ AWS            us-gov-       sqs.us-gov-west-1.amazonaws.com                           HTTP
+ GovCloud       west-1                                                                  and
+ (US-                         sqs.us-gov-west-1.api.aws                                 HTTPS
+
+ West)
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+
+Legacy endpoints
+
+If you use the AWS CLI or AWS SDK for Python (Boto), you can use the following legacy endpoints.
+
+
+
+
+Service endpoints                                                                                     Version 1.0 3421
+AWS General Reference                                                                                Reference guide
+
+
+ Region          Region           Endpoint                                                         Protocol
+ Name
+
+ US East         us-east-2        us-east-2.queue.amazonaws.com                                    HTTP and
+ (Ohio)                                                                                            HTTPS
+
+ US East (N.     us-east-1        queue.amazonaws.com                                              HTTP and
+ Virginia)                                                                                         HTTPS
+
+ US              us-west-1        us-west-1.queue.amazonaws.com                                    HTTP and
+ West (N.                                                                                          HTTPS
+ California)
+
+ US West         us-west-2        us-west-2.queue.amazonaws.com                                    HTTP and
+ (Oregon)                                                                                          HTTPS
+
+ Africa          af-south-1       af-south-1.queue.amazonaws.com                                   HTTP
+ (Cape
+ Town)
+
+ Asia Pacific     ap-south-1       ap-south-1.queue.amazonaws.com                                   HTTP and
+ (Mumbai)                                                                                          HTTPS
+
+ Asia Pacific     ap-northe        ap-northeast-3.queue.amazonaws.com                               HTTP and
+ (Osaka)         ast-3                                                                             HTTPS
+
+ Asia Pacific     ap-northe        ap-northeast-2.queue.amazonaws.com                               HTTP and
+ (Seoul)         ast-2                                                                             HTTPS
+
+ Asia Pacific     ap-southe        ap-southeast-1.queue.amazonaws.com                               HTTP and
+ (Singapor       ast-1                                                                             HTTPS
+ e)
+
+ Asia Pacific     ap-southe        ap-southeast-2.queue.amazonaws.com                               HTTP and
+ (Sydney)        ast-2                                                                             HTTPS
+
+ Asia Pacific     ap-northe        ap-northeast-1.queue.amazonaws.com                               HTTP and
+ (Tokyo)         ast-1                                                                             HTTPS
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 3422
+AWS General Reference                                                                                Reference guide
+
+ Region          Region           Endpoint                                                         Protocol
+ Name
+
+ Canada          ca-centra        ca-central-1.queue.amazonaws.com                                 HTTP and
+ (Central)       l-1                                                                               HTTPS
+
+ China           cn-north-1       cn-north-1.queue.amazonaws.com                                   HTTP and
+ (Beijing)                                                                                         HTTPS
+
+ China           cn-northw        cn-northwest-1.queue.amazonaws.com                               HTTP and
+ (Ningxia)       est-1                                                                             HTTPS
+
+ Europe          eu-centra        eu-central-1.queue.amazonaws.com                                 HTTP and
+ (Frankfurt)     l-1                                                                               HTTPS
+
+ Europe          eu-west-1        eu-west-1.queue.amazonaws.com                                    HTTP and
+ (Ireland)                                                                                         HTTPS
+
+ Europe          eu-west-2        eu-west-2.queue.amazonaws.com                                    HTTP and
+ (London)                                                                                          HTTPS
+
+ Europe          eu-west-3        eu-west-3.queue.amazonaws.com                                    HTTP and
+ (Paris)                                                                                           HTTPS
+
+ Europe          eu-north-1       eu-north-1.queue.amazonaws.com                                   HTTP and
+ (Stockhol                                                                                         HTTPS
+ m)
+
+ South           sa-east-1        sa-east-1.queue.amazonaws.com                                    HTTP and
+ America                                                                                           HTTPS
+ (São Paulo)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 3423
+AWS General Reference                                                                                      Reference guide
+Service quotas
+
+
+
+ Name                          Default                       Adjustable                    Description
+
+ Actions per Queue             Each supported                No                            The number of
+ Policy                        Region: 7                                                   actions in a queue
+                                                                                           policy.
+
+ Attributes per                Each supported                No                            The number of
+ Message                       Region: 10                                                  attributes added to a
+                                                                                           message.
+
+ Batched Message ID            Each supported                No                            The length of a
+ Length                        Region: 80                                                  batched message ID.
+
+ Batched Message               Each supported                No                            The number of
+ Throughput for FIFO           Region: 3,000                                               batched transactions
+ Queues                                                                                    per second (TPS) for
+                                                                                           FIFO queues.
+
+ Batched Message               Supported Regions             No                            The number of
+ High Throughput for           (US East (N. Virginia)                                      batched transactions
+ FIFO Queues                   , US West (Oregon),                                         per second (TPS) for
+                               and Europe (Ireland)):                                      FIFO queues.
+                               700,000
+
+                               Europe (Frankfurt)
+                               and US East (Ohio):
+                               180,000
+
+                               Asia Pacific (Mumbai),
+                               Asia Pacific (Singapor
+                               e), Asia Pacific
+                               (Sydney) and Asia
+                               Pacific (Tokyo):
+                               90,000
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 3424
+AWS General Reference                                                                                      Reference guide
+
+ Name                          Default                        Adjustable                    Description
+
+                               Europe (London) and
+                               South America (São
+                               Paulo):45,000
+
+                               All other supported
+                               Regions: 24,000
+
+ Conditions per Queue          Each supported                 No                            The number of
+ Policy                        Region: 10                                                   conditions in a queue
+                                                                                            policy.
+
+ In-Flight Messages            Each supported                 Contact AWS Support           The number of in-
+ per FIFO Queue                Region: 120,000                                              flight messages in a
+                                                                                            FIFO queue.
+
+ In-Flight Messages            Each supported                 Yes                           The number of in-
+ per Standard Queue            Region: 120,000                                              flight messages in a
+                                                                                            standard queue.
+
+ Message Invisibility          Each supported                 No                            The length of time,
+ Period                        Region: 0 Seconds                                            in seconds, for
+                                                                                            which Amazon SQS
+                                                                                            retains a message if
+                                                                                            it isn't deleted. The
+                                                                                            maximum is 14 days
+                                                                                            (1,209,600 seconds).
+
+ Message Size                  Each supported                 No                            The size of a
+                               Region: 256 Kilobytes                                        message, in kilobytes.
+
+ Message Size in               Each supported                 No                            The size of a
+ Amazon S3 Bucket              Region: 2 Gigabytes                                          message, in gigabytes
+                                                                                            , in an Amazon S3
+                                                                                            bucket.
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 3425
+AWS General Reference                                                                                     Reference guide
+
+ Name                          Default                       Adjustable                    Description
+
+ Messages per Batch            Each supported                No                            The number of
+                               Region: 10                                                  messages in a
+                                                                                           message batch.
+
+ Principals per Queue          Each supported                No                            The length of time,
+ Policy                        Region: 50                                                  in minutes, by which
+                                                                                           to delay the initial
+                                                                                           delivery of messages
+                                                                                           to a queue.
+
+ Queue Name Length             Each supported                No                            The queue name
+                               Region: 80                                                  length.
+
+ Queue Policy Size             Each supported                No                            The size, in bytes, of
+                               Region: 8,192 Bytes                                         a queue policy.
+
+ Statements per                Each supported                No                            The number of tags
+ Queue Policy                  Region: 20                                                  added to a queue.
+
+ UTF-8 Queue Tag Key           Each supported                No                            The length of a UTF-8
+ Length                        Region: 128                                                 queue tag key.
+
+ UTF-8 Queue Tag               Each supported                No                            The length of a UTF-8
+ Value Length                  Region: 256                                                 queue tag value.
+
+ Unbatched Message             Each supported                No                            The number of
+ Throughput for FIFO           Region: 300                                                 unbatched transacti
+ Queues                                                                                    ons per second (TPS)
+                                                                                           for FIFO queues.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 3426

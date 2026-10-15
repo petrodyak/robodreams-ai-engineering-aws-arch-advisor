@@ -1,0 +1,1017 @@
+AWS General Reference                                                                                   Reference guide
+Amazon Redshift endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+Redshift API
+
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ US East        us-east-2     redshift.us-east-2.amazonaws.com                           HTTPS
+ (Ohio)
+                              redshift-fips.us-east-2.amazonaws.com                       HTTPS
+
+ US             us-east-1     redshift.us-east-1.amazonaws.com                           HTTPS
+ East (N.
+ Virginia)                    redshift-fips.us-east-1.amazonaws.com                       HTTPS
+
+
+ US             us-           redshift.us-west-1.amazonaws.com                           HTTPS
+ West (N.       west-1
+ Californi                    redshift-fips.us-west-1.amazonaws.com                       HTTPS
+
+ a)
+
+ US West        us-           redshift.us-west-2.amazonaws.com                           HTTPS
+ (Oregon)       west-2
+                              redshift-fips.us-west-2.amazonaws.com                       HTTPS
+
+ Africa         af-south-     redshift.af-south-1.amazonaws.com                          HTTPS
+ (Cape          1
+ Town)
+
+
+
+Amazon Redshift                                                                                        Version 1.0 2883
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-            redshift.ap-east-1.amazonaws.com                           HTTPS
+ Pacific         east-1
+ (Hong
+ Kong)
+
+ Asia           ap-            redshift.ap-south-2.amazonaws.com                          HTTPS
+ Pacific         south-2
+ (Hyderaba
+ d)
+
+ Asia           ap-            redshift.ap-southeast-3.amazonaws.com                      HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3
+
+ Asia           ap-            redshift.ap-southeast-5.amazonaws.com                      HTTPS
+ Pacific         southe
+ (Malaysia      ast-5
+ )
+
+ Asia           ap-            redshift.ap-southeast-4.amazonaws.com                      HTTPS
+ Pacific         southe
+ (Melbourn      ast-4
+ e)
+
+ Asia           ap-            redshift.ap-south-1.amazonaws.com                          HTTPS
+ Pacific         south-1
+ (Mumbai)
+
+ Asia           ap-            redshift.ap-southeast-6.amazonaws.com                      HTTPS
+ Pacific         southe
+ (New           ast-6
+ Zealand)
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 2884
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-            redshift.ap-northeast-3.amazonaws.com                      HTTPS
+ Pacific         northe
+ (Osaka)        ast-3
+
+ Asia           ap-            redshift.ap-northeast-2.amazonaws.com                      HTTPS
+ Pacific         northe
+ (Seoul)        ast-2
+
+ Asia           ap-            redshift.ap-southeast-1.amazonaws.com                      HTTPS
+ Pacific         southe
+ (Singapor      ast-1
+ e)
+
+ Asia           ap-            redshift.ap-southeast-2.amazonaws.com                      HTTPS
+ Pacific         southe
+ (Sydney)       ast-2
+
+ Asia           ap-            redshift.ap-east-2.amazonaws.com                           HTTPS
+ Pacific         east-2
+ (Taipei)
+
+ Asia           ap-            redshift.ap-southeast-7.amazonaws.com                      HTTPS
+ Pacific         southe
+ (Thailand      ast-7
+ )
+
+ Asia           ap-            redshift.ap-northeast-1.amazonaws.com                      HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1
+
+ Canada         ca-centra      redshift.ca-central-1.amazonaws.com                        HTTPS
+ (Central)      l-1
+                               redshift-fips.ca-central-1.amazonaws.com                    HTTPS
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 2885
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Canada         ca-           redshift.ca-west-1.amazonaws.com                          HTTPS
+ West           west-1
+ (Calgary)                    redshift-fips.ca-west-1.amazonaws.com                      HTTPS
+
+
+ Europe         eu-           redshift.eu-central-1.amazonaws.com                       HTTPS
+ (Frankfur      central-1
+ t)
+
+ Europe         eu-           redshift.eu-west-1.amazonaws.com                          HTTPS
+ (Ireland)      west-1
+
+ Europe         eu-           redshift.eu-west-2.amazonaws.com                          HTTPS
+ (London)       west-2
+
+ Europe         eu-           redshift.eu-south-1.amazonaws.com                         HTTPS
+ (Milan)        south-1
+
+ Europe         eu-           redshift.eu-west-3.amazonaws.com                          HTTPS
+ (Paris)        west-3
+
+ Europe         eu-           redshift.eu-south-2.amazonaws.com                         HTTPS
+ (Spain)        south-2
+
+ Europe         eu-           redshift.eu-north-1.amazonaws.com                         HTTPS
+ (Stockhol      north-1
+ m)
+
+ Europe         eu-           redshift.eu-central-2.amazonaws.com                       HTTPS
+ (Zurich)       central-2
+
+ Israel         il-centra     redshift.il-central-1.amazonaws.com                       HTTPS
+ (Tel Aviv)     l-1
+
+ Mexico         mx-           redshift.mx-central-1.amazonaws.com                       HTTPS
+ (Central)      central-1
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 2886
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Middle         me-           redshift.me-south-1.amazonaws.com                          HTTPS
+ East           south-1
+ (Bahrain)
+
+ Middle         me-           redshift.me-central-1.amazonaws.com                        HTTPS
+ East           central-1
+ (UAE)
+
+ South          sa-east-1     redshift.sa-east-1.amazonaws.com                           HTTPS
+ America
+ (São
+ Paulo)
+
+ AWS            us-gov-       redshift.us-gov-east-1.amazonaws.com                       HTTPS
+ GovCloud       east-1
+ (US-East)                    redshift-fips.us-gov-east-1.api.aws                         HTTPS
+
+
+ AWS            us-gov-       redshift.us-gov-west-1.amazonaws.com                       HTTPS
+ GovCloud       west-1
+ (US-                         redshift-fips.us-gov-west-1.api.aws                         HTTPS
+
+ West)
+
+
+
+Redshift Serverless API
+
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ US East        us-east-2     redshift-serverless.us-east-2.amazonaws.com                HTTPS
+ (Ohio)
+                              redshift-serverless-fips.us-east-2.api.aws                  HTTPS
+
+                              redshift-serverless-fips.us-east-2.amazonaws.               HTTPS
+                              com
+                                                                                         HTTPS
+                              redshift-serverless.us-east-2.api.aws
+
+
+
+Service endpoints                                                                                      Version 1.0 2887
+AWS General Reference                                                                                     Reference guide
+
+ Region         Region         Endpoint                                                    Protocol
+ Name
+
+ US             us-east-1      redshift-serverless.us-east-1.amazonaws.com                 HTTPS
+ East (N.
+ Virginia)                     redshift-serverless-fips.us-east-1.api.aws                   HTTPS
+
+                               redshift-serverless-fips.us-east-1.amazonaws.                HTTPS
+                               com
+                                                                                           HTTPS
+                               redshift-serverless.us-east-1.api.aws
+
+ US             us-            redshift-serverless.us-west-1.amazonaws.com                 HTTPS
+ West (N.       west-1
+ Californi                     redshift-serverless-fips.us-west-1.api.aws                   HTTPS
+
+ a)                            redshift-serverless-fips.us-west-1.amazonaws.                HTTPS
+
+                               com
+                                                                                           HTTPS
+                               redshift-serverless.us-west-1.api.aws
+
+ US West        us-            redshift-serverless.us-west-2.amazonaws.com                 HTTPS
+ (Oregon)       west-2
+                               redshift-serverless-fips.us-west-2.api.aws                   HTTPS
+
+                               redshift-serverless-fips.us-west-2.amazonaws.                HTTPS
+                               com
+                                                                                           HTTPS
+                               redshift-serverless.us-west-2.api.aws
+
+ Africa         af-south-      redshift-serverless.af-south-1.amazonaws.com                HTTPS
+ (Cape          1
+ Town)                         redshift-serverless.af-south-1.api.aws                      HTTPS
+
+
+ Asia           ap-            redshift-serverless.ap-east-1.amazonaws.com                 HTTPS
+ Pacific         east-1
+ (Hong                         redshift-serverless.ap-east-1.api.aws                       HTTPS
+
+ Kong)
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                        Version 1.0 2888
+AWS General Reference                                                                                     Reference guide
+
+ Region         Region         Endpoint                                                    Protocol
+ Name
+
+ Asia           ap-            redshift-serverless.ap-south-2.amazo                        HTTPS
+ Pacific         south-2        naws.com
+ (Hyderaba                                                                                 HTTPS
+ d)                            redshift-serverless.ap-south-2.api.aws
+
+
+ Asia           ap-            redshift-serverless.ap-southeast-3.a                        HTTPS
+ Pacific         southe         mazonaws.com
+ (Jakarta)      ast-3                                                                      HTTPS
+                               redshift-serverless.ap-southeast-3.api.aws
+
+ Asia           ap-            redshift-serverless.ap-southeast-5.a                        HTTPS
+ Pacific         southe         mazonaws.com
+ (Malaysia      ast-5                                                                      HTTPS
+ )                             redshift-serverless.ap-southeast-5.api.aws
+
+
+ Asia           ap-            redshift-serverless.ap-southeast-4.a                        HTTPS
+ Pacific         southe         mazonaws.com
+ (Melbourn      ast-4                                                                      HTTPS
+ e)                            redshift-serverless.ap-southeast-4.api.aws
+
+
+ Asia           ap-            redshift-serverless.ap-south-1.amazo                        HTTPS
+ Pacific         south-1        naws.com
+ (Mumbai)                                                                                  HTTPS
+                               redshift-serverless.ap-south-1.api.aws
+
+ Asia           ap-            redshift-serverless.ap-southeast-6.a                        HTTPS
+ Pacific         southe         mazonaws.com
+ (New           ast-6                                                                      HTTPS
+ Zealand)                      redshift-serverless.ap-southeast-6.api.aws
+
+
+ Asia           ap-            redshift-serverless.ap-northeast-3.a                        HTTPS
+ Pacific         northe         mazonaws.com
+ (Osaka)        ast-3                                                                      HTTPS
+                               redshift-serverless.ap-northeast-3.api.aws
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                         Version 1.0 2889
+AWS General Reference                                                                                      Reference guide
+
+ Region         Region         Endpoint                                                     Protocol
+ Name
+
+ Asia           ap-            redshift-serverless.ap-northeast-2.a                         HTTPS
+ Pacific         northe         mazonaws.com
+ (Seoul)        ast-2                                                                       HTTPS
+                               redshift-serverless.ap-northeast-2.api.aws
+
+ Asia           ap-            redshift-serverless.ap-southeast-1.a                         HTTPS
+ Pacific         southe         mazonaws.com
+ (Singapor      ast-1                                                                       HTTPS
+ e)                            redshift-serverless.ap-southeast-1.api.aws
+
+
+ Asia           ap-            redshift-serverless.ap-southeast-2.a                         HTTPS
+ Pacific         southe         mazonaws.com
+ (Sydney)       ast-2                                                                       HTTPS
+                               redshift-serverless.ap-southeast-2.api.aws
+
+ Asia           ap-            redshift-serverless.ap-east-2.amazonaws.com                  HTTPS
+ Pacific         east-2
+ (Taipei)                      redshift-serverless.ap-east-2.api.aws                        HTTPS
+
+
+ Asia           ap-            redshift-serverless.ap-southeast-7.a                         HTTPS
+ Pacific         southe         mazonaws.com
+ (Thailand      ast-7                                                                       HTTPS
+ )                             redshift-serverless.ap-southeast-7.api.aws
+
+
+ Asia           ap-            redshift-serverless.ap-northeast-1.a                         HTTPS
+ Pacific         northe         mazonaws.com
+ (Tokyo)        ast-1                                                                       HTTPS
+                               redshift-serverless.ap-northeast-1.api.aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                         Version 1.0 2890
+AWS General Reference                                                                                     Reference guide
+
+ Region         Region         Endpoint                                                    Protocol
+ Name
+
+ Canada         ca-centra      redshift-serverless.ca-central-1.amazonaws.co               HTTPS
+ (Central)      l-1            m
+                                                                                           HTTPS
+                               redshift-serverless-fips.ca-central-1.api.aws
+                                                                                           HTTPS
+                               redshift-serverless-fips.ca-central-1.amazona
+                               ws.com                                                      HTTPS
+
+
+                               redshift-serverless.ca-central-1.api.aws
+
+ Canada         ca-            redshift-serverless.ca-west-1.amazonaws.com                 HTTPS
+ West           west-1
+ (Calgary)                     redshift-serverless-fips.ca-west-1.api.aws                   HTTPS
+
+                               redshift-serverless-fips.ca-west-1.amazonaws.                HTTPS
+                               com
+                                                                                           HTTPS
+                               redshift-serverless.ca-west-1.api.aws
+
+ Europe         eu-            redshift-serverless.eu-central-1.amazonaws.co               HTTPS
+ (Frankfur      central-1      m
+ t)                                                                                        HTTPS
+                               redshift-serverless.eu-central-1.api.aws
+
+ Europe         eu-            redshift-serverless.eu-west-1.amazonaws.com                 HTTPS
+ (Ireland)      west-1
+                               redshift-serverless.eu-west-1.api.aws                       HTTPS
+
+ Europe         eu-            redshift-serverless.eu-west-2.amazonaws.com                 HTTPS
+ (London)       west-2
+                               redshift-serverless.eu-west-2.api.aws                       HTTPS
+
+ Europe         eu-            redshift-serverless.eu-south-1.amazo                        HTTPS
+ (Milan)        south-1        naws.com
+                                                                                           HTTPS
+                               redshift-serverless.eu-south-1.api.aws
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                        Version 1.0 2891
+AWS General Reference                                                                                      Reference guide
+
+ Region         Region         Endpoint                                                    Protocol
+ Name
+
+ Europe         eu-            redshift-serverless.eu-west-3.amazonaws.com                 HTTPS
+ (Paris)        west-3
+                               redshift-serverless.eu-west-3.api.aws                       HTTPS
+
+ Europe         eu-            redshift-serverless.eu-south-2.amazo                        HTTPS
+ (Spain)        south-2        naws.com
+                                                                                           HTTPS
+                               redshift-serverless.eu-south-2.api.aws
+
+ Europe         eu-            redshift-serverless.eu-north-1.amazo                        HTTPS
+ (Stockhol      north-1        naws.com
+ m)                                                                                        HTTPS
+                               redshift-serverless.eu-north-1.api.aws
+
+ Europe         eu-            redshift-serverless.eu-central-2.amazonaws.co               HTTPS
+ (Zurich)       central-2      m
+                                                                                           HTTPS
+                               redshift-serverless.eu-central-2.api.aws
+
+ Israel         il-centra      redshift-serverless.il-central-1.amazonaws.co               HTTPS
+ (Tel Aviv)     l-1            m
+                                                                                           HTTPS
+                               redshift-serverless.il-central-1.api.aws
+
+ Mexico         mx-            redshift-serverless.mx-central-1.ama                        HTTPS
+ (Central)      central-1      zonaws.com
+                                                                                           HTTPS
+                               redshift-serverless.mx-central-1.api.aws
+
+ Middle         me-            redshift-serverless.me-central-1.ama                        HTTPS
+ East           central-1      zonaws.com
+ (UAE)                                                                                     HTTPS
+                               redshift-serverless.me-central-1.api.aws
+
+ South          sa-east-1      redshift-serverless.sa-east-1.amazonaws.com                 HTTPS
+ America
+ (São                          redshift-serverless.sa-east-1.api.aws                       HTTPS
+
+ Paulo)
+
+
+
+
+Service endpoints                                                                                         Version 1.0 2892
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ AWS            us-gov-        redshift-serverless.us-gov-east-1.amazonaws.c              HTTPS
+ GovCloud       east-1         om
+ (US-East)                                                                                HTTPS
+                               redshift-serverless-fips.us-gov-east-1.api.aws
+                                                                                          HTTPS
+                               redshift-serverless-fips.us-gov-east-1.amazon
+                               aws.com                                                    HTTPS
+
+
+                               redshift-serverless.us-gov-east-1.api.aws
+
+ AWS            us-gov-        redshift-serverless.us-gov-west-1.am                       HTTPS
+ GovCloud       west-1         azonaws.com
+ (US-                                                                                     HTTPS
+ West)                         redshift-serverless-fips.us-gov-west-1.api.aws
+                                                                                          HTTPS
+                               redshift-serverless-fips.us-gov-west-1.amazon
+                               aws.com                                                    HTTPS
+
+
+                               redshift-serverless.us-gov-west-1.api.aws
+
+
+
+Redshift Data API
+
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ US East        us-east-2      redshift-data.us-east-2.amazonaws.com                      HTTPS
+ (Ohio)
+                               redshift-data-fips.us-east-2.api.aws                        HTTPS
+
+                               redshift-data.us-east-2.api.aws                            HTTPS
+
+                               redshift-data-fips.us-east-2.amazonaws.com                  HTTPS
+
+ US             us-east-1      redshift-data.us-east-1.amazonaws.com                      HTTPS
+ East (N.
+ Virginia)                     redshift-data-fips.us-east-1.api.aws                        HTTPS
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 2893
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+                              redshift-data.us-east-1.api.aws                            HTTPS
+
+                              redshift-data-fips.us-east-1.amazonaws.com                  HTTPS
+
+ US             us-           redshift-data.us-west-1.amazonaws.com                      HTTPS
+ West (N.       west-1
+ Californi                    redshift-data-fips.us-west-1.api.aws                        HTTPS
+
+ a)                           redshift-data.us-west-1.api.aws                            HTTPS
+
+
+                              redshift-data-fips.us-west-1.amazonaws.com                  HTTPS
+
+ US West        us-           redshift-data.us-west-2.amazonaws.com                      HTTPS
+ (Oregon)       west-2
+                              redshift-data-fips.us-west-2.api.aws                        HTTPS
+
+                              redshift-data.us-west-2.api.aws                            HTTPS
+
+                              redshift-data-fips.us-west-2.amazonaws.com                  HTTPS
+
+ Africa         af-south-     redshift-data.af-south-1.amazonaws.com                     HTTPS
+ (Cape          1
+ Town)                        redshift-data.af-south-1.api.aws                           HTTPS
+
+
+ Asia           ap-           redshift-data.ap-east-1.amazonaws.com                      HTTPS
+ Pacific         east-1
+ (Hong                        redshift-data.ap-east-1.api.aws                            HTTPS
+
+ Kong)
+
+ Asia           ap-           redshift-data.ap-south-2.amazonaws.com                     HTTPS
+ Pacific         south-2
+ (Hyderaba                    redshift-data.ap-south-2.api.aws                           HTTPS
+
+ d)
+
+ Asia           ap-           redshift-data.ap-southeast-3.amazonaws.com                 HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3         redshift-data.ap-southeast-3.api.aws                       HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 2894
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-            redshift-data.ap-southeast-5.amazonaws.com                HTTPS
+ Pacific         southe
+ (Malaysia      ast-5          redshift-data.ap-southeast-5.api.aws                      HTTPS
+
+ )
+
+ Asia           ap-            redshift-data.ap-southeast-4.amazonaws.com                HTTPS
+ Pacific         southe
+ (Melbourn      ast-4          redshift-data.ap-southeast-4.api.aws                      HTTPS
+
+ e)
+
+ Asia           ap-            redshift-data.ap-south-1.amazonaws.com                    HTTPS
+ Pacific         south-1
+ (Mumbai)                      redshift-data.ap-south-1.api.aws                          HTTPS
+
+
+ Asia           ap-            redshift-data.ap-southeast-6.amazonaws.com                HTTPS
+ Pacific         southe
+ (New           ast-6          redshift-data.ap-southeast-6.api.aws                      HTTPS
+
+ Zealand)
+
+ Asia           ap-            redshift-data.ap-northeast-3.amazonaws.com                HTTPS
+ Pacific         northe
+ (Osaka)        ast-3          redshift-data.ap-northeast-3.api.aws                      HTTPS
+
+
+ Asia           ap-            redshift-data.ap-northeast-2.amazonaws.com                HTTPS
+ Pacific         northe
+ (Seoul)        ast-2          redshift-data.ap-northeast-2.api.aws                      HTTPS
+
+
+ Asia           ap-            redshift-data.ap-southeast-1.amazonaws.com                HTTPS
+ Pacific         southe
+ (Singapor      ast-1          redshift-data.ap-southeast-1.api.aws                      HTTPS
+
+ e)
+
+ Asia           ap-            redshift-data.ap-southeast-2.amazonaws.com                HTTPS
+ Pacific         southe
+ (Sydney)       ast-2          redshift-data.ap-southeast-2.api.aws                      HTTPS
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 2895
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-            redshift-data.ap-east-2.amazonaws.com                      HTTPS
+ Pacific         east-2
+ (Taipei)                      redshift-data.ap-east-2.api.aws                            HTTPS
+
+
+ Asia           ap-            redshift-data.ap-southeast-7.amazonaws.com                 HTTPS
+ Pacific         southe
+ (Thailand      ast-7          redshift-data.ap-southeast-7.api.aws                       HTTPS
+
+ )
+
+ Asia           ap-            redshift-data.ap-northeast-1.amazonaws.com                 HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1          redshift-data.ap-northeast-1.api.aws                       HTTPS
+
+
+ Canada         ca-centra      redshift-data.ca-central-1.amazonaws.com                   HTTPS
+ (Central)      l-1
+                               redshift-data-fips.ca-central-1.api.aws                     HTTPS
+
+                               redshift-data.ca-central-1.api.aws                         HTTPS
+
+                               redshift-data-fips.ca-central-1.amaz                        HTTPS
+                               onaws.com
+
+ Canada         ca-            redshift-data.ca-west-1.amazonaws.com                      HTTPS
+ West           west-1
+ (Calgary)                     redshift-data-fips.ca-west-1.api.aws                        HTTPS
+
+                               redshift-data.ca-west-1.api.aws                            HTTPS
+
+                               redshift-data-fips.ca-west-1.amazonaws.com                  HTTPS
+
+ Europe         eu-            redshift-data.eu-central-1.amazonaws.com                   HTTPS
+ (Frankfur      central-1
+ t)                            redshift-data.eu-central-1.api.aws                         HTTPS
+
+
+ Europe         eu-            redshift-data.eu-west-1.amazonaws.com                      HTTPS
+ (Ireland)      west-1
+                               redshift-data.eu-west-1.api.aws                            HTTPS
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 2896
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Europe         eu-           redshift-data.eu-west-2.amazonaws.com                      HTTPS
+ (London)       west-2
+                              redshift-data.eu-west-2.api.aws                            HTTPS
+
+ Europe         eu-           redshift-data.eu-south-1.amazonaws.com                     HTTPS
+ (Milan)        south-1
+                              redshift-data.eu-south-1.api.aws                           HTTPS
+
+ Europe         eu-           redshift-data.eu-west-3.amazonaws.com                      HTTPS
+ (Paris)        west-3
+                              redshift-data.eu-west-3.api.aws                            HTTPS
+
+ Europe         eu-           redshift-data.eu-south-2.amazonaws.com                     HTTPS
+ (Spain)        south-2
+                              redshift-data.eu-south-2.api.aws                           HTTPS
+
+ Europe         eu-           redshift-data.eu-north-1.amazonaws.com                     HTTPS
+ (Stockhol      north-1
+ m)                           redshift-data.eu-north-1.api.aws                           HTTPS
+
+
+ Europe         eu-           redshift-data.eu-central-2.amazonaws.com                   HTTPS
+ (Zurich)       central-2
+                              redshift-data.eu-central-2.api.aws                         HTTPS
+
+ Israel         il-centra     redshift-data.il-central-1.amazonaws.com                   HTTPS
+ (Tel Aviv)     l-1
+                              redshift-data.il-central-1.api.aws                         HTTPS
+
+ Mexico         mx-           redshift-data.mx-central-1.amazonaws.com                   HTTPS
+ (Central)      central-1
+                              redshift-data.mx-central-1.api.aws                         HTTPS
+
+ Middle         me-           redshift-data.me-south-1.amazonaws.com                     HTTPS
+ East           south-1
+ (Bahrain)                    redshift-data.me-south-1.api.aws                           HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 2897
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Middle         me-           redshift-data.me-central-1.amazonaws.com                  HTTPS
+ East           central-1
+ (UAE)                        redshift-data.me-central-1.api.aws                        HTTPS
+
+
+ South          sa-east-1     redshift-data.sa-east-1.amazonaws.com                     HTTPS
+ America
+ (São                         redshift-data.sa-east-1.api.aws                           HTTPS
+
+ Paulo)
+
+ AWS            us-gov-       redshift-data.us-gov-east-1.amazonaws.com                 HTTPS
+ GovCloud       east-1
+ (US-East)                    redshift-data-fips.us-gov-east-1.api.aws                   HTTPS
+
+                              redshift-data.us-gov-east-1.api.aws                       HTTPS
+
+                              redshift-data-fips.us-gov-east-1.ama                       HTTPS
+                              zonaws.com
+
+ AWS            us-gov-       redshift-data.us-gov-west-1.amazonaws.com                 HTTPS
+ GovCloud       west-1
+ (US-                         redshift-data-fips.us-gov-west-1.api.aws                   HTTPS
+
+ West)                        redshift-data.us-gov-west-1.api.aws                       HTTPS
+
+
+                              redshift-data-fips.us-gov-west-1.ama                       HTTPS
+                              zonaws.com
+
+
+
+Redshift query editor v2
+
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2     api.sqlworkbench.us-east-2.amazonaws.com                  HTTPS
+ (Ohio)
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 2898
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ US             us-east-1     api.sqlworkbench.us-east-1.amazonaws.com                   HTTPS
+ East (N.
+ Virginia)
+
+ US             us-           api.sqlworkbench.us-west-1.amazonaws.com                   HTTPS
+ West (N.       west-1
+ Californi
+ a)
+
+ US West        us-           api.sqlworkbench.us-west-2.amazonaws.com                   HTTPS
+ (Oregon)       west-2
+
+ Africa         af-south-     api.sqlworkbench.af-south-1.amazonaws.com                  HTTPS
+ (Cape          1
+ Town)
+
+ Asia           ap-           api.sqlworkbench.ap-east-1.amazonaws.com                   HTTPS
+ Pacific         east-1
+ (Hong
+ Kong)
+
+ Asia           ap-           api.sqlworkbench.ap-south-2.amazonaws.com                  HTTPS
+ Pacific         south-2
+ (Hyderaba
+ d)
+
+ Asia           ap-           api.sqlworkbench.ap-southeast-3.amaz                       HTTPS
+ Pacific         southe        onaws.com
+ (Jakarta)      ast-3
+
+ Asia           ap-           api.sqlworkbench.ap-southeast-5.amaz                       HTTPS
+ Pacific         southe        onaws.com
+ (Malaysia      ast-5
+ )
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 2899
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           api.sqlworkbench.ap-southeast-4.amaz                       HTTPS
+ Pacific         southe        onaws.com
+ (Melbourn      ast-4
+ e)
+
+ Asia           ap-           api.sqlworkbench.ap-south-1.amazonaws.com                  HTTPS
+ Pacific         south-1
+ (Mumbai)
+
+ Asia           ap-           api.sqlworkbench.ap-southeast-6.amaz                       HTTPS
+ Pacific         southe        onaws.com
+ (New           ast-6
+ Zealand)
+
+ Asia           ap-           api.sqlworkbench.ap-northeast-3.amaz                       HTTPS
+ Pacific         northe        onaws.com
+ (Osaka)        ast-3
+
+ Asia           ap-           api.sqlworkbench.ap-northeast-2.amaz                       HTTPS
+ Pacific         northe        onaws.com
+ (Seoul)        ast-2
+
+ Asia           ap-           api.sqlworkbench.ap-southeast-1.amaz                       HTTPS
+ Pacific         southe        onaws.com
+ (Singapor      ast-1
+ e)
+
+ Asia           ap-           api.sqlworkbench.ap-southeast-2.amaz                       HTTPS
+ Pacific         southe        onaws.com
+ (Sydney)       ast-2
+
+ Asia           ap-           api.sqlworkbench.ap-southeast-7.amaz                       HTTPS
+ Pacific         southe        onaws.com
+ (Thailand      ast-7
+ )
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 2900
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                 Protocol
+ Name
+
+ Asia           ap-           api.sqlworkbench.ap-northeast-1.amaz                     HTTPS
+ Pacific         northe        onaws.com
+ (Tokyo)        ast-1
+
+ Canada         ca-centra     api.sqlworkbench.ca-central-1.amazon                     HTTPS
+ (Central)      l-1           aws.com
+
+ Canada         ca-           api.sqlworkbench.ca-west-1.amazonaws.com                 HTTPS
+ West           west-1
+ (Calgary)
+
+ Europe         eu-           api.sqlworkbench.eu-central-1.amazon                     HTTPS
+ (Frankfur      central-1     aws.com
+ t)
+
+ Europe         eu-           api.sqlworkbench.eu-west-1.amazonaws.com                 HTTPS
+ (Ireland)      west-1
+
+ Europe         eu-           api.sqlworkbench.eu-west-2.amazonaws.com                 HTTPS
+ (London)       west-2
+
+ Europe         eu-           api.sqlworkbench.eu-south-1.amazonaws.com                HTTPS
+ (Milan)        south-1
+
+ Europe         eu-           api.sqlworkbench.eu-west-3.amazonaws.com                 HTTPS
+ (Paris)        west-3
+
+ Europe         eu-           api.sqlworkbench.eu-south-2.amazonaws.com                HTTPS
+ (Spain)        south-2
+
+ Europe         eu-           api.sqlworkbench.eu-north-1.amazonaws.com                HTTPS
+ (Stockhol      north-1
+ m)
+
+ Europe         eu-           api.sqlworkbench.eu-central-2.amazon                     HTTPS
+ (Zurich)       central-2     aws.com
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 2901
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Israel         il-centra     api.sqlworkbench.il-central-1.amazonaws.com               HTTPS
+ (Tel Aviv)     l-1
+
+ Mexico         mx-           api.sqlworkbench.mx-central-1.amazon                      HTTPS
+ (Central)      central-1     aws.com
+
+ Middle         me-           api.sqlworkbench.me-south-1.amazonaw                      HTTPS
+ East           south-1       s.com
+ (Bahrain)
+
+ Middle         me-           api.sqlworkbench.me-central-1.amazon                      HTTPS
+ East           central-1     aws.com
+ (UAE)
+
+ South          sa-east-1     api.sqlworkbench.sa-east-1.amazonaws.com                  HTTPS
+ America
+ (São
+ Paulo)
+
+ AWS            us-gov-       api.sqlworkbench.us-gov-east-1.amazo                      HTTPS
+ GovCloud       east-1        naws.com
+ (US-East)
+
+ AWS            us-gov-       api.sqlworkbench.us-gov-west-1.amazo                      HTTPS
+ GovCloud       west-1        naws.com
+ (US-
+ West)
+
+
+Service quotas
+
+For information, see Quotas and limits in Amazon Redshift in the Amazon Redshift Management
+Guide.
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                        Version 1.0 2902

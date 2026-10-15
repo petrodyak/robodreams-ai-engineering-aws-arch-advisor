@@ -1,0 +1,894 @@
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ South          sa-east-1      ec2-instance-connect.sa-east-1.amazo                       HTTPS
+ America                       naws.com
+ (São
+ Paulo)
+
+ AWS            us-gov-        ec2-instance-connect.us-gov-east-1.a                       HTTPS
+ GovCloud       east-1         mazonaws.com
+ (US-East)
+
+ AWS            us-gov-        ec2-instance-connect.us-gov-west-1.a                       HTTPS
+ GovCloud       west-1         mazonaws.com
+ (US-
+ West)
+
+
+Service quotas
+
+EC2 Instance Connect has no service quotas.
+
+
+      Note
+      EC2 Instance Connect should not be confused with EC2 Instance Connect Endpoint, which is
+      a separate service with its own quotas. For more information, see Quotas for EC2 Instance
+      Connect Endpoint in the Amazon EC2 User Guide.
+
+
+Amazon ECR endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+
+
+Service quotas                                                                                          Version 1.0 1592
+AWS General Reference                                                                                   Reference guide
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+The ecr and api.ecr endpoints are used for calls to the Amazon ECR API. API actions such as
+DescribeImages and CreateRepository go to this endpoint. While the two endpoints function
+the same, the api.ecr endpoint is recommended and the default when using the AWS CLI or AWS
+SDKs. When connecting to Amazon ECR through an AWS PrivateLink VPC endpoint, you must use
+the api.ecr endpoint to make API calls. For more information, see Amazon ECR Interface VPC
+Endpoints (AWS PrivateLink) in the Amazon Elastic Container Registry User Guide.
+
+For more information about FIPS endpoints, see FIPS endpoints.
+
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2      ecr.us-east-2.amazonaws.com                               HTTPS
+ (Ohio)
+                               ecr-fips.us-east-2.api.aws                                 HTTPS
+
+                               dkr-ecr.us-east-2.on.aws                                  HTTPS
+
+                               dkr.ecr.us-east-2.amazonaws.com                           HTTPS
+
+                               ecr.us-east-2.api.aws                                     HTTPS
+
+                               dkr-ecr-fips.us-east-2.on.aws                             HTTPS
+
+                               ecr-fips.us-east-2.amazonaws.com                           HTTPS
+
+                               api.ecr-fips.us-east-2.amazonaws.com                      HTTPS
+
+                               api.ecr.us-east-2.amazonaws.com                           HTTPS
+
+                               dkr.ecr-fips.us-east-2.amazonaws.com                      HTTPS
+
+ US             us-east-1      ecr.us-east-1.amazonaws.com                               HTTPS
+ East (N.
+ Virginia)                     dkr.ecr-fips.us-east-1.amazonaws.com                      HTTPS
+
+                               ecr-fips.us-east-1.api.aws                                 HTTPS
+
+
+
+Service endpoints                                                                                       Version 1.0 1593
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+                              dkr.ecr.us-east-1.amazonaws.com                           HTTPS
+
+                              dkr-ecr.us-east-1.on.aws                                  HTTPS
+
+                              ecr.us-east-1.api.aws                                     HTTPS
+
+                              dkr-ecr-fips.us-east-1.on.aws                             HTTPS
+
+                              api.ecr.us-east-1.amazonaws.com                           HTTPS
+
+                              api.ecr-fips.us-east-1.amazonaws.com                      HTTPS
+
+                              ecr-fips.us-east-1.amazonaws.com                           HTTPS
+
+ US             us-           ecr.us-west-1.amazonaws.com                               HTTPS
+ West (N.       west-1
+ Californi                    api.ecr-fips.us-west-1.amazonaws.com                      HTTPS
+
+ a)                           ecr.us-west-1.api.aws                                     HTTPS
+
+
+                              ecr-fips.us-west-1.api.aws                                 HTTPS
+
+                              dkr-ecr.us-west-1.on.aws                                  HTTPS
+
+                              dkr-ecr-fips.us-west-1.on.aws                             HTTPS
+
+                              dkr.ecr.us-west-1.amazonaws.com                           HTTPS
+
+                              dkr.ecr-fips.us-west-1.amazonaws.com                      HTTPS
+
+                              api.ecr.us-west-1.amazonaws.com                           HTTPS
+
+                              ecr-fips.us-west-1.amazonaws.com                           HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1594
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US West        us-           ecr.us-west-2.amazonaws.com                               HTTPS
+ (Oregon)       west-2
+                              ecr-fips.us-west-2.api.aws                                 HTTPS
+
+                              ecr.us-west-2.api.aws                                     HTTPS
+
+                              ecr-fips.us-west-2.amazonaws.com                           HTTPS
+
+                              dkr.ecr.us-west-2.amazonaws.com                           HTTPS
+
+                              dkr.ecr-fips.us-west-2.amazonaws.com                      HTTPS
+
+                              api.ecr-fips.us-west-2.amazonaws.com                      HTTPS
+
+                              dkr-ecr.us-west-2.on.aws                                  HTTPS
+
+                              dkr-ecr-fips.us-west-2.on.aws                             HTTPS
+
+                              api.ecr.us-west-2.amazonaws.com                           HTTPS
+
+ Africa         af-south-     ecr.af-south-1.amazonaws.com                              HTTPS
+ (Cape          1
+ Town)                        api.ecr.af-south-1.amazonaws.com                          HTTPS
+
+                              ecr.af-south-1.api.aws                                    HTTPS
+
+                              dkr.ecr.af-south-1.amazonaws.com                          HTTPS
+
+                              dkr-ecr.af-south-1.on.aws                                 HTTPS
+
+ Asia           ap-           ecr.ap-east-1.amazonaws.com                               HTTPS
+ Pacific         east-1
+ (Hong                        dkr-ecr.ap-east-1.on.aws                                  HTTPS
+
+ Kong)                        dkr.ecr.ap-east-1.amazonaws.com                           HTTPS
+
+
+                              ecr.ap-east-1.api.aws                                     HTTPS
+
+                              api.ecr.ap-east-1.amazonaws.com                           HTTPS
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1595
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           ecr.ap-south-2.amazonaws.com                              HTTPS
+ Pacific         south-2
+ (Hyderaba                    api.ecr.ap-south-2.amazonaws.com                          HTTPS
+
+ d)                           dkr-ecr.ap-south-2.on.aws                                 HTTPS
+
+
+                              dkr.ecr.ap-south-2.amazonaws.com                          HTTPS
+
+                              ecr.ap-south-2.api.aws                                    HTTPS
+
+ Asia           ap-           ecr.ap-southeast-3.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3         ecr.ap-southeast-3.api.aws                                HTTPS
+
+                              api.ecr.ap-southeast-3.amazonaws.com                      HTTPS
+
+                              dkr-ecr.ap-southeast-3.on.aws                             HTTPS
+
+                              dkr.ecr.ap-southeast-3.amazonaws.com                      HTTPS
+
+ Asia           ap-           ecr.ap-southeast-5.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Malaysia      ast-5         api.ecr.ap-southeast-5.amazonaws.com                      HTTPS
+
+ )                            dkr.ecr.ap-southeast-5.amazonaws.com                      HTTPS
+
+
+                              ecr.ap-southeast-5.api.aws                                HTTPS
+
+                              dkr-ecr.ap-southeast-5.on.aws                             HTTPS
+
+ Asia           ap-           ecr.ap-southeast-4.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Melbourn      ast-4         api.ecr.ap-southeast-4.amazonaws.com                      HTTPS
+
+ e)                           ecr.ap-southeast-4.api.aws                                HTTPS
+
+
+                              dkr-ecr.ap-southeast-4.on.aws                             HTTPS
+
+                              dkr.ecr.ap-southeast-4.amazonaws.com                      HTTPS
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1596
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                 Protocol
+ Name
+
+ Asia           ap-           ecr.ap-south-1.amazonaws.com                             HTTPS
+ Pacific         south-1
+ (Mumbai)                     api.ecr.ap-south-1.amazonaws.com                         HTTPS
+
+                              dkr-ecr.ap-south-1.on.aws                                HTTPS
+
+                              dkr.ecr.ap-south-1.amazonaws.com                         HTTPS
+
+                              ecr.ap-south-1.api.aws                                   HTTPS
+
+ Asia           ap-           ecr.ap-southeast-6.amazonaws.com                         HTTPS
+ Pacific         southe
+ (New           ast-6         dkr-ecr.ap-southeast-6.on.aws                            HTTPS
+
+ Zealand)                     ecr.ap-southeast-6.api.aws                               HTTPS
+
+
+                              api.ecr.ap-southeast-6.amazonaws.com                     HTTPS
+
+                              dkr.ecr.ap-southeast-6.amazonaws.com                     HTTPS
+
+ Asia           ap-           ecr.ap-northeast-3.amazonaws.com                         HTTPS
+ Pacific         northe
+ (Osaka)        ast-3         api.ecr.ap-northeast-3.amazonaws.com                     HTTPS
+
+                              dkr.ecr.ap-northeast-3.amazonaws.com                     HTTPS
+
+                              ecr.ap-northeast-3.api.aws                               HTTPS
+
+                              dkr-ecr.ap-northeast-3.on.aws                            HTTPS
+
+ Asia           ap-           ecr.ap-northeast-2.amazonaws.com                         HTTPS
+ Pacific         northe
+ (Seoul)        ast-2         api.ecr.ap-northeast-2.amazonaws.com                     HTTPS
+
+                              ecr.ap-northeast-2.api.aws                               HTTPS
+
+                              dkr.ecr.ap-northeast-2.amazonaws.com                     HTTPS
+
+                              dkr-ecr.ap-northeast-2.on.aws                            HTTPS
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1597
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           ecr.ap-southeast-1.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Singapor      ast-1         api.ecr.ap-southeast-1.amazonaws.com                      HTTPS
+
+ e)                           dkr.ecr.ap-southeast-1.amazonaws.com                      HTTPS
+
+
+                              ecr.ap-southeast-1.api.aws                                HTTPS
+
+                              dkr-ecr.ap-southeast-1.on.aws                             HTTPS
+
+ Asia           ap-           ecr.ap-southeast-2.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Sydney)       ast-2         ecr.ap-southeast-2.api.aws                                HTTPS
+
+                              api.ecr.ap-southeast-2.amazonaws.com                      HTTPS
+
+                              dkr.ecr.ap-southeast-2.amazonaws.com                      HTTPS
+
+                              dkr-ecr.ap-southeast-2.on.aws                             HTTPS
+
+ Asia           ap-           ecr.ap-east-2.amazonaws.com                               HTTPS
+ Pacific         east-2
+ (Taipei)                     api.ecr.ap-east-2.amazonaws.com                           HTTPS
+
+                              dkr.ecr.ap-east-2.amazonaws.com                           HTTPS
+
+                              dkr-ecr.ap-east-2.on.aws                                  HTTPS
+
+                              ecr.ap-east-2.api.aws                                     HTTPS
+
+ Asia           ap-           ecr.ap-southeast-7.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Thailand      ast-7         dkr-ecr.ap-southeast-7.on.aws                             HTTPS
+
+ )                            dkr.ecr.ap-southeast-7.amazonaws.com                      HTTPS
+
+
+                              ecr.ap-southeast-7.api.aws                                HTTPS
+
+                              api.ecr.ap-southeast-7.amazonaws.com                      HTTPS
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1598
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           ecr.ap-northeast-1.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1         dkr-ecr.ap-northeast-1.on.aws                             HTTPS
+
+                              api.ecr.ap-northeast-1.amazonaws.com                      HTTPS
+
+                              ecr.ap-northeast-1.api.aws                                HTTPS
+
+                              dkr.ecr.ap-northeast-1.amazonaws.com                      HTTPS
+
+ Canada         ca-centra     ecr.ca-central-1.amazonaws.com                            HTTPS
+ (Central)      l-1
+                              ecr.ca-central-1.api.aws                                  HTTPS
+
+                              dkr-ecr.ca-central-1.on.aws                               HTTPS
+
+                              dkr.ecr.ca-central-1.amazonaws.com                        HTTPS
+
+                              api.ecr.ca-central-1.amazonaws.com                        HTTPS
+
+ Canada         ca-           ecr.ca-west-1.amazonaws.com                               HTTPS
+ West           west-1
+ (Calgary)                    ecr.ca-west-1.api.aws                                     HTTPS
+
+                              api.ecr.ca-west-1.amazonaws.com                           HTTPS
+
+                              dkr.ecr.ca-west-1.amazonaws.com                           HTTPS
+
+                              dkr-ecr.ca-west-1.on.aws                                  HTTPS
+
+ Europe         eu-           ecr.eu-central-1.amazonaws.com                            HTTPS
+ (Frankfur      central-1
+ t)                           ecr.eu-central-1.api.aws                                  HTTPS
+
+                              dkr-ecr.eu-central-1.on.aws                               HTTPS
+
+                              api.ecr.eu-central-1.amazonaws.com                        HTTPS
+
+                              dkr.ecr.eu-central-1.amazonaws.com                        HTTPS
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1599
+AWS General Reference                                                                                Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Europe        eu-            ecr.eu-west-1.amazonaws.com                              HTTPS
+ (Ireland)     west-1
+                              api.ecr.eu-west-1.amazonaws.com                          HTTPS
+
+                              dkr-ecr.eu-west-1.on.aws                                 HTTPS
+
+                              dkr.ecr.eu-west-1.amazonaws.com                          HTTPS
+
+                              ecr.eu-west-1.api.aws                                    HTTPS
+
+ Europe        eu-            ecr.eu-west-2.amazonaws.com                              HTTPS
+ (London)      west-2
+                              ecr.eu-west-2.api.aws                                    HTTPS
+
+                              api.ecr.eu-west-2.amazonaws.com                          HTTPS
+
+                              dkr.ecr.eu-west-2.amazonaws.com                          HTTPS
+
+                              dkr-ecr.eu-west-2.on.aws                                 HTTPS
+
+ Europe        eu-            ecr.eu-south-1.amazonaws.com                             HTTPS
+ (Milan)       south-1
+                              ecr.eu-south-1.api.aws                                   HTTPS
+
+                              api.ecr.eu-south-1.amazonaws.com                         HTTPS
+
+                              dkr-ecr.eu-south-1.on.aws                                HTTPS
+
+                              dkr.ecr.eu-south-1.amazonaws.com                         HTTPS
+
+ Europe        eu-            ecr.eu-west-3.amazonaws.com                              HTTPS
+ (Paris)       west-3
+                              ecr.eu-west-3.api.aws                                    HTTPS
+
+                              api.ecr.eu-west-3.amazonaws.com                          HTTPS
+
+                              dkr.ecr.eu-west-3.amazonaws.com                          HTTPS
+
+                              dkr-ecr.eu-west-3.on.aws                                 HTTPS
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1600
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Europe         eu-           ecr.eu-south-2.amazonaws.com                               HTTPS
+ (Spain)        south-2
+                              ecr.eu-south-2.api.aws                                     HTTPS
+
+                              dkr-ecr.eu-south-2.on.aws                                  HTTPS
+
+                              api.ecr.eu-south-2.amazonaws.com                           HTTPS
+
+                              dkr.ecr.eu-south-2.amazonaws.com                           HTTPS
+
+ Europe         eu-           ecr.eu-north-1.amazonaws.com                               HTTPS
+ (Stockhol      north-1
+ m)                           dkr.ecr.eu-north-1.amazonaws.com                           HTTPS
+
+                              api.ecr.eu-north-1.amazonaws.com                           HTTPS
+
+                              ecr.eu-north-1.api.aws                                     HTTPS
+
+                              dkr-ecr.eu-north-1.on.aws                                  HTTPS
+
+ Europe         eu-           ecr.eu-central-2.amazonaws.com                             HTTPS
+ (Zurich)       central-2
+                              ecr.eu-central-2.api.aws                                   HTTPS
+
+                              dkr-ecr.eu-central-2.on.aws                                HTTPS
+
+                              api.ecr.eu-central-2.amazonaws.com                         HTTPS
+
+                              dkr.ecr.eu-central-2.amazonaws.com                         HTTPS
+
+ Israel         il-centra     ecr.il-central-1.amazonaws.com                             HTTPS
+ (Tel Aviv)     l-1
+                              ecr.il-central-1.api.aws                                   HTTPS
+
+                              dkr-ecr.il-central-1.on.aws                                HTTPS
+
+                              api.ecr.il-central-1.amazonaws.com                         HTTPS
+
+                              dkr.ecr.il-central-1.amazonaws.com                         HTTPS
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1601
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Mexico        mx-            ecr.mx-central-1.amazonaws.com                           HTTPS
+ (Central)     central-1
+                              dkr.ecr.mx-central-1.amazonaws.com                       HTTPS
+
+                              api.ecr.mx-central-1.amazonaws.com                       HTTPS
+
+                              ecr.mx-central-1.api.aws                                 HTTPS
+
+                              dkr-ecr.mx-central-1.on.aws                              HTTPS
+
+ Middle        me-            ecr.me-south-1.amazonaws.com                             HTTPS
+ East          south-1
+ (Bahrain)                    dkr.ecr.me-south-1.amazonaws.com                         HTTPS
+
+                              ecr.me-south-1.api.aws                                   HTTPS
+
+                              api.ecr.me-south-1.amazonaws.com                         HTTPS
+
+                              dkr-ecr.me-south-1.on.aws                                HTTPS
+
+ Middle        me-            ecr.me-central-1.amazonaws.com                           HTTPS
+ East          central-1
+ (UAE)                        dkr.ecr.me-central-1.amazonaws.com                       HTTPS
+
+                              ecr.me-central-1.api.aws                                 HTTPS
+
+                              api.ecr.me-central-1.amazonaws.com                       HTTPS
+
+                              dkr-ecr.me-central-1.on.aws                              HTTPS
+
+ South         sa-east-1      ecr.sa-east-1.amazonaws.com                              HTTPS
+ America
+ (São                         dkr-ecr.sa-east-1.on.aws                                 HTTPS
+
+ Paulo)                       dkr.ecr.sa-east-1.amazonaws.com                          HTTPS
+
+
+                              ecr.sa-east-1.api.aws                                    HTTPS
+
+                              api.ecr.sa-east-1.amazonaws.com                          HTTPS
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1602
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ AWS           us-gov-        ecr.us-gov-east-1.amazonaws.com                          HTTPS
+ GovCloud      east-1
+ (US-East)                    ecr.us-gov-east-1.api.aws                                HTTPS
+
+                              dkr.ecr.us-gov-east-1.amazonaws.com                      HTTPS
+
+                              ecr-fips.us-gov-east-1.amazonaws.com                      HTTPS
+
+                              api.ecr-fips.us-gov-east-1.amazonaws.com                 HTTPS
+
+                              api.ecr.us-gov-east-1.amazonaws.com                      HTTPS
+
+                              ecr-fips.us-gov-east-1.api.aws                            HTTPS
+
+                              dkr.ecr-fips.us-gov-east-1.amazonaws.com                 HTTPS
+
+                              dkr-ecr-fips.us-gov-east-1.on.aws                        HTTPS
+
+                              dkr-ecr.us-gov-east-1.on.aws                             HTTPS
+
+ AWS           us-gov-        ecr.us-gov-west-1.amazonaws.com                          HTTPS
+ GovCloud      west-1
+ (US-                         dkr.ecr-fips.us-gov-west-1.amazonaws.com                 HTTPS
+
+ West)                        ecr-fips.us-gov-west-1.amazonaws.com                      HTTPS
+
+
+                              api.ecr.us-gov-west-1.amazonaws.com                      HTTPS
+
+                              dkr.ecr.us-gov-west-1.amazonaws.com                      HTTPS
+
+                              api.ecr-fips.us-gov-west-1.amazonaws.com                 HTTPS
+
+                              ecr-fips.us-gov-west-1.api.aws                            HTTPS
+
+                              ecr.us-gov-west-1.api.aws                                HTTPS
+
+                              dkr-ecr-fips.us-gov-west-1.on.aws                        HTTPS
+
+                              dkr-ecr.us-gov-west-1.on.aws                             HTTPS
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1603
+AWS General Reference                                                                                     Reference guide
+
+Additionally, the Amazon ECR API has dual-stack endpoints. The dual-stack endpoint was
+introduced in April 2025. To use the dual-stack endpoints with the AWS CLI, see the Dual-stack and
+FIPS endpoints configuration in the AWS SDKs and Tools Reference Guide. The following lists the
+new endpoints:
+
+• OCI and Docker client requests:
+
+  <registry-id>.dkr-ecr.<aws-region>.on.aws
+• AWS API requests:
+
+  ecr.<aws-region>.api.aws
+
+Service quotas
+
+The following table provides the default limits for Amazon Elastic Container Registry (Amazon
+ECR).
+
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Basic image scans per 24 hours                      Each supported           No       The maximum number
+                                                     Region: 100,000                   of images that can be
+                                                                                       scanned within a 24 hour
+                                                                                       period in the current
+                                                                                       account and region using
+                                                                                       basic scanning. This limit
+                                                                                       includes both scan on
+                                                                                       push and manual scans.
+
+ Filters per rule in a replication                   Each supported           No       The maximum number
+ configuration                                        Region: 100                       of filters per rule in a
+                                                                                       replication configuration.
+
+ Images per repository                               Each supported           Yes      The maximum number of
+                                                     Region: 100,000                   images per repository.
+
+ Layer parts                                         Each supported           No       The maximum number
+                                                     Region: 4,200                     of layer parts. This is
+
+
+Service quotas                                                                                            Version 1.0 1604
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+                                                                                          only applicable if you are
+                                                                                          using Amazon ECR API
+                                                                                          actions directly to initiate
+                                                                                          multipart uploads for
+                                                                                          image push operations.
+
+ Lifecycle policy length                              Each supported             No       The maximum number of
+                                                      Region: 30,720                      characters in a lifecycle
+                                                                                          policy.
+
+ Maximum layer part size                              Each supported             No       The maximum size (MiB)
+                                                      Region: 10                          of a layer part. This is
+                                                                                          only applicable if you are
+                                                                                          using Amazon ECR API
+                                                                                          actions directly to initiate
+                                                                                          multipart uploads for
+                                                                                          image push operations.
+
+ Maximum layer size                                   Each supported             No       The maximum size (MiB)
+                                                      Region: 52,000                      of a layer.
+
+ Minimum layer part size                              Each supported             No       The minimum size (MiB)
+                                                      Region: 5                           of a layer part. This is
+                                                                                          only applicable if you are
+                                                                                          using Amazon ECR API
+                                                                                          actions directly to initiate
+                                                                                          multipart uploads for
+                                                                                          image push operations.
+
+ Pull through cache rules per registry                Each supported             No       The maximum number of
+                                                      Region: 50                          pull-through cache rules.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 1605
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+ Rate of BatchCheckLayerAvailability                  Each supported             Yes      The maximum number
+ requests                                             Region: 1,000 per                   of BatchCheckLayerAva
+                                                      second                              ilability requests that
+                                                                                          you can make per second
+                                                                                          in the current Region.
+                                                                                          When an image is
+                                                                                          pushed to a repositor
+                                                                                          y, each image layer is
+                                                                                          checked to verify if it has
+                                                                                          been uploaded before.
+                                                                                          If it has been uploaded,
+                                                                                          then the image layer is
+                                                                                          skipped.
+
+ Rate of BatchGetImage requests                       Each supported             Yes      The maximum number of
+                                                      Region: 2,000 per                   BatchGetImage requests
+                                                      second                              that you can make per
+                                                                                          second in the current
+                                                                                          Region. When an image
+                                                                                          is pulled, the BatchGetI
+                                                                                          mage API is called once
+                                                                                          to retrieve the image
+                                                                                          manifest. If you request
+                                                                                          a quota increase for
+                                                                                          this API, review your
+                                                                                          GetDownloadUrlForLayer
+                                                                                          usage as well.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 1606
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Rate of CompleteLayerUpload requests                Each supported            Yes     The maximum number
+                                                     Region: 100 per                   of CompleteLayerUploa
+                                                     second                            d requests that you can
+                                                                                       make per second in the
+                                                                                       current Region. When
+                                                                                       an image is pushed, the
+                                                                                       CompleteLayerUpload
+                                                                                       API is called once per
+                                                                                       each new image layer to
+                                                                                       verify that the upload
+                                                                                       has completed.
+
+ Rate of GetAuthorizationToken                       Each supported            Yes     The maximum number of
+ requests                                            Region: 500 per                   GetAuthorizationToken
+                                                     second                            requests that you can
+                                                                                       make per second in the
+                                                                                       current Region.
+
+ Rate of GetDownloadUrlForLayer                      Each supported            Yes     The maximum number of
+ requests                                            Region: 3,000 per                 GetDownloadUrlForLayer
+                                                     second                            requests that you can
+                                                                                       make per second in the
+                                                                                       current Region. When
+                                                                                       an image is pulled, the
+                                                                                       GetDownloadUrlForLayer
+                                                                                       API is called once per
+                                                                                       image layer that is not
+                                                                                       already cached. If you
+                                                                                       request a quota increase
+                                                                                       for this API, review your
+                                                                                       BatchGetImage usage as
+                                                                                       well.
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1607
+AWS General Reference                                                                                        Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ Rate of InitiateLayerUpload requests                 Each supported            Yes      The maximum number
+                                                      Region: 100 per                    of InitiateLayerUpload
+                                                      second                             requests that you can
+                                                                                         make per second in the
+                                                                                         current Region. When
+                                                                                         an image is pushed,
+                                                                                         the InitiateLayerUploa
+                                                                                         d API is called once per
+                                                                                         image layer that has not
+                                                                                         already been uploaded.
+                                                                                         Whether or not an image
+                                                                                         layer has been uploaded
+                                                                                         is determined by the
+                                                                                         BatchCheckLayerAva
+                                                                                         ilability API action.
+
+ Rate of PutImage requests                            Each supported            Yes      The maximum number
+                                                      Region: 10 per                     of PutImage requests
+                                                      second                             that you can make per
+                                                                                         second in the current
+                                                                                         Region. When an image
+                                                                                         is pushed and all new
+                                                                                         image layers have been
+                                                                                         uploaded, the PutImage
+                                                                                         API is called once to
+                                                                                         create or update the
+                                                                                         image manifest and the
+                                                                                         tags associated with the
+                                                                                         image.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 1608
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Rate of UploadLayerPart requests                    Each supported            Yes      The maximum number
+                                                     Region: 500 per                    of UploadLayerPart
+                                                     second                             requests that you can
+                                                                                        make per second in the
+                                                                                        current Region. When
+                                                                                        an image is pushed,
+                                                                                        each new image layer is
+                                                                                        uploaded in parts and
+                                                                                        the UploadLayerPart API
+                                                                                        is called once per each
+                                                                                        new image layer part.
+
+ Rate of image scans                                 Each supported            No       The maximum number of
+                                                     Region: 1                          image scans per image,
+                                                                                        per 24 hours.
+
+ Registered repositories                             Each supported            Yes      The maximum number of
+                                                     Region: 100,000                    repositories that you can
+                                                                                        create in this account in
+                                                                                        the current Region.
+
+ Rules per lifecycle policy                          Each supported            No       The maximum number of
+                                                     Region: 50                         rules in a lifecycle policy
+
+ Rules per replication configuration                  Each supported            No       The maximum number
+                                                     Region: 25                         of rules in a replication
+                                                                                        configuration.
+
+ Tags per image                                      Each supported            No       The maximum number of
+                                                     Region: 1,000                      tags per image.
+
+ Unique destinations across all rules in a           Each supported            No       The maximum number
+ replication configuration                            Region: 25                         of unique destinati
+                                                                                        ons across all rules in a
+                                                                                        replication configuration.
+
+
+
+
+Service quotas                                                                                             Version 1.0 1609

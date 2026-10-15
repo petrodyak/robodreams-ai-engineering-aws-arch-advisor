@@ -1,0 +1,522 @@
+AWS General Reference                                                                                 Reference guide
+AWS Resource Groups and Tagging endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+AWS Resource Groups
+
+Service endpoints
+
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2     resource-groups.us-east-2.amazonaws.com                   HTTPS
+ (Ohio)
+                              resource-groups-fips.us-east-2.amazo                       HTTPS
+                              naws.com
+
+ US             us-east-1     resource-groups.us-east-1.amazonaws.com                   HTTPS
+ East (N.
+ Virginia)                    resource-groups-fips.us-east-1.amazo                       HTTPS
+                              naws.com
+
+ US             us-           resource-groups.us-west-1.amazonaws.com                   HTTPS
+ West (N.       west-1
+ Californi                    resource-groups-fips.us-west-1.amazo                       HTTPS
+ a)                           naws.com
+
+
+ US West        us-           resource-groups.us-west-2.amazonaws.com                   HTTPS
+ (Oregon)       west-2
+                              resource-groups-fips.us-west-2.amazo                       HTTPS
+                              naws.com
+
+
+
+
+Resource Groups and Tagging                                                                           Version 1.0 2963
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Africa         af-south-     resource-groups.af-south-1.amazonaws.com                   HTTPS
+ (Cape          1
+ Town)
+
+ Asia           ap-           resource-groups.ap-east-1.amazonaws.com                    HTTPS
+ Pacific         east-1
+ (Hong
+ Kong)
+
+ Asia           ap-           resource-groups.ap-south-2.amazonaws.com                   HTTPS
+ Pacific         south-2
+ (Hyderaba
+ d)
+
+ Asia           ap-           resource-groups.ap-southeast-3.amazo                       HTTPS
+ Pacific         southe        naws.com
+ (Jakarta)      ast-3
+
+ Asia           ap-           resource-groups.ap-southeast-5.amazo                       HTTPS
+ Pacific         southe        naws.com
+ (Malaysia      ast-5
+ )
+
+ Asia           ap-           resource-groups.ap-southeast-4.amazo                       HTTPS
+ Pacific         southe        naws.com
+ (Melbourn      ast-4
+ e)
+
+ Asia           ap-           resource-groups.ap-south-1.amazonaws.com                   HTTPS
+ Pacific         south-1
+ (Mumbai)
+
+
+
+
+
+
+
+
+
+
+
+
+
+AWS Resource Groups                                                                                    Version 1.0 2964
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-            resource-groups.ap-southeast-6.amazo                      HTTPS
+ Pacific         southe         naws.com
+ (New           ast-6
+ Zealand)
+
+ Asia           ap-            resource-groups.ap-northeast-3.amazo                      HTTPS
+ Pacific         northe         naws.com
+ (Osaka)        ast-3
+
+ Asia           ap-            resource-groups.ap-northeast-2.amazo                      HTTPS
+ Pacific         northe         naws.com
+ (Seoul)        ast-2
+
+ Asia           ap-            resource-groups.ap-southeast-1.amazo                      HTTPS
+ Pacific         southe         naws.com
+ (Singapor      ast-1
+ e)
+
+ Asia           ap-            resource-groups.ap-southeast-2.amazo                      HTTPS
+ Pacific         southe         naws.com
+ (Sydney)       ast-2
+
+ Asia           ap-            resource-groups.ap-east-2.amazonaws.com                   HTTPS
+ Pacific         east-2
+ (Taipei)
+
+ Asia           ap-            resource-groups.ap-southeast-7.amazo                      HTTPS
+ Pacific         southe         naws.com
+ (Thailand      ast-7
+ )
+
+ Asia           ap-            resource-groups.ap-northeast-1.amazo                      HTTPS
+ Pacific         northe         naws.com
+ (Tokyo)        ast-1
+
+
+
+
+
+
+
+AWS Resource Groups                                                                                     Version 1.0 2965
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Canada         ca-centra     resource-groups.ca-central-1.amazonaws.com                HTTPS
+ (Central)      l-1
+
+ Canada         ca-           resource-groups.ca-west-1.amazonaws.com                   HTTPS
+ West           west-1
+ (Calgary)
+
+ Europe         eu-           resource-groups.eu-central-1.amazonaws.com                HTTPS
+ (Frankfur      central-1
+ t)
+
+ Europe         eu-           resource-groups.eu-west-1.amazonaws.com                   HTTPS
+ (Ireland)      west-1
+
+ Europe         eu-           resource-groups.eu-west-2.amazonaws.com                   HTTPS
+ (London)       west-2
+
+ Europe         eu-           resource-groups.eu-south-1.amazonaws.com                  HTTPS
+ (Milan)        south-1
+
+ Europe         eu-           resource-groups.eu-west-3.amazonaws.com                   HTTPS
+ (Paris)        west-3
+
+ Europe         eu-           resource-groups.eu-south-2.amazonaws.com                  HTTPS
+ (Spain)        south-2
+
+ Europe         eu-           resource-groups.eu-north-1.amazonaws.com                  HTTPS
+ (Stockhol      north-1
+ m)
+
+ Europe         eu-           resource-groups.eu-central-2.amazonaws.com                HTTPS
+ (Zurich)       central-2
+
+ Israel         il-centra     resource-groups.il-central-1.amazonaws.com                HTTPS
+ (Tel Aviv)     l-1
+
+
+
+
+
+
+
+AWS Resource Groups                                                                                   Version 1.0 2966
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Mexico         mx-           resource-groups.mx-central-1.amazonaws.com                HTTPS
+ (Central)      central-1
+
+ Middle         me-           resource-groups.me-south-1.amazonaws.com                  HTTPS
+ East           south-1
+ (Bahrain)
+
+ Middle         me-           resource-groups.me-central-1.amazona                      HTTPS
+ East           central-1     ws.com
+ (UAE)
+
+ South          sa-east-1     resource-groups.sa-east-1.amazonaws.com                   HTTPS
+ America
+ (São
+ Paulo)
+
+ AWS            us-gov-       resource-groups.us-gov-east-1.amazon                      HTTPS
+ GovCloud       east-1        aws.com
+ (US-East)
+
+ AWS            us-gov-       resource-groups.us-gov-west-1.amazon                      HTTPS
+ GovCloud       west-1        aws.com
+ (US-
+ West)
+
+
+Service quotas for Resource Groups
+
+
+ Name                                              Default                 Adjustabl Description
+                                                                           e
+
+ Resource groups per account                       Each supported          Yes     The maximum number
+                                                   Region: 100                     of resource groups that
+                                                                                   you can create in this
+                                                                                   account. A resource
+
+
+
+AWS Resource Groups                                                                                   Version 1.0 2967
+AWS General Reference                                                                                 Reference guide
+
+ Name                                             Default                  Adjustabl Description
+                                                                           e
+
+                                                                                   group is a collection
+                                                                                   of AWS resources that
+                                                                                   match a specific criteria.
+
+
+Tagging
+
+Service endpoints for AWS Resource Groups Tagging API
+
+
+ Region         Region        Endpoint                                                 Protocol
+ Name
+
+ US East        us-east-2     tagging.us-east-2.amazonaws.com                          HTTPS
+ (Ohio)
+
+ US             us-east-1     tagging.us-east-1.amazonaws.com                          HTTPS
+ East (N.
+ Virginia)
+
+ US             us-           tagging.us-west-1.amazonaws.com                          HTTPS
+ West (N.       west-1
+ Californi
+ a)
+
+ US West        us-           tagging.us-west-2.amazonaws.com                          HTTPS
+ (Oregon)       west-2
+
+ Africa         af-south-     tagging.af-south-1.amazonaws.com                         HTTPS
+ (Cape          1
+ Town)
+
+ Asia           ap-           tagging.ap-east-1.amazonaws.com                          HTTPS
+ Pacific         east-1
+ (Hong
+ Kong)
+
+
+
+
+Tagging                                                                                              Version 1.0 2968
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           tagging.ap-south-2.amazonaws.com                          HTTPS
+ Pacific         south-2
+ (Hyderaba
+ d)
+
+ Asia           ap-           tagging.ap-southeast-3.amazonaws.com                      HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3
+
+ Asia           ap-           tagging.ap-southeast-5.amazonaws.com                      HTTPS
+ Pacific         southe
+ (Malaysia      ast-5
+ )
+
+ Asia           ap-           tagging.ap-southeast-4.amazonaws.com                      HTTPS
+ Pacific         southe
+ (Melbourn      ast-4
+ e)
+
+ Asia           ap-           tagging.ap-south-1.amazonaws.com                          HTTPS
+ Pacific         south-1
+ (Mumbai)
+
+ Asia           ap-           tagging.ap-southeast-6.amazonaws.com                      HTTPS
+ Pacific         southe
+ (New           ast-6
+ Zealand)
+
+ Asia           ap-           tagging.ap-northeast-3.amazonaws.com                      HTTPS
+ Pacific         northe
+ (Osaka)        ast-3
+
+ Asia           ap-           tagging.ap-northeast-2.amazonaws.com                      HTTPS
+ Pacific         northe
+ (Seoul)        ast-2
+
+
+
+
+
+Tagging                                                                                               Version 1.0 2969
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           tagging.ap-southeast-1.amazonaws.com                      HTTPS
+ Pacific         southe
+ (Singapor      ast-1
+ e)
+
+ Asia           ap-           tagging.ap-southeast-2.amazonaws.com                      HTTPS
+ Pacific         southe
+ (Sydney)       ast-2
+
+ Asia           ap-           tagging.ap-east-2.amazonaws.com                           HTTPS
+ Pacific         east-2
+ (Taipei)
+
+ Asia           ap-           tagging.ap-southeast-7.amazonaws.com                      HTTPS
+ Pacific         southe
+ (Thailand      ast-7
+ )
+
+ Asia           ap-           tagging.ap-northeast-1.amazonaws.com                      HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1
+
+ Canada         ca-centra     tagging.ca-central-1.amazonaws.com                        HTTPS
+ (Central)      l-1
+
+ Canada         ca-           tagging.ca-west-1.amazonaws.com                           HTTPS
+ West           west-1
+ (Calgary)
+
+ Europe         eu-           tagging.eu-central-1.amazonaws.com                        HTTPS
+ (Frankfur      central-1
+ t)
+
+ Europe         eu-           tagging.eu-west-1.amazonaws.com                           HTTPS
+ (Ireland)      west-1
+
+
+
+
+
+
+Tagging                                                                                                Version 1.0 2970
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Europe        eu-            tagging.eu-west-2.amazonaws.com                          HTTPS
+ (London)      west-2
+
+ Europe        eu-            tagging.eu-south-1.amazonaws.com                         HTTPS
+ (Milan)       south-1
+
+ Europe        eu-            tagging.eu-west-3.amazonaws.com                          HTTPS
+ (Paris)       west-3
+
+ Europe        eu-            tagging.eu-south-2.amazonaws.com                         HTTPS
+ (Spain)       south-2
+
+ Europe        eu-            tagging.eu-north-1.amazonaws.com                         HTTPS
+ (Stockhol     north-1
+ m)
+
+ Europe        eu-            tagging.eu-central-2.amazonaws.com                       HTTPS
+ (Zurich)      central-2
+
+ Israel        il-centra      tagging.il-central-1.amazonaws.com                       HTTPS
+ (Tel Aviv)    l-1
+
+ Mexico        mx-            tagging.mx-central-1.amazonaws.com                       HTTPS
+ (Central)     central-1
+
+ Middle        me-            tagging.me-south-1.amazonaws.com                         HTTPS
+ East          south-1
+ (Bahrain)
+
+ Middle        me-            tagging.me-central-1.amazonaws.com                       HTTPS
+ East          central-1
+ (UAE)
+
+
+
+
+
+
+
+
+
+
+
+
+
+Tagging                                                                                              Version 1.0 2971
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ South          sa-east-1     tagging.sa-east-1.amazonaws.com                           HTTPS
+ America
+ (São
+ Paulo)
+
+ AWS            us-gov-       tagging.us-gov-east-1.amazonaws.com                       HTTPS
+ GovCloud       east-1
+ (US-East)
+
+ AWS            us-gov-       tagging.us-gov-west-1.amazonaws.com                       HTTPS
+ GovCloud       west-1
+ (US-
+ West)
+
+
+Service quotas for Tagging (Tag Editor and Resource Groups Tagging API)
+
+
+ Name                                   Default
+
+ Tags attached per resource             50 user created tags (AWS
+                                        created tags don't count
+                                        against this limit)
+
+ Tag key name                           Minimum of 1, maximum 128
+                                        Unicode characters in UTF-8.
+
+                                        Allowed characters include:
+                                        letters, numbers, spaces, and
+                                        the following characters:
+
+                                        _ . : / = + - @
+
+                                        Key names can't begin
+                                        with aws: because that is
+                                        reserved.
+
+
+
+
+Tagging                                                                                               Version 1.0 2972
+AWS General Reference                                                                                          Reference guide
+
+ Name                                      Default
+
+
+                                                  Note
+                                                  Some AWS services
+                                                  have some additiona
+                                                  l character or length
+                                                  restrictions. For
+                                                  details, see the
+                                                  documentation for
+                                                  the specific service.
+
+
+ Tag values                                Minimum of 0, maximum of
+                                           256 Unicode characters in
+                                           UTF-8.
+
+                                           Allowed characters include:
+                                           letters, numbers, spaces, and
+                                           the following characters:
+
+                                           _ . : / = + - @
+
+
+                                                  Note
+                                                  Some AWS services
+                                                  have some additiona
+                                                  l character or length
+                                                  restrictions. For
+                                                  details, see the
+                                                  documentation for
+                                                  the specific service.
+
+
+ Rate of calling the GetResour             Maximum of 15 calls per
+ ces API operation                         second
+
+
+
+
+
+
+
+
+
+
+
+Tagging                                                                                                       Version 1.0 2973

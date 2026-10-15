@@ -1,0 +1,1339 @@
+AWS General Reference                                                                                   Reference guide
+AWS Step Functions endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2      states.us-east-2.amazonaws.com                            HTTPS
+ (Ohio)
+                               sync-states.us-east-2.api.aws                             HTTPS
+
+                               sync-states-fips.us-east-2.api.aws                         HTTPS
+
+                               sync-states-fips.us-east-2.amazonaws.com                   HTTPS
+
+                               states-fips.us-east-2.api.aws                              HTTPS
+
+                               states-fips.us-east-2.amazonaws.com                        HTTPS
+
+                               sync-states.us-east-2.amazonaws.com                       HTTPS
+
+                               states.us-east-2.api.aws                                  HTTPS
+
+ US             us-east-1      states.us-east-1.amazonaws.com                            HTTPS
+ East (N.
+ Virginia)                     sync-states.us-east-1.api.aws                             HTTPS
+
+                               sync-states-fips.us-east-1.api.aws                         HTTPS
+
+                               sync-states-fips.us-east-1.amazonaws.com                   HTTPS
+
+                               states-fips.us-east-1.api.aws                              HTTPS
+
+
+
+Step Functions                                                                                          Version 1.0 3463
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+                              states-fips.us-east-1.amazonaws.com                        HTTPS
+
+                              sync-states.us-east-1.amazonaws.com                       HTTPS
+
+                              states.us-east-1.api.aws                                  HTTPS
+
+ US             us-           states.us-west-1.amazonaws.com                            HTTPS
+ West (N.       west-1
+ Californi                    sync-states.us-west-1.api.aws                             HTTPS
+
+ a)                           sync-states-fips.us-west-1.api.aws                         HTTPS
+
+
+                              sync-states-fips.us-west-1.amazonaws.com                   HTTPS
+
+                              states-fips.us-west-1.api.aws                              HTTPS
+
+                              states-fips.us-west-1.amazonaws.com                        HTTPS
+
+                              sync-states.us-west-1.amazonaws.com                       HTTPS
+
+                              states.us-west-1.api.aws                                  HTTPS
+
+ US West        us-           states.us-west-2.amazonaws.com                            HTTPS
+ (Oregon)       west-2
+                              sync-states.us-west-2.api.aws                             HTTPS
+
+                              sync-states-fips.us-west-2.api.aws                         HTTPS
+
+                              sync-states-fips.us-west-2.amazonaws.com                   HTTPS
+
+                              states-fips.us-west-2.api.aws                              HTTPS
+
+                              states-fips.us-west-2.amazonaws.com                        HTTPS
+
+                              sync-states.us-west-2.amazonaws.com                       HTTPS
+
+                              states.us-west-2.api.aws                                  HTTPS
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 3464
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Africa         af-south-     states.af-south-1.amazonaws.com                           HTTPS
+ (Cape          1
+ Town)                        sync-states.af-south-1.api.aws                            HTTPS
+
+                              sync-states.af-south-1.amazonaws.com                      HTTPS
+
+                              states.af-south-1.api.aws                                 HTTPS
+
+ Asia           ap-           states.ap-east-1.amazonaws.com                            HTTPS
+ Pacific         east-1
+ (Hong                        sync-states.ap-east-1.api.aws                             HTTPS
+
+ Kong)                        sync-states.ap-east-1.amazonaws.com                       HTTPS
+
+
+                              states.ap-east-1.api.aws                                  HTTPS
+
+ Asia           ap-           states.ap-south-2.amazonaws.com                           HTTPS
+ Pacific         south-2
+ (Hyderaba                    sync-states.ap-south-2.api.aws                            HTTPS
+
+ d)                           sync-states.ap-south-2.amazonaws.com                      HTTPS
+
+
+                              states.ap-south-2.api.aws                                 HTTPS
+
+ Asia           ap-           states.ap-southeast-3.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3         sync-states.ap-southeast-3.api.aws                        HTTPS
+
+                              sync-states.ap-southeast-3.amazonaws.com                  HTTPS
+
+                              states.ap-southeast-3.api.aws                             HTTPS
+
+ Asia           ap-           states.ap-southeast-5.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Malaysia      ast-5         sync-states.ap-southeast-5.api.aws                        HTTPS
+
+ )                            sync-states.ap-southeast-5.amazonaws.com                  HTTPS
+
+
+                              states.ap-southeast-5.api.aws                             HTTPS
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 3465
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           states.ap-southeast-4.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Melbourn      ast-4         sync-states.ap-southeast-4.api.aws                        HTTPS
+
+ e)                           sync-states.ap-southeast-4.amazonaws.com                  HTTPS
+
+
+                              states.ap-southeast-4.api.aws                             HTTPS
+
+ Asia           ap-           states.ap-south-1.amazonaws.com                           HTTPS
+ Pacific         south-1
+ (Mumbai)                     sync-states.ap-south-1.api.aws                            HTTPS
+
+                              sync-states.ap-south-1.amazonaws.com                      HTTPS
+
+                              states.ap-south-1.api.aws                                 HTTPS
+
+ Asia           ap-           states.ap-southeast-6.amazonaws.com                       HTTPS
+ Pacific         southe
+ (New           ast-6         sync-states.ap-southeast-6.api.aws                        HTTPS
+
+ Zealand)                     sync-states.ap-southeast-6.amazonaws.com                  HTTPS
+
+
+                              states.ap-southeast-6.api.aws                             HTTPS
+
+ Asia           ap-           states.ap-northeast-3.amazonaws.com                       HTTPS
+ Pacific         northe
+ (Osaka)        ast-3         sync-states.ap-northeast-3.api.aws                        HTTPS
+
+                              sync-states.ap-northeast-3.amazonaws.com                  HTTPS
+
+                              states.ap-northeast-3.api.aws                             HTTPS
+
+ Asia           ap-           states.ap-northeast-2.amazonaws.com                       HTTPS
+ Pacific         northe
+ (Seoul)        ast-2         sync-states.ap-northeast-2.api.aws                        HTTPS
+
+                              sync-states.ap-northeast-2.amazonaws.com                  HTTPS
+
+                              states.ap-northeast-2.api.aws                             HTTPS
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 3466
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           states.ap-southeast-1.amazonaws.com                        HTTPS
+ Pacific         southe
+ (Singapor      ast-1         sync-states.ap-southeast-1.api.aws                         HTTPS
+
+ e)                           sync-states.ap-southeast-1.amazonaws.com                   HTTPS
+
+
+                              states.ap-southeast-1.api.aws                              HTTPS
+
+ Asia           ap-           states.ap-southeast-2.amazonaws.com                        HTTPS
+ Pacific         southe
+ (Sydney)       ast-2         sync-states.ap-southeast-2.api.aws                         HTTPS
+
+                              sync-states.ap-southeast-2.amazonaws.com                   HTTPS
+
+                              states.ap-southeast-2.api.aws                              HTTPS
+
+ Asia           ap-           states.ap-east-2.amazonaws.com                             HTTPS
+ Pacific         east-2
+ (Taipei)                     sync-states.ap-east-2.api.aws                              HTTPS
+
+                              sync-states.ap-east-2.amazonaws.com                        HTTPS
+
+                              states.ap-east-2.api.aws                                   HTTPS
+
+ Asia           ap-           states.ap-southeast-7.amazonaws.com                        HTTPS
+ Pacific         southe
+ (Thailand      ast-7         sync-states.ap-southeast-7.api.aws                         HTTPS
+
+ )                            sync-states.ap-southeast-7.amazonaws.com                   HTTPS
+
+
+                              states.ap-southeast-7.api.aws                              HTTPS
+
+ Asia           ap-           states.ap-northeast-1.amazonaws.com                        HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1         sync-states.ap-northeast-1.api.aws                         HTTPS
+
+                              sync-states.ap-northeast-1.amazonaws.com                   HTTPS
+
+                              states.ap-northeast-1.api.aws                              HTTPS
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 3467
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Canada         ca-centra     states.ca-central-1.amazonaws.com                          HTTPS
+ (Central)      l-1
+                              sync-states.ca-central-1.api.aws                           HTTPS
+
+                              sync-states-fips.ca-central-1.api.aws                       HTTPS
+
+                              sync-states-fips.ca-central-1.amazonaws.com                 HTTPS
+
+                              states-fips.ca-central-1.api.aws                            HTTPS
+
+                              sync-states.ca-central-1.amazonaws.com                     HTTPS
+
+                              states-fips.ca-central-1.amazonaws.com                      HTTPS
+
+                              states.ca-central-1.api.aws                                HTTPS
+
+ Canada         ca-           states.ca-west-1.amazonaws.com                             HTTPS
+ West           west-1
+ (Calgary)                    sync-states.ca-west-1.api.aws                              HTTPS
+
+                              sync-states-fips.ca-west-1.api.aws                          HTTPS
+
+                              sync-states-fips.ca-west-1.amazonaws.com                    HTTPS
+
+                              states-fips.ca-west-1.api.aws                               HTTPS
+
+                              sync-states.ca-west-1.amazonaws.com                        HTTPS
+
+                              states-fips.ca-west-1.amazonaws.com                         HTTPS
+
+                              states.ca-west-1.api.aws                                   HTTPS
+
+ Europe         eu-           states.eu-central-1.amazonaws.com                          HTTPS
+ (Frankfur      central-1
+ t)                           sync-states.eu-central-1.api.aws                           HTTPS
+
+                              sync-states.eu-central-1.amazonaws.com                     HTTPS
+
+                              states.eu-central-1.api.aws                                HTTPS
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 3468
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                 Protocol
+ Name
+
+ Europe         eu-           states.eu-west-1.amazonaws.com                           HTTPS
+ (Ireland)      west-1
+                              sync-states.eu-west-1.api.aws                            HTTPS
+
+                              sync-states.eu-west-1.amazonaws.com                      HTTPS
+
+                              states.eu-west-1.api.aws                                 HTTPS
+
+ Europe         eu-           states.eu-west-2.amazonaws.com                           HTTPS
+ (London)       west-2
+                              sync-states.eu-west-2.api.aws                            HTTPS
+
+                              sync-states.eu-west-2.amazonaws.com                      HTTPS
+
+                              states.eu-west-2.api.aws                                 HTTPS
+
+ Europe         eu-           states.eu-south-1.amazonaws.com                          HTTPS
+ (Milan)        south-1
+                              sync-states.eu-south-1.api.aws                           HTTPS
+
+                              sync-states.eu-south-1.amazonaws.com                     HTTPS
+
+                              states.eu-south-1.api.aws                                HTTPS
+
+ Europe         eu-           states.eu-west-3.amazonaws.com                           HTTPS
+ (Paris)        west-3
+                              sync-states.eu-west-3.api.aws                            HTTPS
+
+                              sync-states.eu-west-3.amazonaws.com                      HTTPS
+
+                              states.eu-west-3.api.aws                                 HTTPS
+
+ Europe         eu-           states.eu-south-2.amazonaws.com                          HTTPS
+ (Spain)        south-2
+                              sync-states.eu-south-2.api.aws                           HTTPS
+
+                              sync-states.eu-south-2.amazonaws.com                     HTTPS
+
+                              states.eu-south-2.api.aws                                HTTPS
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 3469
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Europe         eu-           states.eu-north-1.amazonaws.com                            HTTPS
+ (Stockhol      north-1
+ m)                           sync-states.eu-north-1.api.aws                             HTTPS
+
+                              sync-states.eu-north-1.amazonaws.com                       HTTPS
+
+                              states.eu-north-1.api.aws                                  HTTPS
+
+ Europe         eu-           states.eu-central-2.amazonaws.com                          HTTPS
+ (Zurich)       central-2
+                              sync-states.eu-central-2.api.aws                           HTTPS
+
+                              sync-states.eu-central-2.amazonaws.com                     HTTPS
+
+                              states.eu-central-2.api.aws                                HTTPS
+
+ Israel         il-centra     states.il-central-1.amazonaws.com                          HTTPS
+ (Tel Aviv)     l-1
+                              sync-states.il-central-1.api.aws                           HTTPS
+
+                              sync-states.il-central-1.amazonaws.com                     HTTPS
+
+                              states.il-central-1.api.aws                                HTTPS
+
+ Mexico         mx-           states.mx-central-1.amazonaws.com                          HTTPS
+ (Central)      central-1
+                              sync-states.mx-central-1.api.aws                           HTTPS
+
+                              sync-states.mx-central-1.amazonaws.com                     HTTPS
+
+                              states.mx-central-1.api.aws                                HTTPS
+
+ Middle         me-           states.me-south-1.amazonaws.com                            HTTPS
+ East           south-1
+ (Bahrain)                    sync-states.me-south-1.api.aws                             HTTPS
+
+                              sync-states.me-south-1.amazonaws.com                       HTTPS
+
+                              states.me-south-1.api.aws                                  HTTPS
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 3470
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Middle         me-           states.me-central-1.amazonaws.com                          HTTPS
+ East           central-1
+ (UAE)                        sync-states.me-central-1.api.aws                           HTTPS
+
+                              sync-states.me-central-1.amazonaws.com                     HTTPS
+
+                              states.me-central-1.api.aws                                HTTPS
+
+ South          sa-east-1     states.sa-east-1.amazonaws.com                             HTTPS
+ America
+ (São                         sync-states.sa-east-1.api.aws                              HTTPS
+
+ Paulo)                       sync-states.sa-east-1.amazonaws.com                        HTTPS
+
+
+                              states.sa-east-1.api.aws                                   HTTPS
+
+ AWS            us-gov-       states.us-gov-east-1.amazonaws.com                         HTTPS
+ GovCloud       east-1
+ (US-East)                    sync-states.us-gov-east-1.api.aws                          HTTPS
+
+                              sync-states-fips.us-gov-east-1.api.aws                      HTTPS
+
+                              sync-states-fips.us-gov-east-1.amazo                        HTTPS
+                              naws.com
+                                                                                         HTTPS
+                              states-fips.us-gov-east-1.api.aws
+                                                                                         HTTPS
+                              states-fips.us-gov-east-1.amazonaws.com
+                                                                                         HTTPS
+                              sync-states.us-gov-east-1.amazonaws.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 3471
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ AWS            us-gov-        states.us-gov-west-1.amazonaws.com                         HTTPS
+ GovCloud       west-1
+ (US-                          sync-states.us-gov-west-1.api.aws                          HTTPS
+
+ West)                         sync-states-fips.us-gov-west-1.api.aws                      HTTPS
+
+
+                               sync-states.us-gov-west-1.amazonaws.com                    HTTPS
+
+                               states-fips.us-gov-west-1.api.aws                           HTTPS
+
+
+Service quotas
+
+
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Open Map Runs                                      Each supported           No      The maximum number of
+                                                    Region: 1,000                    open Map Runs allowed
+                                                                                     at a time in this account.
+
+ Activity pollers per ARN                           Each supported           No      The maximum number
+                                                    Region: 1,000                    of workers concurrently
+                                                                                     polling an activity per
+                                                                                     ARN.
+
+ CreateActivity throttle token bucket               Each supported           Yes     The maximum number
+ size                                               Region: 100                      of CreateActivity calls
+                                                                                     that you can make per
+                                                                                     second.
+
+ CreateActivity throttle token refill rate           Each supported           Yes     The token refill rate per
+ per second                                         Region: 1                        second for CreateActivity
+                                                                                     calls.
+
+ CreateStateMachine throttle token                  Each supported           Yes     The maximum number
+ bucket size                                        Region: 100                      of CreateStateMachine
+
+
+
+Service quotas                                                                                          Version 1.0 3472
+AWS General Reference                                                                                        Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+                                                                                         calls that you can make
+                                                                                         per second.
+
+ CreateStateMachine throttle token                    Each supported            Yes      The token refill rate per
+ refill rate per second                                Region: 1                          second of CreateSta
+                                                                                         teMachine calls.
+
+ CreateStateMachineAlias throttle token               Each supported            Yes      The maximum number of
+ bucket size                                          Region: 100                        CreateStateMachineAlias
+                                                                                         calls that you can make
+                                                                                         per second.
+
+ CreateStateMachineAlias throttle token               Each supported            Yes      The token refill rate per
+ refill rate per second                                Region: 1                          second for CreateSta
+                                                                                         teMachineAlias calls.
+
+ DeleteActivity throttle token bucket                 Each supported            Yes      The maximum number
+ size                                                 Region: 100                        of DeleteActivity calls
+                                                                                         that you can make per
+                                                                                         second.
+
+ DeleteActivity throttle token refill rate             Each supported            Yes      The token refill rate per
+ per second                                           Region: 1                          second of DeleteActivity
+                                                                                         calls.
+
+ DeleteStateMachine throttle token                    Each supported            Yes      The maximum number
+ bucket size                                          Region: 100                        of DeleteStateMachine
+                                                                                         calls that you can make
+                                                                                         per second.
+
+ DeleteStateMachine throttle token                    Each supported            Yes      The token refill rate per
+ refill rate per second                                Region: 1                          second of DeleteSta
+                                                                                         teMachine calls.
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 3473
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ DeleteStateMachineAlias throttle token               Each supported            Yes     The maximum number of
+ bucket size                                          Region: 100                       DeleteStateMachineAlias
+                                                                                        calls that you can make
+                                                                                        per second.
+
+ DeleteStateMachineAlias throttle token               Each supported            Yes     The token refill rate per
+ refill rate per second                                Region: 1                         second for DeleteSta
+                                                                                        teMachineAlias calls.
+
+ DeleteStateMachineVersion throttle                   Each supported            Yes     The maximum number
+ token bucket size                                    Region: 100                       of DeleteStateMachine
+                                                                                        Version calls that you can
+                                                                                        make per second.
+
+ DeleteStateMachineVersion throttle                   Each supported            Yes     The token refill rate per
+ token refill rate per second                          Region: 1                         second for DeleteSta
+                                                                                        teMachineVersion calls.
+
+ DescribeActivity throttle token bucket               Each supported            Yes     The maximum number
+ size                                                 Region: 200                       of DescribeActivity calls
+                                                                                        that you can make per
+                                                                                        second.
+
+ DescribeActivity throttle token refill                Each supported            Yes     The token refill rate per
+ rate per second                                      Region: 20                        second of DescribeA
+                                                                                        ctivity calls.
+
+ DescribeExecution throttle token                     Each supported            Yes     The maximum number of
+ bucket size                                          Region: 300                       DescribeExecution calls
+                                                                                        that you can make per
+                                                                                        second.
+
+ DescribeExecution throttle token refill               Each supported            Yes     The token refill rate per
+ rate per second                                      Region: 50                        second of DescribeE
+                                                                                        xecution calls.
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 3474
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ DescribeMapRun throttle token bucket                Each supported            Yes     The maximum number
+ size                                                Region: 200                       of DescribeMapRun calls
+                                                                                       that you can make per
+                                                                                       second.
+
+ DescribeMapRun throttle token refill                 Each supported            Yes     The token refill rate per
+ rate per second                                     Region: 1                         second for DescribeM
+                                                                                       apRun calls.
+
+ DescribeStateMachine throttle token                 Each supported            Yes     The maximum number
+ bucket size                                         Region: 200                       of DescribeStateMachine
+                                                                                       calls that you can make
+                                                                                       per second.
+
+ DescribeStateMachine throttle token                 Each supported            Yes     The token refill rate per
+ refill rate per second                               Region: 20                        second of DescribeS
+                                                                                       tateMachine calls.
+
+ DescribeStateMachineAlias throttle                  Each supported            Yes     The maximum number
+ token bucket size                                   Region: 200                       of DescribeStateMachi
+                                                                                       neAlias calls that you can
+                                                                                       make per second.
+
+ DescribeStateMachineAlias throttle                  Each supported            Yes     The token refill rate per
+ token refill rate per second                         Region: 1                         second for DescribeS
+                                                                                       tateMachineAlias calls.
+
+ DescribeStateMachineForExecution                    Each supported            Yes     The maximum number
+ throttle token bucket size                          Region: 200                       of DescribeStateMachi
+                                                                                       neForExecution calls
+                                                                                       that you can make per
+                                                                                       second.
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 3475
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                    Adjustabl Description
+                                                                                e
+
+ DescribeStateMachineForExecution                    Each supported             Yes     The token refill rate per
+ throttle token refill rate per second                Region: 1                          second of DescribeS
+                                                                                        tateMachineForExecution
+                                                                                        calls.
+
+ Execution history retention time                    Each supported             Yes     The maximum time
+                                                     Region: 90                         (in days) for which the
+                                                                                        execution history is
+                                                                                        stored after an execution
+                                                                                        completes.
+
+ Execution history size                              Each supported             No      The maximum number
+                                                     Region: 25,000                     of events in a state
+                                                                                        machines execution
+                                                                                        history.
+
+ Execution idle time                                 Each supported             No      The maximum amount
+                                                     Region: 1                          of time (in years) a state
+                                                                                        machine execution can
+                                                                                        remain idle.
+
+ Execution time                                      Each supported             No      The maximum amount of
+                                                     Region: 1                          time (in years) for which
+                                                                                        an execution can run.
+
+ GetActivityTask throttle token bucket               us-east-1: 3,000           Yes     The maximum number
+ size                                                                                   of GetActivityTask calls
+                                                     us-west-2: 3,000                   that you can make per
+
+                                                     eu-west-1: 3,000                   second.
+
+
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 1,500
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 3476
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+ GetActivityTask throttle token refill                 us-east-1: 500             Yes      The token refill rate
+ rate per second                                                                          per second of GetActivi
+                                                      us-west-2: 500                      tyTask calls.
+
+                                                      eu-west-1: 500
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 300
+
+ GetExecutionHistory throttle token                   Each supported             Yes      The maximum number
+ bucket size                                          Region: 400                         of GetExecutionHistory
+                                                                                          calls that you can make
+                                                                                          per second.
+
+ GetExecutionHistory throttle token                   Each supported             Yes      The token refill rate per
+ refill rate per second                                Region: 20                          second of GetExecut
+                                                                                          ionHistory calls.
+
+ Input file data size for a Map Run                    Each supported             No       Input file data size for a
+                                                      Region: 10                          Map Run
+                                                      Gigabytes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                Version 1.0 3477
+AWS General Reference                                                                                            Reference guide
+
+ Name                                                   Default                    Adjustabl Description
+                                                                                   e
+
+ Input or result data size in task state or             Each supported             No       The maximum size of
+ execution                                              Region: 262,144                     input or output data
+                                                        Bytes                               (in bytes) as a UTF-8
+                                                                                            encoded string. This
+                                                                                            quota affects tasks
+                                                                                            (activity, Lambda
+                                                                                            function, or integrate
+                                                                                            d service), state or
+                                                                                            execution output,
+                                                                                            and input data when
+                                                                                            scheduling a task,
+                                                                                            entering a state, or
+                                                                                            starting an execution.
+
+ ListActivities throttle token bucket size              Each supported             Yes      The maximum number
+                                                        Region: 100                         of ListActivities calls
+                                                                                            that you can make per
+                                                                                            second.
+
+ ListActivities throttle token refill rate               us-east-1: 10              Yes      The token refill rate per
+ per second                                                                                 second of ListActivities
+                                                        us-west-2: 10                       calls.
+
+                                                        eu-west-1: 10
+
+                                                        Each of the
+                                                        other supported
+                                                        Regions: 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                  Version 1.0 3478
+AWS General Reference                                                                                        Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ ListExecutions throttle token bucket                 us-east-1: 200            Yes      The maximum number
+ size                                                                                    of ListExecutions calls
+                                                      us-west-2: 200                     that you can make per
+
+                                                      eu-west-1: 200                     second.
+
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 100
+
+ ListExecutions throttle token refill rate             us-east-1: 5              Yes      The token refill rate per
+ per second                                                                              second of ListExecutions
+                                                      us-west-2: 5                       calls.
+
+                                                      eu-west-1: 5
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 2
+
+ ListMapRuns throttle token bucket size               Each supported            Yes      The maximum number
+                                                      Region: 100                        of ListMapRuns calls
+                                                                                         that you can make per
+                                                                                         second.
+
+ ListMapRuns throttle token refill rate                Each supported            Yes      The token refill rate per
+ per second                                           Region: 1                          second for ListMapRuns
+                                                                                         calls.
+
+ ListStateMachineAliases throttle token               Each supported            Yes      The maximum number of
+ bucket size                                          Region: 100                        ListStateMachineAliases
+                                                                                         calls that you can make
+                                                                                         per second.
+
+ ListStateMachineAliases throttle token               Each supported            Yes      The token refill rate per
+ refill rate per second                                Region: 1                          second for ListState
+                                                                                         MachineAliases calls.
+
+
+
+
+Service quotas                                                                                              Version 1.0 3479
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ ListStateMachineVersions throttle                   Each supported            Yes     The maximum number
+ token bucket size                                   Region: 100                       of ListStateMachineVe
+                                                                                       rsions calls that you can
+                                                                                       make per second.
+
+ ListStateMachineVersions throttle                   Each supported            Yes     The token refill rate per
+ token refill rate per second                         Region: 1                         second for ListState
+                                                                                       MachineVersions calls.
+
+ ListStateMachines throttle token                    Each supported            Yes     The maximum number
+ bucket size                                         Region: 100                       of ListStateMachine calls
+                                                                                       that you can make per
+                                                                                       second.
+
+ ListStateMachines throttle token refill              Each supported            Yes     The token refill rate
+ rate per second                                     Region: 5                         per second of ListState
+                                                                                       Machines calls.
+
+ ListTagsForResource throttle token                  Each supported            Yes     The maximum number
+ bucket size                                         Region: 100                       of ListTagsForResource
+                                                                                       calls that you can make
+                                                                                       per second.
+
+ ListTagsForResource throttle token                  Each supported            Yes     The token refill rate
+ refill rate per second                               Region: 1                         per second of ListTagsF
+                                                                                       orResource calls.
+
+ Maximum Concurrency                                 Each supported            No      The maximum number
+                                                     Region: 10,000                    of parallel Map Run child
+                                                                                       executions
+
+ Maximum Number of Items Read per                    Each supported            No      Maximum Number of
+ Map Run                                             Region: 100,000,0                 Items Read per Map Run
+                                                     00
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 3480
+AWS General Reference                                                                                     Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Maximum redrives of a Map Run                       Each supported           No       Maximum redrives of a
+                                                     Region: 1,000                     Map Run
+
+ Maximum size of CSV headers                         Each supported           No       Maximum size of CSV
+                                                     Region: 10                        headers
+                                                     Kilobytes
+
+ Open executions                                     Each supported           Yes      The maximum number
+                                                     Region: 1,000,000                 of open executions per
+                                                                                       account in the current
+                                                                                       Region.
+
+ PublishStateMachineVersion throttle                 Each supported           Yes      The maximum number
+ token bucket size                                   Region: 100                       of PublishStateMachin
+                                                                                       eVersion calls that you
+                                                                                       can make per second.
+
+ PublishStateMachineVersion throttle                 Each supported           Yes      The token refill rate per
+ token refill rate per second                         Region: 1                         second for PublishSt
+                                                                                       ateMachineVersion calls.
+
+ Published state machine versions per                Each supported           Yes      The maximum number
+ state machine                                       Region: 1,000                     of versions that can be
+                                                                                       published for a state
+                                                                                       machine.
+
+ RedriveExecution throttle token bucket              Each supported           Yes      The maximum number
+ size                                                Region: 800                       of RedriveExecution calls
+                                                                                       that you can make per
+                                                                                       second.
+
+ RedriveExecution throttle token refill               Each supported           Yes      The token refill rate per
+ rate per second                                     Region: 150                       second for RedriveEx
+                                                                                       ecution calls.
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 3481
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ Registered activities                                Each supported            Yes     The maximum number
+                                                      Region: 100,000                   of activities that you can
+                                                                                        create in this account in
+                                                                                        the current Region.
+
+ Registered state machines                            Each supported            Yes     The maximum number of
+                                                      Region: 100,000                   state machines that you
+                                                                                        can create in this account
+                                                                                        in the current Region.
+
+ Request size                                         Each supported            No      The total data size in
+                                                      Region: 1                         Megabytes per Step
+                                                      Megabytes                         Functions API request,
+                                                                                        including the request
+                                                                                        header and all other
+                                                                                        associated request data.
+
+ Resource name length                                 Each supported            No      The maximum allowed
+                                                      Region: 80                        characters for names
+                                                                                        of state machines,
+                                                                                        executions, and activity
+                                                                                        resource types.
+
+ SendTaskFailure throttle token bucket                us-east-1: 3,000          Yes     The maximum number
+ size                                                                                   of SendTaskFailure calls
+                                                      us-west-2: 3,000                  that you can make per
+
+                                                      eu-west-1: 3,000                  second.
+
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 1,500
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 3482
+AWS General Reference                                                                                        Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ SendTaskFailure throttle token refill                 us-east-1: 500            Yes      The token refill rate per
+ rate per second                                                                         second of SendTaskF
+                                                      us-west-2: 500                     ailure calls.
+
+                                                      eu-west-1: 500
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 300
+
+ SendTaskHeartbeat throttle token                     us-east-1: 3,000          Yes      The maximum number of
+ bucket size                                                                             SendTaskHeartbeat calls
+                                                      us-west-2: 3,000                   that you can make per
+
+                                                      eu-west-1: 3,000                   second.
+
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 1,500
+
+ SendTaskHeartbeat throttle token refill               us-east-1: 500            Yes      The token refill rate per
+ rate per second                                                                         second of SendTaskH
+                                                      us-west-2: 500                     eartbeat calls.
+
+                                                      eu-west-1: 500
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 300
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 3483
+AWS General Reference                                                                                        Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ SendTaskSuccess throttle token bucket                us-east-1: 3,000          Yes      The maximum number
+ size                                                                                    of SendTaskSuccess calls
+                                                      us-west-2: 3,000                   that you can make per
+
+                                                      eu-west-1: 3,000                   second.
+
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 1,500
+
+ SendTaskSuccess throttle token refill                 us-east-1: 500            Yes      The token refill rate per
+ rate per second                                                                         second of SendTaskS
+                                                      us-west-2: 500                     uccess calls.
+
+                                                      eu-west-1: 500
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 300
+
+ StartExecution throttle token bucket                 us-east-1: 1,300          Yes      The maximum number
+ size                                                                                    of StartExecution calls
+                                                      us-west-2: 1,300                   that you can make per
+
+                                                      eu-west-1: 1,300                   second.
+
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 800
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 3484
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ StartExecution throttle token refill rate             us-east-1: 300            Yes     The token refill rate per
+ per second                                                                             second of StartExecution
+                                                      us-west-2: 300                    calls.
+
+                                                      eu-west-1: 300
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 150
+
+ StartExpressExecution throttle token                 Each supported            Yes     The maximum number
+ bucket size                                          Region: 6,000                     of StartExpressExecution
+                                                                                        calls that you can make
+                                                                                        per second.
+
+ StartExpressExecution throttle token                 Each supported            Yes     The token refill rate
+ refill rate per second                                Region: 6,000                     per second of StartExpr
+                                                                                        essExecution calls.
+
+ StartMapRun throttle token bucket size               Each supported            No      The maximum number
+                                                      Region: 25                        of StartMapRun calls
+                                                                                        that you can make per
+                                                                                        second.
+
+ StartMapRun throttle token refill rate                Each supported            No      The token refill rate per
+ per second                                           Region: 25                        second of StartMapRun
+                                                                                        calls
+
+ State machine aliases per state                      Each supported            Yes     The maximum number
+ machine                                              Region: 100                       of aliases that can be
+                                                                                        created for a state
+                                                                                        machine.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 3485
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+ StateTransition throttle token bucket                us-east-1: 5,000           Yes      The maximum number
+ size                                                                                     of StateTransition calls
+                                                      us-west-2: 5,000                    that you can make per
+
+                                                      eu-west-1: 5,000                    second.
+
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 800
+
+ StateTransition throttle token refill rate            us-east-1: 5,000           Yes      The token refill rate per
+ per second                                                                               second of StateTransition
+                                                      us-west-2: 5,000                    calls.
+
+                                                      eu-west-1: 5,000
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 800
+
+ StopExecution throttle token bucket                  us-east-1: 1,000           Yes      The maximum number
+ size                                                                                     of StopExecution calls
+                                                      us-west-2: 1,000                    that you can make per
+
+                                                      eu-west-1: 1,000                    second.
+
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 500
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 3486
+AWS General Reference                                                                                        Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ StopExecution throttle token refill rate              us-east-1: 200            Yes      The token refill rate per
+ per second                                                                              second of StopExecution
+                                                      us-west-2: 200                     calls.
+
+                                                      eu-west-1: 200
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 25
+
+ TagResource throttle token bucket size               Each supported            Yes      The maximum number
+                                                      Region: 200                        of TagResource calls
+                                                                                         that you can make per
+                                                                                         second.
+
+ TagResource throttle token refill rate                Each supported            Yes      The token refill rate per
+ per second                                           Region: 1                          second of TagResource
+                                                                                         calls.
+
+ Task execution time                                  Each supported            No       The maximum time (in
+                                                      Region: 1                          years) that a task can
+                                                                                         take to complete an
+                                                                                         execution.
+
+ Task retention time in queue                         Each supported            No       The maximum time
+                                                      Region: 1                          (in years) that Step
+                                                                                         Functions keeps a task in
+                                                                                         the queue.
+
+ TestState throttle token bucket size                 Each supported            No       The maximum number of
+                                                      Region: 50                         TestState calls that you
+                                                                                         can make per second.
+
+ TestState throttle token refill rate per              Each supported            No       The token refill rate per
+ second                                               Region: 10                         second of TestState calls.
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 3487
+AWS General Reference                                                                                     Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ UntagResource throttle token bucket                 Each supported           Yes      The maximum number
+ size                                                Region: 200                       of UntagResource calls
+                                                                                       that you can make per
+                                                                                       second.
+
+ UntagResource throttle token refill rate             Each supported           Yes      The token refill rate per
+ per second                                          Region: 1                         second of UntagResource
+                                                                                       calls.
+
+ UpdateMapRun throttle token bucket                  Each supported           Yes      The maximum number
+ size                                                Region: 100                       of UpdateMapRun calls
+                                                                                       that you can make per
+                                                                                       second.
+
+ UpdateMapRun throttle token refill                   Each supported           Yes      The token refill rate per
+ rate per second                                     Region: 1                         second for UpdateMap
+                                                                                       Run calls.
+
+ UpdateStateMachine throttle token                   Each supported           Yes      The maximum number
+ bucket size                                         Region: 100                       of UpdateStateMachine
+                                                                                       calls that you can make
+                                                                                       per second.
+
+ UpdateStateMachine throttle token                   Each supported           Yes      The token refill rate per
+ refill rate per second                               Region: 1                         second of UpdateSta
+                                                                                       teMachine calls.
+
+ UpdateStateMachineAlias throttle                    Each supported           Yes      The maximum number
+ token bucket size                                   Region: 100                       of UpdateStateMachine
+                                                                                       Alias calls that you can
+                                                                                       make per second.
+
+ UpdateStateMachineAlias throttle                    Each supported           Yes      The token refill rate per
+ token refill rate per second                         Region: 1                         second for UpdateSta
+                                                                                       teMachineAlias calls.
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 3488

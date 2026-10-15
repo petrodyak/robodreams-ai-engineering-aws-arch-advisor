@@ -36,4 +36,9 @@ data/gold/     ground-truth quotas/endpoints for 10 of the 30, JSON (committed)
 python scripts/split_pdf.py
 # 3. copy the 30 selected PDFs (data/raw/manifest.csv) -> data/raw/
 python scripts/select_docs.py
+# 4. extract text "as is" (pypdf layout mode, only ligatures normalized) -> data/raw/*.txt
+python scripts/extract_text.py
 ```
+
+Setup is managed by [uv](https://docs.astral.sh/uv/): `make install` creates `.venv`
+from `uv.lock`; `make data` runs steps 2–3 and `make text` runs step 4.

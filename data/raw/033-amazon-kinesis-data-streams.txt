@@ -1,0 +1,376 @@
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ UpdateKeyDescription request rate                   Each supported           Yes      Maximum UpdateKey
+                                                     Region: 5 per                     Description requests
+                                                     second                            per second. When
+                                                                                       you reach this quota,
+                                                                                       KMS rejects requests
+                                                                                       for this operation for
+                                                                                       the remainder of the
+                                                                                       interval.
+
+ UpdatePrimaryRegion request rate                    Each supported           Yes      Maximum UpdatePri
+                                                     Region: 5 per                     maryRegion requests
+                                                     second                            per second. When
+                                                                                       you reach this quota,
+                                                                                       KMS rejects requests
+                                                                                       for this operation for
+                                                                                       the remainder of the
+                                                                                       interval.
+
+
+Amazon Kinesis Data Streams endpoints and quotas
+
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kinesis Data Streams                                                                                      Version 1.0 2380
+AWS General Reference                                                                                    Reference guide
+Service endpoints
+
+
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ US East        us-east-2      kinesis.us-east-2.amazonaws.com                            HTTPS
+ (Ohio)
+                               kinesis-fips.us-east-2.api.aws                             HTTPS
+
+                               kinesis-fips.us-east-2.amazonaws.com                       HTTPS
+
+                               kinesis.us-east-2.api.aws                                  HTTPS
+
+ US             us-east-1      kinesis.us-east-1.amazonaws.com                            HTTPS
+ East (N.
+ Virginia)                     kinesis-fips.us-east-1.api.aws                             HTTPS
+
+                               kinesis-fips.us-east-1.amazonaws.com                       HTTPS
+
+                               kinesis.us-east-1.api.aws                                  HTTPS
+
+ US             us-            kinesis.us-west-1.amazonaws.com                            HTTPS
+ West (N.       west-1
+ Californi                     kinesis-fips.us-west-1.api.aws                             HTTPS
+
+ a)                            kinesis-fips.us-west-1.amazonaws.com                       HTTPS
+
+
+                               kinesis.us-west-1.api.aws                                  HTTPS
+
+ US West        us-            kinesis.us-west-2.amazonaws.com                            HTTPS
+ (Oregon)       west-2
+                               kinesis-fips.us-west-2.api.aws                             HTTPS
+
+                               kinesis-fips.us-west-2.amazonaws.com                       HTTPS
+
+                               kinesis.us-west-2.api.aws                                  HTTPS
+
+ Africa         af-south-      kinesis.af-south-1.amazonaws.com                           HTTPS
+ (Cape          1
+ Town)                         kinesis.af-south-1.api.aws                                 HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 2381
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-            kinesis.ap-east-1.amazonaws.com                            HTTPS
+ Pacific         east-1
+ (Hong                         kinesis.ap-east-1.api.aws                                  HTTPS
+
+ Kong)
+
+ Asia           ap-            kinesis.ap-south-2.amazonaws.com                           HTTPS
+ Pacific         south-2
+ (Hyderaba                     kinesis.ap-south-2.api.aws                                 HTTPS
+
+ d)
+
+ Asia           ap-            kinesis.ap-southeast-3.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3          kinesis.ap-southeast-3.api.aws                             HTTPS
+
+
+ Asia           ap-            kinesis.ap-southeast-5.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Malaysia      ast-5          kinesis.ap-southeast-5.api.aws                             HTTPS
+
+ )
+
+ Asia           ap-            kinesis.ap-southeast-4.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Melbourn      ast-4          kinesis.ap-southeast-4.api.aws                             HTTPS
+
+ e)
+
+ Asia           ap-            kinesis.ap-south-1.amazonaws.com                           HTTPS
+ Pacific         south-1
+ (Mumbai)                      kinesis.ap-south-1.api.aws                                 HTTPS
+
+
+ Asia           ap-            kinesis.ap-southeast-6.amazonaws.com                       HTTPS
+ Pacific         southe
+ (New           ast-6          kinesis.ap-southeast-6.api.aws                             HTTPS
+
+ Zealand)
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 2382
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-            kinesis.ap-northeast-3.amazonaws.com                       HTTPS
+ Pacific         northe
+ (Osaka)        ast-3          kinesis.ap-northeast-3.api.aws                             HTTPS
+
+
+ Asia           ap-            kinesis.ap-northeast-2.amazonaws.com                       HTTPS
+ Pacific         northe
+ (Seoul)        ast-2          kinesis.ap-northeast-2.api.aws                             HTTPS
+
+
+ Asia           ap-            kinesis.ap-southeast-1.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Singapor      ast-1          kinesis.ap-southeast-1.api.aws                             HTTPS
+
+ e)
+
+ Asia           ap-            kinesis.ap-southeast-2.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Sydney)       ast-2          kinesis.ap-southeast-2.api.aws                             HTTPS
+
+
+ Asia           ap-            kinesis.ap-east-2.amazonaws.com                            HTTPS
+ Pacific         east-2
+ (Taipei)                      kinesis.ap-east-2.api.aws                                  HTTPS
+
+
+ Asia           ap-            kinesis.ap-southeast-7.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Thailand      ast-7          kinesis.ap-southeast-7.api.aws                             HTTPS
+
+ )
+
+ Asia           ap-            kinesis.ap-northeast-1.amazonaws.com                       HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1          kinesis.ap-northeast-1.api.aws                             HTTPS
+
+
+ Canada         ca-centra      kinesis.ca-central-1.amazonaws.com                         HTTPS
+ (Central)      l-1
+                               kinesis.ca-central-1.api.aws                               HTTPS
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                        Version 1.0 2383
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Canada         ca-           kinesis.ca-west-1.amazonaws.com                            HTTPS
+ West           west-1
+ (Calgary)                    kinesis.ca-west-1.api.aws                                  HTTPS
+
+
+ Europe         eu-           kinesis.eu-central-1.amazonaws.com                         HTTPS
+ (Frankfur      central-1
+ t)                           kinesis.eu-central-1.api.aws                               HTTPS
+
+
+ Europe         eu-           kinesis.eu-west-1.amazonaws.com                            HTTPS
+ (Ireland)      west-1
+                              kinesis.eu-west-1.api.aws                                  HTTPS
+
+ Europe         eu-           kinesis.eu-west-2.amazonaws.com                            HTTPS
+ (London)       west-2
+                              kinesis.eu-west-2.api.aws                                  HTTPS
+
+ Europe         eu-           kinesis.eu-south-1.amazonaws.com                           HTTPS
+ (Milan)        south-1
+                              kinesis.eu-south-1.api.aws                                 HTTPS
+
+ Europe         eu-           kinesis.eu-west-3.amazonaws.com                            HTTPS
+ (Paris)        west-3
+                              kinesis.eu-west-3.api.aws                                  HTTPS
+
+ Europe         eu-           kinesis.eu-south-2.amazonaws.com                           HTTPS
+ (Spain)        south-2
+                              kinesis.eu-south-2.api.aws                                 HTTPS
+
+ Europe         eu-           kinesis.eu-north-1.amazonaws.com                           HTTPS
+ (Stockhol      north-1
+ m)                           kinesis.eu-north-1.api.aws                                 HTTPS
+
+
+ Europe         eu-           kinesis.eu-central-2.amazonaws.com                         HTTPS
+ (Zurich)       central-2
+                              kinesis.eu-central-2.api.aws                               HTTPS
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 2384
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Israel         il-centra      kinesis.il-central-1.amazonaws.com                         HTTPS
+ (Tel Aviv)     l-1
+                               kinesis.il-central-1.api.aws                               HTTPS
+
+ Mexico         mx-            kinesis.mx-central-1.amazonaws.com                         HTTPS
+ (Central)      central-1
+                               kinesis.mx-central-1.api.aws                               HTTPS
+
+ Middle         me-            kinesis.me-south-1.amazonaws.com                           HTTPS
+ East           south-1
+ (Bahrain)                     kinesis.me-south-1.api.aws                                 HTTPS
+
+
+ Middle         me-            kinesis.me-central-1.amazonaws.com                         HTTPS
+ East           central-1
+ (UAE)                         kinesis.me-central-1.api.aws                               HTTPS
+
+
+ South          sa-east-1      kinesis.sa-east-1.amazonaws.com                            HTTPS
+ America
+ (São                          kinesis.sa-east-1.api.aws                                  HTTPS
+
+ Paulo)
+
+ AWS            us-gov-        kinesis.us-gov-east-1.amazonaws.com                        HTTPS
+ GovCloud       east-1
+ (US-East)                     kinesis.us-gov-east-1.api.aws                              HTTPS
+
+
+ AWS            us-gov-        kinesis.us-gov-west-1.amazonaws.com                        HTTPS
+ GovCloud       west-1
+ (US-                          kinesis.us-gov-west-1.api.aws                              HTTPS
+
+ West)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 2385
+AWS General Reference                                                                                      Reference guide
+Service quotas
+
+
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Shards per Region                                   us-east-1: 20,000         Yes     The maximum number
+                                                                                       of shards that you can
+                                                     us-east-2: 6,000                  create in this account in
+
+                                                     us-west-2: 20,000                 the current Region.
+
+
+                                                     ap-northeast-1:
+                                                     6,000
+
+                                                     ap-south-1: 6,000
+
+                                                     ap-southeast-1:
+                                                     6,000
+
+                                                     ap-southeast-2:
+                                                     6,000
+
+                                                     eu-central-1:
+                                                     6,000
+
+                                                     eu-west-1: 20,000
+
+                                                     eu-west-3: 6,000
+
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 1,000
+
+
+
+If you’re using strict security policies that require explicit allowlisting of service endpoints, you
+must also allowlist the following account-level endpoints to ensure Kinesis Data Streams actions
+succeed.
+
+• Control-plane APIs: *.control-kinesis.<Region>.amazonaws.com and *.control-
+  kinesis.<Region>.api.aws
+
+
+
+Service quotas                                                                                            Version 1.0 2386

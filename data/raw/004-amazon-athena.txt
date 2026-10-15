@@ -1,0 +1,1227 @@
+AWS General Reference                                                                                   Reference guide
+
+Rate of request tokens is the maximum number of request tokens per second in this account in
+the current Region. AWS AppSync allocates tokens to mutation and query requests based on the
+amount of resources (processing time and memory) that they consume. For more details on tokens,
+see Using token counts to optimize your requests in the AWS AppSync developer guide.
+
+Amazon Athena endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2      athena.us-east-2.amazonaws.com                            HTTPS
+ (Ohio)
+                               athena-fips.us-east-2.api.aws                              HTTPS
+
+                               athena-fips.us-east-2.amazonaws.com                        HTTPS
+
+                               athena.us-east-2.api.aws                                  HTTPS
+
+ US             us-east-1      athena.us-east-1.amazonaws.com                            HTTPS
+ East (N.
+ Virginia)                     athena-fips.us-east-1.api.aws                              HTTPS
+
+                               athena-fips.us-east-1.amazonaws.com                        HTTPS
+
+                               athena.us-east-1.api.aws                                  HTTPS
+
+ US             us-            athena.us-west-1.amazonaws.com                            HTTPS
+ West (N.       west-1
+
+
+
+Athena                                                                                                   Version 1.0 296
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Californi                    athena-fips.us-west-1.api.aws                             HTTPS
+ a)
+                              athena-fips.us-west-1.amazonaws.com                       HTTPS
+
+                              athena.us-west-1.api.aws                                 HTTPS
+
+ US West       us-            athena.us-west-2.amazonaws.com                           HTTPS
+ (Oregon)      west-2
+                              athena-fips.us-west-2.api.aws                             HTTPS
+
+                              athena-fips.us-west-2.amazonaws.com                       HTTPS
+
+                              athena.us-west-2.api.aws                                 HTTPS
+
+ Africa        af-south-      athena.af-south-1.amazonaws.com                          HTTPS
+ (Cape         1
+ Town)                        athena.af-south-1.api.aws                                HTTPS
+
+
+ Asia          ap-            athena.ap-east-1.amazonaws.com                           HTTPS
+ Pacific        east-1
+ (Hong                        athena.ap-east-1.api.aws                                 HTTPS
+
+ Kong)
+
+ Asia          ap-            athena.ap-south-2.amazonaws.com                          HTTPS
+ Pacific        south-2
+ (Hyderaba                    athena.ap-south-2.api.aws                                HTTPS
+
+ d)
+
+ Asia          ap-            athena.ap-southeast-3.amazonaws.com                      HTTPS
+ Pacific        southe
+ (Jakarta)     ast-3          athena.ap-southeast-3.api.aws                            HTTPS
+
+
+ Asia          ap-            athena.ap-southeast-5.amazonaws.com                      HTTPS
+ Pacific        southe
+ (Malaysia     ast-5          athena.ap-southeast-5.api.aws                            HTTPS
+
+ )
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 297
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           athena.ap-southeast-4.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Melbourn      ast-4         athena.ap-southeast-4.api.aws                             HTTPS
+
+ e)
+
+ Asia           ap-           athena.ap-south-1.amazonaws.com                           HTTPS
+ Pacific         south-1
+ (Mumbai)                     athena.ap-south-1.api.aws                                 HTTPS
+
+
+ Asia           ap-           athena.ap-southeast-6.amazonaws.com                       HTTPS
+ Pacific         southe
+ (New           ast-6         athena.ap-southeast-6.api.aws                             HTTPS
+
+ Zealand)
+
+ Asia           ap-           athena.ap-northeast-3.amazonaws.com                       HTTPS
+ Pacific         northe
+ (Osaka)        ast-3         athena.ap-northeast-3.api.aws                             HTTPS
+
+
+ Asia           ap-           athena.ap-northeast-2.amazonaws.com                       HTTPS
+ Pacific         northe
+ (Seoul)        ast-2         athena.ap-northeast-2.api.aws                             HTTPS
+
+
+ Asia           ap-           athena.ap-southeast-1.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Singapor      ast-1         athena.ap-southeast-1.api.aws                             HTTPS
+
+ e)
+
+ Asia           ap-           athena.ap-southeast-2.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Sydney)       ast-2         athena.ap-southeast-2.api.aws                             HTTPS
+
+
+ Asia           ap-           athena.ap-east-2.amazonaws.com                            HTTPS
+ Pacific         east-2
+ (Taipei)                     athena.ap-east-2.api.aws                                  HTTPS
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 298
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-            athena.ap-southeast-7.amazonaws.com                      HTTPS
+ Pacific        southe
+ (Thailand     ast-7          athena.ap-southeast-7.api.aws                            HTTPS
+
+ )
+
+ Asia          ap-            athena.ap-northeast-1.amazonaws.com                      HTTPS
+ Pacific        northe
+ (Tokyo)       ast-1          athena.ap-northeast-1.api.aws                            HTTPS
+
+
+ Canada        ca-centra      athena.ca-central-1.amazonaws.com                        HTTPS
+ (Central)     l-1
+                              athena-fips.ca-central-1.api.aws                          HTTPS
+
+                              athena-fips.ca-central-1.amazonaws.com                    HTTPS
+
+                              athena.ca-central-1.api.aws                              HTTPS
+
+ Canada        ca-            athena.ca-west-1.amazonaws.com                           HTTPS
+ West          west-1
+ (Calgary)                    athena-fips.ca-west-1.api.aws                             HTTPS
+
+                              athena-fips.ca-west-1.amazonaws.com                       HTTPS
+
+                              athena.ca-west-1.api.aws                                 HTTPS
+
+ Europe        eu-            athena.eu-central-1.amazonaws.com                        HTTPS
+ (Frankfur     central-1
+ t)                           athena.eu-central-1.api.aws                              HTTPS
+
+
+ Europe        eu-            athena.eu-west-1.amazonaws.com                           HTTPS
+ (Ireland)     west-1
+                              athena.eu-west-1.api.aws                                 HTTPS
+
+ Europe        eu-            athena.eu-west-2.amazonaws.com                           HTTPS
+ (London)      west-2
+                              athena.eu-west-2.api.aws                                 HTTPS
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 299
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Europe        eu-            athena.eu-south-1.amazonaws.com                          HTTPS
+ (Milan)       south-1
+                              athena.eu-south-1.api.aws                                HTTPS
+
+ Europe        eu-            athena.eu-west-3.amazonaws.com                           HTTPS
+ (Paris)       west-3
+                              athena.eu-west-3.api.aws                                 HTTPS
+
+ Europe        eu-            athena.eu-south-2.amazonaws.com                          HTTPS
+ (Spain)       south-2
+                              athena.eu-south-2.api.aws                                HTTPS
+
+ Europe        eu-            athena.eu-north-1.amazonaws.com                          HTTPS
+ (Stockhol     north-1
+ m)                           athena.eu-north-1.api.aws                                HTTPS
+
+
+ Europe        eu-            athena.eu-central-2.amazonaws.com                        HTTPS
+ (Zurich)      central-2
+                              athena.eu-central-2.api.aws                              HTTPS
+
+ Israel        il-centra      athena.il-central-1.amazonaws.com                        HTTPS
+ (Tel Aviv)    l-1
+                              athena.il-central-1.api.aws                              HTTPS
+
+ Mexico        mx-            athena.mx-central-1.amazonaws.com                        HTTPS
+ (Central)     central-1
+                              athena.mx-central-1.api.aws                              HTTPS
+
+ Middle        me-            athena.me-south-1.amazonaws.com                          HTTPS
+ East          south-1
+ (Bahrain)                    athena.me-south-1.api.aws                                HTTPS
+
+
+ Middle        me-            athena.me-central-1.amazonaws.com                        HTTPS
+ East          central-1
+ (UAE)                        athena.me-central-1.api.aws                              HTTPS
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 300
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ South          sa-east-1     athena.sa-east-1.amazonaws.com                             HTTPS
+ America
+ (São                         athena.sa-east-1.api.aws                                   HTTPS
+
+ Paulo)
+
+ AWS            us-gov-       athena.us-gov-east-1.amazonaws.com                         HTTPS
+ GovCloud       east-1
+ (US-East)                    athena-fips.us-gov-east-1.api.aws                           HTTPS
+
+                              athena-fips.us-gov-east-1.amazonaws.com                     HTTPS
+
+                              athena.us-gov-east-1.api.aws                               HTTPS
+
+ AWS            us-gov-       athena.us-gov-west-1.amazonaws.com                         HTTPS
+ GovCloud       west-1
+ (US-                         athena-fips.us-gov-west-1.api.aws                           HTTPS
+
+ West)                        athena-fips.us-gov-west-1.amazonaws.com                     HTTPS
+
+
+                              athena.us-gov-west-1.api.aws                               HTTPS
+
+
+
+To download the latest version of the JDBC driver and its documentation, see Using Athena with
+the JDBC Driver.
+
+For more information about the previous versions of the JDBC driver and their documentation, see
+Using the Previous Version of the JDBC Driver.
+
+To download the latest and previous versions of the ODBC driver and their documentation, see
+Connecting to Athena with ODBC.
+
+Service quotas
+
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Active DDL queries                                Each supported           Yes     The number of active
+                                                   Region: 20                       DDL queries. DDL queries
+
+
+
+Service quotas                                                                                          Version 1.0 301
+AWS General Reference                                                                                     Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+                                                                                       include CREATE TABLE
+                                                                                       and ALTER TABLE ADD
+                                                                                       PARTITION queries.
+
+ Active DML queries                                 us-east-1: 200            Yes      The number of active
+                                                                                       DML queries. DML
+                                                    us-east-2: 150                     queries include SELECT,
+
+                                                    us-west-2: 150                     CREATE TABLE AS
+                                                                                       (CTAS), and INSERT INTO
+                                                    ap-northeast-1:                    queries. The specific
+                                                    150                                quotas vary by AWS
+                                                                                       Region.
+                                                    ap-northeast-2:
+                                                    100
+
+                                                    ap-south-1: 100
+
+                                                    ap-southeast-1:
+                                                    100
+
+                                                    ap-southeast-2:
+                                                    100
+
+                                                    eu-central-1: 150
+
+                                                    eu-west-1: 150
+
+                                                    eu-west-2: 100
+
+                                                    Each of the
+                                                    other supported
+                                                    Regions: 20
+
+ Apache Spark DPU concurrency                       Each supported            No       The maximum number of
+                                                    Region: 160                        DPUs you can consume
+                                                                                       concurrently for Apache
+                                                                                       Spark calculations.
+
+
+
+
+Service quotas                                                                                             Version 1.0 302
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                    Adjustabl Description
+                                                                                e
+
+ Burst multiplier quota for BatchGetN                Each supported             No      Multiplier factor to
+ amedQuery API                                       Region: 2                          scale burst capacity for
+                                                                                        BatchGetNamedQuery
+                                                                                        API based on the rate
+                                                                                        quota (Burst = Rate *
+                                                                                        BurstMultiplierQuota).
+                                                                                        BatchGetNamedQuery
+                                                                                        Burst is the maximum
+                                                                                        number of BatchGetN
+                                                                                        amedQuery API tokens
+                                                                                        you can accumulate in
+                                                                                        the account in the region
+
+ Burst multiplier quota for BatchGetQ                Each supported             No      Multiplier factor to
+ ueryExecution API                                   Region: 2                          scale burst capacity for
+                                                                                        BatchGetQueryExecu
+                                                                                        tion API based on the
+                                                                                        rate quota (Burst = Rate
+                                                                                        * BurstMultiplierQuota).
+                                                                                        BatchGetQueryExecution
+                                                                                        Burst is the maximum
+                                                                                        number of BatchGetQ
+                                                                                        ueryExecution API tokens
+                                                                                        you can accumulate in
+                                                                                        the account in the region
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 303
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                    Adjustabl Description
+                                                                                e
+
+ Burst multiplier quota for CreateNam                Each supported             No      Multiplier factor to
+ edQuery API                                         Region: 4                          scale burst capacity for
+                                                                                        CreateNamedQuery
+                                                                                        API based on the rate
+                                                                                        quota (Burst = Rate *
+                                                                                        BurstMultiplierQuota).
+                                                                                        CreateNamedQuery
+                                                                                        Burst is the maximum
+                                                                                        number of CreateNam
+                                                                                        edQuery API tokens you
+                                                                                        can accumulate in the
+                                                                                        account in the region
+
+ Burst multiplier quota for DeleteNam                Each supported             No      Multiplier factor to
+ edQuery API                                         Region: 4                          scale burst capacity for
+                                                                                        DeleteNamedQuery
+                                                                                        API based on the rate
+                                                                                        quota (Burst = Rate *
+                                                                                        BurstMultiplierQuota).
+                                                                                        DeleteNamedQuery
+                                                                                        Burst is the maximum
+                                                                                        number of DeleteNam
+                                                                                        edQuery API tokens you
+                                                                                        can accumulate in the
+                                                                                        account in the region
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 304
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+ Burst multiplier quota for GetNamedQ                 Each supported             No       Multiplier factor to
+ uery API                                             Region: 4                           scale burst capacity
+                                                                                          for GetNamedQuery
+                                                                                          API based on the rate
+                                                                                          quota (Burst = Rate
+                                                                                          * BurstMultiplierQuo
+                                                                                          ta). GetNamedQuery
+                                                                                          Burst is the maximum
+                                                                                          number of GetNamedQ
+                                                                                          uery API tokens you
+                                                                                          can accumulate in the
+                                                                                          account in the region
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                 Version 1.0 305
+AWS General Reference                                                                                          Reference guide
+
+ Name                                                  Default                   Adjustabl Description
+                                                                                 e
+
+ Burst multiplier quota for GetQueryE                  us-west-1: 2              No       Multiplier factor to
+ xecution API                                                                             scale burst capacity
+                                                       af-south-1: 2                      for GetQueryExecution
+
+                                                       ap-east-1: 2                       API based on the rate
+                                                                                          quota (Burst = Rate *
+                                                       ap-northeast-3: 2                  BurstMultiplierQuota).
+                                                                                          GetQueryExecution
+                                                       ap-south-2: 2                      Burst is the maximum
+
+                                                       ap-southeast-3: 2                  number of GetQueryE
+                                                                                          xecution API tokens you
+                                                       ap-southeast-4: 2                  can accumulate in the
+                                                                                          account in the region
+                                                       ca-central-1: 2
+
+                                                       ca-west-1: 2
+
+                                                       eu-central-2: 2
+
+                                                       eu-north-1: 2
+
+                                                       eu-south-1: 2
+
+                                                       eu-south-2: 2
+
+                                                       eu-west-3: 2
+
+                                                       il-central-1: 2
+
+                                                       sa-east-1: 2
+
+                                                       Each of the
+                                                       other supported
+                                                       Regions: 1
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                 Version 1.0 306
+AWS General Reference                                                                                          Reference guide
+
+ Name                                                  Default                    Adjustabl Description
+                                                                                  e
+
+ Burst multiplier quota for GetQueryR                  us-east-1: 5               No       Multiplier factor to
+ esults API                                                                                scale burst capacity
+                                                       us-east-2: 5                        for GetQueryResults
+
+                                                       us-west-2: 5                        API based on the rate
+                                                                                           quota (Burst = Rate
+                                                       ap-northeast-1: 5                   * BurstMultiplierQuo
+                                                                                           ta). GetQueryResults
+                                                       ap-northeast-2: 5                   Burst is the maximum
+
+                                                       ap-south-1: 5                       number of GetQueryR
+                                                                                           esults API tokens you
+                                                       ap-southeast-1: 5                   can accumulate in the
+                                                                                           account in the region
+                                                       ap-southeast-2: 5
+
+                                                       eu-central-1: 5
+
+                                                       eu-west-1: 5
+
+                                                       eu-west-2: 5
+
+                                                       Each of the
+                                                       other supported
+                                                       Regions: 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                  Version 1.0 307
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                  Default                   Adjustabl Description
+                                                                                 e
+
+ Burst multiplier quota for ListNamed                  Each supported            No       Multiplier factor to
+ Queries API                                           Region: 2                          scale burst capacity
+                                                                                          for ListNamedQueries
+                                                                                          API based on the rate
+                                                                                          quota (Burst = Rate
+                                                                                          * BurstMultiplierQuo
+                                                                                          ta). ListNamedQueries
+                                                                                          Burst is the maximum
+                                                                                          number of ListNamed
+                                                                                          Queries API tokens you
+                                                                                          can accumulate in the
+                                                                                          account in the region
+
+ Burst multiplier quota for ListQuery                  Each supported            No       Multiplier factor to
+ Executions API                                        Region: 2                          scale burst capacity for
+                                                                                          ListQueryExecutions
+                                                                                          API based on the rate
+                                                                                          quota (Burst = Rate *
+                                                                                          BurstMultiplierQuota).
+                                                                                          ListQueryExecutions
+                                                                                          Burst is the maximum
+                                                                                          number of ListQuery
+                                                                                          Executions API tokens
+                                                                                          you can accumulate in
+                                                                                          the account in the region
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                 Version 1.0 308
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+ Burst multiplier quota for StartQuer                 us-east-1: 5               No       Multiplier factor to
+ yExecution API                                                                           scale burst capacity for
+                                                      us-east-2: 5                        StartQueryExecution
+
+                                                      us-west-2: 5                        API based on the rate
+                                                                                          quota (Burst = Rate *
+                                                      ap-northeast-1: 5                   BurstMultiplierQuota).
+                                                                                          StartQueryExecution
+                                                      eu-central-1: 5                     Burst is the maximum
+
+                                                      eu-west-1: 5                        number of StartQuer
+                                                                                          yExecution API tokens
+                                                      Each of the                         you can accumulate in
+                                                      other supported                     the account in the region
+                                                      Regions: 4
+
+ Burst multiplier quota for StopQuery                 Each supported             No       Multiplier factor to
+ Execution API                                        Region: 4                           scale burst capacity for
+                                                                                          StopQueryExecution
+                                                                                          API based on the rate
+                                                                                          quota (Burst = Rate *
+                                                                                          BurstMultiplierQuota).
+                                                                                          StopQueryExecution
+                                                                                          Burst is the maximum
+                                                                                          number of StopQuery
+                                                                                          Execution API tokens you
+                                                                                          can accumulate in the
+                                                                                          account in the region
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                Version 1.0 309
+AWS General Reference                                                                                     Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+ DDL query timeout                                  Each supported            No      The maximum amount
+                                                    Region: 600                       of time in minutes a DDL
+                                                                                      query can run before
+                                                                                      it gets cancelled. DDL
+                                                                                      queries include CREATE
+                                                                                      TABLE and CREATE
+                                                                                      TABLE ADD PARTITION
+                                                                                      queries.
+
+ DML query timeout                                  Each supported            Yes     The maximum amount
+                                                    Region: 30                        of time in minutes a DML
+                                                                                      query can run before
+                                                                                      it gets cancelled. DML
+                                                                                      queries include SELECT,
+                                                                                      CTAS and INSERT
+                                                                                      queries.
+
+ Maximum number of workgroups per                   Each supported            No      The maximum number of
+ account                                            Region: 1,000                     workgroups that can be
+                                                                                      created in an account.
+
+ On-demand DPUs per account                         Each supported            Yes     The maximum number
+                                                    Region: 4                         of DPUs (Data Processin
+                                                                                      g Units) that can be
+                                                                                      active across all Spark
+                                                                                      workloads in this
+                                                                                      account. This limit
+                                                                                      applies only to Athena
+                                                                                      Spark Version 3.5 and
+                                                                                      does not affect Athena
+                                                                                      Engine Version 3.
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 310
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+ Provisioned DPU                                      Each supported             No      Maximum number of
+                                                      Region: 1,000                      DPUs provisioned for the
+                                                                                         account.
+
+ Replenishment rate of BatchGetN                      Each supported             Yes     Maximum call rate per
+ amedQuery API calls                                  Region: 5 per                      second for BatchGetN
+                                                      second                             amedQuery API in this
+                                                                                         account in the current
+                                                                                         Region. For this API, the
+                                                                                         service adds tokens to
+                                                                                         your account at a fixed
+                                                                                         rate. One token allows
+                                                                                         you to make one API
+                                                                                         call. You accumulate
+                                                                                         tokens for an API up to
+                                                                                         a maximum of (Replenis
+                                                                                         hment rate quota of the
+                                                                                         API * Burst multiplier
+                                                                                         quota of the API)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                Version 1.0 311
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+ Replenishment rate of BatchGetQ                      Each supported             Yes      Maximum call rate per
+ ueryExecution API calls                              Region: 10 per                      second for BatchGetQ
+                                                      second                              ueryExecution API in this
+                                                                                          account in the current
+                                                                                          Region. For this API, the
+                                                                                          service adds tokens to
+                                                                                          your account at a fixed
+                                                                                          rate. One token allows
+                                                                                          you to make one API
+                                                                                          call. You accumulate
+                                                                                          tokens for an API up to
+                                                                                          a maximum of (Replenis
+                                                                                          hment rate quota of the
+                                                                                          API * Burst multiplier
+                                                                                          quota of the API)
+
+ Replenishment rate of CreateNam                      Each supported             Yes      Maximum call rate per
+ edQuery API calls                                    Region: 5 per                       second for CreateNam
+                                                      second                              edQuery API in this
+                                                                                          account in the current
+                                                                                          Region. For this API, the
+                                                                                          service adds tokens to
+                                                                                          your account at a fixed
+                                                                                          rate. One token allows
+                                                                                          you to make one API
+                                                                                          call. You accumulate
+                                                                                          tokens for an API up to
+                                                                                          a maximum of (Replenis
+                                                                                          hment rate quota of the
+                                                                                          API * Burst multiplier
+                                                                                          quota of the API)
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                 Version 1.0 312
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+ Replenishment rate of DeleteNam                      Each supported             Yes      Maximum call rate per
+ edQuery API calls                                    Region: 5 per                       second for DeleteNam
+                                                      second                              edQuery API in this
+                                                                                          account in the current
+                                                                                          Region. For this API, the
+                                                                                          service adds tokens to
+                                                                                          your account at a fixed
+                                                                                          rate. One token allows
+                                                                                          you to make one API
+                                                                                          call. You accumulate
+                                                                                          tokens for an API up to
+                                                                                          a maximum of (Replenis
+                                                                                          hment rate quota of the
+                                                                                          API * Burst multiplier
+                                                                                          quota of the API)
+
+ Replenishment rate of GetNamedQ                      Each supported             Yes      Maximum call rate per
+ uery API calls                                       Region: 5 per                       second for GetNamedQ
+                                                      second                              uery API in this account
+                                                                                          in the current Region. For
+                                                                                          this API, the service adds
+                                                                                          tokens to your account
+                                                                                          at a fixed rate. One token
+                                                                                          allows you to make one
+                                                                                          API call. You accumulat
+                                                                                          e tokens for an API up to
+                                                                                          a maximum of (Replenis
+                                                                                          hment rate quota of the
+                                                                                          API * Burst multiplier
+                                                                                          quota of the API)
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                 Version 1.0 313
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+ Replenishment rate of GetQueryE                      us-east-1: 500 per         Yes     Maximum call rate per
+ xecution API calls                                   second                             second for GetQueryE
+                                                                                         xecution API in this
+                                                      us-east-2: 500 per                 account in the current
+                                                      second                             Region. For this API, the
+
+                                                      us-west-2: 500                     service adds tokens to
+                                                      per second                         your account at a fixed
+                                                                                         rate. One token allows
+                                                      ap-northeast-1:                    you to make one API
+                                                      500 per second                     call. You accumulate
+                                                                                         tokens for an API up to
+                                                      ap-northeast-2:                    a maximum of (Replenis
+                                                      500 per second                     hment rate quota of the
+
+                                                      ap-south-1: 500                    API * Burst multiplier
+                                                      per second                         quota of the API)
+
+
+                                                      ap-southeast-1:
+                                                      500 per second
+
+                                                      ap-southeast-2:
+                                                      500 per second
+
+                                                      eu-central-1: 500
+                                                      per second
+
+                                                      eu-west-1: 500
+                                                      per second
+
+                                                      eu-west-2: 500
+                                                      per second
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 100 per
+                                                      second
+
+
+
+
+Service quotas                                                                                                Version 1.0 314
+AWS General Reference                                                                                          Reference guide
+
+ Name                                                  Default                    Adjustabl Description
+                                                                                  e
+
+ Replenishment rate of GetQueryR                       Each supported             Yes     Maximum call rate per
+ esults API calls                                      Region: 100 per                    second for GetQueryR
+                                                       second                             esults API in this account
+                                                                                          in the current Region. For
+                                                                                          this API, the service adds
+                                                                                          tokens to your account
+                                                                                          at a fixed rate. One token
+                                                                                          allows you to make one
+                                                                                          API call. You accumulat
+                                                                                          e tokens for an API up to
+                                                                                          a maximum of (Replenis
+                                                                                          hment rate quota of the
+                                                                                          API * Burst multiplier
+                                                                                          quota of the API)
+
+ Replenishment rate of ListNamed                       Each supported             Yes     Maximum call rate per
+ Queries API calls                                     Region: 5 per                      second for ListNamed
+                                                       second                             Queries API in this
+                                                                                          account in the current
+                                                                                          Region. For this API, the
+                                                                                          service adds tokens to
+                                                                                          your account at a fixed
+                                                                                          rate. One token allows
+                                                                                          you to make one API
+                                                                                          call. You accumulate
+                                                                                          tokens for an API up to
+                                                                                          a maximum of (Replenis
+                                                                                          hment rate quota of the
+                                                                                          API * Burst multiplier
+                                                                                          quota of the API)
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                 Version 1.0 315
+AWS General Reference                                                                                            Reference guide
+
+ Name                                                   Default                    Adjustabl Description
+                                                                                   e
+
+ Replenishment rate of ListQuery                        Each supported             Yes      Maximum call rate per
+ Executions API calls                                   Region: 5 per                       second for ListQuery
+                                                        second                              Executions API in this
+                                                                                            account in the current
+                                                                                            Region. For this API, the
+                                                                                            service adds tokens to
+                                                                                            your account at a fixed
+                                                                                            rate. One token allows
+                                                                                            you to make one API
+                                                                                            call. You accumulate
+                                                                                            tokens for an API up to
+                                                                                            a maximum of (Replenis
+                                                                                            hment rate quota of the
+                                                                                            API * Burst multiplier
+                                                                                            quota of the API)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                   Version 1.0 316
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+ Replenishment rate of StartQuer                      us-east-1: 100 per         Yes      Maximum call rate per
+ yExecution API calls                                 second                              second for StartQuer
+                                                                                          yExecution API in this
+                                                      us-east-2: 100 per                  account in the current
+                                                      second                              Region. For this API, the
+
+                                                      us-west-2: 100                      service adds tokens to
+                                                      per second                          your account at a fixed
+                                                                                          rate. One token allows
+                                                      ap-northeast-1:                     you to make one API
+                                                      100 per second                      call. You accumulate
+                                                                                          tokens for an API up to
+                                                      ap-northeast-2:                     a maximum of (Replenis
+                                                      100 per second                      hment rate quota of the
+
+                                                      ap-south-1: 100                     API * Burst multiplier
+                                                      per second                          quota of the API)
+
+
+                                                      ap-southeast-1:
+                                                      100 per second
+
+                                                      ap-southeast-2:
+                                                      100 per second
+
+                                                      eu-central-1: 100
+                                                      per second
+
+                                                      eu-west-1: 100
+                                                      per second
+
+                                                      eu-west-2: 100
+                                                      per second
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 20 per
+                                                      second
+
+
+
+
+Service quotas                                                                                                Version 1.0 317
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+ Replenishment rate of StopQuery                      us-east-1: 50 per          Yes      Maximum call rate per
+ Execution API calls                                  second                              second for StopQuery
+                                                                                          Execution API in this
+                                                      us-east-2: 50 per                   account in the current
+                                                      second                              Region. For this API, the
+
+                                                      us-west-2: 50 per                   service adds tokens to
+                                                      second                              your account at a fixed
+                                                                                          rate. One token allows
+                                                      ap-northeast-1:                     you to make one API
+                                                      50 per second                       call. You accumulate
+                                                                                          tokens for an API up to
+                                                      ap-northeast-2:                     a maximum of (Replenis
+                                                      50 per second                       hment rate quota of the
+
+                                                      ap-south-1: 50                      API * Burst multiplier
+                                                      per second                          quota of the API)
+
+
+                                                      ap-southeast-1:
+                                                      50 per second
+
+                                                      ap-southeast-2:
+                                                      50 per second
+
+                                                      eu-central-1: 50
+                                                      per second
+
+                                                      eu-west-1: 50 per
+                                                      second
+
+                                                      eu-west-2: 50 per
+                                                      second
+
+                                                      Each of the
+                                                      other supported
+                                                      Regions: 20 per
+                                                      second
+
+
+
+
+Service quotas                                                                                                Version 1.0 318

@@ -1,0 +1,587 @@
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ South          sa-east-1     sa-east-1.console.aws.amazon.com                          HTTPS
+ America
+ (São
+ Paulo)
+
+ AWS            us-gov-       us-gov-east-1.console.amazonaws-us-gov.com                HTTPS
+ GovCloud       east-1
+ (US-East)
+
+ AWS            us-gov-       us-gov-west-1.console.amazonaws-us-g                      HTTPS
+ GovCloud       west-1        ov.com
+ (US-
+ West)
+
+
+Service quotas
+
+This service has no quotas.
+
+Amazon Managed Workflows for Apache Airflow endpoints and
+quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                        Version 1.0 2571
+AWS General Reference                                                                                 Reference guide
+Service endpoints
+
+
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ US East       us-east-2      api.airflow.us-east-2.amazonaws.com                       HTTPS
+ (Ohio)
+                              env.airflow.us-east-2.api.aws                             HTTPS
+
+                              ops.airflow.us-east-2.amazonaws.com                       HTTPS
+
+                              api.airflow.us-east-2.api.aws                             HTTPS
+
+                              env.airflow-fips.us-east-2.api.aws                         HTTPS
+
+                              env.airflow-fips.us-east-2.amazonaws.com                   HTTPS
+
+                              api.airflow-fips.us-east-2.api.aws                         HTTPS
+
+                              api.airflow-fips.us-east-2.amazonaws.com                   HTTPS
+
+                              env.airflow.us-east-2.amazonaws.com                       HTTPS
+
+ US            us-east-1      api.airflow.us-east-1.amazonaws.com                       HTTPS
+ East (N.
+ Virginia)                    env.airflow.us-east-1.api.aws                             HTTPS
+
+                              ops.airflow.us-east-1.amazonaws.com                       HTTPS
+
+                              api.airflow.us-east-1.api.aws                             HTTPS
+
+                              env.airflow-fips.us-east-1.api.aws                         HTTPS
+
+                              env.airflow-fips.us-east-1.amazonaws.com                   HTTPS
+
+                              api.airflow-fips.us-east-1.api.aws                         HTTPS
+
+                              api.airflow-fips.us-east-1.amazonaws.com                   HTTPS
+
+                              env.airflow.us-east-1.amazonaws.com                       HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 2572
+AWS General Reference                                                                                Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ US            us-            api.airflow.us-west-1.amazonaws.com                       HTTPS
+ West (N.      west-1
+ Californi                    env.airflow.us-west-1.api.aws                             HTTPS
+
+ a)                           api.airflow.us-west-1.api.aws                             HTTPS
+
+
+                              env.airflow-fips.us-west-1.api.aws                         HTTPS
+
+                              env.airflow-fips.us-west-1.amazonaws.com                   HTTPS
+
+                              api.airflow-fips.us-west-1.api.aws                         HTTPS
+
+                              api.airflow-fips.us-west-1.amazonaws.com                   HTTPS
+
+                              env.airflow.us-west-1.amazonaws.com                       HTTPS
+
+ US West       us-            api.airflow.us-west-2.amazonaws.com                       HTTPS
+ (Oregon)      west-2
+                              env.airflow.us-west-2.api.aws                             HTTPS
+
+                              ops.airflow.us-west-2.amazonaws.com                       HTTPS
+
+                              api.airflow.us-west-2.api.aws                             HTTPS
+
+                              env.airflow-fips.us-west-2.api.aws                         HTTPS
+
+                              env.airflow-fips.us-west-2.amazonaws.com                   HTTPS
+
+                              api.airflow-fips.us-west-2.api.aws                         HTTPS
+
+                              api.airflow-fips.us-west-2.amazonaws.com                   HTTPS
+
+                              env.airflow.us-west-2.amazonaws.com                       HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 2573
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Africa         af-south-     api.airflow.af-south-1.amazonaws.com                       HTTPS
+ (Cape          1
+ Town)                        env.airflow.af-south-1.api.aws                             HTTPS
+
+                              api.airflow.af-south-1.api.aws                             HTTPS
+
+                              env.airflow.af-south-1.amazonaws.com                       HTTPS
+
+ Asia           ap-           api.airflow.ap-east-1.amazonaws.com                        HTTPS
+ Pacific         east-1
+ (Hong                        env.airflow.ap-east-1.api.aws                              HTTPS
+
+ Kong)                        api.airflow.ap-east-1.api.aws                              HTTPS
+
+
+                              env.airflow.ap-east-1.amazonaws.com                        HTTPS
+
+ Asia           ap-           api.airflow.ap-south-2.amazonaws.com                       HTTPS
+ Pacific         south-2
+ (Hyderaba                    env.airflow.ap-south-2.api.aws                             HTTPS
+
+ d)                           api.airflow.ap-south-2.api.aws                             HTTPS
+
+
+                              env.airflow.ap-south-2.amazonaws.com                       HTTPS
+
+ Asia           ap-           api.airflow.ap-southeast-3.amazonaws.com                   HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3         env.airflow.ap-southeast-3.api.aws                         HTTPS
+
+                              api.airflow.ap-southeast-3.api.aws                         HTTPS
+
+                              env.airflow.ap-southeast-3.amazonaws.com                   HTTPS
+
+ Asia           ap-           api.airflow.ap-southeast-5.amazonaws.com                   HTTPS
+ Pacific         southe
+ (Malaysia      ast-5         env.airflow.ap-southeast-5.api.aws                         HTTPS
+
+ )                            api.airflow.ap-southeast-5.api.aws                         HTTPS
+
+
+                              env.airflow.ap-southeast-5.amazonaws.com                   HTTPS
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 2574
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-            api.airflow.ap-southeast-4.amazonaws.com                  HTTPS
+ Pacific        southe
+ (Melbourn     ast-4          env.airflow.ap-southeast-4.api.aws                        HTTPS
+
+ e)                           api.airflow.ap-southeast-4.api.aws                        HTTPS
+
+
+                              env.airflow.ap-southeast-4.amazonaws.com                  HTTPS
+
+ Asia          ap-            api.airflow.ap-south-1.amazonaws.com                      HTTPS
+ Pacific        south-1
+ (Mumbai)                     env.airflow.ap-south-1.api.aws                            HTTPS
+
+                              ops.airflow.ap-south-1.amazonaws.com                      HTTPS
+
+                              api.airflow.ap-south-1.api.aws                            HTTPS
+
+                              env.airflow.ap-south-1.amazonaws.com                      HTTPS
+
+ Asia          ap-            api.airflow.ap-northeast-3.amazonaws.com                  HTTPS
+ Pacific        northe
+ (Osaka)       ast-3          env.airflow.ap-northeast-3.api.aws                        HTTPS
+
+                              api.airflow.ap-northeast-3.api.aws                        HTTPS
+
+                              env.airflow.ap-northeast-3.amazonaws.com                  HTTPS
+
+ Asia          ap-            api.airflow.ap-northeast-2.amazonaws.com                  HTTPS
+ Pacific        northe
+ (Seoul)       ast-2          env.airflow.ap-northeast-2.api.aws                        HTTPS
+
+                              ops.airflow.ap-northeast-2.amazonaws.com                  HTTPS
+
+                              api.airflow.ap-northeast-2.api.aws                        HTTPS
+
+                              env.airflow.ap-northeast-2.amazonaws.com                  HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 2575
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                 Protocol
+ Name
+
+ Asia           ap-           api.airflow.ap-southeast-1.amazonaws.com                  HTTPS
+ Pacific         southe
+ (Singapor      ast-1         env.airflow.ap-southeast-1.api.aws                        HTTPS
+
+ e)                           ops.airflow.ap-southeast-1.amazonaws.com                  HTTPS
+
+
+                              api.airflow.ap-southeast-1.api.aws                        HTTPS
+
+                              env.airflow.ap-southeast-1.amazonaws.com                  HTTPS
+
+ Asia           ap-           api.airflow.ap-southeast-2.amazonaws.com                  HTTPS
+ Pacific         southe
+ (Sydney)       ast-2         env.airflow.ap-southeast-2.api.aws                        HTTPS
+
+                              ops.airflow.ap-southeast-2.amazonaws.com                  HTTPS
+
+                              api.airflow.ap-southeast-2.api.aws                        HTTPS
+
+                              env.airflow.ap-southeast-2.amazonaws.com                  HTTPS
+
+ Asia           ap-           api.airflow.ap-southeast-7.amazonaws.com                  HTTPS
+ Pacific         southe
+ (Thailand      ast-7         env.airflow.ap-southeast-7.api.aws                        HTTPS
+
+ )                            api.airflow.ap-southeast-7.api.aws                        HTTPS
+
+
+                              env.airflow.ap-southeast-7.amazonaws.com                  HTTPS
+
+ Asia           ap-           api.airflow.ap-northeast-1.amazonaws.com                  HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1         env.airflow.ap-northeast-1.api.aws                        HTTPS
+
+                              ops.airflow.ap-northeast-1.amazonaws.com                  HTTPS
+
+                              api.airflow.ap-northeast-1.api.aws                        HTTPS
+
+                              env.airflow.ap-northeast-1.amazonaws.com                  HTTPS
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 2576
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Canada         ca-centra     api.airflow.ca-central-1.amazonaws.com                     HTTPS
+ (Central)      l-1
+                              env.airflow.ca-central-1.api.aws                           HTTPS
+
+                              ops.airflow.ca-central-1.amazonaws.com                     HTTPS
+
+                              api.airflow.ca-central-1.api.aws                           HTTPS
+
+                              env.airflow-fips.ca-central-1.api.aws                       HTTPS
+
+                              env.airflow-fips.ca-central-1.amazonaws.com                 HTTPS
+
+                              api.airflow-fips.ca-central-1.api.aws                       HTTPS
+
+                              api.airflow-fips.ca-central-1.amazonaws.com                 HTTPS
+
+                              env.airflow.ca-central-1.amazonaws.com                     HTTPS
+
+ Canada         ca-           api.airflow.ca-west-1.amazonaws.com                        HTTPS
+ West           west-1
+ (Calgary)                    env.airflow.ca-west-1.api.aws                              HTTPS
+
+                              api.airflow.ca-west-1.api.aws                              HTTPS
+
+                              env.airflow-fips.ca-west-1.api.aws                          HTTPS
+
+                              env.airflow-fips.ca-west-1.amazonaws.com                    HTTPS
+
+                              api.airflow-fips.ca-west-1.api.aws                          HTTPS
+
+                              api.airflow-fips.ca-west-1.amazonaws.com                    HTTPS
+
+                              env.airflow.ca-west-1.amazonaws.com                        HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 2577
+AWS General Reference                                                                                Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Europe        eu-            api.airflow.eu-central-1.amazonaws.com                    HTTPS
+ (Frankfur     central-1
+ t)                           env.airflow.eu-central-1.api.aws                          HTTPS
+
+                              ops.airflow.eu-central-1.amazonaws.com                    HTTPS
+
+                              api.airflow.eu-central-1.api.aws                          HTTPS
+
+                              env.airflow.eu-central-1.amazonaws.com                    HTTPS
+
+ Europe        eu-            api.airflow.eu-west-1.amazonaws.com                       HTTPS
+ (Ireland)     west-1
+                              env.airflow.eu-west-1.api.aws                             HTTPS
+
+                              ops.airflow.eu-west-1.amazonaws.com                       HTTPS
+
+                              api.airflow.eu-west-1.api.aws                             HTTPS
+
+                              env.airflow.eu-west-1.amazonaws.com                       HTTPS
+
+ Europe        eu-            api.airflow.eu-west-2.amazonaws.com                       HTTPS
+ (London)      west-2
+                              env.airflow.eu-west-2.api.aws                             HTTPS
+
+                              ops.airflow.eu-west-2.amazonaws.com                       HTTPS
+
+                              api.airflow.eu-west-2.api.aws                             HTTPS
+
+                              env.airflow.eu-west-2.amazonaws.com                       HTTPS
+
+ Europe        eu-            api.airflow.eu-south-1.amazonaws.com                      HTTPS
+ (Milan)       south-1
+                              env.airflow.eu-south-1.api.aws                            HTTPS
+
+                              api.airflow.eu-south-1.api.aws                            HTTPS
+
+                              env.airflow.eu-south-1.amazonaws.com                      HTTPS
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 2578
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Europe        eu-            api.airflow.eu-west-3.amazonaws.com                       HTTPS
+ (Paris)       west-3
+                              env.airflow.eu-west-3.api.aws                             HTTPS
+
+                              ops.airflow.eu-west-3.amazonaws.com                       HTTPS
+
+                              api.airflow.eu-west-3.api.aws                             HTTPS
+
+                              env.airflow.eu-west-3.amazonaws.com                       HTTPS
+
+ Europe        eu-            api.airflow.eu-south-2.amazonaws.com                      HTTPS
+ (Spain)       south-2
+                              env.airflow.eu-south-2.api.aws                            HTTPS
+
+                              api.airflow.eu-south-2.api.aws                            HTTPS
+
+                              env.airflow.eu-south-2.amazonaws.com                      HTTPS
+
+ Europe        eu-            api.airflow.eu-north-1.amazonaws.com                      HTTPS
+ (Stockhol     north-1
+ m)                           env.airflow.eu-north-1.api.aws                            HTTPS
+
+                              ops.airflow.eu-north-1.amazonaws.com                      HTTPS
+
+                              api.airflow.eu-north-1.api.aws                            HTTPS
+
+                              env.airflow.eu-north-1.amazonaws.com                      HTTPS
+
+ Europe        eu-            api.airflow.eu-central-2.amazonaws.com                    HTTPS
+ (Zurich)      central-2
+                              env.airflow.eu-central-2.api.aws                          HTTPS
+
+                              api.airflow.eu-central-2.api.aws                          HTTPS
+
+                              env.airflow.eu-central-2.amazonaws.com                    HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 2579
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Israel         il-centra     api.airflow.il-central-1.amazonaws.com                     HTTPS
+ (Tel Aviv)     l-1
+                              env.airflow.il-central-1.api.aws                           HTTPS
+
+                              api.airflow.il-central-1.api.aws                           HTTPS
+
+                              env.airflow.il-central-1.amazonaws.com                     HTTPS
+
+ Middle         me-           api.airflow.me-south-1.amazonaws.com                       HTTPS
+ East           south-1
+ (Bahrain)                    env.airflow.me-south-1.api.aws                             HTTPS
+
+                              api.airflow.me-south-1.api.aws                             HTTPS
+
+                              env.airflow.me-south-1.amazonaws.com                       HTTPS
+
+ Middle         me-           api.airflow.me-central-1.amazonaws.com                     HTTPS
+ East           central-1
+ (UAE)                        env.airflow.me-central-1.api.aws                           HTTPS
+
+                              api.airflow.me-central-1.api.aws                           HTTPS
+
+                              env.airflow.me-central-1.amazonaws.com                     HTTPS
+
+ South          sa-east-1     api.airflow.sa-east-1.amazonaws.com                        HTTPS
+ America
+ (São                         env.airflow.sa-east-1.api.aws                              HTTPS
+
+ Paulo)                       ops.airflow.sa-east-1.amazonaws.com                        HTTPS
+
+
+                              api.airflow.sa-east-1.api.aws                              HTTPS
+
+                              env.airflow.sa-east-1.amazonaws.com                        HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 2580
+AWS General Reference                                                                               Reference guide
+
+
+      Note
+      For IPv6, use *.api.aws in your endpoint, not *.amazonaws.com, for all regions except
+      ap-southeast-5. For example, api.airflow.us-east-1.amazonaws.com would be
+      api.airflow.us-east-1.api.aws.
+
+
+
+Amazon MWAA uses prefixes for service endpoints, where each prefix corresponds to a set of API
+operations:
+
+• Environment management – api.airflow.region.amazonaws.com (use
+  api.airflow.region.api.aws for IPv6)
+
+  • CreateEnvironment
+
+  • DeleteEnvironment
+
+  • GetEnvironment
+
+  • ListEnvironments
+
+  • ListTagsForResource
+
+  • TagResource
+
+  • UntagResource
+
+  • UpdateEnvironment
+
+• Airflow environment – env.airflow.region.amazonaws.com (use
+  env.airflow.region.api.aws for IPv6)
+
+  • CreateCliToken
+
+  • CreateWebLoginToken
+
+Service quotas
+
+
+ Name                                            Default                 Adjustabl Description
+                                                                         e
+
+ Environments per account per Region             Each supported          Yes     The maximum number
+ (small, medium, large)                          Region: 10                      of environments per
+                                                                                 account per Region.
+
+
+Service quotas                                                                                     Version 1.0 2581

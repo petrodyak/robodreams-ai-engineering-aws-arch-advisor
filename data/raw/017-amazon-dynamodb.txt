@@ -1,0 +1,1726 @@
+AWS General Reference                                                                                 Reference guide
+Amazon DynamoDB endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+For more information about this topic specific to DynamoDB, see Quotas in Amazon DynamoDB.
+
+Service endpoints
+
+DynamoDB
+
+Newer versions of the AWS SDK connect to Amazon DynamoDB using the AWS-account-based
+endpoints listed below. For more information, see Account-based endpoints .
+
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2     dynamodb.us-east-2.amazonaws.com                          HTTP
+ (Ohio)                                                                                 and
+                              account-id.ddb.us-east-2.api.aws                          HTTPS
+
+                              dynamodb.us-east-2.api.aws                                HTTP
+
+                              dynamodb-fips.us-east-2.api.aws                            and
+                                                                                        HTTPS
+                              dynamodb-fips.us-east-2.amazonaws.com
+                                                                                        HTTP
+                              account-id.ddb.us-east-2.amazonaws.com                    and
+                                                                                        HTTPS
+
+                                                                                        HTTPS
+
+                                                                                        HTTPS
+
+
+
+DynamoDB                                                                                              Version 1.0 1487
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ US             us-east-1     dynamodb.us-east-1.amazonaws.com                          HTTP
+ East (N.                                                                               and
+ Virginia)                    dynamodb-fips.us-east-1.amazonaws.com                      HTTPS
+
+                              account-id.ddb.us-east-1.api.aws                          HTTPS
+
+                              account-id.ddb.us-east-1.amazonaws.com                    HTTP
+
+                              dynamodb.us-east-1.api.aws                                and
+                                                                                        HTTPS
+                              dynamodb-fips.us-east-1.api.aws
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+                                                                                        HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1488
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US             us-           dynamodb.us-west-1.amazonaws.com                          HTTP
+ West (N.       west-1                                                                  and
+ Californi                    dynamodb.us-west-1.api.aws                                HTTPS
+
+ a)                           dynamodb-fips.us-west-1.api.aws
+                                                                                        HTTP
+                              dynamodb-fips.us-west-1.amazonaws.com                      and
+                                                                                        HTTPS
+                              account-id.ddb.us-west-1.amazonaws.com
+                                                                                        HTTPS
+                              account-id.ddb.us-west-1.api.aws
+                                                                                        HTTPS
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1489
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ US West       us-           dynamodb.us-west-2.amazonaws.com                         HTTP
+ (Oregon)      west-2                                                                 and
+                             account-id.ddb.us-west-2.amazonaws.com                   HTTPS
+
+                             dynamodb-fips.us-west-2.amazonaws.com                     HTTP
+
+                             dynamodb.us-west-2.api.aws                               and
+                                                                                      HTTPS
+                             account-id.ddb.us-west-2.api.aws
+                                                                                      HTTPS
+                             dynamodb-fips.us-west-2.api.aws
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+                                                                                      HTTPS
+
+ Africa        af-south-     dynamodb.af-south-1.amazonaws.com                        HTTP
+ (Cape         1                                                                      and
+ Town)                       account-id.ddb.af-south-1.amazonaws.com                  HTTPS
+
+
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ Asia          ap-           dynamodb.ap-east-1.amazonaws.com                         HTTP
+ Pacific        east-1                                                                 and
+ (Hong                       account-id.ddb.ap-east-1.amazonaws.com                   HTTPS
+
+ Kong)
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                  Version 1.0 1490
+AWS General Reference                                                                                Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-            dynamodb.ap-south-2.amazonaws.com                        HTTP
+ Pacific        south-2                                                                 and
+ (Hyderaba                    account-id.ddb.ap-south-2.amazonaws.com                  HTTPS
+
+ d)
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            dynamodb.ap-southeast-3.amazonaws.com                    HTTP
+ Pacific        southe                                                                  and
+ (Jakarta)     ast-3          account-id.ddb.ap-southeast-3.amazon                     HTTPS
+                              aws.com
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            dynamodb.ap-southeast-5.amazonaws.com                    HTTP
+ Pacific        southe                                                                  and
+ (Malaysia     ast-5          account-id.ddb.ap-southeast-5.amazon                     HTTPS
+ )                            aws.com
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            dynamodb.ap-southeast-4.amazonaws.com                    HTTP
+ Pacific        southe                                                                  and
+ (Melbourn     ast-4          account-id.ddb.ap-southeast-4.amazon                     HTTPS
+ e)                           aws.com
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1491
+AWS General Reference                                                                                Reference guide
+
+ Region        Region         Endpoint                                                Protocol
+ Name
+
+ Asia          ap-            dynamodb.ap-south-1.amazonaws.com                       HTTP
+ Pacific        south-1                                                                and
+ (Mumbai)                     account-id.ddb.ap-south-1.amazonaws.com                 HTTPS
+
+
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ Asia          ap-            dynamodb.ap-southeast-6.amazonaws.com                   HTTP
+ Pacific        southe                                                                 and
+ (New          ast-6          account-id.ddb.ap-southeast-6.amazon                    HTTPS
+ Zealand)                     aws.com
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ Asia          ap-            dynamodb.ap-northeast-3.amazonaws.com                   HTTP
+ Pacific        northe                                                                 and
+ (Osaka)       ast-3          account-id.ddb.ap-northeast-3.amazon                    HTTPS
+                              aws.com
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ Asia          ap-            dynamodb.ap-northeast-2.amazonaws.com                   HTTP
+ Pacific        northe                                                                 and
+ (Seoul)       ast-2          account-id.ddb.ap-northeast-2.amazon                    HTTPS
+                              aws.com
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 1492
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-            dynamodb.ap-southeast-1.amazonaws.com                    HTTP
+ Pacific        southe                                                                  and
+ (Singapor     ast-1          account-id.ddb.ap-southeast-1.amazon                     HTTPS
+ e)                           aws.com
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            dynamodb.ap-southeast-2.amazonaws.com                    HTTP
+ Pacific        southe                                                                  and
+ (Sydney)      ast-2          account-id.ddb.ap-southeast-2.amazon                     HTTPS
+                              aws.com
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            dynamodb.ap-east-2.amazonaws.com                         HTTP
+ Pacific        east-2                                                                  and
+ (Taipei)                     account-id.ddb.ap-east-2.amazonaws.com                   HTTPS
+
+
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            dynamodb.ap-southeast-7.amazonaws.com                    HTTP
+ Pacific        southe                                                                  and
+ (Thailand     ast-7          account-id.ddb.ap-southeast-7.amazon                     HTTPS
+ )                            aws.com
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1493
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-           dynamodb.ap-northeast-1.amazonaws.com                    HTTP
+ Pacific        northe                                                                 and
+ (Tokyo)       ast-1         account-id.ddb.ap-northeast-1.amazon                     HTTPS
+                             aws.com
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ Canada        ca-centra     dynamodb.ca-central-1.amazonaws.com                      HTTP
+ (Central)     l-1                                                                    and
+                             account-id.ddb.ca-central-1.amazonaws.com                HTTPS
+
+                             dynamodb-fips.ca-central-1.amazonaws.com                  HTTP
+
+                                                                                      and
+                                                                                      HTTPS
+
+                                                                                      HTTPS
+
+ Canada        ca-           dynamodb.ca-west-1.amazonaws.com                         HTTP
+ West          west-1                                                                 and
+ (Calgary)                   dynamodb-fips.ca-west-1.amazonaws.com                     HTTPS
+
+                             account-id.ddb.ca-west-1.amazonaws.com                   HTTPS
+
+
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ Europe        eu-           dynamodb.eu-central-1.amazonaws.com                      HTTP
+ (Frankfur     central-1                                                              and
+ t)                          account-id.ddb.eu-central-1.amazonaws.com                HTTPS
+
+
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 1494
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                Protocol
+ Name
+
+ Europe        eu-           dynamodb.eu-west-1.amazonaws.com                        HTTP
+ (Ireland)     west-1                                                                and
+                             account-id.ddb.eu-west-1.amazonaws.com                  HTTPS
+
+
+                                                                                     HTTP
+                                                                                     and
+                                                                                     HTTPS
+
+ Europe        eu-           dynamodb.eu-west-2.amazonaws.com                        HTTP
+ (London)      west-2                                                                and
+                             account-id.ddb.eu-west-2.amazonaws.com                  HTTPS
+
+
+                                                                                     HTTP
+                                                                                     and
+                                                                                     HTTPS
+
+ Europe        eu-           dynamodb.eu-south-1.amazonaws.com                       HTTP
+ (Milan)       south-1                                                               and
+                             account-id.ddb.eu-south-1.amazonaws.com                 HTTPS
+
+
+                                                                                     HTTP
+                                                                                     and
+                                                                                     HTTPS
+
+ Europe        eu-           dynamodb.eu-west-3.amazonaws.com                        HTTP
+ (Paris)       west-3                                                                and
+                             account-id.ddb.eu-west-3.amazonaws.com                  HTTPS
+
+
+                                                                                     HTTP
+                                                                                     and
+                                                                                     HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                  Version 1.0 1495
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Europe        eu-            dynamodb.eu-south-2.amazonaws.com                        HTTP
+ (Spain)       south-2                                                                 and
+                              account-id.ddb.eu-south-2.amazonaws.com                  HTTPS
+
+
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Europe        eu-            dynamodb.eu-north-1.amazonaws.com                        HTTP
+ (Stockhol     north-1                                                                 and
+ m)                           account-id.ddb.eu-north-1.amazonaws.com                  HTTPS
+
+
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Europe        eu-            dynamodb.eu-central-2.amazonaws.com                      HTTP
+ (Zurich)      central-2                                                               and
+                              account-id.ddb.eu-central-2.amazonaws.com                HTTPS
+
+
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Israel        il-centra      dynamodb.il-central-1.amazonaws.com                      HTTP
+ (Tel Aviv)    l-1                                                                     and
+                              account-id.ddb.il-central-1.amazonaws.com                HTTPS
+
+
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1496
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ Mexico        mx-           dynamodb.mx-central-1.amazonaws.com                      HTTP
+ (Central)     central-1                                                              and
+                             account-id.ddb.mx-central-1.amazonaws.com                HTTPS
+
+
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ Middle        me-           dynamodb.me-south-1.amazonaws.com                        HTTP
+ East          south-1                                                                and
+ (Bahrain)                   account-id.ddb.me-south-1.amazonaws.com                  HTTPS
+
+
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ Middle        me-           dynamodb.me-central-1.amazonaws.com                      HTTP
+ East          central-1                                                              and
+ (UAE)                       account-id.ddb.me-central-1.amazonaws.com                HTTPS
+
+
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ South         sa-east-1     dynamodb.sa-east-1.amazonaws.com                         HTTP
+ America                                                                              and
+ (São                        account-id.ddb.sa-east-1.amazonaws.com                   HTTPS
+
+ Paulo)
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 1497
+AWS General Reference                                                                             Reference guide
+
+ Region        Region        Endpoint                                               Protocol
+ Name
+
+ AWS           us-gov-       dynamodb.us-gov-east-1.amazonaws.com                   HTTP
+ GovCloud      east-1                                                               and
+ (US-East)                   dynamodb-fips.us-gov-east-1.amazonaws.com               HTTPS
+
+                             dynamodb.us-gov-east-1.api.aws                         HTTPS
+
+                             dynamodb-fips.us-gov-east-1.api.aws                     HTTP
+
+                                                                                    and
+                                                                                    HTTPS
+
+                                                                                    HTTPS
+
+ AWS           us-gov-       dynamodb.us-gov-west-1.amazonaws.com                   HTTP
+ GovCloud      west-1                                                               and
+ (US-                        dynamodb-fips.us-gov-west-1.api.aws                     HTTPS
+
+ West)                       dynamodb.us-gov-west-1.api.aws
+                                                                                    HTTPS
+
+                             dynamodb-fips.us-gov-west-1.amazonaw                    HTTP
+                             s.com                                                  and
+
+                                                                                    HTTPS
+
+                                                                                    HTTPS
+
+
+DynamoDB Accelerator (DAX)
+
+
+ Region        Region        Endpoint                                               Protocol
+ Name
+
+ US East       us-east-2     dax.us-east-2.amazonaws.com                            HTTP
+ (Ohio)                                                                             and
+                             dax.us-east-2.api.aws                                  HTTPS
+
+
+                                                                                    HTTPS
+
+
+
+
+
+
+Service endpoints                                                                                 Version 1.0 1498
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US             us-east-1     dax.us-east-1.amazonaws.com                               HTTP
+ East (N.                                                                               and
+ Virginia)                    dax.us-east-1.api.aws                                     HTTPS
+
+
+                                                                                        HTTPS
+
+ US             us-           dax.us-west-1.amazonaws.com                               HTTP
+ West (N.       west-1                                                                  and
+ Californi                    dax.us-west-1.api.aws                                     HTTPS
+
+ a)
+                                                                                        HTTPS
+
+ US West        us-           dax.us-west-2.amazonaws.com                               HTTP
+ (Oregon)       west-2                                                                  and
+                              dax.us-west-2.api.aws                                     HTTPS
+
+
+                                                                                        HTTPS
+
+ Africa         af-south-     dax.af-south-1.amazonaws.com                              HTTP
+ (Cape          1                                                                       and
+ Town)                        dax.af-south-1.api.aws                                    HTTPS
+
+
+                                                                                        HTTPS
+
+ Asia           ap-           dax.ap-east-1.amazonaws.com                               HTTP
+ Pacific         east-1                                                                  and
+ (Hong                        dax.ap-east-1.api.aws                                     HTTPS
+
+ Kong)
+                                                                                        HTTPS
+
+ Asia           ap-           dax.ap-south-2.amazonaws.com                              HTTP
+ Pacific         south-2                                                                 and
+ (Hyderaba                    dax.ap-south-2.api.aws                                    HTTPS
+
+ d)
+                                                                                        HTTPS
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1499
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           dax.ap-southeast-3.amazonaws.com                          HTTP
+ Pacific         southe                                                                  and
+ (Jakarta)      ast-3         dax.ap-southeast-3.api.aws                                HTTPS
+
+
+                                                                                        HTTPS
+
+ Asia           ap-           dax.ap-southeast-5.amazonaws.com                          HTTP
+ Pacific         southe                                                                  and
+ (Malaysia      ast-5         dax.ap-southeast-5.api.aws                                HTTPS
+
+ )
+                                                                                        HTTPS
+
+ Asia           ap-           dax.ap-southeast-4.amazonaws.com                          HTTP
+ Pacific         southe                                                                  and
+ (Melbourn      ast-4         dax.ap-southeast-4.api.aws                                HTTPS
+
+ e)
+                                                                                        HTTPS
+
+ Asia           ap-           dax.ap-south-1.amazonaws.com                              HTTP
+ Pacific         south-1                                                                 and
+ (Mumbai)                     dax.ap-south-1.api.aws                                    HTTPS
+
+
+                                                                                        HTTPS
+
+ Asia           ap-           dax.ap-southeast-6.amazonaws.com                          HTTP
+ Pacific         southe                                                                  and
+ (New           ast-6         dax.ap-southeast-6.api.aws                                HTTPS
+
+ Zealand)
+                                                                                        HTTPS
+
+ Asia           ap-           dax.ap-northeast-3.amazonaws.com                          HTTP
+ Pacific         northe                                                                  and
+ (Osaka)        ast-3         dax.ap-northeast-3.api.aws                                HTTPS
+
+
+                                                                                        HTTPS
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1500
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           dax.ap-northeast-2.amazonaws.com                          HTTP
+ Pacific         northe                                                                  and
+ (Seoul)        ast-2         dax.ap-northeast-2.api.aws                                HTTPS
+
+
+                                                                                        HTTPS
+
+ Asia           ap-           dax.ap-southeast-1.amazonaws.com                          HTTP
+ Pacific         southe                                                                  and
+ (Singapor      ast-1         dax.ap-southeast-1.api.aws                                HTTPS
+
+ e)
+                                                                                        HTTPS
+
+ Asia           ap-           dax.ap-southeast-2.amazonaws.com                          HTTP
+ Pacific         southe                                                                  and
+ (Sydney)       ast-2         dax.ap-southeast-2.api.aws                                HTTPS
+
+
+                                                                                        HTTPS
+
+ Asia           ap-           dax.ap-east-2.amazonaws.com                               HTTP
+ Pacific         east-2                                                                  and
+ (Taipei)                     dax.ap-east-2.api.aws                                     HTTPS
+
+
+                                                                                        HTTPS
+
+ Asia           ap-           dax.ap-southeast-7.amazonaws.com                          HTTP
+ Pacific         southe                                                                  and
+ (Thailand      ast-7         dax.ap-southeast-7.api.aws                                HTTPS
+
+ )
+                                                                                        HTTPS
+
+ Asia           ap-           dax.ap-northeast-1.amazonaws.com                          HTTP
+ Pacific         northe                                                                  and
+ (Tokyo)        ast-1         dax.ap-northeast-1.api.aws                                HTTPS
+
+
+                                                                                        HTTPS
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1501
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Canada         ca-centra     dax.ca-central-1.amazonaws.com                            HTTP
+ (Central)      l-1                                                                     and
+                              dax.ca-central-1.api.aws                                  HTTPS
+
+
+                                                                                        HTTPS
+
+ Canada         ca-           dax.ca-west-1.amazonaws.com                               HTTP
+ West           west-1                                                                  and
+ (Calgary)                    dax.ca-west-1.api.aws                                     HTTPS
+
+
+                                                                                        HTTPS
+
+ Europe         eu-           dax.eu-central-1.amazonaws.com                            HTTP
+ (Frankfur      central-1                                                               and
+ t)                           dax.eu-central-1.api.aws                                  HTTPS
+
+
+                                                                                        HTTPS
+
+ Europe         eu-           dax.eu-west-1.amazonaws.com                               HTTP
+ (Ireland)      west-1                                                                  and
+                              dax.eu-west-1.api.aws                                     HTTPS
+
+
+                                                                                        HTTPS
+
+ Europe         eu-           dax.eu-west-2.amazonaws.com                               HTTP
+ (London)       west-2                                                                  and
+                              dax.eu-west-2.api.aws                                     HTTPS
+
+
+                                                                                        HTTPS
+
+ Europe         eu-           dax.eu-south-1.amazonaws.com                              HTTP
+ (Milan)        south-1                                                                 and
+                              dax.eu-south-1.api.aws                                    HTTPS
+
+
+                                                                                        HTTPS
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1502
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           dax.eu-west-3.amazonaws.com                               HTTP
+ (Paris)        west-3                                                                  and
+                              dax.eu-west-3.api.aws                                     HTTPS
+
+
+                                                                                        HTTPS
+
+ Europe         eu-           dax.eu-south-2.amazonaws.com                              HTTP
+ (Spain)        south-2                                                                 and
+                              dax.eu-south-2.api.aws                                    HTTPS
+
+
+                                                                                        HTTPS
+
+ Europe         eu-           dax.eu-north-1.amazonaws.com                              HTTP
+ (Stockhol      north-1                                                                 and
+ m)                           dax.eu-north-1.api.aws                                    HTTPS
+
+
+                                                                                        HTTPS
+
+ Europe         eu-           dax.eu-central-2.amazonaws.com                            HTTP
+ (Zurich)       central-2                                                               and
+                              dax.eu-central-2.api.aws                                  HTTPS
+
+
+                                                                                        HTTPS
+
+ Israel         il-centra     dax.il-central-1.amazonaws.com                            HTTP
+ (Tel Aviv)     l-1                                                                     and
+                              dax.il-central-1.api.aws                                  HTTPS
+
+
+                                                                                        HTTPS
+
+ Mexico         mx-           dax.mx-central-1.amazonaws.com                            HTTP
+ (Central)      central-1                                                               and
+                              dax.mx-central-1.api.aws                                  HTTPS
+
+
+                                                                                        HTTPS
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1503
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ South         sa-east-1     dax.sa-east-1.amazonaws.com                              HTTP
+ America                                                                              and
+ (São                        dax.sa-east-1.api.aws                                    HTTPS
+
+ Paulo)
+                                                                                      HTTPS
+
+ AWS           us-gov-       dax.us-gov-east-1.amazonaws.com                          HTTP
+ GovCloud      east-1                                                                 and
+ (US-East)                                                                            HTTPS
+
+ AWS           us-gov-       dax.us-gov-west-1.amazonaws.com                          HTTP
+ GovCloud      west-1                                                                 and
+ (US-                                                                                 HTTPS
+ West)
+
+
+Amazon DynamoDB Streams
+
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ US East       us-east-2     streams.dynamodb.us-east-2.amazonaws.com                 HTTP
+ (Ohio)                                                                               and
+                             streams-dynamodb-fips.us-east-2.api.aws                  HTTPS
+
+                             streams.dynamodb-fips.us-east-2.amaz                     HTTPS
+                             onaws.com
+                                                                                      HTTPS
+                             streams-dynamodb.us-east-2.api.aws
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ US            us-east-1     streams.dynamodb.us-east-1.amazonaws.com                 HTTP
+ East (N.                                                                             and
+ Virginia)                   streams-dynamodb-fips.us-east-1.api.aws                  HTTPS
+
+
+
+
+Service endpoints                                                                                  Version 1.0 1504
+AWS General Reference                                                                                Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+                             streams.dynamodb-fips.us-east-1.amaz                     HTTPS
+                             onaws.com
+                                                                                      HTTPS
+                             streams-dynamodb.us-east-1.api.aws
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ US            us-           streams.dynamodb.us-west-1.amazonaws.com                 HTTP
+ West (N.      west-1                                                                 and
+ Californi                   streams-dynamodb-fips.us-west-1.api.aws                  HTTPS
+
+ a)                          streams.dynamodb-fips.us-west-1.amaz
+                                                                                      HTTPS
+                             onaws.com
+                                                                                      HTTPS
+                             streams-dynamodb.us-west-1.api.aws
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ US West       us-           streams.dynamodb.us-west-2.amazonaws.com                 HTTP
+ (Oregon)      west-2                                                                 and
+                             streams-dynamodb-fips.us-west-2.api.aws                  HTTPS
+
+                             streams.dynamodb-fips.us-west-2.amaz                     HTTPS
+                             onaws.com
+                                                                                      HTTPS
+                             streams-dynamodb.us-west-2.api.aws
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 1505
+AWS General Reference                                                                                Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Africa        af-south-      streams.dynamodb.af-south-1.amazonaw                     HTTP
+ (Cape         1              s.com                                                    and
+ Town)                                                                                 HTTPS
+                              streams-dynamodb.af-south-1.api.aws
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            streams.dynamodb.ap-east-1.amazonaws.com                 HTTP
+ Pacific        east-1                                                                  and
+ (Hong                        streams-dynamodb.ap-east-1.api.aws                       HTTPS
+
+ Kong)
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            streams.dynamodb.ap-south-2.amazonaw                     HTTP
+ Pacific        south-2        s.com                                                    and
+ (Hyderaba                                                                             HTTPS
+ d)                           streams-dynamodb.ap-south-2.api.aws
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            streams.dynamodb.ap-southeast-3.amaz                     HTTP
+ Pacific        southe         onaws.com                                                and
+ (Jakarta)     ast-3                                                                   HTTPS
+                              streams-dynamodb.ap-southeast-3.api.aws
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1506
+AWS General Reference                                                                                Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-            streams.dynamodb.ap-southeast-5.amaz                     HTTP
+ Pacific        southe         onaws.com                                                and
+ (Malaysia     ast-5                                                                   HTTPS
+ )                            streams-dynamodb.ap-southeast-5.api.aws
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            streams.dynamodb.ap-southeast-4.amaz                     HTTP
+ Pacific        southe         onaws.com                                                and
+ (Melbourn     ast-4                                                                   HTTPS
+ e)                           streams-dynamodb.ap-southeast-4.api.aws
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            streams.dynamodb.ap-south-1.amazonaw                     HTTP
+ Pacific        south-1        s.com                                                    and
+ (Mumbai)                                                                              HTTPS
+                              streams-dynamodb.ap-south-1.api.aws
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            streams.dynamodb.ap-southeast-6.amaz                     HTTP
+ Pacific        southe         onaws.com                                                and
+ (New          ast-6                                                                   HTTPS
+ Zealand)                     streams-dynamodb.ap-southeast-6.api.aws
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1507
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-            streams.dynamodb.ap-northeast-3.amaz                     HTTP
+ Pacific        northe         onaws.com                                                and
+ (Osaka)       ast-3                                                                   HTTPS
+                              streams-dynamodb.ap-northeast-3.api.aws
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            streams.dynamodb.ap-northeast-2.amaz                     HTTP
+ Pacific        northe         onaws.com                                                and
+ (Seoul)       ast-2                                                                   HTTPS
+                              streams-dynamodb.ap-northeast-2.api.aws
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            streams.dynamodb.ap-southeast-1.amaz                     HTTP
+ Pacific        southe         onaws.com                                                and
+ (Singapor     ast-1                                                                   HTTPS
+ e)                           streams-dynamodb.ap-southeast-1.api.aws
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            streams.dynamodb.ap-southeast-2.amaz                     HTTP
+ Pacific        southe         onaws.com                                                and
+ (Sydney)      ast-2                                                                   HTTPS
+                              streams-dynamodb.ap-southeast-2.api.aws
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1508
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-            streams.dynamodb.ap-east-2.amazonaws.com                 HTTP
+ Pacific        east-2                                                                  and
+ (Taipei)                     streams-dynamodb.ap-east-2.api.aws                       HTTPS
+
+
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            streams.dynamodb.ap-southeast-7.amaz                     HTTP
+ Pacific        southe         onaws.com                                                and
+ (Thailand     ast-7                                                                   HTTPS
+ )                            streams-dynamodb.ap-southeast-7.api.aws
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Asia          ap-            streams.dynamodb.ap-northeast-1.amaz                     HTTP
+ Pacific        northe         onaws.com                                                and
+ (Tokyo)       ast-1                                                                   HTTPS
+                              streams-dynamodb.ap-northeast-1.api.aws
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ Canada        ca-centra      streams.dynamodb.ca-central-1.amazon                     HTTP
+ (Central)     l-1            aws.com                                                  and
+                                                                                       HTTPS
+                              streams-dynamodb-fips.ca-central-1.api.aws
+                                                                                       HTTPS
+                              streams.dynamodb-fips.ca-central-1.a
+                              mazonaws.com                                             HTTPS
+
+                              streams-dynamodb.ca-central-1.api.aws                    HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1509
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ Canada        ca-           streams.dynamodb.ca-west-1.amazonaws.com                 HTTP
+ West          west-1                                                                 and
+ (Calgary)                   streams-dynamodb-fips.ca-west-1.api.aws                  HTTPS
+
+                             streams.dynamodb-fips.ca-west-1.amaz                     HTTPS
+                             onaws.com
+                                                                                      HTTPS
+                             streams-dynamodb.ca-west-1.api.aws
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ Europe        eu-           streams.dynamodb.eu-central-1.amazon                     HTTP
+ (Frankfur     central-1     aws.com                                                  and
+ t)                                                                                   HTTPS
+                             streams-dynamodb.eu-central-1.api.aws
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ Europe        eu-           streams.dynamodb.eu-west-1.amazonaws.com                 HTTP
+ (Ireland)     west-1                                                                 and
+                             streams-dynamodb.eu-west-1.api.aws                       HTTPS
+
+
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ Europe        eu-           streams.dynamodb.eu-west-2.amazonaws.com                 HTTP
+ (London)      west-2                                                                 and
+                             streams-dynamodb.eu-west-2.api.aws                       HTTPS
+
+
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 1510
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ Europe        eu-           streams.dynamodb.eu-south-1.amazonaw                     HTTP
+ (Milan)       south-1       s.com                                                    and
+                                                                                      HTTPS
+                             streams-dynamodb.eu-south-1.api.aws
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ Europe        eu-           streams.dynamodb.eu-west-3.amazonaws.com                 HTTP
+ (Paris)       west-3                                                                 and
+                             streams-dynamodb.eu-west-3.api.aws                       HTTPS
+
+
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ Europe        eu-           streams.dynamodb.eu-south-2.amazonaw                     HTTP
+ (Spain)       south-2       s.com                                                    and
+                                                                                      HTTPS
+                             streams-dynamodb.eu-south-2.api.aws
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+ Europe        eu-           streams.dynamodb.eu-north-1.amazonaw                     HTTP
+ (Stockhol     north-1       s.com                                                    and
+ m)                                                                                   HTTPS
+                             streams-dynamodb.eu-north-1.api.aws
+                                                                                      HTTP
+                                                                                      and
+                                                                                      HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 1511
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           streams.dynamodb.eu-central-2.amazon                      HTTP
+ (Zurich)       central-2     aws.com                                                   and
+                                                                                        HTTPS
+                              streams-dynamodb.eu-central-2.api.aws
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Israel         il-centra     streams.dynamodb.il-central-1.amazon                      HTTP
+ (Tel Aviv)     l-1           aws.com                                                   and
+                                                                                        HTTPS
+                              streams-dynamodb.il-central-1.api.aws
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Mexico         mx-           streams.dynamodb.mx-central-1.amazon                      HTTP
+ (Central)      central-1     aws.com                                                   and
+                                                                                        HTTPS
+                              streams-dynamodb.mx-central-1.api.aws
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+ Middle         me-           streams.dynamodb.me-south-1.amazonaw                      HTTP
+ East           south-1       s.com                                                     and
+ (Bahrain)                                                                              HTTPS
+                              streams-dynamodb.me-south-1.api.aws
+                                                                                        HTTP
+                                                                                        and
+                                                                                        HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1512
+AWS General Reference                                                                                Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Middle        me-            streams.dynamodb.me-central-1.amazon                     HTTP
+ East          central-1      aws.com                                                  and
+ (UAE)                                                                                 HTTPS
+                              streams-dynamodb.me-central-1.api.aws
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ South         sa-east-1      streams.dynamodb.sa-east-1.amazonaws.com                 HTTP
+ America                                                                               and
+ (São                         streams-dynamodb.sa-east-1.api.aws                       HTTPS
+
+ Paulo)
+                                                                                       HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+ AWS           us-gov-        streams.dynamodb.us-gov-east-1.amazo                     HTTP
+ GovCloud      east-1         naws.com                                                 and
+ (US-East)                                                                             HTTPS
+                              streams-dynamodb-fips.us-gov-east-1.api.aws
+                                                                                       HTTPS
+                              streams.dynamodb-fips.us-gov-east-1.
+                              amazonaws.com                                            HTTPS
+
+                              streams-dynamodb.us-gov-east-1.api.aws                   HTTP
+                                                                                       and
+                                                                                       HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1513
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ AWS            us-gov-       streams.dynamodb.us-gov-west-1.amazo                       HTTP
+ GovCloud       west-1        naws.com                                                   and
+ (US-                                                                                    HTTPS
+ West)                        streams-dynamodb-fips.us-gov-west-1.
+                              api.aws                                                    HTTPS
+
+                              streams.dynamodb-fips.us-gov-west-1.                       HTTPS
+                              amazonaws.com
+                                                                                         HTTP
+                              streams-dynamodb.us-gov-west-1.api.aws                     and
+                                                                                         HTTPS
+
+
+Service quotas
+
+
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Account-level read throughput limit               Each supported           Yes      The maximum number
+ (Provisioned mode)                                Region: 80,000                    of read capacity units
+                                                                                     allocated for the
+                                                                                     account; applicable only
+                                                                                     for tables (including
+                                                                                     all associated global
+                                                                                     secondary indexes) in
+                                                                                     provisioned read/write
+                                                                                     capacity mode. For more
+                                                                                     information, see https://
+                                                                                     docs.aws.amazon.com
+                                                                                     /amazondynamodb/la
+                                                                                     test/developerguide/
+                                                                                     Limits.html#default-limit
+                                                                                     s-throughput-capacity-
+                                                                                     modes
+
+
+
+
+Service quotas                                                                                         Version 1.0 1514
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Account-level write throughput limit                Each supported            Yes      The maximum number
+ (Provisioned mode)                                  Region: 80,000                     of write capacity units
+                                                                                        allocated for the
+                                                                                        account; applicable only
+                                                                                        for tables (including
+                                                                                        all associated global
+                                                                                        secondary indexes) in
+                                                                                        provisioned read/write
+                                                                                        capacity mode. For more
+                                                                                        information, see https://
+                                                                                        docs.aws.amazon.com
+                                                                                        /amazondynamodb/la
+                                                                                        test/developerguide/
+                                                                                        Limits.html#default-limit
+                                                                                        s-throughput-capacity-
+                                                                                        modes
+
+ Concurrent control plane operations                 Each supported            Yes      The maximum number
+                                                     Region: 500                        of allowed concurrent
+                                                                                        control plane operation
+                                                                                        s. For more information,
+                                                                                        see https://docs.aws.a
+                                                                                        mazon.com/amazondy
+                                                                                        namodb/latest/deve
+                                                                                        loperguide/Limits.
+                                                                                        html#limits-api
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1515
+AWS General Reference                                                                                     Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+ Global Secondary Indexes per table                 Each supported            Yes     The maximum number of
+                                                    Region: 20                        global secondary indexes
+                                                                                      that can be created
+                                                                                      for a table. For more
+                                                                                      information, see, https://
+                                                                                      docs.aws.amazon.com
+                                                                                      /amazondynamodb/
+                                                                                      latest/developerguid
+                                                                                      e/ServiceQuotas.ht
+                                                                                      ml#limits-secondary-
+                                                                                      indexes
+
+ Maximum Incremental Export                         Each supported            Yes     Maximum limit on size
+ concurrent data size                               Region: 100                       of in flight increment
+                                                    Terabytes                         al export requests.
+                                                                                      For more information,
+                                                                                      see https://docs.aws.a
+                                                                                      mazon.com/amazondy
+                                                                                      namodb/latest/deve
+                                                                                      loperguide/Service
+                                                                                      Quotas.html#limits-
+                                                                                      table-export
+
+ Maximum Incremental Export                         Each supported            Yes     Maximum limit on
+ concurrent requests                                Region: 300                       number of in flight
+                                                                                      incremental export
+                                                                                      requests. For more
+                                                                                      information, see https://
+                                                                                      docs.aws.amazon.com
+                                                                                      /amazondynamodb/
+                                                                                      latest/developerguid
+                                                                                      e/ServiceQuotas.ht
+                                                                                      ml#limits-table-export
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 1516
+AWS General Reference                                                                                     Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+ Maximum Incremental Export period                  Each supported            No      The limit on the
+ window                                             Region: 24                        maximum export
+                                                                                      period (in hours) for
+                                                                                      an incremental export
+                                                                                      request. For more
+                                                                                      information, see https://
+                                                                                      docs.aws.amazon.com
+                                                                                      /amazondynamodb/
+                                                                                      latest/developerguid
+                                                                                      e/ServiceQuotas.ht
+                                                                                      ml#limits-table-export
+
+ Maximum number of tables                           Each supported            Yes     The maximum number
+                                                    Region: 2,500                     of tables that can be
+                                                                                      created per region.
+                                                                                      For more information,
+                                                                                      see https://docs.aws.a
+                                                                                      mazon.com/amazondy
+                                                                                      namodb/latest/deve
+                                                                                      loperguide/Service
+                                                                                      Quotas.html#limits-
+                                                                                      tables
+
+ Minimum Incremental Export period                  Each supported            No      The limit on the
+ window                                             Region: 15                        minimum export period
+                                                                                      (in minutes) for an
+                                                                                      incremental export
+                                                                                      request. For more
+                                                                                      information, see https://
+                                                                                      docs.aws.amazon.com
+                                                                                      /amazondynamodb/
+                                                                                      latest/developerguid
+                                                                                      e/ServiceQuotas.ht
+                                                                                      ml#limits-table-export
+
+
+
+
+Service quotas                                                                                           Version 1.0 1517
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                    Adjustabl Description
+                                                                                e
+
+ Provisioned capacity decreases per day              Each supported             Yes     A decrease is allowed
+                                                     Region: 27                         up to four times any
+                                                                                        time per day (GMT time
+                                                                                        zone). Also, if there
+                                                                                        was no decrease in the
+                                                                                        past hour, an additiona
+                                                                                        l decrease is allowed,
+                                                                                        effectively bringing
+                                                                                        the maximum number
+                                                                                        of decreases in a day
+                                                                                        to 27 times. For more
+                                                                                        information, see https://
+                                                                                        docs.aws.amazon.com
+                                                                                        /amazondynamodb/la
+                                                                                        test/developerguide/
+                                                                                        ServiceQuotas.html
+
+ Table-level read throughput limit                   Each supported             Yes     The maximum number
+                                                     Region: 40,000                     of read throughput
+                                                                                        allocated for a table or
+                                                                                        global secondary index.
+                                                                                        For more information,
+                                                                                        see https://docs.aws.a
+                                                                                        mazon.com/amazondy
+                                                                                        namodb/latest/deve
+                                                                                        loperguide/Limits.
+                                                                                        html#default-limits-
+                                                                                        throughput-capacity-
+                                                                                        modes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1518
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Table-level write throughput limit                  Each supported            Yes     The maximum number
+                                                     Region: 40,000                    of write throughput
+                                                                                       allocated for a table or
+                                                                                       global secondary index.
+                                                                                       For more information,
+                                                                                       see https://docs.aws.a
+                                                                                       mazon.com/amazondy
+                                                                                       namodb/latest/deve
+                                                                                       loperguide/Limits.
+                                                                                       html#default-limits-
+                                                                                       throughput-capacity-
+                                                                                       modes
+
+ Write throughput limit for DynamoDB                 Each supported            Yes     The maximum number
+ Streams (Provisioned mode)                          Region: 40,000                    of write capacity units
+                                                                                       allowed for a table
+                                                                                       with streams enabled;
+                                                                                       applicable only for tables
+                                                                                       in provisioned read/writ
+                                                                                       e capacity mode. Other
+                                                                                       quotas might also apply.
+                                                                                       For more information,
+                                                                                       see https://docs.aws.a
+                                                                                       mazon.com/amazondy
+                                                                                       namodb/latest/deve
+                                                                                       loperguide/Service
+                                                                                       Quotas.html#limits-
+                                                                                       dynamodb-streams
+
+
+
+DAX has the following quotas.
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1519
