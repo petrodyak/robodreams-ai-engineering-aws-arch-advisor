@@ -40,7 +40,7 @@
 .
 ├── CLAUDE.md
 ├── .env.example                 # ANTHROPIC_API_KEY, OLLAMA_HOST
-├── .gitignore                   # .env, .venv, data/source/, data/pool/, data/raw/*.pdf
+├── .gitignore                   # .env, .venv, data/source/, data/pool/*.pdf, data/raw/*.pdf
 ├── README.md                    # проблема, користувач, 4 етапи, як запустити, як відтворити дані
 ├── REPORT.md                    # звіт-порівняння по ДЗ 1
 ├── Makefile                     # make run — запуск одною командою
@@ -54,7 +54,7 @@
 │   └── sampling.yaml            # конфігурації temperature/top_p
 ├── data/
 │   ├── source/                  # aws-general-endpoints-and-quotas.pdf (25 МБ, не в Git)
-│   ├── pool/                    # УСІ 100 PDF по сервісах + manifest.csv (не в Git)
+│   ├── pool/                    # УСІ 100 PDF (не в Git) + manifest.csv, profile.csv (у Git)
 │   ├── raw/                     # 30 відібраних: *.pdf (не в Git) + *.txt + manifest.csv (у Git)
 │   └── gold/                    # 10 JSON golden set (у Git)
 ├── results/                     # виходи моделей: JSONL по прогонах + metrics (у Git)
