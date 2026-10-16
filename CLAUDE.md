@@ -34,14 +34,14 @@
 - Не роби `git commit` / `git push` без моєї явної команди.
 - Не видаляй файли в `data/` — тільки переміщуй.
 - Робота з Git (гілки, commits, PR, перевірки перед commit) — за правилами нижче. Перевірки запускаються `make check`.
-
-@docs/GIT_RULES.md
-
+> Git-правила (гілки, commits, PR, gates) — у `docs/GIT_RULES.md` репозиторію; у `CLAUDE.md` вони підключені через `@docs/GIT_RULES.md`.
+ 
 ## Структура репозиторію (цільова)
-
+ 
 ```
 .
 ├── CLAUDE.md
+├── GLOSSARY.md                  # терміни проєкту (Service Document, Quota Row, Neighbour Tail …)
 ├── .env.example                 # ANTHROPIC_API_KEY, OLLAMA_HOST
 ├── .gitignore                   # .env, .venv, data/source/, data/pool/*.pdf, data/raw/*.pdf
 ├── README.md                    # проблема, користувач, 4 етапи, як запустити, як відтворити дані
@@ -73,8 +73,11 @@
 ├── evals/
 ├── tests/
 └── docs/
+    ├── GIT_RULES.md             # гілки, commits, PR, gates (make check)
+    ├── stage1-data-contract.md  # контракт даних етапу 1 — звіряти код із ним
+    └── adr/                     # 0001 standard quota tables only, 0002 model extracts / code derives
 ```
-
+ 
 ## ДЗ 1 — «Structured Extraction Service» (30 балів, дедлайн 27.10 23:59)
 
 Сервіс, що витягує структуровані дані з «брудних» текстів за схемою, порівнює провайдерську (Claude) і локальну (qwen2.5:7b) моделі й обґрунтовує вибір для продакшну цифрами.
@@ -124,6 +127,14 @@ Stretch (без балів, тільки якщо лишиться час): тр
 - Локальна модель має працювати на звичайному ноутбуці.
 - Здача — одне посилання на GitHub-репозиторій: https://github.com/petrodyak/robodreams-ai-engineering-aws-arch-advisor
 
+### Що має бути в репозиторії
+- код сервісу та схема;
+- папка prompts/ з версіями та changelog;
+- data/ з текстами та golden set;
+- results/ з виходами моделей;
+- REPORT.md із звітом-порівнянням;
+- README.md: як запустити і що потрібно встановити.
+
 ## Поточний стан і наступний крок
 
 ### Зроблено (15.10, дані)
@@ -133,15 +144,28 @@ Stretch (без балів, тільки якщо лишиться час): тр
 - `scripts/split_pdf.py` тепер пише в `pool/`; `.gitignore` і README оновлені.
 - Групи ділили **за словами, а не сторінками** (таблиці рідкі: 4 стор. = 489 слів, 39 стор. = 4 020 слів; діапазон 0.5k–5k слів ≈ 0.7k–8k токенів — усе влазить у контекст qwen2.5:7b).
 
+### Зроблено (15.10, проєкт і дизайн схеми)
+- `pyproject.toml` + `uv.lock` (`anthropic`, `ollama`, `pydantic`, `pypdf`, `python-dotenv`, `pyyaml`; dev: `pytest`, `ruff`), `.python-version = 3.12`. Нові залежності — тільки через `uv add`, не руками.
+- `Makefile`: `install` (uv sync), `data` (split + select), `text` (extract), `check` (ruff check + ruff format --check + pytest). Цілі `run` ще немає — з'явиться разом з `main.py`.
+- `scripts/extract_text.py` — `pypdf` layout mode, 30 `.txt` у `data/raw/`. Текст не чистимо; єдина зміна — лігатури `ﬀ ﬁ ﬂ ﬃ ﬄ` → звичайні літери (рішення прийнято). Сторінки розділені `\f`.
+- Крок 0 Git: `docs/GIT_RULES.md`, pre-commit gates через `make check`, PR #1 змерджено.
+- Design interview → `GLOSSARY.md`, `docs/stage1-data-contract.md` (10 пунктів контракту), ADR-0001 і ADR-0002. **Схема етапу 1 спроєктована — код пишемо за контрактом, а не придумуємо заново:**
+  - `ServiceDocument`: `schema_version: Literal["1"]`, `service`, `quota_table_format: standard | non_standard | none`, `endpoints: list[EndpointRow]`, `quotas: list[QuotaRow]`.
+  - `EndpointRow`: `region_name, region_code, endpoint, protocol (HTTPS|HTTP)` — тільки друковані колонки; `endpoint_type (fips|dual_stack|ipv4|global)` — computed field з hostname, у метриках точності не рахується.
+  - `QuotaRow`: `name, default: str (як надруковано), adjustable: bool, description` — тільки зі Standard Quota Table (`Name | Default | Adjustable | Description`); інші формати → `quotas: []` + `quota_table_format = non_standard` (ADR-0001).
+  - Модель витягує лише надруковане; парсинг `default` у число/scope — у коді, пізніше (ADR-0002). Мультирегіональні `default` → `"us-east-1: 20,000; us-east-2: 6,000"`.
+  - Валідатор на кожному `str`: `" ".join(s.split())`, більше нічого. `service` не збігся з manifest → validation failure (детектор Neighbour Tail).
+  - Golden set: чернетка з прогону `claude__v1__t0` → `data/gold/<name>.json` → ручна правка по PDF.
+
 ### Відомі особливості даних (зафіксовані рішення)
 - **Хвости сусідніх сервісів лишаємо як є.** Розрізання по закладках іде посторінково, тому перша сторінка файлу містить кінець попереднього сервісу (напр. у `006-aurora-dsql` — шматок quotas від Aurora), а власні quotas можуть витікати в наступний файл. Промпт має витягати тільки цільовий сервіс; у golden set — тільки дані цільового сервісу.
 - Пропущені поля є природно: без quotas-таблиці (`007`, `042`, `047`), «N/A» (`047`, `048`), глобальні сервіси з 3 endpoint-рядками (`010`, `074`).
-- Текст із `pdftotext -layout` брудний: ламані слова (`ap-\nsoutheast-4`), лігатури `ﬁ`, колонтитули «AWS General Reference … Version 1.0 NNN».
+- Текст із PDF брудний: ламані слова (`ap-\nsoutheast-4`), колонтитули «AWS General Reference … Version 1.0 NNN». Лігатури вже нормалізовані в `.txt`.
 - `093-aws-services.pdf` — не сервіс (зведений список), виключено.
 
 ### Наступний крок (Claude Code)
-1. `pyproject.toml` через `uv` (pypdf/pdfplumber, pydantic, anthropic, ollama/httpx, python-dotenv), `Makefile`.
-2. `scripts/extract_text.py`: `data/raw/*.pdf` → `data/raw/*.txt` (pdftotext-layout або pdfplumber; текст НЕ чистити — це вхід «як є»; хіба що нормалізувати лігатури `ﬁ/ﬂ` — рішення за мною).
-3. Pydantic-схема (`src/extract/schema.py`) — показати план полів до написання коду.
-4. Baseline-промпт `prompts/extract_v1.txt` + Claude через structured output + retry/timeout; прогін на 30; `results/`.
-5. Golden set: чернетка JSON моделлю для 10 файлів з `gold=1` → я звіряю вручну → `data/gold/`.
+1. `src/extract/schema.py` — Pydantic-схема за `docs/stage1-data-contract.md` (поля вище) + unit-тести на валідатори (whitespace, `endpoint_type`, перевірка `service`). План полів уже є — показати лише план файлу/тестів і чекати «ок».
+2. `src/extract/llm/` — спільний інтерфейс для Claude і Ollama (одна функція `extract(text, service, prompt, sampling) -> ServiceDocument | failed`), спочатку тільки Claude-реалізація зі structured output, retry + timeout.
+3. `prompts/extract_v1.txt` + `prompts/CHANGELOG.md`, `config/sampling.yaml` (перша конфігурація `t0`), `main.py` + ціль `make run`; оцінити вартість, прогнати 30 → `results/claude__v1__t0.jsonl` з логуванням моделі/версії промпту/семплінгу.
+4. Golden set: з результатів п.3 скопіювати 10 файлів `gold=1` у `data/gold/` → я звіряю вручну з PDF.
+5. Далі крок 2 ДЗ: Ollama-реалізація того ж інтерфейсу, друга конфігурація семплінгу, `metrics.py`.
