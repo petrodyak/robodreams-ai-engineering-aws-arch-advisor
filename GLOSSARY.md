@@ -45,8 +45,8 @@ endpoint hostname, one protocol. A region with two hostnames has two Endpoint Ro
 _Avoid_: endpoint (for the row), region entry
 
 **Endpoint Type**:
-The kind of an Endpoint Row's hostname (FIPS, dual-stack, IPv4, global), derived from the
-hostname itself; it is not printed in the table.
+The kind of an Endpoint Row's hostname (FIPS, dual-stack, FIPS + dual-stack, IPv4, global),
+derived from the hostname itself; it is not printed in the table.
 _Avoid_: endpoint kind, endpoint flavour
 
 **Quota Row**:

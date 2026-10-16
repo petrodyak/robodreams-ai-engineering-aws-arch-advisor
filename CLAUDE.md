@@ -149,12 +149,13 @@ Stretch (без балів, тільки якщо лишиться час): тр
 - `Makefile`: `install` (uv sync), `data` (split + select), `text` (extract), `check` (ruff check + ruff format --check + pytest). Цілі `run` ще немає — з'явиться разом з `main.py`.
 - `scripts/extract_text.py` — `pypdf` layout mode, 30 `.txt` у `data/raw/`. Текст не чистимо; єдина зміна — лігатури `ﬀ ﬁ ﬂ ﬃ ﬄ` → звичайні літери (рішення прийнято). Сторінки розділені `\f`.
 - Крок 0 Git: `docs/GIT_RULES.md`, pre-commit gates через `make check`, PR #1 змерджено.
-- Design interview → `GLOSSARY.md`, `docs/stage1-data-contract.md` (10 пунктів контракту), ADR-0001 і ADR-0002. **Схема етапу 1 спроєктована — код пишемо за контрактом, а не придумуємо заново:**
+- Design interview → `GLOSSARY.md`, `docs/stage1-data-contract.md` (10 пунктів контракту), ADR-0001 і ADR-0002; 16.10 — правки контракту (п. 6, 9, 14, 16) і ADR-0003 після звірки з гілкою grill (її не мерджимо). **Схема етапу 1 спроєктована — код пишемо за контрактом, а не придумуємо заново:**
   - `ServiceDocument`: `schema_version: Literal["1"]`, `service`, `quota_table_format: standard | non_standard | none`, `endpoints: list[EndpointRow]`, `quotas: list[QuotaRow]`.
-  - `EndpointRow`: `region_name, region_code, endpoint, protocol (HTTPS|HTTP)` — тільки друковані колонки; `endpoint_type (fips|dual_stack|ipv4|global)` — computed field з hostname, у метриках точності не рахується.
+  - `EndpointRow`: `region_name, region_code, endpoint, protocol (HTTPS|HTTP|HTTP and HTTPS)` — тільки друковані колонки; `endpoint_type (fips|dual_stack|fips_dual_stack|ipv4|global)` — computed field з hostname, у метриках точності не рахується.
   - `QuotaRow`: `name, default: str (як надруковано), adjustable: bool, description` — тільки зі Standard Quota Table (`Name | Default | Adjustable | Description`); інші формати → `quotas: []` + `quota_table_format = non_standard` (ADR-0001).
   - Модель витягує лише надруковане; парсинг `default` у число/scope — у коді, пізніше (ADR-0002). Мультирегіональні `default` → `"us-east-1: 20,000; us-east-2: 6,000"`.
-  - Валідатор на кожному `str`: `" ".join(s.split())`, більше нічого. `service` не збігся з manifest → validation failure (детектор Neighbour Tail).
+  - Валідатор на кожному `str`: `" ".join(s.split())`. Validation failure → repair: `service` не збігся з manifest (детектор Neighbour Tail); regex `region_code`; `endpoint` — hostname без пробілів на AWS-домені; `quotas` непорожні при `quota_table_format != standard` (ADR-0003).
+  - Платна модель — `claude-haiku-4-5`: нове покоління Claude не приймає `temperature`, а нам потрібні `t0`/`t05` (контракт п. 14).
   - Golden set: чернетка з прогону `claude__v1__t0` → `data/gold/<name>.json` → ручна правка по PDF.
 
 ### Відомі особливості даних (зафіксовані рішення)
@@ -164,7 +165,7 @@ Stretch (без балів, тільки якщо лишиться час): тр
 - `093-aws-services.pdf` — не сервіс (зведений список), виключено.
 
 ### Наступний крок (Claude Code)
-1. `src/extract/schema.py` — Pydantic-схема за `docs/stage1-data-contract.md` (поля вище) + unit-тести на валідатори (whitespace, `endpoint_type`, перевірка `service`). План полів уже є — показати лише план файлу/тестів і чекати «ок».
+1. `src/extract/schema.py` — Pydantic-схема за `docs/stage1-data-contract.md` (поля вище) + unit-тести на валідатори (whitespace, `endpoint_type`, перевірка `service`, format/consistency checks з ADR-0003; структуру тестів можна взяти з гілки `step-0-1-grill-me-1`). План полів уже є — показати лише план файлу/тестів і чекати «ок».
 2. `src/extract/llm/` — спільний інтерфейс для Claude і Ollama (одна функція `extract(text, service, prompt, sampling) -> ServiceDocument | failed`), спочатку тільки Claude-реалізація зі structured output, retry + timeout.
 3. `prompts/extract_v1.txt` + `prompts/CHANGELOG.md`, `config/sampling.yaml` (перша конфігурація `t0`), `main.py` + ціль `make run`; оцінити вартість, прогнати 30 → `results/claude__v1__t0.jsonl` з логуванням моделі/версії промпту/семплінгу.
 4. Golden set: з результатів п.3 скопіювати 10 файлів `gold=1` у `data/gold/` → я звіряю вручну з PDF.
