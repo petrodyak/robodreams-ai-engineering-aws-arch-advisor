@@ -47,6 +47,7 @@ Apply to every step and are not repeated in the steps:
 | 1.1 | This plan | `patch-1.1-implementation-steps` | review 10 min | — | 16.10 | ✅ PR #3 (`f1636f2`) |
 | 1.2 | Status row for step 1.1 | `patch-1.2-step-1.1-status-row` | — | — | 17.10 | ✅ PR #4 (`4cfa1a5`) |
 | 2 | Pydantic schema + tests | `step-2-schema` | plan + review ~30 min | step 1: schema (2) | 17.10 | 🔄 PR #5 |
+| 2.1 | Split `CLAUDE.md`: core rules stay, stage details move to `docs/` | `patch-2.1-claude-md-split` | review 10 min | — | 17.10 | 🔄 branch |
 | 3 | Shared LLM interface + Claude | `step-3-llm-claude` | review ~30 min | step 1: structured output, retry/timeout (2) | 18.10 | ⬜ |
 | 4 | Prompt v1, sampling config, pipeline, `make run`, run `claude__v1__t0` | `step-4-pipeline-v1` | "ok" on the cost | step 1: all texts run (2); step 3: validation (3), logging (2) | 19.10 | ⬜ |
 | 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | ⬜ |
@@ -102,6 +103,16 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
   (ADR-0003). Found: Pydantic re-runs the after-validator on an already validated instance, so a
   Run Record needs the context too. Review findings 5–7 (unversioned Field descriptions,
   substring region match, tuple rebuild) left as is.
+
+### Step 2.1 — Split `CLAUDE.md`
+
+- **Done:** `CLAUDE.md` 172 → ~110 lines: it keeps only what every session needs (who, stages,
+  constraints, how to work, git hard rules, a "read before you work on…" table, repo map). Moved, not
+  dropped: the HW 1 assignment → `docs/hw1-brief.md`; dataset, text extraction and data quirks →
+  `docs/data-notes.md`; the "current state / next step" list is superseded by this file; the schema
+  summary was already in the contract. Found: the `@docs/GIT_RULES.md` import sat inside backticks, so
+  it never loaded; replaced by a 6-line summary + "read before any git operation" rather than a real
+  import (+207 lines in every session).
 
 ### Step 3 — Shared LLM interface + Claude
 
@@ -218,3 +229,4 @@ and the PR that closed it.
 | 16.10 | First version of the plan |
 | 16.10 | Practices from Silpo: maintenance rule, status from git, standing rules, per-step "Done", deferred findings (F1–F4; `max_tokens` and `num_ctx` moved here from the risks), REPORT as a snapshot; "Actual" column in the run matrix |
 | 17.10 | All `.md` files translated to English; repository docs are written in English from now on |
+| 17.10 | Step 2.1 added: `CLAUDE.md` split; this file is now the only place for status and next step |
