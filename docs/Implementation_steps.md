@@ -1,208 +1,209 @@
-# Implementation steps — ДЗ 1 (Structured Extraction Service)
+# Implementation steps — HW 1 (Structured Extraction Service)
 
-Робочий план і журнал виконання етапу 1 до дедлайну **27.10 23:59**. Що будуємо — у
-[`stage1-data-contract.md`](stage1-data-contract.md) і ADR ([0001](adr/0001-standard-quota-tables-only.md),
+Working plan and execution log for stage 1 up to the deadline **27.10 23:59**. What we build is in
+[`stage1-data-contract.md`](stage1-data-contract.md) and the ADRs ([0001](adr/0001-standard-quota-tables-only.md),
 [0002](adr/0002-model-extracts-code-derives.md), [0003](adr/0003-format-checks-are-validation-failures.md));
-як працюємо з Git — у [`GIT_RULES.md`](GIT_RULES.md). Цей файл відповідає на «в якому порядку, хто,
-до коли, як зрозуміти, що крок готовий» (план) і «що зроблено, що вирішили і чому» (журнал).
+how we work with Git is in [`GIT_RULES.md`](GIT_RULES.md). This file answers "in what order, who,
+by when, how do we know a step is done" (the plan) and "what was done, what we decided and why" (the log).
 
-> **Maintenance rule:** запис кроку в цьому файлі (статус + підрозділ «Виконано») оновлюється
-> **в тому ж PR**, що й код кроку, а не після. Крок не завершено, доки його запису тут немає.
+> **Maintenance rule:** a step's entry in this file (status + the "Done" subsection) is updated
+> **in the same PR** as the step's code, not afterwards. A step is not finished until its entry exists here.
 
-> **Статус — з git, не з тексту.** Готовий крок позначаємо `✅ PR #N (sha merge-коміту)`; якщо
-> рядок тут і `git log --oneline origin/main` розходяться, правий git.
+> **Status comes from git, not from prose.** A finished step is marked `✅ PR #N (merge commit sha)`; if
+> a row here and `git log --oneline origin/main` disagree, git is right.
 
-Статуси: ✅ змерджено (PR, sha) · 🔄 в роботі (гілка є) · ⬜ не почато · ⏸ заблоковано
+Statuses: ✅ merged (PR, sha) · 🔄 in progress (branch exists) · ⬜ not started · ⏸ blocked
 
-## 1. Постійні правила
+## 1. Standing rules
 
-Діють для кожного кроку, у кроках не повторюються:
+Apply to every step and are not repeated in the steps:
 
-- **Контракт — джерело правди.** Код звіряємо з `stage1-data-contract.md`; рішення, що його
-  змінює, — спершу правка контракту (і ADR, якщо змінюється принцип), потім код.
-- **Гроші — до прогону.** Перед кожним Claude-прогоном — оцінка через `count_tokens`, озвучена
-  і погоджена; фактичні витрати — у розділ 5 після прогону. Ліміт — $5 на все ДЗ 1.
-- **Ключі — тільки в `.env`**, у Git лише `.env.example`.
-- **`data/` не видаляємо** — тільки переміщуємо.
-- **Одна гілка = один крок = один PR**; перед PR — `make check` зелений; commit/push — тільки за
-  командою Петра.
-- **Знахідку не виправляємо в чужому кроці.** Записуємо в «Відкладені знахідки» з кроком, де
-  закриємо, і закриваємо окремо.
-- **Записи короткі:** підрозділ «Виконано» — до 10 рядків.
+- **The contract is the source of truth.** Code is checked against `stage1-data-contract.md`; a decision
+  that changes it is first a contract amendment (and an ADR if a principle changes), then code.
+- **Money before the run.** Before every Claude run — an estimate via `count_tokens`, stated
+  and agreed; actual spend goes into section 5 after the run. The limit is $5 for the whole of HW 1.
+- **Keys only in `.env`**, only `.env.example` in Git.
+- **Nothing in `data/` is deleted** — only moved.
+- **One branch = one step = one PR**; before a PR, `make check` is green; commit/push only on
+  Petro's command.
+- **A finding is not fixed inside someone else's step.** It is recorded under "Deferred findings" with the
+  step where it will be closed, and closed separately.
+- **Entries are short:** the "Done" subsection is at most 10 lines.
 
-## 2. Передумови
+## 2. Prerequisites
 
-| Що | Хто | Потрібно до кроку | Статус |
+| What | Who | Needed before step | Status |
 |---|---|---|---|
-| `.env` з `ANTHROPIC_API_KEY` (шаблон — `.env.example`) | Петро | 4 | ⬜ |
-| Ollama встановлена, `ollama pull qwen2.5:7b` (≈4.7 ГБ) | Петро | 6 | ⬜ |
-| Залізо: MacBook Pro M4 Pro, 48 ГБ — 7B модель влазить із запасом | — | 6 | ✅ |
+| `.env` with `ANTHROPIC_API_KEY` (template — `.env.example`) | Petro | 4 | ⬜ |
+| Ollama installed, `ollama pull qwen2.5:7b` (≈4.7 GB) | Petro | 6 | ⬜ |
+| Hardware: MacBook Pro M4 Pro, 48 GB — a 7B model fits with room to spare | — | 6 | ✅ |
 
-## 3. Огляд кроків
+## 3. Steps overview
 
-| # | Крок | Гілка | Хто / час Петра | Бали (критерій ДЗ) | До | Статус |
+| # | Step | Branch | Who / Petro's time | Points (HW criterion) | By | Status |
 |---|---|---|---|---|---|---|
-| 0 | Git-правила і gates (`make check`) | `step-0-git-rules-and-gates` | — | якість репо | 15.10 | ✅ PR #1 (`8076640`) |
-| 1 | Контракт даних, GLOSSARY, ADR-0001…0003 | `step-1-contract-amendments` | — | — | 16.10 | ✅ PR #2 (`4c046be`) |
-| 1.1 | Цей план | `patch-1.1-implementation-steps` | рев'ю 10 хв | — | 16.10 | 🔄 |
-| 2 | Pydantic-схема + тести | `step-2-schema` | план + рев'ю ~30 хв | крок 1: схема (2) | 17.10 | ⬜ |
-| 3 | Спільний LLM-інтерфейс + Claude | `step-3-llm-claude` | рев'ю ~30 хв | крок 1: structured output, retry/timeout (2) | 18.10 | ⬜ |
-| 4 | Промпт v1, конфіг семплінгу, pipeline, `make run`, прогін `claude__v1__t0` | `step-4-pipeline-v1` | «ок» на вартість | крок 1: усі тексти прогнані (2); крок 3: валідація (3), логування (2) | 19.10 | ⬜ |
-| 5 | Golden set: чернетки → ручна звірка з PDF | `step-5-golden-set` | **~2–3 год** | крок 2: коректні заміри (частина 3) | 22.10 | ⬜ |
-| 6 | Ollama-реалізація + прогони v1 | `step-6-llm-ollama` | рев'ю ~20 хв | крок 2: спільний інтерфейс (3), ≥2 конфігурації (2) | 22.10 | ⬜ |
-| 7 | Метрики → `results/metrics.csv` | `step-7-metrics` | рев'ю ~20 хв | крок 2: коректні заміри (3) | **24.10 чекпоінт** | ⬜ |
-| 8 | Промпт v2 + CHANGELOG, прогони v2, README | `step-8-prompt-v2` | вибір змін ~30 хв | крок 3: ≥2 версії + changelog (3); якість репо (2) | 26.10 | ⬜ |
-| 9 | `REPORT.md` (після Q&A 26.10) | `step-9-report` | ~1 год разом | крок 4 (6) | **27.10** | ⬜ |
+| 0 | Git rules and gates (`make check`) | `step-0-git-rules-and-gates` | — | repo quality | 15.10 | ✅ PR #1 (`8076640`) |
+| 1 | Data contract, GLOSSARY, ADR-0001…0003 | `step-1-contract-amendments` | — | — | 16.10 | ✅ PR #2 (`4c046be`) |
+| 1.1 | This plan | `patch-1.1-implementation-steps` | review 10 min | — | 16.10 | 🔄 |
+| 2 | Pydantic schema + tests | `step-2-schema` | plan + review ~30 min | step 1: schema (2) | 17.10 | ⬜ |
+| 3 | Shared LLM interface + Claude | `step-3-llm-claude` | review ~30 min | step 1: structured output, retry/timeout (2) | 18.10 | ⬜ |
+| 4 | Prompt v1, sampling config, pipeline, `make run`, run `claude__v1__t0` | `step-4-pipeline-v1` | "ok" on the cost | step 1: all texts run (2); step 3: validation (3), logging (2) | 19.10 | ⬜ |
+| 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | ⬜ |
+| 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | ⬜ |
+| 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | ⬜ |
+| 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ⬜ |
+| 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ⬜ |
 
-## 4. Кроки
+## 4. Steps
 
-Для кожного кроку: **мета · файли · done when · відкрите** (план) і **виконано** (журнал, після
-мерджу). «Done when» — те, що перевіряємо перед PR, плюс `make check` зелений і запис тут оновлено.
+For every step: **goal · files · done when · open** (the plan) and **done** (the log, after the
+merge). "Done when" is what we check before the PR, plus `make check` green and the entry here updated.
 
-Шаблон «Виконано»: *файли і кількість тестів · рішення і чому · відхилення від плану · знахідки
-(→ розділ 6)*.
+"Done" template: *files and test count · decisions and why · deviations from the plan · findings
+(→ section 6)*.
 
-### Крок 0 — Git-правила і gates
+### Step 0 — Git rules and gates
 
-- **Виконано:** `docs/GIT_RULES.md` (гілки, коміти, PR, review), `make check` = `ruff check` +
-  `ruff format --check` + `pytest`. Type checker свідомо відкладено, щоб тулчейн лишився мінімальним.
+- **Done:** `docs/GIT_RULES.md` (branches, commits, PRs, review), `make check` = `ruff check` +
+  `ruff format --check` + `pytest`. The type checker is deliberately deferred to keep the toolchain minimal.
 
-### Крок 1 — Контракт даних
+### Step 1 — Data contract
 
-- **Виконано:** `GLOSSARY.md`, `docs/stage1-data-contract.md` (19 пунктів), ADR-0001 (тільки Standard
-  Quota Table), ADR-0002 (модель витягує надруковане, код виводить решту). Правки 16.10 після звірки
-  з гілкою grill (її не мерджили, коміт — у `backup/step-0-1-grill-me-1-local-snapshot`):
-  `protocol` + `HTTP and HTTPS` (є у 7 файлах), `endpoint_type` + `fips_dual_stack`, ADR-0003
-  (format/consistency checks → repair, бо інакше repair-цикл майже не спрацьовує), Claude =
-  `claude-haiku-4-5` (новіші моделі не приймають `temperature`, а потрібні `t0`/`t05`).
+- **Done:** `GLOSSARY.md`, `docs/stage1-data-contract.md` (19 items), ADR-0001 (Standard
+  Quota Table only), ADR-0002 (the model extracts what is printed, code derives the rest). Amendments on 16.10 after
+  reconciling with the grill branch (not merged, its commit is in `backup/step-0-1-grill-me-1-local-snapshot`):
+  `protocol` + `HTTP and HTTPS` (present in 7 files), `endpoint_type` + `fips_dual_stack`, ADR-0003
+  (format/consistency checks → repair, because otherwise the repair loop hardly ever fires), Claude =
+  `claude-haiku-4-5` (newer models do not accept `temperature`, and we need `t0`/`t05`).
 
-### Крок 1.1 — Цей план
+### Step 1.1 — This plan
 
-- **Виконано:** план кроків 2–9; друга версія 16.10 — переніс з `implementation-steps.md` проєкту Silpo
-  maintenance rule, статус із git, постійні правила, журнал «Виконано», відкладені знахідки, звіт як
-  snapshot. Не переносив: mutation testing, кілька reviewer-агентів, великий обсяг записів.
+- **Done:** plan for steps 2–9; second version on 16.10 — carried over from the Silpo project's
+  `implementation-steps.md`: the maintenance rule, status from git, standing rules, the "Done" log, deferred findings, the report as a
+  snapshot. Not carried over: mutation testing, multiple reviewer agents, large entries.
 
-### Крок 2 — Pydantic-схема
+### Step 2 — Pydantic schema
 
-- **Мета:** `ServiceDocument` / `EndpointRow` / `QuotaRow` рівно за контрактом (п. 3–9), Run Record (п. 12).
-- **Файли:** `src/extract/schema.py`, `tests/test_schema.py` (основа — тести з
-  `backup/step-0-1-grill-me-1-local-snapshot`, переписані під контракт).
-- **Done when:** whitespace-нормалізація на кожному `str`; `endpoint_type` (5 значень) обчислюється
-  з hostname; format/consistency checks з ADR-0003 падають з `ValidationError`; JSON Schema для моделі
-  без `endpoint_type`, з `additionalProperties: false`; gold-файл проходить round trip.
-- **Відкрите:** —
-- **Виконано:** —
+- **Goal:** `ServiceDocument` / `EndpointRow` / `QuotaRow` exactly per the contract (items 3–9), Run Record (item 12).
+- **Files:** `src/extract/schema.py`, `tests/test_schema.py` (based on the tests from
+  `backup/step-0-1-grill-me-1-local-snapshot`, rewritten for the contract).
+- **Done when:** whitespace normalisation on every `str`; `endpoint_type` (5 values) is computed
+  from the hostname; the ADR-0003 format/consistency checks fail with `ValidationError`; the JSON Schema for the model
+  has no `endpoint_type` and has `additionalProperties: false`; a gold file survives a round trip.
+- **Open:** —
+- **Done:** —
 
-### Крок 3 — Спільний LLM-інтерфейс + Claude
+### Step 3 — Shared LLM interface + Claude
 
-- **Мета:** одна функція `extract(text, service, prompt, sampling)` для обох провайдерів; Claude —
-  `claude-haiku-4-5` зі structured output.
-- **Файли:** `src/extract/llm/` (інтерфейс + `claude.py`).
-- **Done when:** timeout і transport retry (до 3 спроб, контракт п. 15); повертається відповідь +
-  `usage` + `latency_ms`; unit-тест без мережі (fake client).
-- **Відкрите:** `messages.parse()` чи `messages.create()` з `output_config` — вирішимо на плані кроку
-  (потрібен сирий текст відповіді для repair-виклику).
-- **Виконано:** —
+- **Goal:** one function `extract(text, service, prompt, sampling)` for both providers; Claude —
+  `claude-haiku-4-5` with structured output.
+- **Files:** `src/extract/llm/` (interface + `claude.py`).
+- **Done when:** timeout and transport retry (up to 3 attempts, contract item 15); returns the response +
+  `usage` + `latency_ms`; a unit test without network (fake client).
+- **Open:** `messages.parse()` or `messages.create()` with `output_config` — to be decided in the step's
+  plan (the raw response text is needed for the repair call).
+- **Done:** —
 
-### Крок 4 — Промпт v1, pipeline, перший прогін
+### Step 4 — Prompt v1, pipeline, first run
 
-- **Мета:** запуск однією командою; перший Run на всіх 30 документах.
-- **Файли:** `prompts/extract_v1.txt`, `prompts/CHANGELOG.md`, `config/sampling.yaml` (`t0`, `t05`),
-  `src/extract/pipeline.py` (repair-цикл, п. 16), `main.py`, ціль `make run`,
+- **Goal:** one-command launch; the first Run over all 30 documents.
+- **Files:** `prompts/extract_v1.txt`, `prompts/CHANGELOG.md`, `config/sampling.yaml` (`t0`, `t05`),
+  `src/extract/pipeline.py` (repair loop, item 16), `main.py`, the `make run` target,
   `results/runs/claude__v1__t0.jsonl`.
-- **Done when:** 30 Run Records із моделлю, версією промпту, семплінгом, `attempts`, `status`;
-  знахідку F1 (`max_tokens`) закрито.
-- **Відкрите:** —
-- **Виконано:** —
+- **Done when:** 30 Run Records with model, prompt version, sampling, `attempts`, `status`;
+  finding F1 (`max_tokens`) closed.
+- **Open:** —
+- **Done:** —
 
-### Крок 5 — Golden set
+### Step 5 — Golden set
 
-- **Мета:** 10 перевірених Service Documents (`gold=1` у manifest), еталон для метрик.
-- **Файли:** `data/gold/<name>.json` ×10, `data/gold/README.md` (run id чернетки, дата, процедура
-  «model-assisted, human-verified»), тест валідності gold.
-- **Done when:** кожен файл звірено з PDF (endpoints, quotas, `quota_table_format`); тест проходить;
-  у README зазначено перевагу моделі, що робила чернетку.
-- **Відкрите:** порядок звірки — почати з `short`, щоб відкалібрувати процедуру.
-- **Виконано:** —
+- **Goal:** 10 verified Service Documents (`gold=1` in the manifest), the reference for the metrics.
+- **Files:** `data/gold/<name>.json` ×10, `data/gold/README.md` (draft run id, date, procedure
+  "model-assisted, human-verified"), a gold validity test.
+- **Done when:** every file checked against the PDF (endpoints, quotas, `quota_table_format`); the test passes;
+  the README states the advantage of the model that produced the draft.
+- **Open:** checking order — start with `short` to calibrate the procedure.
+- **Done:** —
 
-### Крок 6 — Ollama + прогони v1
+### Step 6 — Ollama + v1 runs
 
-- **Мета:** qwen2.5:7b через той самий інтерфейс; другі конфігурації семплінгу.
-- **Файли:** `src/extract/llm/ollama.py`; прогони `qwen2.5-7b__v1__t0`, `qwen2.5-7b__v1__t05`,
+- **Goal:** qwen2.5:7b through the same interface; the second sampling configurations.
+- **Files:** `src/extract/llm/ollama.py`; runs `qwen2.5-7b__v1__t0`, `qwen2.5-7b__v1__t05`,
   `claude__v1__t05`.
-- **Done when:** pipeline не змінювався (тільки новий провайдер); qwen-прогони в фоні, latency
-  записано; знахідку F2 (`num_ctx`) закрито.
-- **Відкрите:** —
-- **Виконано:** —
+- **Done when:** the pipeline is unchanged (only a new provider); qwen runs in the background, latency
+  recorded; finding F2 (`num_ctx`) closed.
+- **Open:** —
+- **Done:** —
 
-### Крок 7 — Метрики
+### Step 7 — Metrics
 
-- **Мета:** усі цифри для REPORT з одного скрипта (контракт п. 17–19).
-- **Файли:** `src/extract/metrics.py`, `results/metrics.csv`, тести на зіставлення рядків за ключем.
-- **Done when:** key precision/recall + точність по полях на gold; `% ok`, `% ok + repaired`;
-  latency p50/p95; вартість на 1000 документів — по групах і разом. **Чекпоінт 24.10:** посилання в
+- **Goal:** all numbers for REPORT from one script (contract items 17–19).
+- **Files:** `src/extract/metrics.py`, `results/metrics.csv`, tests for key-based row matching.
+- **Done when:** key precision/recall + per-field accuracy on gold; `% ok`, `% ok + repaired`;
+  latency p50/p95; cost per 1,000 documents — by group and in total. **Checkpoint 24.10:** link in
   `#ai-engineering-2-flood`.
-- **Виконано:** —
+- **Done:** —
 
-### Крок 8 — Промпт v2, README
+### Step 8 — Prompt v2, README
 
-- **Мета:** друга версія промпту, обґрунтована помилками v1.
-- **Файли:** `prompts/extract_v2.txt`, запис у `prompts/CHANGELOG.md` (що змінили і чому), прогони v2,
-  `README.md` (проблема, як встановити й запустити, як відтворити дані, відомі обмеження).
-- **Done when:** кожна зміна в v2 прив'язана до конкретної помилки v1; README проходить «чистий
-  клон → `make install` → `make run`»; знахідку F3 (відомі обмеження в README) закрито.
-- **Виконано:** —
+- **Goal:** the second prompt version, justified by the v1 errors.
+- **Files:** `prompts/extract_v2.txt`, an entry in `prompts/CHANGELOG.md` (what changed and why), v2 runs,
+  `README.md` (problem, how to install and run, how to reproduce the data, known limits).
+- **Done when:** every change in v2 is tied to a specific v1 error; the README passes "clean
+  clone → `make install` → `make run`"; finding F3 (known limits in the README) closed.
+- **Done:** —
 
-### Крок 9 — REPORT.md
+### Step 9 — REPORT.md
 
-- **Мета:** таблиця «модель × промпт × семплінг», 3–5 розібраних помилок, вибір для продакшну
-  + за яких умов рішення змінилось би.
-- **Done when:** усі цифри — з `results/metrics.csv`; враховано фідбек Q&A 26.10. Звіт — **dated
-  snapshot**: на початку вказано коміт і run ids, з яких узято цифри; пізніші зміни коду звіт заднім
-  числом не правлять.
-- **Виконано:** —
+- **Goal:** a "model × prompt × sampling" table, 3–5 analysed errors, the production choice
+  + under which conditions the decision would change.
+- **Done when:** all numbers come from `results/metrics.csv`; the Q&A feedback of 26.10 is taken into account. The report is a **dated
+  snapshot**: it states at the top the commit and run ids the numbers were taken from; later code changes do not
+  retroactively edit the report.
+- **Done:** —
 
-## 5. Матриця прогонів і бюджет
+## 5. Run matrix and budget
 
-| Run id | Крок | Обов'язковий | Оцінка вартості | Факт |
+| Run id | Step | Required | Cost estimate | Actual |
 |---|---|---|---|---|
-| `claude__v1__t0` | 4 | так (і чернетка gold) | ≈$1 (уточнити `count_tokens`) | — |
-| `claude__v1__t05` | 6 | так | ≈$1 | — |
-| `qwen2.5-7b__v1__t0` | 6 | так | $0, ≈30–60 хв | — |
-| `qwen2.5-7b__v1__t05` | 6 | так | $0, ≈30–60 хв | — |
-| `claude__v2__t0` | 8 | так | ≈$1 | — |
-| `qwen2.5-7b__v2__t0` | 8 | так | $0 | — |
-| `qwen2.5-7b__v2__t05` | 8 | бажано | $0 | — |
-| `claude__v2__t05` | 8 | лише якщо лишився бюджет | ≈$1 | — |
+| `claude__v1__t0` | 4 | yes (also the gold draft) | ≈$1 (confirm with `count_tokens`) | — |
+| `claude__v1__t05` | 6 | yes | ≈$1 | — |
+| `qwen2.5-7b__v1__t0` | 6 | yes | $0, ≈30–60 min | — |
+| `qwen2.5-7b__v1__t05` | 6 | yes | $0, ≈30–60 min | — |
+| `claude__v2__t0` | 8 | yes | ≈$1 | — |
+| `qwen2.5-7b__v2__t0` | 8 | yes | $0 | — |
+| `qwen2.5-7b__v2__t05` | 8 | desirable | $0 | — |
+| `claude__v2__t05` | 8 | only if budget remains | ≈$1 | — |
 
-**API-бюджет:** $5 на все ДЗ 1 → 3 обов'язкові Claude-прогони ≈ $3 + repair-виклики. Витрачено: **$0**.
+**API budget:** $5 for the whole of HW 1 → 3 required Claude runs ≈ $3 + repair calls. Spent: **$0**.
 
-**Час Петра:** ≈6 год до дедлайну (3–4 год/тиждень); з них golden set ≈ половина — виділити блок
+**Petro's time:** ≈6 h until the deadline (3–4 h/week); the golden set is about half of it — reserve a block on
 20–22.10.
 
-## 6. Відкладені знахідки
+## 6. Deferred findings
 
-Те, що помітили, але закриваємо не там, де знайшли. Закрита знахідка лишається в таблиці з кроком
-і PR, де її закрито.
+Things we noticed but close somewhere other than where we found them. A closed finding stays in the table with the step
+and the PR that closed it.
 
-| # | Знахідка | Де знайшли | Закриваємо в | Статус |
+| # | Finding | Found in | Closed in | Status |
 |---|---|---|---|---|
-| F1 | `max_tokens` ≈8k (контракт п. 14) може не вистачити: S3 — 254 рядки з `region_name` ≈ 9k токенів | крок 1 | крок 4 (`count_tokens` + пробний виклик на S3) | ⬜ |
-| F2 | Ollama `num_ctx` за замовчуванням може обрізати довгий вхід. 17.10: значення 32768 у `config/sampling.yaml` (`providers.ollama`), обґрунтування — виміри токенів S3/EMR; лишилось передати в `ollama.py` | план | крок 6 (явний `num_ctx`) | ⬜ |
-| F3 | README має назвати відомі обмеження: тільки Standard Quota Table (ADR-0001), список AWS-доменів (ADR-0003), Neighbour Tail | крок 1 | крок 8 | ⬜ |
-| F4 | Локальна гілка `backup/step-0-1-grill-me-1-local-snapshot` потрібна лише як основа тестів | крок 1 | після мерджу кроку 2 — видалити | ⬜ |
+| F1 | `max_tokens` ≈8k (contract item 14) may not be enough: S3 — 254 rows with `region_name` ≈ 9k tokens | step 1 | step 4 (`count_tokens` + a trial call on S3) | ⬜ |
+| F2 | Ollama's default `num_ctx` may truncate long input. 17.10: value 32768 in `config/sampling.yaml` (`providers.ollama`), justified by S3/EMR token measurements; still to be passed in `ollama.py` | plan | step 6 (explicit `num_ctx`) | ⬜ |
+| F3 | The README must name the known limits: Standard Quota Table only (ADR-0001), the AWS domain list (ADR-0003), Neighbour Tail | step 1 | step 8 | ⬜ |
+| F4 | The local branch `backup/step-0-1-grill-me-1-local-snapshot` is needed only as the basis for the tests | step 1 | after step 2 is merged — delete | ⬜ |
 
-## 7. Ризики
+## 7. Risks
 
-| Ризик | Вплив | Що робимо |
+| Risk | Impact | What we do |
 |---|---|---|
-| Бюджет Claude закінчиться | менше прогонів у таблиці | рахуємо до кожного прогону; ріжемо прогони, не поля схеми |
-| qwen обриває довгий вихід / губить рядки | низька recall у `edge` | не баг, а матеріал для розбору помилок |
-| Golden set не встигнемо звірити | немає точності по полях | крок 5 стартує одразу після кроку 4 |
+| The Claude budget runs out | fewer runs in the table | estimate before every run; cut runs, not schema fields |
+| qwen truncates long output / drops rows | low recall in `edge` | not a bug but material for the error analysis |
+| The golden set is not checked in time | no per-field accuracy | step 5 starts right after step 4 |
 
-## 8. Журнал змін плану
+## 8. Plan change log
 
-| Дата | Що змінилось |
+| Date | What changed |
 |---|---|
-| 16.10 | Перша версія плану |
-| 16.10 | Підходи з Silpo: maintenance rule, статус із git, постійні правила, «Виконано» по кроках, відкладені знахідки (F1–F4; `max_tokens` і `num_ctx` перенесено сюди з ризиків), REPORT як snapshot; колонка «Факт» у матриці прогонів |
+| 16.10 | First version of the plan |
+| 16.10 | Practices from Silpo: maintenance rule, status from git, standing rules, per-step "Done", deferred findings (F1–F4; `max_tokens` and `num_ctx` moved here from the risks), REPORT as a snapshot; "Actual" column in the run matrix |
+| 17.10 | All `.md` files translated to English; repository docs are written in English from now on |
