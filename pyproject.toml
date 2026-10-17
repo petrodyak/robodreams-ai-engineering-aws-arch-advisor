@@ -17,3 +17,7 @@ dev = [
     "pytest>=9.1.1",
     "ruff>=0.17.0",
 ]
+
+[tool.pytest.ini_options]
+# import project code as `src.extract...` from the repo root (the same way main.py will)
+pythonpath = ["."]

@@ -45,8 +45,8 @@ Apply to every step and are not repeated in the steps:
 | 0 | Git rules and gates (`make check`) | `step-0-git-rules-and-gates` | — | repo quality | 15.10 | ✅ PR #1 (`8076640`) |
 | 1 | Data contract, GLOSSARY, ADR-0001…0003 | `step-1-contract-amendments` | — | — | 16.10 | ✅ PR #2 (`4c046be`) |
 | 1.1 | This plan | `patch-1.1-implementation-steps` | review 10 min | — | 16.10 | ✅ PR #3 (`f1636f2`) |
-| 1.2 | Status row for step 1.1 | `patch-1.2-step-1.1-status-row` | — | — | 17.10 | 🔄 PR #4 |
-| 2 | Pydantic schema + tests | `step-2-schema` | plan + review ~30 min | step 1: schema (2) | 17.10 | ⬜ |
+| 1.2 | Status row for step 1.1 | `patch-1.2-step-1.1-status-row` | — | — | 17.10 | ✅ PR #4 (`4cfa1a5`) |
+| 2 | Pydantic schema + tests | `step-2-schema` | plan + review ~30 min | step 1: schema (2) | 17.10 | 🔄 PR #5 |
 | 3 | Shared LLM interface + Claude | `step-3-llm-claude` | review ~30 min | step 1: structured output, retry/timeout (2) | 18.10 | ⬜ |
 | 4 | Prompt v1, sampling config, pipeline, `make run`, run `claude__v1__t0` | `step-4-pipeline-v1` | "ok" on the cost | step 1: all texts run (2); step 3: validation (3), logging (2) | 19.10 | ⬜ |
 | 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | ⬜ |
@@ -92,7 +92,16 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
   from the hostname; the ADR-0003 format/consistency checks fail with `ValidationError`; the JSON Schema for the model
   has no `endpoint_type` and has `additionalProperties: false`; a gold file survives a round trip.
 - **Open:** —
-- **Done:** —
+- **Done:** `src/extract/schema.py` (315 lines), `tests/test_schema.py` (32 tests, 69 cases);
+  `pyproject.toml` gets the pytest `pythonpath`. Decisions: one `NormStr` type collapses whitespace
+  on every extracted `str`; validation requires a context (`answer_context(service)` /
+  `stored_context(service | None)`), so a forgotten context fails instead of skipping the
+  Neighbour Tail check; stored `endpoint_type` is dropped only in `stored_context`, so in a model
+  answer it is an invented field; `adjustable` is strict JSON boolean; float `latency_ms` is
+  rounded; Run Record `sampling` = `{name, temperature, top_p}`. Format checks stay in validators
+  (ADR-0003). Found: Pydantic re-runs the after-validator on an already validated instance, so a
+  Run Record needs the context too. Review findings 5–7 (unversioned Field descriptions,
+  substring region match, tuple rebuild) left as is.
 
 ### Step 3 — Shared LLM interface + Claude
 
@@ -192,6 +201,7 @@ and the PR that closed it.
 | F2 | Ollama's default `num_ctx` may truncate long input. 17.10: value 32768 in `config/sampling.yaml` (`providers.ollama`), justified by S3/EMR token measurements; still to be passed in `ollama.py` | plan | step 6 (explicit `num_ctx`) | ⬜ |
 | F3 | The README must name the known limits: Standard Quota Table only (ADR-0001), the AWS domain list (ADR-0003), Neighbour Tail | step 1 | step 8 | ⬜ |
 | F4 | The local branch `backup/step-0-1-grill-me-1-local-snapshot` is needed only as the basis for the tests | step 1 | after step 2 is merged — delete | ⬜ |
+| F5 | `Field(description=...)` texts in `schema.py` are model instructions outside `prompts/`, not covered by `prompt_version` | step 2 review | step 4 (state in `prompts/CHANGELOG.md` that schema descriptions are part of a prompt version) | ⬜ |
 
 ## 7. Risks
 
