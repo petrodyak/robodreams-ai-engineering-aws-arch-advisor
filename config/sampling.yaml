@@ -1,0 +1,19 @@
+# Sampling Configurations — data contract item 14.
+# The key under `sampling` is the <sampling_name> part of the run id
+# (<model>__<prompt_version>__<sampling_name>, e.g. qwen2.5-7b__v1__t05).
+# Only knobs both providers accept identically; top_p stays unset (contract item 14).
+sampling:
+  t0:
+    temperature: 0.0
+  t05:
+    temperature: 0.5
+
+# Provider constants: the same for every Sampling Configuration, so not part of the run id.
+providers:
+  ollama:
+    # Context window = input + output tokens; anything beyond it is truncated silently.
+    # Measured with the qwen tokenizer (17.10): largest input is S3 (049) at 13,129 tokens,
+    # and its 254 Endpoint Rows need ≈9k output tokens, so 16384 is too small.
+    # 32768 is qwen2.5's trained maximum. Set explicitly because Ollama's default depends on
+    # version and free memory (32768 on a 48 GB Mac, as low as 4096 on a smaller laptop).
+    num_ctx: 32768
