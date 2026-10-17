@@ -63,7 +63,10 @@ This file is the single list to check code against; it is not a spec of the impl
 14. Sampling Configurations in `config/sampling.yaml`: `t0` (temperature 0) and `t05`
     (temperature 0.5); `top_p` left unset for both, because the Claude API asks for temperature
     *or* top_p, and a like-for-like comparison needs identical knobs. `max_tokens` is a provider
-    constant (≈8k; S3 has 254 Endpoint Rows), not a sampling parameter.
+    constant (≈8k; S3 has 254 Endpoint Rows), not a sampling parameter. The same holds for
+    Ollama's `num_ctx`: a provider constant under `providers.ollama` in the same file, set
+    explicitly to 32768 (S3 input is 13,129 qwen tokens plus ≈9k output; Ollama's default
+    varies with version and memory and truncates silently).
     The paid model is `claude-haiku-4-5` (short name `claude` in run ids): the current Claude
     generation (Opus 5.5 / 5, Sonnet 5.5, Haiku 5.5) rejects non-default `temperature`, so
     `t0`/`t05` would be impossible there; Haiku 4.5 accepts it, supports structured outputs and
