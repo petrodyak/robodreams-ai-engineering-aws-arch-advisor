@@ -165,7 +165,7 @@ Most points are for steps 2 and 3. Not needed: UI, deployment, fine-tuning, a la
 - `093-aws-services.pdf` is not a service (a summary list) — excluded.
 
 ### Next step (Claude Code)
-1. `src/extract/schema.py` — Pydantic schema per `docs/stage1-data-contract.md` (fields above) + unit tests for the validators (whitespace, `endpoint_type`, the `service` check, format/consistency checks from ADR-0003; the test structure can be taken from the `step-0-1-grill-me-1` branch). The field plan already exists — show only the file/test plan and wait for "ok".
+1. ✅ (step 2, branch `step-2-schema`) `src/extract/schema.py` — Pydantic schema per `docs/stage1-data-contract.md` (fields above) + unit tests for the validators (whitespace, `endpoint_type`, the `service` check, format/consistency checks from ADR-0003; the test structure can be taken from the `step-0-1-grill-me-1` branch). The field plan already exists — show only the file/test plan and wait for "ok".
 2. `src/extract/llm/` — a shared interface for Claude and Ollama (one function `extract(text, service, prompt, sampling) -> ServiceDocument | failed`), Claude implementation first, with structured output, retry + timeout.
 3. `prompts/extract_v1.txt` + `prompts/CHANGELOG.md`, `config/sampling.yaml` (first configuration `t0`), `main.py` + the `make run` target; estimate the cost, run all 30 → `results/claude__v1__t0.jsonl` with logging of model/prompt version/sampling.
 4. Golden set: copy the 10 `gold=1` files from the results of item 3 into `data/gold/` → I check them by hand against the PDF.
