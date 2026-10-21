@@ -251,10 +251,11 @@ def test_run_writes_one_loadable_record_per_document_and_resumes(tmp_path, raw):
 
     # first run: Athena fails twice, DSQL is fine
     llm = FakeLLM(reply(answer()), reply("not json"), reply("not json"))
-    new = pipeline.run(
+    result = pipeline.run(
         llm, [DOC, athena], PROMPT, T0, out, raw_dir=raw, log=lambda _: None
     )
-    assert [r.status for r in new] == [Status.OK, Status.FAILED]
+    assert [r.status for r in result.records] == [Status.OK, Status.FAILED]
+    assert result.lost == Usage(input_tokens=0, output_tokens=0)
 
     lines = out.read_text().splitlines()
     assert len(lines) == 2
@@ -266,7 +267,7 @@ def test_run_writes_one_loadable_record_per_document_and_resumes(tmp_path, raw):
     assert (
         pipeline.run(
             again, [DOC, athena], PROMPT, T0, out, raw_dir=raw, log=lambda _: None
-        )
+        ).records
         == []
     )
     assert again.requests == []
@@ -284,12 +285,12 @@ def test_document_without_an_answer_is_left_out_and_retried_next_run(tmp_path, r
     new = run(
         FakeLLM(error, reply(answer(service="Amazon Athena"))), out, raw, logged.append
     )
-    assert [r.file for r in new] == [ATHENA.file]
+    assert [r.file for r in new.records] == [ATHENA.file]
     assert pipeline.done_files(out) == {ATHENA.file}
     assert any("no answer" in m and "not recorded" in m for m in logged)
 
     again = FakeLLM(reply(answer()))
-    assert [r.file for r in run(again, out, raw)] == [DOC.file]
+    assert [r.file for r in run(again, out, raw).records] == [DOC.file]
     assert len(again.requests) == 1
     assert pipeline.done_files(out) == {DOC.file, ATHENA.file}
 
@@ -325,3 +326,17 @@ def test_missing_files_names_the_documents_still_without_a_record(tmp_path, raw)
     error = LLMCallError("APIStatusError: overloaded", attempts=3, latency_ms=3000)
     run(FakeLLM(error, reply(answer(service="Amazon Athena"))), out, raw)
     assert pipeline.missing_files([DOC, ATHENA], out) == [DOC.file]
+
+
+def test_run_reports_tokens_paid_for_documents_without_a_record(tmp_path, raw):
+    # finding F10: the first answer was paid for, the repair call got no answer, so the
+    # document has no record; the run summary must still count what it cost
+    error = LLMCallError("APIStatusError: overloaded", attempts=3, latency_ms=3000)
+    llm = FakeLLM(
+        reply("not json", tokens=(1000, 200)),
+        error,
+        reply(answer(service="Amazon Athena"), tokens=(900, 100)),
+    )
+    result = run(llm, tmp_path / "run.jsonl", raw)
+    assert [r.file for r in result.records] == [ATHENA.file]
+    assert result.lost == Usage(input_tokens=1000, output_tokens=200)

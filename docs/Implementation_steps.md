@@ -174,6 +174,11 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     resuming and a broken line elsewhere raises; `main.py` exits non-zero while documents
     lack a record. Two tests that pinned the old `failed`-on-no-answer behaviour were replaced
     by tests of the new contract. 117 tests.
+  - 21.10: review findings F10–F11 fixed. A document that keeps getting no answer stays without
+    a record and metrics count it as failed, reported as "no answer" (contract items 15, 18) —
+    no classification of API errors. `run()` returns `RunResult(records, lost)`, and the cost
+    summary of `main.py` includes the tokens paid for documents that ended without a record.
+    118 tests.
 
 ### Step 5 — Golden set
 
@@ -208,8 +213,9 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 - **Done when:** key precision/recall + per-field accuracy on gold; `% ok`, `% ok + repaired`;
   latency p50/p95; cost per 1,000 documents — by group and in total. **Checkpoint 24.10:** link in
   `#ai-engineering-2-flood`.
-- **Open:** metrics need a complete run (30 records per run file): since F7 a run file may lack
-  documents that had no answer, and `main.py` exits non-zero until they are retried.
+- **Open:** the denominator of validity is the 30 documents of the manifest, not the lines of the
+  run file: a document without a record counts as failed and is reported as "no answer"
+  (contract item 18, finding F11) — needs its own test here.
 - **Done:** —
 
 ### Step 8 — Prompt v2, README
@@ -234,16 +240,27 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 
 | Run id | Step | Required | Cost estimate | Actual |
 |---|---|---|---|---|
-| `claude__v1__t0` | 4 | yes (also the gold draft) | ≈$1 (confirm with `count_tokens`) | — |
-| `claude__v1__t05` | 6 | yes | ≈$1 | — |
+| `claude__v1__t0` | 4 | yes (also the gold draft) | ≈$1.9 (input measured: 262,867 tokens ≈ $0.26; output from the S3 trial) | — |
+| `claude__v1__t05` | 6 | yes — **the 10 Golden Set documents only** (budget decision 21.10) | ≈$0.3 | — |
 | `qwen2.5-7b__v1__t0` | 6 | yes | $0, ≈30–60 min | — |
 | `qwen2.5-7b__v1__t05` | 6 | yes | $0, ≈30–60 min | — |
-| `claude__v2__t0` | 8 | yes | ≈$1 | — |
+| `claude__v2__t0` | 8 | yes | ≈$1.8 | — |
 | `qwen2.5-7b__v2__t0` | 8 | yes | $0 | — |
 | `qwen2.5-7b__v2__t05` | 8 | desirable | $0 | — |
-| `claude__v2__t05` | 8 | only if budget remains | ≈$1 | — |
+| `claude__v2__t05` | 8 | no (budget decision 21.10) | ≈$1.8 | — |
 
-**API budget:** $5 for the whole of HW 1 → 3 required Claude runs ≈ $3 + repair calls. Spent: **$0.32** (21.10: S3 trial at 16384 — $0.22, failed, kept in `results/trials/`; S3 at 32000 — $0.10, ok). Re-estimate 21.10: ≈ $1.9 per full Claude run, so three runs ≈ $5.2 — over the limit; decide after `claude__v1__t0` (options: `claude__v1__t05` on the 10 Golden Set documents only, or a conscious raise of the limit).
+**API budget:** $5 for the whole of HW 1. Spent before the full `claude__v1__t0` run: **$0.42** — three
+S3 calls: at 16384, cut off ($0.22, `results/trials/…max-tokens-16384`); at 32000 before the enum
+descriptions reached the model ($0.10, `results/trials/…before-enum-descriptions`); at 32000 with the
+fixed schema ($0.10, the record in `claude__v1__t0`).
+
+**Budget decision (21.10, variant A).** Three full Claude runs would cost ≈ $5.2, over the limit. Per-field
+accuracy — the main comparison — is computed on the Golden Set only (contract item 17), so
+`claude__v1__t05` runs on the 10 Golden Set documents (≈ $0.3): the model × sampling table stays complete,
+and only its validity and latency for Claude t05 rest on 10 documents instead of 30 — the report says so.
+Planned total ≈ $0.42 + $1.55 + $0.3 + $1.8 ≈ **$4.1**, ≈ $0.9 reserve. Rejected: B (no Claude t05 — a gap
+in the sampling comparison), the Batch API (no meaningful latency), raising the limit. Revisit before
+`claude__v2__t0` if the actual cost of `claude__v1__t0` is well above $1.9.
 
 **Petro's time:** ≈6 h until the deadline (3–4 h/week); the golden set is about half of it — reserve a block on
 20–22.10.
@@ -264,8 +281,8 @@ and the PR that closed it.
 | F7 | A transport failure (a non-retryable 4xx such as "credit balance is too low", or a 429/529 still failing after 3 attempts) is written as a permanent `failed` Run Record, and resume skips it: after a top-up the documents stay `failed` and count against validity. The backoff (1 s, 2 s) also ignores `retry-after` | step 4 review | step 4, before the full run | ✅ step 4 (`step-4-pipeline-v1`) |
 | F8 | `done_files` parses every line, so one half-written last line (killed process, full disk) makes every later resume crash with `JSONDecodeError` | step 4 review | step 4 | ✅ step 4 (`step-4-pipeline-v1`) |
 | F9 | `SCHEMA_FILE` and the example path in `tests/test_schema.py` are relative to the current directory: `cd tests && pytest` fails; `pipeline.py` already uses `ROOT / ...` | step 4 review | step 4 | ✅ step 4 (`step-4-pipeline-v1`) |
-| F10 | Tokens paid before a `NoAnswer` (the first call when the repair call has no answer) appear only in the run log, not in the `main.py` cost summary or any record-based cost metric, so spending against the $5 budget is under-reported | review of the F7 fix | step 4 or step 7 — Petro's call | ⬜ |
-| F11 | Every non-retryable error becomes `NoAnswer`, also a permanent one (400 "prompt is too long", a rejected schema): such a document never gets a record, `main.py` exits non-zero on every run, and step 7 waits for 30 records forever. Contract item 15 considers only temporary causes | review of the F7 fix | step 4 — Petro's call, before the full run | ⬜ |
+| F10 | Tokens paid before a `NoAnswer` (the first call when the repair call has no answer) appear only in the run log, not in the `main.py` cost summary or any record-based cost metric, so spending against the $5 budget is under-reported | review of the F7 fix | step 4 | ✅ step 4 (`step-4-pipeline-v1`) |
+| F11 | Every non-retryable error becomes `NoAnswer`, also a permanent one (400 "prompt is too long", a rejected schema): such a document never gets a record, `main.py` exits non-zero on every run, and step 7 waits for 30 records forever. Contract item 15 considers only temporary causes | review of the F7 fix | step 4 (contract items 15, 18: counted as failed in metrics; no error classification) | ✅ step 4 (`step-4-pipeline-v1`); metrics side in step 7 |
 | F12 | Results-file edge cases: a line that is JSON but not an object raises a bare `TypeError` without its line number; `{"file": null}` counts as done; a complete record whose final `\n` was stripped by hand is dropped as a cut-off line (recoverable from Git) | review of the F8 fix | Petro's call | ⬜ |
 | F13 | No test pins `main.py`'s non-zero exit (contract item 15) or `NoAnswer.__cause__` | review of the F7 fix | Petro's call | ⬜ |
 
@@ -287,3 +304,4 @@ and the PR that closed it.
 | 17.10 | Step 2.1 added: `CLAUDE.md` split; this file is now the only place for status and next step |
 | 21.10 | Step 3.2 added: README section "Why this is not just table parsing" (answers the question whether a structured source is a fair structured-extraction task) |
 | 21.10 | Golden Set re-selected to 6 `short` / 3 `medium` / 1 `edge` to cut the manual check (step 5); the limits it sets on the metrics — `edge` on one document, no `non_standard` and no global service in gold — are in `data-notes.md` |
+| 21.10 | Budget variant A: `claude__v1__t05` on the 10 Golden Set documents only, `claude__v2__t05` dropped (section 5); step 6 needs a `--gold` option in `main.py` |

@@ -2,7 +2,7 @@
 
 Decisions reached in the design interview of 2026-10-15, amended on 2026-10-16 (items 6, 9,
 14, 16; review of the earlier schema grill against this contract) and on 2026-10-21 (items 14,
-15, 16; the S3 trial call and the review of step 4). Terms are defined in
+15, 16, 18; the S3 trial call and the reviews of step 4). Terms are defined in
 [`GLOSSARY.md`](../GLOSSARY.md); the decisions that are hard to reverse have ADRs
 ([0001](adr/0001-standard-quota-tables-only.md), [0002](adr/0002-model-extracts-code-derives.md),
 [0003](adr/0003-format-checks-are-validation-failures.md)).
@@ -84,6 +84,10 @@ This file is the single list to check code against; it is not a spec of the impl
     call, or at once on a non-retryable error such as an exhausted credit balance — gets no
     Run Record: a transport failure says nothing about the model. It is left out of the run
     file, the run command exits non-zero, and running it again retries just those documents.
+    If the same error comes back, it is permanent (e.g. a request the API rejects for this
+    document): the document stays without a record, and item 18 counts it as failed. Tokens
+    paid before such a failure (the first call when the repair call has no answer) are
+    added to the run's cost summary.
 16. Repair: a response that fails schema validation, a format/consistency check (item 9) or
     the `service` check gets exactly one
     corrective call carrying the previous answer and the validation error text. A second
@@ -99,6 +103,8 @@ This file is the single list to check code against; it is not a spec of the impl
     normalisation, other fields exact after normalisation. Computed on the Golden Set only.
 18. Validity (`% ok` first try, `% ok + repaired`), latency p50 / p95, and cost per 1,000
     documents are computed on all 30 documents and broken down by Group as well as in total.
+    The denominator comes from the manifest, not from the run file: a document without a Run
+    Record (item 15) counts as failed and is also reported separately as "no answer".
 19. `latency_ms` is the wall-clock time for the whole document, including transport retries and
     the repair call. Cost for Claude is derived from `usage` and list prices; for the local
     model the API cost is $0, reported together with the run's total wall-clock as the compute

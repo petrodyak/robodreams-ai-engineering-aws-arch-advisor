@@ -8,7 +8,8 @@ Usage:
 Writes results/runs/<run_id>.jsonl (contract items 11-12). Documents already in that file
 are skipped, so a run interrupted halfway is resumed by running the same command again.
 A document with no answer (network, rate limit, billing) gets no record (contract item 15):
-the command then exits non-zero, and running it again retries just those documents.
+the command then exits non-zero, and running it again retries just those documents. If
+the same error comes back, it is permanent: metrics count the document as failed (item 18).
 """
 
 import argparse
@@ -57,11 +58,13 @@ def main() -> None:
 
     out_path = pipeline.RUNS_DIR / f"{run_id}.jsonl"
     print(f"Run {run_id}: {len(docs)} document(s) -> {out_path}")
-    records = pipeline.run(client, docs, prompt, sampling, out_path)
+    result = pipeline.run(client, docs, prompt, sampling, out_path)
+    records, lost = result.records, result.lost
 
     statuses = Counter(r.status.value for r in records)
-    tokens_in = sum(r.usage.input_tokens for r in records)
-    tokens_out = sum(r.usage.output_tokens for r in records)
+    # paid tokens include those of documents that ended without a record (finding F10)
+    tokens_in = sum(r.usage.input_tokens for r in records) + lost.input_tokens
+    tokens_out = sum(r.usage.output_tokens for r in records) + lost.output_tokens
     print(
         f"Done: {len(records)} new record(s) {dict(statuses)}; "
         f"in {tokens_in:,} / out {tokens_out:,} tokens"
@@ -71,10 +74,18 @@ def main() -> None:
             else ""
         )
     )
+    if lost.input_tokens or lost.output_tokens:
+        print(
+            f"  of which lost (paid, no record): in {lost.input_tokens:,} / "
+            f"out {lost.output_tokens:,} tokens"
+        )
     missing = pipeline.missing_files(docs, out_path)
     if missing:
         print(f"{len(missing)} document(s) still without a record: {missing}")
-        raise SystemExit("run the same command again to retry them")
+        raise SystemExit(
+            "run the same command again to retry them; if the same error comes back, "
+            "it is permanent and metrics count the document as failed"
+        )
 
 
 def estimate(client: ClaudeClient, docs: list[pipeline.Document], prompt) -> None:

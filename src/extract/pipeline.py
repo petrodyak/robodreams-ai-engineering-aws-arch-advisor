@@ -282,6 +282,15 @@ def missing_files(docs: Iterable[Document], path: Path) -> list[str]:
     return [d.file for d in docs if d.file not in done]
 
 
+@dataclass(frozen=True)
+class RunResult:
+    """What one `run` call added: the new Run Records, and the tokens paid for documents
+    that ended without one (finding F10), so the cost summary counts them too."""
+
+    records: list[RunRecord]
+    lost: Usage
+
+
 def run(
     client: LLMClient,
     docs: Iterable[Document],
@@ -291,13 +300,14 @@ def run(
     *,
     raw_dir: Path = RAW_DIR,
     log: Callable[[str], None] = print,
-) -> list[RunRecord]:
-    """Extract every document not yet in `out_path`; return the new Run Records."""
+) -> RunResult:
+    """Extract every document not yet in `out_path`; return what this call added."""
     docs = list(docs)
     drop_cut_off_tail(out_path, log)
     done = done_files(out_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     new: list[RunRecord] = []
+    lost = Usage(input_tokens=0, output_tokens=0)
     with out_path.open("a") as f:
         for i, doc in enumerate(docs, 1):
             prefix = f"[{i}/{len(docs)}] {doc.file}"
@@ -312,6 +322,10 @@ def run(
                     f"(spent in {error.spent.input_tokens:,} / "
                     f"out {error.spent.output_tokens:,} tokens)"
                 )
+                lost = Usage(
+                    input_tokens=lost.input_tokens + error.spent.input_tokens,
+                    output_tokens=lost.output_tokens + error.spent.output_tokens,
+                )
                 continue
             # one line per document, flushed at once: a crash loses at most this document
             f.write(rec.model_dump_json() + "\n")
@@ -322,4 +336,4 @@ def run(
                 f"{rec.latency_ms / 1000:.1f} s, "
                 f"in {rec.usage.input_tokens:,} / out {rec.usage.output_tokens:,} tokens"
             )
-    return new
+    return RunResult(new, lost)
