@@ -42,3 +42,9 @@ python scripts/extract_text.py
 
 Setup is managed by [uv](https://docs.astral.sh/uv/): `make install` creates `.venv`
 from `uv.lock`; `make data` runs steps 2–3 and `make text` runs step 4.
+
+## Keys
+
+Copy `.env.example` to `.env` (git-ignored) and fill it in. Stage 1 needs `ANTHROPIC_API_KEY`
+(paid model) and a local Ollama (`OLLAMA_HOST`). `OPENROUTER_API_KEY` is optional: it serves
+the course exercises only and no stage-1 step reads it (see `docs/adr/0004`).

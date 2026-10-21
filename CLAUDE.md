@@ -21,7 +21,7 @@ If a decision at the current stage affects later stages (data structure, file na
 ## Constraints
 
 - One person, 2 months, 3–4 h/week. Minimally sufficient solutions, no over-engineering.
-- **Stack:** Python 3.12, `uv` (not poetry, not a hand-made pip venv), Anthropic (Claude) as the only paid model, Ollama with `qwen2.5:7b` as the local one. Do not suggest OpenAI or other providers.
+- **Stack:** Python 3.12, `uv` (not poetry, not a hand-made pip venv), Anthropic (Claude) as the only paid model, Ollama with `qwen2.5:7b` as the local one. Do not suggest OpenAI or other providers. The `openai` SDK is a dependency only as the client for OpenRouter in course lectures and exercises; it is not a second paid provider for the HW 1 comparison (ADR-0004).
 - New dependencies only via `uv add`, never by editing `pyproject.toml` by hand.
 - No private data — public data only.
 - API budget — up to $5 for the whole of HW 1. Before bulk runs, estimate the cost and state it.
@@ -67,7 +67,7 @@ The contract is the source of truth for stage 1 code — write code against it, 
 .
 ├── CLAUDE.md
 ├── GLOSSARY.md                  # project terms (Service Document, Quota Row, Neighbour Tail …)
-├── .env.example                 # ANTHROPIC_API_KEY, OLLAMA_HOST
+├── .env.example                 # ANTHROPIC_API_KEY, OLLAMA_HOST, OPENROUTER_API_KEY
 ├── .gitignore                   # .env, .venv, data/source/, data/pool/*.pdf, data/raw/*.pdf
 ├── README.md                    # problem, user, 4 stages, how to run, how to reproduce the data
 ├── REPORT.md                    # HW 1 comparison report
@@ -104,5 +104,6 @@ The contract is the source of truth for stage 1 code — write code against it, 
     ├── data-notes.md            # dataset, text extraction, known data quirks
     ├── hw1-brief.md             # HW 1 assignment: HW steps, criteria, dates, deliverables
     └── adr/                     # 0001 standard quota tables only, 0002 model extracts / code derives,
-                                 # 0003 format checks are validation failures
+                                 # 0003 format checks are validation failures,
+                                 # 0004 OpenRouter is a course-exercise client, not an HW 1 provider
 ```
