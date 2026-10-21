@@ -27,6 +27,31 @@ data/raw/      working subset: 30 PDFs (git-ignored) + extracted *.txt + manifes
 data/gold/     ground-truth quotas/endpoints for 10 of the 30, JSON (committed)
 ```
 
+## Why this is not just table parsing
+
+The source tables look structured on the page, but the pipeline never sees the page — it sees
+the output of layout-mode text extraction, and that text is where the difficulty lives
+(details and file examples in [`docs/data-notes.md`](docs/data-notes.md)):
+
+- **Extraction noise.** Broken words, repeated running headers and footers, and column text
+  that drifts across lines when a cell wraps.
+- **Neighbour tails.** A per-service PDF is cut from one large document by page, so a file's
+  first page may carry the tail of the previous service's tables. The model must extract only
+  the target service and ignore the rest.
+- **Non-standard layouts.** Not every service prints the standard quota table (name / default /
+  adjustable / description). Some print prose, some a different table, some nothing. The model
+  must recognise the layout and return an empty quota list where the standard table is absent
+  ([ADR-0001](docs/adr/0001-standard-quota-tables-only.md)).
+- **Irregular cells.** A single default cell may hold several regional values
+  ("us-east-1: 20,000; us-east-2: 6,000"), a footnote marker, or a placeholder such as
+  "Not supported", "—" or "N/A". The model keeps the printed text verbatim; derived values are
+  computed by code ([ADR-0002](docs/adr/0002-model-extracts-code-derives.md)).
+
+A regex or a PDF table extractor handles the clean cases and silently fails on the rest. These
+failure modes are the substance of the error analysis in `REPORT.md`. The structured nature of
+the source is also what makes the comparison measurable: the golden set has an objective answer
+for every field, so field accuracy compares models rather than opinions.
+
 ## Reproduce the dataset
 
 ```bash
