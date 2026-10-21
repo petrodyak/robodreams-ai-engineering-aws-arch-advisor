@@ -35,9 +35,9 @@ Apply to every step and are not repeated in the steps:
 
 | What | Who | Needed before step | Status |
 |---|---|---|---|
-| `.env` with `ANTHROPIC_API_KEY` (template — `.env.example`) | Petro | 4 | ⬜ |
+| `.env` with `ANTHROPIC_API_KEY` (template — `.env.example`) | Petro | 4 | ✅ 21.10 (new key; `count_tokens` answers) |
 | `OPENROUTER_API_KEY` in `.env` — course exercises only, no HW 1 step needs it (ADR-0004) | Petro | — | ✅ |
-| Ollama installed, `ollama pull qwen2.5:7b` (≈4.7 GB) | Petro | 6 | ⬜ |
+| Ollama installed, `ollama pull qwen2.5:7b` (≈4.7 GB) | Petro | 6 | ✅ (`ollama list` shows `qwen2.5:7b`) |
 | Hardware: MacBook Pro M4 Pro, 48 GB — a 7B model fits with room to spare | — | 6 | ✅ |
 
 ## 3. Steps overview
@@ -51,9 +51,9 @@ Apply to every step and are not repeated in the steps:
 | 2 | Pydantic schema + tests | `step-2-schema` | plan + review ~30 min | step 1: schema (2) | 17.10 | ✅ PR #5 (`a2852bb`) |
 | 2.1 | Split `CLAUDE.md`: core rules stay, stage details move to `docs/` | `patch-2.1-claude-md-split` | review 10 min | — | 17.10 | ✅ PR #6 (`8eb97d8`) |
 | 3 | Shared LLM interface + Claude | `step-3-llm-claude` | review ~30 min | step 1: structured output, retry/timeout (2) | 18.10 | ✅ PR #7 (`277e1de`) |
-| 3.1 | Status row for step 3 | `patch-3.1-step-3-status-row` | — | — | 21.10 | 🔄 PR #8 |
+| 3.1 | Status row for step 3 | `patch-3.1-step-3-status-row` | — | — | 21.10 | ✅ PR #8 (`e4bfad3`) |
 | 3.2 | README: "Why this is not just table parsing" | `patch-3.2-readme-not-table-parsing` | review 5 min | repo quality | 21.10 | 🔄 PR #9 |
-| 4 | Prompt v1, sampling config, pipeline, `make run`, run `claude__v1__t0` | `step-4-pipeline-v1` | "ok" on the cost | step 1: all texts run (2); step 3: validation (3), logging (2) | 19.10 | ⬜ |
+| 4 | Prompt v1, sampling config, pipeline, `make run`, run `claude__v1__t0` | `step-4-pipeline-v1` | "ok" on the cost | step 1: all texts run (2); step 3: validation (3), logging (2) | 19.10 | 🔄 branch `step-4-pipeline-v1` |
 | 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | ⬜ |
 | 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | ⬜ |
 | 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | ⬜ |
@@ -219,7 +219,7 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 | `qwen2.5-7b__v2__t05` | 8 | desirable | $0 | — |
 | `claude__v2__t05` | 8 | only if budget remains | ≈$1 | — |
 
-**API budget:** $5 for the whole of HW 1 → 3 required Claude runs ≈ $3 + repair calls. Spent: **$0**.
+**API budget:** $5 for the whole of HW 1 → 3 required Claude runs ≈ $3 + repair calls. Spent: **$0.32** (21.10: S3 trial at 16384 — $0.22, failed, kept in `results/trials/`; S3 at 32000 — $0.10, ok). Re-estimate 21.10: ≈ $1.9 per full Claude run, so three runs ≈ $5.2 — over the limit; decide after `claude__v1__t0` (options: `claude__v1__t05` on the 10 Golden Set documents only, or a conscious raise of the limit).
 
 **Petro's time:** ≈6 h until the deadline (3–4 h/week); the golden set is about half of it — reserve a block on
 20–22.10.
@@ -231,11 +231,12 @@ and the PR that closed it.
 
 | # | Finding | Found in | Closed in | Status |
 |---|---|---|---|---|
-| F1 | `max_tokens` ≈8k (contract item 14) may not be enough: S3 — 254 rows with `region_name` ≈ 9k tokens | step 1 | step 4 (`count_tokens` + a trial call on S3) | ⬜ |
-| F2 | Ollama's default `num_ctx` may truncate long input. 17.10: value 32768 in `config/sampling.yaml` (`providers.ollama`), justified by S3/EMR token measurements; still to be passed in `ollama.py` | plan | step 6 (explicit `num_ctx`) | ⬜ |
+| F1 | `max_tokens` ≈8k (contract item 14) may not be enough: S3 — 254 rows with `region_name` ≈ 9k tokens. 21.10 trial: a complete S3 answer is 16,589 tokens (290 rows, ≈57 tokens/row), cut off at 16384 → `MAX_TOKENS` 32000, `TIMEOUT_S` 300, contract items 14/16 amended (no repair for a cut-off answer) | step 1 | step 4 (`count_tokens` + a trial call on S3) | ✅ step 4 (`step-4-pipeline-v1`) |
+| F2 | Ollama's default `num_ctx` may truncate long input. 17.10: value 32768 in `config/sampling.yaml` (`providers.ollama`), justified by S3/EMR token measurements; still to be passed in `ollama.py`. 21.10: the S3 answer is ≈16.6k Claude tokens, so S3 needs ≈13.1k + ≈17k ≈ 30k of 32768 — check S3 first in step 6 | plan | step 6 (explicit `num_ctx`) | ⬜ |
 | F3 | The README must name the known limits: Standard Quota Table only (ADR-0001), the AWS domain list (ADR-0003), Neighbour Tail | step 1 | step 8 | ⬜ |
 | F4 | The local branch `backup/step-0-1-grill-me-1-local-snapshot` is needed only as the basis for the tests | step 1 | after step 2 is merged — delete | ✅ deleted 17.10 after PR #5 (was `e2f27cf`) |
 | F5 | `Field(description=...)` texts in `schema.py` are model instructions outside `prompts/`, not covered by `prompt_version` | step 2 review | step 4 (state in `prompts/CHANGELOG.md` that schema descriptions are part of a prompt version) | ⬜ |
+| F6 | `endpoint_rows` in `data/raw/manifest.csv` undercounts: it matched hostnames on one line, but wrapped hostnames are split (S3: 254 in the manifest, 290 rows extracted, all 36 extra are rejoined wraps). S3 also has several endpoint sub-tables (`s3`, `s3tables`, `s3-accesspoint`, `s3-control`); contract item 6 says "the endpoints table" | step 4 | step 5 (gold check counts rows in the PDF, not from the manifest; state "all endpoint tables of the chapter" in item 6) | ⬜ |
 
 ## 7. Risks
 

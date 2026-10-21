@@ -1,5 +1,11 @@
 # Every target runs inside the uv-managed .venv (`uv run` syncs it first if needed).
-.PHONY: install data text check
+.PHONY: install data text run estimate check
+
+# One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`.
+MODEL ?= claude
+PROMPT ?= v1
+SAMPLING ?= t0
+RUN_ARGS = --model $(MODEL) --prompt $(PROMPT) --sampling $(SAMPLING)
 
 # create .venv and install the locked dependencies from uv.lock
 install:
@@ -13,6 +19,14 @@ data:
 # data/raw/*.pdf -> data/raw/*.txt (text "as is", only ligatures normalized)
 text:
 	uv run python scripts/extract_text.py
+
+# extract all 30 documents -> results/runs/<model>__<prompt>__<sampling>.jsonl (resumable)
+run:
+	uv run python main.py $(RUN_ARGS)
+
+# input tokens and their cost before a paid run (free count_tokens endpoint)
+estimate:
+	uv run python main.py $(RUN_ARGS) --estimate
 
 # pre-commit gates (docs/GIT_RULES.md §1): all three always run, exit non-zero if any failed
 check:
