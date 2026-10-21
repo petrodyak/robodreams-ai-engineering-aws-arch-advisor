@@ -1,17 +1,17 @@
 file,service,group,gold,priority,pages,words,endpoint_rows,note
 006-amazon-aurora-dsql.pdf,Amazon Aurora DSQL,short,1,1,4,489,25,tail of previous service (Aurora quotas) on first page
 076-aws-glue-databrew.pdf,AWS Glue DataBrew,short,1,1,4,520,24,
-085-aws-lake-formation.pdf,AWS Lake Formation,short,0,1,6,611,75,
-033-amazon-kinesis-data-streams.pdf,Amazon Kinesis Data Streams,short,0,1,7,704,82,
+085-aws-lake-formation.pdf,AWS Lake Formation,short,1,1,6,611,75,
+033-amazon-kinesis-data-streams.pdf,Amazon Kinesis Data Streams,short,1,1,7,704,82,
 007-amazon-bedrock-agentcore.pdf,Amazon Bedrock AgentCore,short,1,1,5,725,22,no service-quotas table
 037-amazon-managed-workflows-for-apache-airflow.pdf,Amazon Managed Workflows for Apache Airflow,short,0,0,11,884,171,
 055-aws-app-mesh.pdf,AWS App Mesh,short,0,0,12,913,95,
-066-aws-datasync.pdf,AWS DataSync,short,0,0,10,949,88,
+066-aws-datasync.pdf,AWS DataSync,short,1,0,10,949,88,
 091-aws-resource-groups-and-tagging.pdf,AWS Resource Groups and Tagging,short,0,0,11,1029,59,
 018-amazon-ec2-auto-scaling.pdf,Amazon EC2 Auto Scaling,short,0,0,12,1101,85,
 005-amazon-aurora.pdf,Amazon Aurora,medium,1,1,13,1471,72,own quotas table spills into next file
-075-aws-glue.pdf,AWS Glue,medium,0,1,12,1636,88,
-042-amazon-redshift.pdf,Amazon Redshift,medium,1,1,20,1751,201,no service-quotas table
+075-aws-glue.pdf,AWS Glue,medium,1,1,12,1636,88,
+042-amazon-redshift.pdf,Amazon Redshift,medium,0,1,20,1751,201,no service-quotas table
 044-amazon-relational-database-service.pdf,Amazon Relational Database Service,medium,0,1,16,1830,165,
 048-amazon-simple-queue-service.pdf,Amazon Simple Queue Service,medium,1,0,15,1443,104,N/A values
 047-amazon-simple-notification-service.pdf,Amazon Simple Notification Service,medium,0,0,16,1693,79,no service-quotas table; N/A values
@@ -21,11 +21,11 @@ file,service,group,gold,priority,pages,words,endpoint_rows,note
 078-aws-iam-identity-center.pdf,AWS IAM Identity Center,medium,0,0,16,1615,234,234 endpoint rows in a short text
 038-amazon-opensearch-service.pdf,Amazon OpenSearch Service,edge,1,1,21,2130,170,
 086-aws-lambda.pdf,AWS Lambda,edge,0,1,21,2893,78,
-004-amazon-athena.pdf,Amazon Athena,edge,1,1,23,2833,88,
+004-amazon-athena.pdf,Amazon Athena,edge,0,1,23,2833,88,
 017-amazon-dynamodb.pdf,Amazon DynamoDB,edge,0,1,33,2634,203,FIPS + global endpoints
-095-aws-step-functions.pdf,AWS Step Functions,edge,1,1,26,3342,171,
+095-aws-step-functions.pdf,AWS Step Functions,edge,0,1,26,3342,171,
 049-amazon-simple-storage-service.pdf,Amazon Simple Storage Service,edge,0,1,39,4020,254,254 endpoint rows (largest endpoints table)
 025-amazon-emr.pdf,Amazon EMR,edge,0,1,32,5074,55,26 pages of quotas (largest quotas table)
-010-amazon-cloudfront.pdf,Amazon CloudFront,edge,1,0,16,3141,3,global service: 3 endpoint rows
+010-amazon-cloudfront.pdf,Amazon CloudFront,edge,0,0,16,3141,3,global service: 3 endpoint rows
 074-aws-global-accelerator.pdf,AWS Global Accelerator,edge,0,0,13,1373,105,global service: global endpoint
 019-amazon-ecr.pdf,Amazon ECR,edge,0,0,18,2020,169,FIPS-heavy endpoints

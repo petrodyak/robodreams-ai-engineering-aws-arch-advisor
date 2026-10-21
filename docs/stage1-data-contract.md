@@ -1,7 +1,8 @@
 # Stage 1 — extraction data contract
 
 Decisions reached in the design interview of 2026-10-15, amended on 2026-10-16 (items 6, 9,
-14, 16; review of the earlier schema grill against this contract). Terms are defined in
+14, 16; review of the earlier schema grill against this contract) and on 2026-10-21 (items 14,
+15, 16, 18; the S3 trial call and the reviews of step 4). Terms are defined in
 [`GLOSSARY.md`](../GLOSSARY.md); the decisions that are hard to reverse have ADRs
 ([0001](adr/0001-standard-quota-tables-only.md), [0002](adr/0002-model-extracts-code-derives.md),
 [0003](adr/0003-format-checks-are-validation-failures.md)).
@@ -63,7 +64,9 @@ This file is the single list to check code against; it is not a spec of the impl
 14. Sampling Configurations in `config/sampling.yaml`: `t0` (temperature 0) and `t05`
     (temperature 0.5); `top_p` left unset for both, because the Claude API asks for temperature
     *or* top_p, and a like-for-like comparison needs identical knobs. `max_tokens` is a provider
-    constant (≈8k; S3 has 254 Endpoint Rows), not a sampling parameter. The same holds for
+    constant, not a sampling parameter: 32000 for Claude. Measured 21.10 on S3 (254 Endpoint
+    Rows): a complete answer is ≈14.4k Claude tokens (≈57 tokens per Endpoint Row, not the ≈35
+    first assumed), so the earlier ≈8k and the first raise to 16384 both cut S3 off. The same holds for
     Ollama's `num_ctx`: a provider constant under `providers.ollama` in the same file, set
     explicitly to 32768 (S3 input is 13,129 qwen tokens plus ≈9k output; Ollama's default
     varies with version and memory and truncates silently).
@@ -75,12 +78,22 @@ This file is the single list to check code against; it is not a spec of the impl
 
 ## Failure handling
 
-15. Transport retry (timeout, 5xx, rate limit): up to 3 attempts with backoff, invisible to
-    the pipeline except for the `attempts` counter.
+15. Transport retry (timeout, 5xx, rate limit): up to 3 attempts with backoff (1 s, 2 s, or the
+    server's `retry-after` when longer, capped at 60 s), invisible to the pipeline except for
+    the `attempts` counter. A document that still has no answer — on the first or the repair
+    call, or at once on a non-retryable error such as an exhausted credit balance — gets no
+    Run Record: a transport failure says nothing about the model. It is left out of the run
+    file, the run command exits non-zero, and running it again retries just those documents.
+    If the same error comes back, it is permanent (e.g. a request the API rejects for this
+    document): the document stays without a record, and item 18 counts it as failed. Tokens
+    paid before such a failure (the first call when the repair call has no answer) are
+    added to the run's cost summary.
 16. Repair: a response that fails schema validation, a format/consistency check (item 9) or
     the `service` check gets exactly one
     corrective call carrying the previous answer and the validation error text. A second
-    failure → `status: failed`. No blind re-sends with the same prompt.
+    failure → `status: failed`. No blind re-sends with the same prompt. Exception: an answer
+    cut off at `max_tokens` (`stop_reason: max_tokens`) is `failed` at once, without a repair
+    call — the corrected answer is as long as the cut one and is cut again (S3 trial, 21.10).
 
 ## Metrics
 
@@ -90,6 +103,8 @@ This file is the single list to check code against; it is not a spec of the impl
     normalisation, other fields exact after normalisation. Computed on the Golden Set only.
 18. Validity (`% ok` first try, `% ok + repaired`), latency p50 / p95, and cost per 1,000
     documents are computed on all 30 documents and broken down by Group as well as in total.
+    The denominator comes from the manifest, not from the run file: a document without a Run
+    Record (item 15) counts as failed and is also reported separately as "no answer".
 19. `latency_ms` is the wall-clock time for the whole document, including transport retries and
     the repair call. Cost for Claude is derived from `usage` and list prices; for the local
     model the API cost is $0, reported together with the run's total wall-clock as the compute

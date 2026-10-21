@@ -1,0 +1,132 @@
+{
+  "$defs": {
+    "EndpointRow": {
+      "type": "object",
+      "description": "One row of the endpoints table: one hostname, exactly the printed columns.",
+      "title": "EndpointRow",
+      "properties": {
+        "region_name": {
+          "type": "string",
+          "description": "Region Name column as printed, e.g. \"US East (Ohio)\"",
+          "title": "Region Name"
+        },
+        "region_code": {
+          "type": "string",
+          "description": "Region column: an AWS Region code such as \"us-east-2\", rejoined if a line wrap split it",
+          "title": "Region Code"
+        },
+        "endpoint": {
+          "type": "string",
+          "description": "Endpoint column: one hostname without the scheme, e.g. \"dsql.us-east-2.api.aws\"",
+          "title": "Endpoint"
+        },
+        "protocol": {
+          "$ref": "#/$defs/Protocol"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "region_name",
+        "region_code",
+        "endpoint",
+        "protocol"
+      ]
+    },
+    "Protocol": {
+      "type": "string",
+      "enum": [
+        "HTTPS",
+        "HTTP",
+        "HTTP and HTTPS"
+      ],
+      "description": "The Protocol column exactly as printed.",
+      "title": "Protocol"
+    },
+    "QuotaRow": {
+      "type": "object",
+      "description": "One row of a Standard Quota Table (ADR-0001), values as printed (ADR-0002).",
+      "title": "QuotaRow",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name column as printed",
+          "title": "Name"
+        },
+        "default": {
+          "type": "string",
+          "description": "Default column as printed, not converted to a number. Keep \"Each supported Region: 10,000\" verbatim. A cell with a value per Region becomes \"us-east-1: 20,000; us-east-2: 6,000\": Region codes, separator \"; \", in table order",
+          "title": "Default"
+        },
+        "adjustable": {
+          "type": "boolean",
+          "description": "Adjustable column: Yes is true, No is false",
+          "title": "Adjustable"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description column as printed, footnote markers included",
+          "title": "Description"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "default",
+        "adjustable",
+        "description"
+      ]
+    },
+    "QuotaTableFormat": {
+      "type": "string",
+      "enum": [
+        "standard",
+        "non_standard",
+        "none"
+      ],
+      "description": "Layout of the target service's quotas table.\n\nstandard: exactly the columns Name, Default, Adjustable, Description;\nnon_standard: a quotas table in any other layout;\nnone: no quotas table for the target service",
+      "title": "QuotaTableFormat"
+    }
+  },
+  "type": "object",
+  "description": "Endpoints and quotas of the one Target Service of a Working Set document.\n\nValidation without a context fails (see the module docstring): the service check\n(contract item 2) is the Neighbour Tail detector and must not be lost silently.",
+  "title": "ServiceDocument",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Always \"1\"\n\n{const: 1}",
+      "title": "Schema Version"
+    },
+    "service": {
+      "type": "string",
+      "description": "The Target Service name given in the prompt, unchanged",
+      "title": "Service"
+    },
+    "quota_table_format": {
+      "$ref": "#/$defs/QuotaTableFormat"
+    },
+    "endpoints": {
+      "type": "array",
+      "description": "Every row of the target service's endpoints table, one per hostname",
+      "title": "Endpoints",
+      "items": {
+        "$ref": "#/$defs/EndpointRow"
+      }
+    },
+    "quotas": {
+      "type": "array",
+      "description": "Rows of the target service's quotas table; empty unless quota_table_format is standard",
+      "title": "Quotas",
+      "items": {
+        "$ref": "#/$defs/QuotaRow"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "service",
+    "quota_table_format",
+    "endpoints",
+    "quotas"
+  ]
+}

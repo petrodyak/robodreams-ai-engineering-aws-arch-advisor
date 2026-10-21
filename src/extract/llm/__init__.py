@@ -1,6 +1,21 @@
 """Model providers behind one interface (`LLMClient`); see base.py."""
 
-from src.extract.llm.base import LLMCallError, LLMClient, LLMReply, llm_schema
+from src.extract.llm.base import (
+    SCHEMA_FILE,
+    LLMCallError,
+    LLMClient,
+    LLMReply,
+    llm_schema,
+    llm_schema_json,
+)
 from src.extract.llm.claude import ClaudeClient
 
-__all__ = ["ClaudeClient", "LLMCallError", "LLMClient", "LLMReply", "llm_schema"]
+__all__ = [
+    "SCHEMA_FILE",
+    "ClaudeClient",
+    "LLMCallError",
+    "LLMClient",
+    "LLMReply",
+    "llm_schema",
+    "llm_schema_json",
+]
