@@ -52,6 +52,7 @@ Apply to every step and are not repeated in the steps:
 | 2.1 | Split `CLAUDE.md`: core rules stay, stage details move to `docs/` | `patch-2.1-claude-md-split` | review 10 min | — | 17.10 | ✅ PR #6 (`8eb97d8`) |
 | 3 | Shared LLM interface + Claude | `step-3-llm-claude` | review ~30 min | step 1: structured output, retry/timeout (2) | 18.10 | ✅ PR #7 (`277e1de`) |
 | 3.1 | Status row for step 3 | `patch-3.1-step-3-status-row` | — | — | 21.10 | 🔄 PR #8 |
+| 3.2 | README: "Why this is not just table parsing" | `patch-3.2-readme-not-table-parsing` | review 5 min | repo quality | 21.10 | 🔄 PR #9 |
 | 4 | Prompt v1, sampling config, pipeline, `make run`, run `claude__v1__t0` | `step-4-pipeline-v1` | "ok" on the cost | step 1: all texts run (2); step 3: validation (3), logging (2) | 19.10 | ⬜ |
 | 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | ⬜ |
 | 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | ⬜ |
@@ -137,6 +138,15 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 - **Also in this PR (not step 3 scope):** `openai` added via `uv add` as the OpenRouter client for
   course exercises, `OPENROUTER_API_KEY` in `.env.example`, ADR-0004 records the boundary: not an
   HW 1 provider.
+
+### Step 3.2 — README: why this is not just table parsing
+
+- **Done:** `README.md` gets a section explaining why the quota and endpoint tables are a
+  structured-extraction task rather than table parsing: layout-mode text, Neighbour Tails,
+  non-standard layouts (ADR-0001), irregular cells (ADR-0002), and why an objective golden set
+  makes the model comparison measurable. Written now so `REPORT.md` (step 9) can refer to it
+  instead of repeating it. Finding F3 (known limits in the README) stays with step 8 — this
+  section motivates the task, it does not list the limits.
 
 ### Step 4 — Prompt v1, pipeline, first run
 
@@ -243,3 +253,4 @@ and the PR that closed it.
 | 16.10 | Practices from Silpo: maintenance rule, status from git, standing rules, per-step "Done", deferred findings (F1–F4; `max_tokens` and `num_ctx` moved here from the risks), REPORT as a snapshot; "Actual" column in the run matrix |
 | 17.10 | All `.md` files translated to English; repository docs are written in English from now on |
 | 17.10 | Step 2.1 added: `CLAUDE.md` split; this file is now the only place for status and next step |
+| 21.10 | Step 3.2 added: README section "Why this is not just table parsing" (answers the question whether a structured source is a fair structured-extraction task) |
