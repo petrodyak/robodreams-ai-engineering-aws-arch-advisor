@@ -51,7 +51,7 @@ Apply to every step and are not repeated in the steps:
 | 2 | Pydantic schema + tests | `step-2-schema` | plan + review ~30 min | step 1: schema (2) | 17.10 | ✅ PR #5 (`a2852bb`) |
 | 2.1 | Split `CLAUDE.md`: core rules stay, stage details move to `docs/` | `patch-2.1-claude-md-split` | review 10 min | — | 17.10 | ✅ PR #6 (`8eb97d8`) |
 | 3 | Shared LLM interface + Claude | `step-3-llm-claude` | review ~30 min | step 1: structured output, retry/timeout (2) | 18.10 | ✅ PR #7 (`277e1de`) |
-| 3.1 | Status row for step 3 | `patch-3.1-step-3-status-row` | — | — | 21.10 | 🔄 |
+| 3.1 | Status row for step 3 | `patch-3.1-step-3-status-row` | — | — | 21.10 | 🔄 PR #8 |
 | 4 | Prompt v1, sampling config, pipeline, `make run`, run `claude__v1__t0` | `step-4-pipeline-v1` | "ok" on the cost | step 1: all texts run (2); step 3: validation (3), logging (2) | 19.10 | ⬜ |
 | 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | ⬜ |
 | 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | ⬜ |
