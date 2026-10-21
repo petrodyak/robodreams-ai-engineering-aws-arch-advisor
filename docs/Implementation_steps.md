@@ -2,7 +2,8 @@
 
 Working plan and execution log for stage 1 up to the deadline **27.10 23:59**. What we build is in
 [`stage1-data-contract.md`](stage1-data-contract.md) and the ADRs ([0001](adr/0001-standard-quota-tables-only.md),
-[0002](adr/0002-model-extracts-code-derives.md), [0003](adr/0003-format-checks-are-validation-failures.md));
+[0002](adr/0002-model-extracts-code-derives.md), [0003](adr/0003-format-checks-are-validation-failures.md),
+[0004](adr/0004-openrouter-for-course-exercises-only.md));
 how we work with Git is in [`GIT_RULES.md`](GIT_RULES.md). This file answers "in what order, who,
 by when, how do we know a step is done" (the plan) and "what was done, what we decided and why" (the log).
 
@@ -35,6 +36,7 @@ Apply to every step and are not repeated in the steps:
 | What | Who | Needed before step | Status |
 |---|---|---|---|
 | `.env` with `ANTHROPIC_API_KEY` (template — `.env.example`) | Petro | 4 | ⬜ |
+| `OPENROUTER_API_KEY` in `.env` — course exercises only, no HW 1 step needs it (ADR-0004) | Petro | — | ✅ |
 | Ollama installed, `ollama pull qwen2.5:7b` (≈4.7 GB) | Petro | 6 | ⬜ |
 | Hardware: MacBook Pro M4 Pro, 48 GB — a 7B model fits with room to spare | — | 6 | ✅ |
 
@@ -46,9 +48,9 @@ Apply to every step and are not repeated in the steps:
 | 1 | Data contract, GLOSSARY, ADR-0001…0003 | `step-1-contract-amendments` | — | — | 16.10 | ✅ PR #2 (`4c046be`) |
 | 1.1 | This plan | `patch-1.1-implementation-steps` | review 10 min | — | 16.10 | ✅ PR #3 (`f1636f2`) |
 | 1.2 | Status row for step 1.1 | `patch-1.2-step-1.1-status-row` | — | — | 17.10 | ✅ PR #4 (`4cfa1a5`) |
-| 2 | Pydantic schema + tests | `step-2-schema` | plan + review ~30 min | step 1: schema (2) | 17.10 | 🔄 PR #5 |
-| 2.1 | Split `CLAUDE.md`: core rules stay, stage details move to `docs/` | `patch-2.1-claude-md-split` | review 10 min | — | 17.10 | 🔄 branch |
-| 3 | Shared LLM interface + Claude | `step-3-llm-claude` | review ~30 min | step 1: structured output, retry/timeout (2) | 18.10 | ⬜ |
+| 2 | Pydantic schema + tests | `step-2-schema` | plan + review ~30 min | step 1: schema (2) | 17.10 | ✅ PR #5 (`a2852bb`) |
+| 2.1 | Split `CLAUDE.md`: core rules stay, stage details move to `docs/` | `patch-2.1-claude-md-split` | review 10 min | — | 17.10 | ✅ PR #6 (`8eb97d8`) |
+| 3 | Shared LLM interface + Claude | `step-3-llm-claude` | review ~30 min | step 1: structured output, retry/timeout (2) | 18.10 | 🔄 |
 | 4 | Prompt v1, sampling config, pipeline, `make run`, run `claude__v1__t0` | `step-4-pipeline-v1` | "ok" on the cost | step 1: all texts run (2); step 3: validation (3), logging (2) | 19.10 | ⬜ |
 | 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | ⬜ |
 | 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | ⬜ |
@@ -121,9 +123,19 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 - **Files:** `src/extract/llm/` (interface + `claude.py`).
 - **Done when:** timeout and transport retry (up to 3 attempts, contract item 15); returns the response +
   `usage` + `latency_ms`; a unit test without network (fake client).
-- **Open:** `messages.parse()` or `messages.create()` with `output_config` — to be decided in the step's
-  plan (the raw response text is needed for the repair call).
-- **Done:** —
+- **Open:** —
+- **Done:** `src/extract/llm/` (`base.py` 86, `claude.py` 110 lines), `tests/test_llm_claude.py`
+  (10 tests, 14 cases, fake SDK client, no network, $0). Decisions: providers only `complete(system,
+  messages, sampling) -> LLMReply`; validation + repair are written once in the step 4 pipeline (the
+  `extract(...)` of the plan moves there); `messages.create()` + `output_config`, not `parse()`
+  (parse validates without the service context and hides the raw text); own retry loop, 3 attempts,
+  backoff 1 s / 2 s, SDK `max_retries=0`, because the SDK does not report attempts; timeout 120 s per
+  attempt. Found: `anthropic` 1.x dropped `temperature`/`top_p` from the signatures, so they go in
+  `extra_body` (Haiku 4.5 still accepts them); both providers get `anthropic.transform_schema(...)`.
+  Not verified against the live API yet (no smoke call): first real request is in step 4.
+- **Also in this PR (not step 3 scope):** `openai` added via `uv add` as the OpenRouter client for
+  course exercises, `OPENROUTER_API_KEY` in `.env.example`, ADR-0004 records the boundary: not an
+  HW 1 provider.
 
 ### Step 4 — Prompt v1, pipeline, first run
 
@@ -211,7 +223,7 @@ and the PR that closed it.
 | F1 | `max_tokens` ≈8k (contract item 14) may not be enough: S3 — 254 rows with `region_name` ≈ 9k tokens | step 1 | step 4 (`count_tokens` + a trial call on S3) | ⬜ |
 | F2 | Ollama's default `num_ctx` may truncate long input. 17.10: value 32768 in `config/sampling.yaml` (`providers.ollama`), justified by S3/EMR token measurements; still to be passed in `ollama.py` | plan | step 6 (explicit `num_ctx`) | ⬜ |
 | F3 | The README must name the known limits: Standard Quota Table only (ADR-0001), the AWS domain list (ADR-0003), Neighbour Tail | step 1 | step 8 | ⬜ |
-| F4 | The local branch `backup/step-0-1-grill-me-1-local-snapshot` is needed only as the basis for the tests | step 1 | after step 2 is merged — delete | ⬜ |
+| F4 | The local branch `backup/step-0-1-grill-me-1-local-snapshot` is needed only as the basis for the tests | step 1 | after step 2 is merged — delete | ✅ deleted 17.10 after PR #5 (was `e2f27cf`) |
 | F5 | `Field(description=...)` texts in `schema.py` are model instructions outside `prompts/`, not covered by `prompt_version` | step 2 review | step 4 (state in `prompts/CHANGELOG.md` that schema descriptions are part of a prompt version) | ⬜ |
 
 ## 7. Risks
