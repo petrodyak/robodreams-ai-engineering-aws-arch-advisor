@@ -286,3 +286,4 @@ and the PR that closed it.
 | 17.10 | All `.md` files translated to English; repository docs are written in English from now on |
 | 17.10 | Step 2.1 added: `CLAUDE.md` split; this file is now the only place for status and next step |
 | 21.10 | Step 3.2 added: README section "Why this is not just table parsing" (answers the question whether a structured source is a fair structured-extraction task) |
+| 21.10 | Golden Set re-selected to 6 `short` / 3 `medium` / 1 `edge` to cut the manual check (step 5); the limits it sets on the metrics — `edge` on one document, no `non_standard` and no global service in gold — are in `data-notes.md` |

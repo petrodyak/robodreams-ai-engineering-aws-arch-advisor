@@ -22,9 +22,26 @@ touching `data/`, the prompts, or the golden set. The schema the data is extract
 - Documents of 20+ pages (EC2, S3, IAM) are not used in HW 1 — they do not fit into the local model's
   context.
 - `093-aws-services.pdf` is not a service (a summary list) — excluded.
-- **Golden set: 10 of 30** (3–4 from each group, `gold=1`) in `data/gold/`. Model-assisted,
-  human-verified: a draft from the `claude__v1__t0` run → `data/gold/<name>.json` → manual correction
-  against the PDF; documented as such.
+- **Golden set: 10 of 30** (`gold=1`) in `data/gold/`. Model-assisted, human-verified: a draft
+  from the `claude__v1__t0` run → `data/gold/<name>.json` → manual correction against the PDF;
+  documented as such.
+  - **Selection (decision of 21.10): 6 `short` / 3 `medium` / 1 `edge`** — `006`, `076`, `085`,
+    `033`, `007`, `066` / `005`, `075`, `048` / `038`. It replaced the first selection of 3–4 per
+    group (`042`, `004`, `095`, `010` out; `085`, `033`, `066`, `075` in). **Why:** the manual
+    check against the PDF is the largest block of Petro's time before the deadline, and short
+    documents (4–12 pages) take a fraction of the time of edge ones (16–26 pages).
+  - **Limits this sets on the metrics** (the report states them):
+    - *`edge` rests on one document (`038` OpenSearch).* Per-field accuracy for the `edge` group
+      is an anecdote, not a measurement; the group breakdown in REPORT is read for `short` and
+      `medium` only. Errors on long, FIPS-heavy or quota-heavy documents (S3, DynamoDB, EMR) are
+      shown through validity (`% ok`, truncation) and the error analysis, not through accuracy.
+    - *No `non_standard` document in gold* (Redshift `042` left it). Accuracy of
+      `quota_table_format` covers `standard` and `none` (`007`) only; whether a model recognises a
+      non-standard quotas layout instead of inventing Quota Rows (ADR-0001) is checked by hand on
+      the non-gold documents `042` and `047` in the error analysis.
+    - *No global service in gold* (CloudFront `010` left it). `endpoint_type` is excluded from
+      accuracy anyway (contract item 6), so only the error analysis can show how a model handles
+      the 3-row global table.
 
 **Affects later stages:** the file names and the JSON format are fixed — `raw/*.txt` and
 `gold/*.json` are reused by RAG (stage 2) and by the agent (stage 3).
