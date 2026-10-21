@@ -156,8 +156,8 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
   `results/runs/claude__v1__t0.jsonl`.
 - **Done when:** 30 Run Records with model, prompt version, sampling, `attempts`, `status`;
   finding F1 (`max_tokens`) closed.
-- **Open:** re-run S3 under the fixed schema (≈$0.10) or keep its record (see `prompts/CHANGELOG.md`,
-  v1, 21.10).
+- **Open:** — (S3 re-run under the fixed schema, decided 21.10; the earlier record is in
+  `results/trials/`).
 - **Done:** —
   - 21.10, commit `078a766`: pipeline, prompt v1, `make run` / `make estimate`, the S3 trial
     (F1 closed: `MAX_TOKENS` 32000, `TIMEOUT_S` 300, contract items 14/16 amended); Golden Set
@@ -179,6 +179,11 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     no classification of API errors. `run()` returns `RunResult(records, lost)`, and the cost
     summary of `main.py` includes the tokens paid for documents that ended without a record.
     118 tests.
+  - 21.10: the full run `claude__v1__t0` — **30/30 `ok` on the first call**, no repair, no
+    transport retry (30 calls). Input 264,757 / output 188,292 tokens ≈ **$1.21** (≈ $40 per
+    1,000 documents); latency ≈ 33 s p50 / ≈ 87 s p95 (rough; step 7 computes the metric).
+    The estimate was ≈ $1.9: output per Endpoint Row is lower outside S3. Valid is not correct:
+    endpoint row counts differ from the manifest in both directions → finding F14.
 
 ### Step 5 — Golden set
 
@@ -240,7 +245,7 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 
 | Run id | Step | Required | Cost estimate | Actual |
 |---|---|---|---|---|
-| `claude__v1__t0` | 4 | yes (also the gold draft) | ≈$1.9 (input measured: 262,867 tokens ≈ $0.26; output from the S3 trial) | — |
+| `claude__v1__t0` | 4 | yes (also the gold draft) | ≈$1.9 (input measured: 262,867 tokens ≈ $0.26; output from the S3 trial) | **$1.21** — in 264,757 / out 188,292; 30/30 `ok`, 30 calls |
 | `claude__v1__t05` | 6 | yes — **the 10 Golden Set documents only** (budget decision 21.10) | ≈$0.3 | — |
 | `qwen2.5-7b__v1__t0` | 6 | yes | $0, ≈30–60 min | — |
 | `qwen2.5-7b__v1__t05` | 6 | yes | $0, ≈30–60 min | — |
@@ -253,6 +258,10 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 S3 calls: at 16384, cut off ($0.22, `results/trials/…max-tokens-16384`); at 32000 before the enum
 descriptions reached the model ($0.10, `results/trials/…before-enum-descriptions`); at 32000 with the
 fixed schema ($0.10, the record in `claude__v1__t0`).
+
+**Spent after `claude__v1__t0`: $1.53** — the run $1.21 (its S3 record included) + the two S3 trials kept in
+`results/trials/` ($0.22 + $0.10). With the actual run cost, the plan below is ≈ $1.53 + $0.3
+(`claude__v1__t05`, gold) + ≈ $1.3 (`claude__v2__t0`) ≈ **$3.1**.
 
 **Budget decision (21.10, variant A).** Three full Claude runs would cost ≈ $5.2, over the limit. Per-field
 accuracy — the main comparison — is computed on the Golden Set only (contract item 17), so
@@ -285,6 +294,7 @@ and the PR that closed it.
 | F11 | Every non-retryable error becomes `NoAnswer`, also a permanent one (400 "prompt is too long", a rejected schema): such a document never gets a record, `main.py` exits non-zero on every run, and step 7 waits for 30 records forever. Contract item 15 considers only temporary causes | review of the F7 fix | step 4 (contract items 15, 18: counted as failed in metrics; no error classification) | ✅ step 4 (`step-4-pipeline-v1`); metrics side in step 7 |
 | F12 | Results-file edge cases: a line that is JSON but not an object raises a bare `TypeError` without its line number; `{"file": null}` counts as done; a complete record whose final `\n` was stripped by hand is dropped as a cut-off line (recoverable from Git) | review of the F8 fix | Petro's call | ⬜ |
 | F13 | No test pins `main.py`'s non-zero exit (contract item 15) or `NoAnswer.__cause__` | review of the F7 fix | Petro's call | ⬜ |
+| F14 | `claude__v1__t0` is 30/30 valid, but endpoint row counts differ from the manifest in both directions. Fewer: `078` IAM Identity Center 78 of 234, `017` DynamoDB 94 of 203, `044` RDS 78 of 165, `092` Secrets Manager 44 of 62, `048` SQS 84 of 104 (gold). More: `007` AgentCore 39 vs 22 (templated `gatewayId`, gold), `055` App Mesh 120 vs 77, `042` Redshift 253 vs 201, `038` OpenSearch 183 vs 170 (Neighbour Tail of Network Security Manager? gold), `085` Lake Formation 88 vs 75 (gold). Also `042` Redshift has `quota_table_format: none` (ADR-0001 expects `non_standard`?) and `010` CloudFront has 97 Quota Rows. Expected or manifest-side: `005` Aurora 36 of 72 (decided: one row per hostname), `074` Global Accelerator 2 of 105 (the text has 5 hostnames — manifest, F6). The manifest undercounts wrapped hostnames (F6), so these are signals, not verdicts | step 4 (full run) | step 5 (gold `048`, `007`, `038`, `085`: count against the PDF); steps 8–9 (non-gold: error analysis and v2 changes) | ⬜ |
 
 ## 7. Risks
 
