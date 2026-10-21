@@ -90,9 +90,17 @@ class EndpointType(StrEnum):
 
 
 class QuotaTableFormat(StrEnum):
-    STANDARD = "standard"  # Name | Default | Adjustable | Description (ADR-0001)
-    NON_STANDARD = "non_standard"  # a quotas table in any other layout: not extracted
-    NONE = "none"  # no quotas table for the Target Service
+    """Layout of the target service's quotas table.
+
+    standard: exactly the columns Name, Default, Adjustable, Description;
+    non_standard: a quotas table in any other layout;
+    none: no quotas table for the target service"""
+
+    # The docstring, not Field(description=...), is what the model sees: transform_schema
+    # drops a description next to a $ref but keeps the one of the enum in $defs.
+    STANDARD = "standard"  # ADR-0001: the only layout whose rows are extracted
+    NON_STANDARD = "non_standard"
+    NONE = "none"
 
 
 class Group(StrEnum):
@@ -127,7 +135,7 @@ class EndpointRow(BaseModel):
     endpoint: NormStr = Field(
         description='Endpoint column: one hostname without the scheme, e.g. "dsql.us-east-2.api.aws"'
     )
-    protocol: Protocol = Field(description="Protocol column as printed")
+    protocol: Protocol  # described by the Protocol docstring (see QuotaTableFormat)
 
     @model_validator(mode="before")
     @classmethod
@@ -210,11 +218,7 @@ class ServiceDocument(BaseModel):
     service: NormStr = Field(
         description="The Target Service name given in the prompt, unchanged"
     )
-    quota_table_format: QuotaTableFormat = Field(
-        description="standard: the quotas table has exactly the columns Name, Default, "
-        "Adjustable, Description; non_standard: a quotas table in any other layout; "
-        "none: no quotas table for the target service"
-    )
+    quota_table_format: QuotaTableFormat  # described by the QuotaTableFormat docstring
     endpoints: list[EndpointRow] = Field(
         description="Every row of the target service's endpoints table, one per hostname"
     )

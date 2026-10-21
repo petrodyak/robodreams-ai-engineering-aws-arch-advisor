@@ -5,10 +5,12 @@ schema and the one repair call (contract item 16) live once in the pipeline, so 
 Ollama are judged by exactly the same logic.
 """
 
+import json
 import time
 from collections.abc import Callable
 from dataclasses import dataclass
 from functools import cache
+from pathlib import Path
 from typing import Any, Protocol
 
 import anthropic
@@ -17,6 +19,8 @@ from src.extract.schema import Sampling, ServiceDocument, Usage
 
 MAX_ATTEMPTS = 3  # contract item 15
 BASE_DELAY_S = 1.0  # backoff: 1 s, then 2 s
+# A readable copy of llm_schema() in Git; `make schema` (run by `make check`) rewrites it.
+SCHEMA_FILE = Path("docs/service-document.schema.json")
 
 
 @dataclass(frozen=True)
@@ -61,6 +65,11 @@ def llm_schema() -> dict[str, Any]:
     models see an identical schema (ADR-0003).
     """
     return anthropic.transform_schema(ServiceDocument)
+
+
+def llm_schema_json() -> str:
+    """llm_schema() as the text of SCHEMA_FILE: stable, so a diff shows only real changes."""
+    return json.dumps(llm_schema(), indent=2, ensure_ascii=False) + "\n"
 
 
 def call_with_retry[T](

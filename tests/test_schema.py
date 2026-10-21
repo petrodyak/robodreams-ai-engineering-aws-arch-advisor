@@ -6,10 +6,13 @@ gold/results JSON. Fixture values are taken from data/raw/006-amazon-aurora-dsql
 """
 
 import json
+from pathlib import Path
 
 import pytest
 from pydantic import ValidationError
 
+from src.extract.llm import SCHEMA_FILE, llm_schema_json
+from src.extract.llm import llm_schema as sent_llm_schema
 from src.extract.schema import (
     EndpointRow,
     EndpointType,
@@ -96,6 +99,42 @@ def test_llm_schema_requires_every_field():
     # No defaults: the model states every field instead of silently skipping one.
     for obj in schema_objects(llm_schema()):
         assert set(obj["required"]) == set(obj["properties"])
+
+
+def test_every_field_description_reaches_the_model():
+    # The schema actually sent, not the Pydantic one: transform_schema drops a
+    # description that sits next to a $ref, so an enum field's description has to live
+    # on the enum class (its docstring), which survives in $defs.
+    schema = sent_llm_schema()
+    defs = schema["$defs"]
+    for obj in schema_objects(schema):
+        for name, prop in obj["properties"].items():
+            target = defs[prop["$ref"].rsplit("/", 1)[-1]] if "$ref" in prop else prop
+            assert target.get("description"), (
+                f"{obj['title']}.{name} has no description"
+            )
+
+
+def test_quota_table_format_definition_reaches_the_model():
+    # The definition of "standard" is what separates the three formats (ADR-0001).
+    described = sent_llm_schema()["$defs"]["QuotaTableFormat"]["description"]
+    assert "Name, Default, Adjustable, Description" in described
+
+
+def test_schema_file_matches_the_sent_schema():
+    # `make check` regenerates the file first; this catches a plain `pytest` run
+    # after a schema.py change that left the documented schema stale.
+    assert SCHEMA_FILE.read_text() == llm_schema_json(), (
+        f"{SCHEMA_FILE} is stale, run `make schema`"
+    )
+
+
+def test_example_document_is_a_valid_model_answer():
+    # docs/service-document.example.json is hand-made data, so it cannot be regenerated
+    # like the schema file; this fails instead when schema.py stops accepting it.
+    text = Path("docs/service-document.example.json").read_text()
+    doc = ServiceDocument.model_validate_json(text, context=answer_context(SERVICE))
+    assert (len(doc.endpoints), len(doc.quotas)) == (25, 4)
 
 
 # ---------------------------------------------------------------- normalisation (item 9)
