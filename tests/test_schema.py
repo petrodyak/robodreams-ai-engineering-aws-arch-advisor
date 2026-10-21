@@ -132,7 +132,10 @@ def test_schema_file_matches_the_sent_schema():
 def test_example_document_is_a_valid_model_answer():
     # docs/service-document.example.json is hand-made data, so it cannot be regenerated
     # like the schema file; this fails instead when schema.py stops accepting it.
-    text = Path("docs/service-document.example.json").read_text()
+    example = (
+        Path(__file__).resolve().parents[1] / "docs" / "service-document.example.json"
+    )
+    text = example.read_text()
     doc = ServiceDocument.model_validate_json(text, context=answer_context(SERVICE))
     assert (len(doc.endpoints), len(doc.quotas)) == (25, 4)
 

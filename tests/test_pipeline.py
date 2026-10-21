@@ -182,24 +182,23 @@ def test_second_failure_is_failed_and_there_is_no_third_call():
     assert len(llm.requests) == 2
 
 
-def test_no_answer_is_failed_without_a_repair_call():
+def test_no_answer_is_not_a_run_record():
+    # finding F7: a transport failure says nothing about the model (contract item 15)
     error = LLMCallError("APITimeoutError: timed out", attempts=3, latency_ms=900_000)
-    record, llm = extract(error)
-    assert record.status == Status.FAILED
-    assert record.attempts == 3
-    assert record.latency_ms == 900_000
-    assert record.usage == Usage(input_tokens=0, output_tokens=0)
-    assert "no answer" in record.error
+    llm = FakeLLM(error)
+    with pytest.raises(pipeline.NoAnswer, match="no answer: APITimeoutError") as caught:
+        pipeline.extract_document(llm, DOC, TEXT, PROMPT, T0)
+    assert caught.value.spent == Usage(input_tokens=0, output_tokens=0)
     assert len(llm.requests) == 1
 
 
-def test_repair_call_without_an_answer_keeps_the_first_usage():
+def test_repair_call_without_an_answer_reports_the_spent_tokens():
+    # the first, paid answer is lost with the document; the log must show what it cost
     error = LLMCallError("APITimeoutError: timed out", attempts=3, latency_ms=3000)
-    record, _ = extract(reply("not json", latency_ms=500), error)
-    assert record.status == Status.FAILED
-    assert record.usage == Usage(input_tokens=1000, output_tokens=200)
-    assert (record.attempts, record.latency_ms) == (4, 3500)
-    assert "repair call: no answer" in record.error
+    llm = FakeLLM(reply("not json"), error)
+    with pytest.raises(pipeline.NoAnswer, match="repair call: no answer") as caught:
+        pipeline.extract_document(llm, DOC, TEXT, PROMPT, T0)
+    assert caught.value.spent == Usage(input_tokens=1000, output_tokens=200)
 
 
 def test_truncated_answer_is_failed_without_a_repair_call():
@@ -228,14 +227,26 @@ def test_empty_answer_is_sent_back_as_a_placeholder():
 # ---------------------------------------------------------------- one run
 
 
-def test_run_writes_one_loadable_record_per_document_and_resumes(tmp_path):
+ATHENA = pipeline.Document(
+    file="004-amazon-athena.pdf", service="Amazon Athena", group=Group.EDGE
+)
+
+
+@pytest.fixture
+def raw(tmp_path):
     raw = tmp_path / "raw"
     raw.mkdir()
-    athena = pipeline.Document(
-        file="004-amazon-athena.pdf", service="Amazon Athena", group=Group.EDGE
-    )
-    for doc in (DOC, athena):
+    for doc in (DOC, ATHENA):
         (raw / doc.file).with_suffix(".txt").write_text(TEXT)
+    return raw
+
+
+def run(llm, out, raw, log=lambda _: None):
+    return pipeline.run(llm, [DOC, ATHENA], PROMPT, T0, out, raw_dir=raw, log=log)
+
+
+def test_run_writes_one_loadable_record_per_document_and_resumes(tmp_path, raw):
+    athena = ATHENA
     out = tmp_path / "runs" / "fake__v1__t0.jsonl"
 
     # first run: Athena fails twice, DSQL is fine
@@ -260,3 +271,57 @@ def test_run_writes_one_loadable_record_per_document_and_resumes(tmp_path):
     )
     assert again.requests == []
     assert len(out.read_text().splitlines()) == 2
+
+
+def test_document_without_an_answer_is_left_out_and_retried_next_run(tmp_path, raw):
+    # finding F7: e.g. "credit balance is too low" — after a top-up the same command
+    # must ask again, not skip the document as done
+    out = tmp_path / "run.jsonl"
+    error = LLMCallError(
+        "BadRequestError: credit balance is too low", attempts=1, latency_ms=50
+    )
+    logged = []
+    new = run(
+        FakeLLM(error, reply(answer(service="Amazon Athena"))), out, raw, logged.append
+    )
+    assert [r.file for r in new] == [ATHENA.file]
+    assert pipeline.done_files(out) == {ATHENA.file}
+    assert any("no answer" in m and "not recorded" in m for m in logged)
+
+    again = FakeLLM(reply(answer()))
+    assert [r.file for r in run(again, out, raw)] == [DOC.file]
+    assert len(again.requests) == 1
+    assert pipeline.done_files(out) == {DOC.file, ATHENA.file}
+
+
+def test_cut_off_last_line_is_dropped_before_resuming(tmp_path, raw):
+    # finding F8: a process killed mid-write leaves half a line; the next record must
+    # not be glued to it, and resume must not crash on it
+    out = tmp_path / "run.jsonl"
+    run(FakeLLM(reply(answer()), reply(answer(service="Amazon Athena"))), out, raw)
+    whole = out.read_text().splitlines(keepends=True)[0]
+    out.write_text(whole + '{"file": "004-amazon-athena.pdf", "gro')
+
+    logged = []
+    run(FakeLLM(reply(answer(service="Amazon Athena"))), out, raw, logged.append)
+    lines = out.read_text().splitlines()
+    assert [json.loads(line)["file"] for line in lines] == [DOC.file, ATHENA.file]
+    assert any("cut-off last line" in m for m in logged)
+
+
+def test_broken_line_in_the_middle_is_an_error(tmp_path, raw):
+    # only the last line can be cut off by an append; anything else is real damage
+    out = tmp_path / "run.jsonl"
+    run(FakeLLM(reply(answer()), reply(answer(service="Amazon Athena"))), out, raw)
+    first, second = out.read_text().splitlines(keepends=True)
+    out.write_text(first + "garbage\n" + second)
+    with pytest.raises(ValueError, match="line 2"):
+        pipeline.done_files(out)
+
+
+def test_missing_files_names_the_documents_still_without_a_record(tmp_path, raw):
+    # main.py prints these and exits non-zero, so an incomplete run is not missed
+    out = tmp_path / "run.jsonl"
+    error = LLMCallError("APIStatusError: overloaded", attempts=3, latency_ms=3000)
+    run(FakeLLM(error, reply(answer(service="Amazon Athena"))), out, raw)
+    assert pipeline.missing_files([DOC, ATHENA], out) == [DOC.file]

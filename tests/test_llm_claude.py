@@ -169,6 +169,24 @@ def test_three_transient_failures_raise_with_the_attempt_count():
     assert isinstance(raised.value.__cause__, anthropic.APITimeoutError)
 
 
+@pytest.mark.parametrize(
+    "header, pause",
+    [
+        ("7", 7.0),  # the server knows better than our 1 s backoff (finding F7)
+        ("600", 60.0),  # capped: one document must not stall the run for minutes
+        ("0", 1.0),  # never shorter than the backoff
+        ("soon", 1.0),  # not a number of seconds: fall back to the backoff
+    ],
+)
+def test_retry_after_header_sets_the_pause(header, pause):
+    clock = FakeClock()
+    response = httpx2.Response(429, request=REQUEST, headers={"retry-after": header})
+    error = anthropic.RateLimitError("HTTP 429", response=response, body=None)
+    client, _ = claude(error, message(), clock=clock)
+    client.complete(SYSTEM, MESSAGES, T0)
+    assert clock.sleeps == [pause]
+
+
 def test_client_error_is_not_retried():
     client, fake = claude(status_error(anthropic.BadRequestError, 400), message())
     with pytest.raises(LLMCallError) as raised:

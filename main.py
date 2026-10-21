@@ -7,6 +7,8 @@ Usage:
 
 Writes results/runs/<run_id>.jsonl (contract items 11-12). Documents already in that file
 are skipped, so a run interrupted halfway is resumed by running the same command again.
+A document with no answer (network, rate limit, billing) gets no record (contract item 15):
+the command then exits non-zero, and running it again retries just those documents.
 """
 
 import argparse
@@ -69,6 +71,10 @@ def main() -> None:
             else ""
         )
     )
+    missing = pipeline.missing_files(docs, out_path)
+    if missing:
+        print(f"{len(missing)} document(s) still without a record: {missing}")
+        raise SystemExit("run the same command again to retry them")
 
 
 def estimate(client: ClaudeClient, docs: list[pipeline.Document], prompt) -> None:

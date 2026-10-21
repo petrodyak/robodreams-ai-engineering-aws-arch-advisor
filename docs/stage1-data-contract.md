@@ -2,7 +2,7 @@
 
 Decisions reached in the design interview of 2026-10-15, amended on 2026-10-16 (items 6, 9,
 14, 16; review of the earlier schema grill against this contract) and on 2026-10-21 (items 14,
-16; the S3 trial call of step 4). Terms are defined in
+15, 16; the S3 trial call and the review of step 4). Terms are defined in
 [`GLOSSARY.md`](../GLOSSARY.md); the decisions that are hard to reverse have ADRs
 ([0001](adr/0001-standard-quota-tables-only.md), [0002](adr/0002-model-extracts-code-derives.md),
 [0003](adr/0003-format-checks-are-validation-failures.md)).
@@ -78,8 +78,12 @@ This file is the single list to check code against; it is not a spec of the impl
 
 ## Failure handling
 
-15. Transport retry (timeout, 5xx, rate limit): up to 3 attempts with backoff, invisible to
-    the pipeline except for the `attempts` counter.
+15. Transport retry (timeout, 5xx, rate limit): up to 3 attempts with backoff (1 s, 2 s, or the
+    server's `retry-after` when longer, capped at 60 s), invisible to the pipeline except for
+    the `attempts` counter. A document that still has no answer — on the first or the repair
+    call, or at once on a non-retryable error such as an exhausted credit balance — gets no
+    Run Record: a transport failure says nothing about the model. It is left out of the run
+    file, the run command exits non-zero, and running it again retries just those documents.
 16. Repair: a response that fails schema validation, a format/consistency check (item 9) or
     the `service` check gets exactly one
     corrective call carrying the previous answer and the validation error text. A second

@@ -39,6 +39,16 @@ def is_transient(error: Exception) -> bool:
     return False
 
 
+def retry_after(error: Exception) -> float | None:
+    """Seconds the API asks to wait before retrying (`retry-after` on 429/529), if any."""
+    if not isinstance(error, anthropic.APIStatusError):
+        return None
+    try:
+        return float(error.response.headers.get("retry-after", ""))
+    except ValueError:  # absent, or an HTTP date: the backoff applies
+        return None
+
+
 def _sampling_body(sampling: Sampling) -> dict[str, float]:
     # anthropic 1.x dropped temperature/top_p from the method signatures; the API still
     # accepts them for claude-haiku-4-5, so they travel in extra_body. An unset top_p is
@@ -91,7 +101,7 @@ class ClaudeClient:
         started = self._clock()
         try:
             response, attempts = call_with_retry(
-                request, is_transient, sleep=self._sleep
+                request, is_transient, retry_after=retry_after, sleep=self._sleep
             )
         except Exception as error:
             raise LLMCallError(

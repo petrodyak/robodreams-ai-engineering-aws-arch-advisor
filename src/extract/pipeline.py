@@ -51,6 +51,19 @@ _PLACEHOLDER_RE = re.compile(r"\{(\w+)\}")
 EMPTY_ANSWER = "(empty answer)"
 
 
+class NoAnswer(Exception):
+    """The provider gave no answer after its retries (contract item 15): no Run Record.
+
+    A transport failure says nothing about the model, so the document is left out of the
+    run file and the next run of the same command asks again. `spent` is what the calls
+    that did answer cost; it is lost with the document, so the run log shows it.
+    """
+
+    def __init__(self, message: str, spent: Usage):
+        super().__init__(message)
+        self.spent = spent
+
+
 # ---------------------------------------------------------------- inputs
 
 
@@ -164,13 +177,14 @@ def extract_document(
     messages = [{"role": "user", "content": prompt.user_message(doc.service, text)}]
     calls: list[LLMReply] = []
 
+    def spent() -> Usage:
+        return Usage(
+            input_tokens=sum(c.usage.input_tokens for c in calls),
+            output_tokens=sum(c.usage.output_tokens for c in calls),
+        )
+
     def record(
-        status: Status,
-        output: ServiceDocument | None,
-        error: str | None,
-        *,
-        extra_attempts: int = 0,
-        extra_latency_ms: int = 0,
+        status: Status, output: ServiceDocument | None, error: str | None
     ) -> RunRecord:
         # Sums over every call for the document, the repair included (items 12, 19).
         return RunRecord.model_validate(
@@ -180,12 +194,9 @@ def extract_document(
                 "model": client.model,
                 "prompt_version": prompt.version,
                 "sampling": sampling,
-                "attempts": sum(c.attempts for c in calls) + extra_attempts,
-                "latency_ms": sum(c.latency_ms for c in calls) + extra_latency_ms,
-                "usage": Usage(
-                    input_tokens=sum(c.usage.input_tokens for c in calls),
-                    output_tokens=sum(c.usage.output_tokens for c in calls),
-                ),
+                "attempts": sum(c.attempts for c in calls),
+                "latency_ms": sum(c.latency_ms for c in calls),
+                "usage": spent(),
                 "status": status,
                 "output": output,
                 "error": error,
@@ -196,13 +207,7 @@ def extract_document(
     try:
         calls.append(client.complete(prompt.system, messages, sampling))
     except LLMCallError as error:
-        return record(
-            Status.FAILED,
-            None,
-            f"no answer: {error}",
-            extra_attempts=error.attempts,
-            extra_latency_ms=error.latency_ms,
-        )
+        raise NoAnswer(f"no answer: {error}", spent()) from error
 
     output, first_error = validate_answer(calls[0], doc.service)
     if output is not None:
@@ -219,13 +224,7 @@ def extract_document(
     try:
         calls.append(client.complete(prompt.system, repair, sampling))
     except LLMCallError as error:
-        return record(
-            Status.FAILED,
-            None,
-            f"{first_error}\n--- repair call: no answer: {error}",
-            extra_attempts=error.attempts,
-            extra_latency_ms=error.latency_ms,
-        )
+        raise NoAnswer(f"repair call: no answer: {error}", spent()) from error
 
     output, second_error = validate_answer(calls[1], doc.service)
     if output is not None:
@@ -239,12 +238,48 @@ def extract_document(
 # ---------------------------------------------------------------- one run
 
 
+def drop_cut_off_tail(path: Path, log: Callable[[str], None]) -> None:
+    """Remove what a killed process left after the last complete line (finding F8).
+
+    Every record is appended as one line ending in "\\n", so anything after the last
+    "\\n" is an unfinished append: kept, it would glue the next record onto itself.
+    """
+    if not path.exists():
+        return
+    data = path.read_bytes()
+    keep = data.rfind(b"\n") + 1
+    if keep < len(data):
+        path.write_bytes(data[:keep])
+        log(f"{path.name}: dropped a cut-off last line ({len(data) - keep:,} bytes)")
+
+
 def done_files(path: Path) -> set[str]:
-    """Documents that already have a Run Record in this run's file."""
+    """Documents that already have a Run Record in this run's file.
+
+    A line that is not JSON is real damage (only the last line can be cut off, and
+    `run` drops that one first), so it raises instead of being skipped silently.
+    """
     if not path.exists():
         return set()
-    with path.open() as f:
-        return {json.loads(line)["file"] for line in f if line.strip()}
+    done = set()
+    # split("\n"), not splitlines(): that also splits on characters such as U+2028,
+    # which may legitimately sit inside a JSON string
+    for n, line in enumerate(path.read_text().split("\n"), 1):
+        if not line.strip():
+            continue
+        try:
+            done.add(json.loads(line)["file"])
+        except (ValueError, KeyError) as error:
+            raise ValueError(
+                f"{path}: line {n} is not a Run Record: {error}"
+            ) from error
+    return done
+
+
+def missing_files(docs: Iterable[Document], path: Path) -> list[str]:
+    """Documents of the run that have no Run Record yet, in manifest order."""
+    done = done_files(path)
+    return [d.file for d in docs if d.file not in done]
 
 
 def run(
@@ -259,6 +294,7 @@ def run(
 ) -> list[RunRecord]:
     """Extract every document not yet in `out_path`; return the new Run Records."""
     docs = list(docs)
+    drop_cut_off_tail(out_path, log)
     done = done_files(out_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     new: list[RunRecord] = []
@@ -268,7 +304,15 @@ def run(
             if doc.file in done:
                 log(f"{prefix}: already in {out_path.name}, skipped")
                 continue
-            rec = extract_document(client, doc, doc.text(raw_dir), prompt, sampling)
+            try:
+                rec = extract_document(client, doc, doc.text(raw_dir), prompt, sampling)
+            except NoAnswer as error:
+                log(
+                    f"{prefix}: {error}; not recorded, the next run retries it "
+                    f"(spent in {error.spent.input_tokens:,} / "
+                    f"out {error.spent.output_tokens:,} tokens)"
+                )
+                continue
             # one line per document, flushed at once: a crash loses at most this document
             f.write(rec.model_dump_json() + "\n")
             f.flush()
