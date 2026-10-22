@@ -506,15 +506,129 @@
       "region_code": "us-gov-west-1",
       "endpoint": "sqs.us-gov-west-1.api.aws",
       "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "us-east-2.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "us-west-1.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "us-west-2.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Africa (Cape Town)",
+      "region_code": "af-south-1",
+      "endpoint": "af-south-1.queue.amazonaws.com",
+      "protocol": "HTTP"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "ap-south-1.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Osaka)",
+      "region_code": "ap-northeast-3",
+      "endpoint": "ap-northeast-3.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "ap-northeast-2.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "ap-southeast-1.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "ap-southeast-2.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "ap-northeast-1.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "ca-central-1.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "China (Beijing)",
+      "region_code": "cn-north-1",
+      "endpoint": "cn-north-1.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "China (Ningxia)",
+      "region_code": "cn-northwest-1",
+      "endpoint": "cn-northwest-1.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "eu-central-1.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "eu-west-1.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "eu-west-2.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "eu-west-3.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "eu-north-1.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "sa-east-1.queue.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
     }
   ],
   "quotas": [
-    {
-      "name": "Actions per Queue Policy",
-      "default": "Each supported Region: 7",
-      "adjustable": false,
-      "description": "The number of actions in a queue policy."
-    },
     {
       "name": "Attributes per Message",
       "default": "Each supported Region: 10",

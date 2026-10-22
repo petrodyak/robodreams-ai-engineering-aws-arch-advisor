@@ -342,12 +342,6 @@
     {
       "region_name": "Europe (Milan)",
       "region_code": "eu-south-1",
-      "endpoint": "kinesis.eu-south-1.amazonaws.com",
-      "protocol": "HTTPS"
-    },
-    {
-      "region_name": "Europe (Milan)",
-      "region_code": "eu-south-1",
       "endpoint": "kinesis.eu-south-1.api.aws",
       "protocol": "HTTPS"
     },

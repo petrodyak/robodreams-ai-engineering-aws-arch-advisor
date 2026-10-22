@@ -38,18 +38,34 @@ metrics (edge on one document, no `non_standard` and no global service in gold) 
   the ID of your gateway"): kept as printed, e.g.
   `gatewayId.gateway.bedrock-agentcore.us-east-1.amazonaws.com` (contract item 6).
 - All endpoints tables of the chapter count, not only the first (contract item 6).
+- **`048-amazon-simple-queue-service`**: the draft missed the chapter's "Legacy endpoints"
+  table (20 rows, `<region>.queue.amazonaws.com`); added from the text in table order
+  (contract item 6). `af-south-1` is printed with `HTTP` only, the others `HTTP and HTTPS`;
+  `queue.amazonaws.com` (us-east-1) has no Region code in it and is a `global` endpoint.
+- **Rows removed by the reviewer after the PDF check (22.10).** Decision of the reviewer:
+  these rows are not in the PDF or do not fall under contract items 6 / 7, so they are not
+  part of the reference. They do appear in the extracted `.txt`, so `make gold-check` keeps
+  listing the three hostnames; that is expected, not a new finding.
+  - `033`: endpoint `kinesis.eu-south-1.amazonaws.com` (Europe (Milan));
+  - `085`: endpoint `lakeformation.eu-central-1.api.aws` (Europe (Frankfurt));
+  - `007`: endpoint `gatewayId.gateway.bedrock-agentcore.sa-east-1.amazonaws.com`;
+  - `048`: Quota Row "Actions per Queue Policy";
+  - `076`: Quota Row "Recipes per AWS account".
 
 ## Status
 
-| File | Endpoints (check) | Quotas by hand | Checked |
+Checked against the PDF by the reviewer on 22.10.2026. `make gold-check` then lists only the
+expected differences named above.
+
+| File | Endpoints | Quotas | Checked |
 |---|---|---|---|
-| `006-amazon-aurora-dsql.json` | match | 4 | ⬜ |
-| `076-aws-glue-databrew.json` | match | 7 | ⬜ |
-| `033-amazon-kinesis-data-streams.json` | match | 1 | ⬜ |
-| `066-aws-datasync.json` | match | 0 (`non_standard`) | ⬜ |
-| `085-aws-lake-formation.json` | match | 0 (`none`) | ⬜ |
-| `007-amazon-bedrock-agentcore.json` | match | 0 (`none`) | ⬜ |
-| `005-amazon-aurora.json` | match | 25 | ⬜ |
-| `075-aws-glue.json` | match | 46 | ⬜ |
-| `048-amazon-simple-queue-service.json` | 20 printed hostnames missing | 19 | ⬜ |
-| `038-amazon-opensearch-service.json` | match | 0 (`non_standard`) | ⬜ |
+| `006-amazon-aurora-dsql.json` | 25 | 4 | ✅ |
+| `076-aws-glue-databrew.json` | 24 | 6 (1 removed) | ✅ |
+| `033-amazon-kinesis-data-streams.json` | 79 (1 removed) | 1 | ✅ |
+| `066-aws-datasync.json` | 88 | 0 (`non_standard`) | ✅ |
+| `085-aws-lake-formation.json` | 87 (1 removed) | 0 (`none`) | ✅ |
+| `007-amazon-bedrock-agentcore.json` | 38 (1 removed) | 0 (`none`) | ✅ |
+| `005-amazon-aurora.json` | 36 | 25 | ✅ |
+| `075-aws-glue.json` | 88 | 46 | ✅ |
+| `048-amazon-simple-queue-service.json` | 104 (20 legacy added) | 18 (1 removed) | ✅ |
+| `038-amazon-opensearch-service.json` | 183 | 0 (`non_standard`) | ✅ |

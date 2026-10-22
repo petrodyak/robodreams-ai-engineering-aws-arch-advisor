@@ -184,12 +184,6 @@
       "default": "Each supported Region: 100",
       "adjustable": true,
       "description": "The maximum number of projects that you can create in this AWS account."
-    },
-    {
-      "name": "Recipes per AWS account",
-      "default": "Each supported Region: 500",
-      "adjustable": true,
-      "description": "The maximum number of recipes that you can create in this AWS account."
     }
   ]
 }

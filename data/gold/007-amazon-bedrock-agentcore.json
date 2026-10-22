@@ -230,12 +230,6 @@
       "region_code": "ca-central-1",
       "endpoint": "gatewayId.gateway.bedrock-agentcore.ca-central-1.amazonaws.com",
       "protocol": "HTTPS"
-    },
-    {
-      "region_name": "South America (São Paulo)",
-      "region_code": "sa-east-1",
-      "endpoint": "gatewayId.gateway.bedrock-agentcore.sa-east-1.amazonaws.com",
-      "protocol": "HTTPS"
     }
   ],
   "quotas": []

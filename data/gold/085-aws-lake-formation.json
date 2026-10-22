@@ -334,12 +334,6 @@
       "protocol": "HTTPS"
     },
     {
-      "region_name": "Europe (Frankfurt)",
-      "region_code": "eu-central-1",
-      "endpoint": "lakeformation.eu-central-1.api.aws",
-      "protocol": "HTTPS"
-    },
-    {
       "region_name": "Europe (Ireland)",
       "region_code": "eu-west-1",
       "endpoint": "lakeformation.eu-west-1.amazonaws.com",
