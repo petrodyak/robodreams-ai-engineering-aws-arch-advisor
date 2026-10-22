@@ -1,0 +1,627 @@
+{
+  "schema_version": "1",
+  "service": "Amazon Simple Queue Service",
+  "quota_table_format": "standard",
+  "endpoints": [
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "sqs.us-east-2.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "sqs-fips.us-east-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "sqs-fips.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "sqs.us-east-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "sqs.us-east-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "sqs-fips.us-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "sqs-fips.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "sqs.us-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "sqs.us-west-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "sqs-fips.us-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "sqs-fips.us-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "sqs.us-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "sqs.us-west-2.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "sqs-fips.us-west-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "sqs-fips.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "sqs.us-west-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Africa (Cape Town)",
+      "region_code": "af-south-1",
+      "endpoint": "sqs.af-south-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Africa (Cape Town)",
+      "region_code": "af-south-1",
+      "endpoint": "sqs.af-south-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hong Kong)",
+      "region_code": "ap-east-1",
+      "endpoint": "sqs.ap-east-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hong Kong)",
+      "region_code": "ap-east-1",
+      "endpoint": "sqs.ap-east-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hyderabad)",
+      "region_code": "ap-south-2",
+      "endpoint": "sqs.ap-south-2.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hyderabad)",
+      "region_code": "ap-south-2",
+      "endpoint": "sqs.ap-south-2.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Jakarta)",
+      "region_code": "ap-southeast-3",
+      "endpoint": "sqs.ap-southeast-3.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Jakarta)",
+      "region_code": "ap-southeast-3",
+      "endpoint": "sqs.ap-southeast-3.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Malaysia)",
+      "region_code": "ap-southeast-5",
+      "endpoint": "sqs.ap-southeast-5.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Malaysia)",
+      "region_code": "ap-southeast-5",
+      "endpoint": "sqs.ap-southeast-5.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Melbourne)",
+      "region_code": "ap-southeast-4",
+      "endpoint": "sqs.ap-southeast-4.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Melbourne)",
+      "region_code": "ap-southeast-4",
+      "endpoint": "sqs.ap-southeast-4.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "sqs.ap-south-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "sqs.ap-south-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (New Zealand)",
+      "region_code": "ap-southeast-6",
+      "endpoint": "sqs.ap-southeast-6.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (New Zealand)",
+      "region_code": "ap-southeast-6",
+      "endpoint": "sqs.ap-southeast-6.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Osaka)",
+      "region_code": "ap-northeast-3",
+      "endpoint": "sqs.ap-northeast-3.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Osaka)",
+      "region_code": "ap-northeast-3",
+      "endpoint": "sqs.ap-northeast-3.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "sqs.ap-northeast-2.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "sqs.ap-northeast-2.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "sqs.ap-southeast-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "sqs.ap-southeast-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "sqs.ap-southeast-2.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "sqs.ap-southeast-2.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Taipei)",
+      "region_code": "ap-east-2",
+      "endpoint": "sqs.ap-east-2.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Taipei)",
+      "region_code": "ap-east-2",
+      "endpoint": "sqs.ap-east-2.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Thailand)",
+      "region_code": "ap-southeast-7",
+      "endpoint": "sqs.ap-southeast-7.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Thailand)",
+      "region_code": "ap-southeast-7",
+      "endpoint": "sqs.ap-southeast-7.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "sqs.ap-northeast-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "sqs.ap-northeast-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "sqs.ca-central-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "sqs-fips.ca-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "sqs-fips.ca-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "sqs.ca-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "sqs.ca-west-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "sqs-fips.ca-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "sqs-fips.ca-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "sqs.ca-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "sqs.eu-central-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "sqs.eu-central-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "sqs.eu-west-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "sqs.eu-west-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "sqs.eu-west-2.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "sqs.eu-west-2.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Milan)",
+      "region_code": "eu-south-1",
+      "endpoint": "sqs.eu-south-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Milan)",
+      "region_code": "eu-south-1",
+      "endpoint": "sqs.eu-south-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "sqs.eu-west-3.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "sqs.eu-west-3.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Spain)",
+      "region_code": "eu-south-2",
+      "endpoint": "sqs.eu-south-2.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Spain)",
+      "region_code": "eu-south-2",
+      "endpoint": "sqs.eu-south-2.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "sqs.eu-north-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "sqs.eu-north-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Zurich)",
+      "region_code": "eu-central-2",
+      "endpoint": "sqs.eu-central-2.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Europe (Zurich)",
+      "region_code": "eu-central-2",
+      "endpoint": "sqs.eu-central-2.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Israel (Tel Aviv)",
+      "region_code": "il-central-1",
+      "endpoint": "sqs.il-central-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Israel (Tel Aviv)",
+      "region_code": "il-central-1",
+      "endpoint": "sqs.il-central-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Mexico (Central)",
+      "region_code": "mx-central-1",
+      "endpoint": "sqs.mx-central-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Mexico (Central)",
+      "region_code": "mx-central-1",
+      "endpoint": "sqs.mx-central-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Middle East (Bahrain)",
+      "region_code": "me-south-1",
+      "endpoint": "sqs.me-south-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Middle East (Bahrain)",
+      "region_code": "me-south-1",
+      "endpoint": "sqs.me-south-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Middle East (UAE)",
+      "region_code": "me-central-1",
+      "endpoint": "sqs.me-central-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "Middle East (UAE)",
+      "region_code": "me-central-1",
+      "endpoint": "sqs.me-central-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "sqs.sa-east-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "sqs.sa-east-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "sqs.us-gov-east-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "sqs.us-gov-east-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "sqs.us-gov-west-1.amazonaws.com",
+      "protocol": "HTTP and HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "sqs.us-gov-west-1.api.aws",
+      "protocol": "HTTP and HTTPS"
+    }
+  ],
+  "quotas": [
+    {
+      "name": "Actions per Queue Policy",
+      "default": "Each supported Region: 7",
+      "adjustable": false,
+      "description": "The number of actions in a queue policy."
+    },
+    {
+      "name": "Attributes per Message",
+      "default": "Each supported Region: 10",
+      "adjustable": false,
+      "description": "The number of attributes added to a message."
+    },
+    {
+      "name": "Batched Message ID Length",
+      "default": "Each supported Region: 80",
+      "adjustable": false,
+      "description": "The length of a batched message ID."
+    },
+    {
+      "name": "Batched Message Throughput for FIFO Queues",
+      "default": "Each supported Region: 3,000",
+      "adjustable": false,
+      "description": "The number of batched transactions per second (TPS) for FIFO queues."
+    },
+    {
+      "name": "Batched Message High Throughput for FIFO Queues",
+      "default": "Supported Regions (US East (N. Virginia), US West (Oregon), and Europe (Ireland)): 700,000; Europe (Frankfurt) and US East (Ohio): 180,000; Asia Pacific (Mumbai), Asia Pacific (Singapore), Asia Pacific (Sydney) and Asia Pacific (Tokyo): 90,000; Europe (London) and South America (São Paulo): 45,000; All other supported Regions: 24,000",
+      "adjustable": false,
+      "description": "The number of batched transactions per second (TPS) for FIFO queues."
+    },
+    {
+      "name": "Conditions per Queue Policy",
+      "default": "Each supported Region: 10",
+      "adjustable": false,
+      "description": "The number of conditions in a queue policy."
+    },
+    {
+      "name": "In-Flight Messages per FIFO Queue",
+      "default": "Each supported Region: 120,000",
+      "adjustable": false,
+      "description": "The number of in-flight messages in a FIFO queue."
+    },
+    {
+      "name": "In-Flight Messages per Standard Queue",
+      "default": "Each supported Region: 120,000",
+      "adjustable": true,
+      "description": "The number of in-flight messages in a standard queue."
+    },
+    {
+      "name": "Message Invisibility Period",
+      "default": "Each supported Region: 0 Seconds",
+      "adjustable": false,
+      "description": "The length of time, in seconds, for which Amazon SQS retains a message if it isn't deleted. The maximum is 14 days (1,209,600 seconds)."
+    },
+    {
+      "name": "Message Size",
+      "default": "Each supported Region: 256 Kilobytes",
+      "adjustable": false,
+      "description": "The size of a message, in kilobytes."
+    },
+    {
+      "name": "Message Size in Amazon S3 Bucket",
+      "default": "Each supported Region: 2 Gigabytes",
+      "adjustable": false,
+      "description": "The size of a message, in gigabytes, in an Amazon S3 bucket."
+    },
+    {
+      "name": "Messages per Batch",
+      "default": "Each supported Region: 10",
+      "adjustable": false,
+      "description": "The number of messages in a message batch."
+    },
+    {
+      "name": "Principals per Queue Policy",
+      "default": "Each supported Region: 50",
+      "adjustable": false,
+      "description": "The length of time, in minutes, by which to delay the initial delivery of messages to a queue."
+    },
+    {
+      "name": "Queue Name Length",
+      "default": "Each supported Region: 80",
+      "adjustable": false,
+      "description": "The queue name length."
+    },
+    {
+      "name": "Queue Policy Size",
+      "default": "Each supported Region: 8,192 Bytes",
+      "adjustable": false,
+      "description": "The size, in bytes, of a queue policy."
+    },
+    {
+      "name": "Statements per Queue Policy",
+      "default": "Each supported Region: 20",
+      "adjustable": false,
+      "description": "The number of tags added to a queue."
+    },
+    {
+      "name": "UTF-8 Queue Tag Key Length",
+      "default": "Each supported Region: 128",
+      "adjustable": false,
+      "description": "The length of a UTF-8 queue tag key."
+    },
+    {
+      "name": "UTF-8 Queue Tag Value Length",
+      "default": "Each supported Region: 256",
+      "adjustable": false,
+      "description": "The length of a UTF-8 queue tag value."
+    },
+    {
+      "name": "Unbatched Message Throughput for FIFO Queues",
+      "default": "Each supported Region: 300",
+      "adjustable": false,
+      "description": "The number of unbatched transactions per second (TPS) for FIFO queues."
+    }
+  ]
+}

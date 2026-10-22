@@ -1,0 +1,813 @@
+{
+  "schema_version": "1",
+  "service": "AWS Glue",
+  "quota_table_format": "standard",
+  "endpoints": [
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "glue.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "glue-fips.us-east-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "glue-fips.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "glue.us-east-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "glue.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "glue-fips.us-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "glue-fips.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "glue.us-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "glue.us-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "glue-fips.us-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "glue-fips.us-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "glue.us-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "glue.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "glue-fips.us-west-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "glue-fips.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "glue.us-west-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Africa (Cape Town)",
+      "region_code": "af-south-1",
+      "endpoint": "glue.af-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Africa (Cape Town)",
+      "region_code": "af-south-1",
+      "endpoint": "glue.af-south-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hong Kong)",
+      "region_code": "ap-east-1",
+      "endpoint": "glue.ap-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hong Kong)",
+      "region_code": "ap-east-1",
+      "endpoint": "glue.ap-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hyderabad)",
+      "region_code": "ap-south-2",
+      "endpoint": "glue.ap-south-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hyderabad)",
+      "region_code": "ap-south-2",
+      "endpoint": "glue.ap-south-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Jakarta)",
+      "region_code": "ap-southeast-3",
+      "endpoint": "glue.ap-southeast-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Jakarta)",
+      "region_code": "ap-southeast-3",
+      "endpoint": "glue.ap-southeast-3.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Malaysia)",
+      "region_code": "ap-southeast-5",
+      "endpoint": "glue.ap-southeast-5.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Malaysia)",
+      "region_code": "ap-southeast-5",
+      "endpoint": "glue.ap-southeast-5.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Melbourne)",
+      "region_code": "ap-southeast-4",
+      "endpoint": "glue.ap-southeast-4.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Melbourne)",
+      "region_code": "ap-southeast-4",
+      "endpoint": "glue.ap-southeast-4.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "glue.ap-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "glue.ap-south-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (New Zealand)",
+      "region_code": "ap-southeast-6",
+      "endpoint": "glue.ap-southeast-6.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (New Zealand)",
+      "region_code": "ap-southeast-6",
+      "endpoint": "glue.ap-southeast-6.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Osaka)",
+      "region_code": "ap-northeast-3",
+      "endpoint": "glue.ap-northeast-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Osaka)",
+      "region_code": "ap-northeast-3",
+      "endpoint": "glue.ap-northeast-3.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "glue.ap-northeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "glue.ap-northeast-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "glue.ap-southeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "glue.ap-southeast-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "glue.ap-southeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "glue.ap-southeast-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Taipei)",
+      "region_code": "ap-east-2",
+      "endpoint": "glue.ap-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Taipei)",
+      "region_code": "ap-east-2",
+      "endpoint": "glue.ap-east-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Thailand)",
+      "region_code": "ap-southeast-7",
+      "endpoint": "glue.ap-southeast-7.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Thailand)",
+      "region_code": "ap-southeast-7",
+      "endpoint": "glue.ap-southeast-7.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "glue.ap-northeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "glue.ap-northeast-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "glue.ca-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "glue-fips.ca-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "glue-fips.ca-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "glue.ca-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "glue.ca-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "glue-fips.ca-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "glue-fips.ca-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "glue.ca-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "glue.eu-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "glue.eu-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "glue.eu-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "glue.eu-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "glue.eu-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "glue.eu-west-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Milan)",
+      "region_code": "eu-south-1",
+      "endpoint": "glue.eu-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Milan)",
+      "region_code": "eu-south-1",
+      "endpoint": "glue.eu-south-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "glue.eu-west-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "glue.eu-west-3.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Spain)",
+      "region_code": "eu-south-2",
+      "endpoint": "glue.eu-south-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Spain)",
+      "region_code": "eu-south-2",
+      "endpoint": "glue.eu-south-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "glue.eu-north-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "glue.eu-north-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Zurich)",
+      "region_code": "eu-central-2",
+      "endpoint": "glue.eu-central-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Zurich)",
+      "region_code": "eu-central-2",
+      "endpoint": "glue.eu-central-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Israel (Tel Aviv)",
+      "region_code": "il-central-1",
+      "endpoint": "glue.il-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Israel (Tel Aviv)",
+      "region_code": "il-central-1",
+      "endpoint": "glue.il-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Mexico (Central)",
+      "region_code": "mx-central-1",
+      "endpoint": "glue.mx-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Mexico (Central)",
+      "region_code": "mx-central-1",
+      "endpoint": "glue.mx-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Middle East (Bahrain)",
+      "region_code": "me-south-1",
+      "endpoint": "glue.me-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Middle East (Bahrain)",
+      "region_code": "me-south-1",
+      "endpoint": "glue.me-south-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Middle East (UAE)",
+      "region_code": "me-central-1",
+      "endpoint": "glue.me-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Middle East (UAE)",
+      "region_code": "me-central-1",
+      "endpoint": "glue.me-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "glue.sa-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "glue.sa-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "glue.us-gov-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "glue-fips.us-gov-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "glue-fips.us-gov-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "glue.us-gov-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "glue.us-gov-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "glue-fips.us-gov-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "glue-fips.us-gov-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "glue.us-gov-west-1.api.aws",
+      "protocol": "HTTPS"
+    }
+  ],
+  "quotas": [
+    {
+      "name": "Concurrent compute capacity for Ray worker instances in M-DPUs per account.",
+      "default": "Each supported Region: 50",
+      "adjustable": false,
+      "description": "The maximum number of data processing units that can be concurrently used by Ray jobs or interactive sessions in this account. The capacity provided by a Ray worker instance type is measured in memory optimized data processing units (M-DPUs)."
+    },
+    {
+      "name": "Concurrent machine learning task runs per transform",
+      "default": "Each supported Region: 3",
+      "adjustable": true,
+      "description": "The maximum number of concurrent task runs per machine learning transform for this account."
+    },
+    {
+      "name": "Global max tags",
+      "default": "Each supported Region: 10,000",
+      "adjustable": true,
+      "description": "Catalog: global max tags"
+    },
+    {
+      "name": "Global maximum administrators",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "Catalog: global maximum administrators"
+    },
+    {
+      "name": "Global maximum paths",
+      "default": "Each supported Region: 30,000",
+      "adjustable": true,
+      "description": "Catalog: global maximum paths"
+    },
+    {
+      "name": "Global s3 path max length",
+      "default": "Each supported Region: 2,000",
+      "adjustable": true,
+      "description": "Catalog: global s3 path max length"
+    },
+    {
+      "name": "Label file size",
+      "default": "Each supported Region: 10 Megabytes",
+      "adjustable": true,
+      "description": "The maximum file size of an individual label file that can be imported."
+    },
+    {
+      "name": "Max DPUs per dev endpoint",
+      "default": "Each supported Region: 50",
+      "adjustable": true,
+      "description": "The maximum number of DPUs in your development endpoint."
+    },
+    {
+      "name": "Max Named Tag Expressions",
+      "default": "Each supported Region: 25,000",
+      "adjustable": true,
+      "description": "The maximum number of named tag expression allowed per account"
+    },
+    {
+      "name": "Max concurrent data quality ruleset evaluation runs per account",
+      "default": "Each supported Region: 50",
+      "adjustable": true,
+      "description": "The maximum number of concurrent data quality ruleset evaluation runs in your account."
+    },
+    {
+      "name": "Max concurrent data quality ruleset recommendation runs per account",
+      "default": "Each supported Region: 25",
+      "adjustable": true,
+      "description": "The maximum number of concurrent data quality ruleset recommendation runs in your account."
+    },
+    {
+      "name": "Max concurrent job runs per account",
+      "default": "Each supported Region: 2,000",
+      "adjustable": true,
+      "description": "The maximum number of concurrent job runs in your account."
+    },
+    {
+      "name": "Max concurrent job runs per job",
+      "default": "Each supported Region: 4,000",
+      "adjustable": true,
+      "description": "The maximum number of concurrent job runs for a job."
+    },
+    {
+      "name": "Max concurrent observations generation runs per account",
+      "default": "Each supported Region: 10",
+      "adjustable": true,
+      "description": "The maximum number of concurrent observations generation runs"
+    },
+    {
+      "name": "Max connection per account",
+      "default": "Each supported Region: 1,000",
+      "adjustable": true,
+      "description": "The maximum number of connections in your account."
+    },
+    {
+      "name": "Max data quality rulesets per account",
+      "default": "Each supported Region: 1,000,000",
+      "adjustable": true,
+      "description": "The maximum number of data quality rulesets per account."
+    },
+    {
+      "name": "Max databases per account",
+      "default": "Each supported Region: 10,000",
+      "adjustable": true,
+      "description": "The maximum number of databases in your account."
+    },
+    {
+      "name": "Max databases per catalog",
+      "default": "Each supported Region: 10,000",
+      "adjustable": true,
+      "description": "The maximum number of databases per catalog."
+    },
+    {
+      "name": "Max development endpoint per account",
+      "default": "Each supported Region: 25",
+      "adjustable": true,
+      "description": "The maximum number of development endpoints in your account."
+    },
+    {
+      "name": "Max functions per account",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of functions in your account."
+    },
+    {
+      "name": "Max functions per database",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of functions per database."
+    },
+    {
+      "name": "Max jobs per account",
+      "default": "Each supported Region: 2,000",
+      "adjustable": true,
+      "description": "The maximum number of jobs in your account."
+    },
+    {
+      "name": "Max jobs per trigger",
+      "default": "Each supported Region: 50",
+      "adjustable": true,
+      "description": "The maximum number of jobs that a trigger can start."
+    },
+    {
+      "name": "Max partitions per account",
+      "default": "Each supported Region: 20,000,000",
+      "adjustable": true,
+      "description": "The maximum number of partitions in your account."
+    },
+    {
+      "name": "Max partitions per table",
+      "default": "Each supported Region: 10,000,000",
+      "adjustable": true,
+      "description": "The maximum number of partitions per table."
+    },
+    {
+      "name": "Max security configurations per account",
+      "default": "Each supported Region: 250",
+      "adjustable": true,
+      "description": "The maximum number of security configurations in your account."
+    },
+    {
+      "name": "Max spare compute capacity consumed in data processing units (DPUs) per account.",
+      "default": "Each supported Region: 4,000",
+      "adjustable": true,
+      "description": "The maximum spare compute capacity in data processing units (DPUs) you can use concurrently in your account."
+    },
+    {
+      "name": "Max table versions per account",
+      "default": "Each supported Region: 1,000,000",
+      "adjustable": true,
+      "description": "The maximum number of table versions in your account."
+    },
+    {
+      "name": "Max table versions per table",
+      "default": "Each supported Region: 100,000",
+      "adjustable": true,
+      "description": "The maximum number of table versions per table."
+    },
+    {
+      "name": "Max tables per account",
+      "default": "Each supported Region: 1,000,000",
+      "adjustable": true,
+      "description": "The maximum number of tables in your account."
+    },
+    {
+      "name": "Max tables per database",
+      "default": "Each supported Region: 200,000",
+      "adjustable": true,
+      "description": "The maximum number of tables per database."
+    },
+    {
+      "name": "Max task DPUs per account",
+      "default": "us-east-1: 1,000; us-east-2: 1,000; us-west-2: 1,000; ap-northeast-1: 1,000; ap-southeast-2: 1,000; eu-west-1: 1,000; Each of the other supported Regions: 500",
+      "adjustable": true,
+      "description": "The maximum compute capacity in data processing units (DPUs) you can use concurrently in your account."
+    },
+    {
+      "name": "Max triggers per account",
+      "default": "Each supported Region: 1,000",
+      "adjustable": true,
+      "description": "The maximum number of triggers in your account."
+    },
+    {
+      "name": "Maximum number of in-flight completion requests allowed per account",
+      "default": "Each supported Region: 10",
+      "adjustable": true,
+      "description": "The maximum number of concurrent generative AI completion requests allowed per account in the current Region. These requests are used for code generation and Spark troubleshooting in AWS Glue."
+    },
+    {
+      "name": "Maximum number of queued job runs",
+      "default": "Each supported Region: 1,000",
+      "adjustable": true,
+      "description": "Orchestration: maximum number of queued job runs"
+    },
+    {
+      "name": "Number of Schema Registries.",
+      "default": "Each supported Region: 100",
+      "adjustable": false,
+      "description": "The maximum number of Schema Registries per AWS Region for this account."
+    },
+    {
+      "name": "Number of Schema Versions.",
+      "default": "Each supported Region: 10,000",
+      "adjustable": false,
+      "description": "The maximum number of Schema Versions per AWS Region for this account."
+    },
+    {
+      "name": "Number of column statistics tasks running concurrently per account",
+      "default": "Each supported Region: 50",
+      "adjustable": true,
+      "description": "The maximum number of column statistics tasks running concurrently in your account."
+    },
+    {
+      "name": "Number of connection types",
+      "default": "Each supported Region: 1,000",
+      "adjustable": true,
+      "description": "The maximum number of connection types per AWS Region for this account."
+    },
+    {
+      "name": "Number of crawlers per account",
+      "default": "Each supported Region: 1,000",
+      "adjustable": true,
+      "description": "The maximum number of crawlers in your account."
+    },
+    {
+      "name": "Number of crawlers running concurrently per account",
+      "default": "Each supported Region: 150",
+      "adjustable": true,
+      "description": "The maximum number of crawlers running concurrently in your account."
+    },
+    {
+      "name": "Number of integrations",
+      "default": "Each supported Region: 40",
+      "adjustable": true,
+      "description": "The maximum number of integrations per AWS Region for this account."
+    },
+    {
+      "name": "Number of machine learning transforms",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of machine learning transforms for this account."
+    },
+    {
+      "name": "Number of metadata key value pairs per Schema Version.",
+      "default": "Each supported Region: 10",
+      "adjustable": false,
+      "description": "The maximum number of Schema Version metadata key value pairs per Schema Version."
+    },
+    {
+      "name": "Number of workflows",
+      "default": "Each supported Region: 1,000",
+      "adjustable": true,
+      "description": "The maximum number of workflows in your account."
+    },
+    {
+      "name": "The maximum number of concurrent materialized view refresh task runs.",
+      "default": "Each supported Region: 50",
+      "adjustable": true,
+      "description": "The maximum number of concurrent materialized view refresh task runs."
+    }
+  ]
+}

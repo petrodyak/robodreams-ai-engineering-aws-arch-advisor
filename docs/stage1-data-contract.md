@@ -2,7 +2,8 @@
 
 Decisions reached in the design interview of 2026-10-15, amended on 2026-10-16 (items 6, 9,
 14, 16; review of the earlier schema grill against this contract) and on 2026-10-21 (items 14,
-15, 16, 18; the S3 trial call and the reviews of step 4). Terms are defined in
+15, 16, 18; the S3 trial call and the reviews of step 4; item 6, the Golden Set check of
+step 5). Terms are defined in
 [`GLOSSARY.md`](../GLOSSARY.md); the decisions that are hard to reverse have ADRs
 ([0001](adr/0001-standard-quota-tables-only.md), [0002](adr/0002-model-extracts-code-derives.md),
 [0003](adr/0003-format-checks-are-validation-failures.md)).
@@ -24,7 +25,12 @@ This file is the single list to check code against; it is not a spec of the impl
 5. `quota_table_format: standard | non_standard | none` (enum).
 6. `endpoints: list[EndpointRow]` — `region_name`, `region_code`, `endpoint`, `protocol`
    (`HTTPS | HTTP | HTTP and HTTPS` — the printed value, 7 Working Set files print
-   "HTTP and HTTPS"), exactly the printed columns; one row per hostname. `endpoint_type`
+   "HTTP and HTTPS"), exactly the printed columns; one row per hostname. The rows come from
+   every endpoints table of the Target Service's chapter (S3 prints four: `s3`, `s3tables`,
+   `s3-accesspoint`, `s3-control`). A hostname printed twice (Aurora prints the same 36 in its
+   MySQL- and PostgreSQL-Compatible tables) is one row, so metrics compare key sets. A
+   templated hostname is kept as printed (`gatewayId.gateway.bedrock-agentcore.us-east-1.
+   amazonaws.com`, AgentCore). `endpoint_type`
    (`fips | dual_stack | fips_dual_stack | ipv4 | global`) is a computed field derived from the
    hostname and is excluded from accuracy metrics: `global` when the hostname does not contain
    `region_code`; dual-stack when the domain is `api.aws` / `on.aws` or a label is `dualstack`;

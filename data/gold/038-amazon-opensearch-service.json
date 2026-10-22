@@ -1,0 +1,1106 @@
+{
+  "schema_version": "1",
+  "service": "Amazon OpenSearch Service",
+  "quota_table_format": "non_standard",
+  "endpoints": [
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "es.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "es-fips.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "aos.us-east-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "es.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "es-fips.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "aos.us-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "es.us-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "es-fips.us-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "aos.us-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "es.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "es-fips.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "aos.us-west-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Africa (Cape Town)",
+      "region_code": "af-south-1",
+      "endpoint": "es.af-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Africa (Cape Town)",
+      "region_code": "af-south-1",
+      "endpoint": "aos.af-south-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hong Kong)",
+      "region_code": "ap-east-1",
+      "endpoint": "es.ap-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hong Kong)",
+      "region_code": "ap-east-1",
+      "endpoint": "aos.ap-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hyderabad)",
+      "region_code": "ap-south-2",
+      "endpoint": "es.ap-south-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hyderabad)",
+      "region_code": "ap-south-2",
+      "endpoint": "aos.ap-south-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Jakarta)",
+      "region_code": "ap-southeast-3",
+      "endpoint": "es.ap-southeast-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Jakarta)",
+      "region_code": "ap-southeast-3",
+      "endpoint": "aos.ap-southeast-3.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Malaysia)",
+      "region_code": "ap-southeast-5",
+      "endpoint": "es.ap-southeast-5.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Malaysia)",
+      "region_code": "ap-southeast-5",
+      "endpoint": "aos.ap-southeast-5.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Melbourne)",
+      "region_code": "ap-southeast-4",
+      "endpoint": "es.ap-southeast-4.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Melbourne)",
+      "region_code": "ap-southeast-4",
+      "endpoint": "aos.ap-southeast-4.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "es.ap-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "aos.ap-south-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (New Zealand)",
+      "region_code": "ap-southeast-6",
+      "endpoint": "es.ap-southeast-6.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (New Zealand)",
+      "region_code": "ap-southeast-6",
+      "endpoint": "aos.ap-southeast-6.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Osaka)",
+      "region_code": "ap-northeast-3",
+      "endpoint": "es.ap-northeast-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Osaka)",
+      "region_code": "ap-northeast-3",
+      "endpoint": "aos.ap-northeast-3.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "es.ap-northeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "aos.ap-northeast-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "es.ap-southeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "aos.ap-southeast-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "es.ap-southeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "aos.ap-southeast-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Taipei)",
+      "region_code": "ap-east-2",
+      "endpoint": "es.ap-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Taipei)",
+      "region_code": "ap-east-2",
+      "endpoint": "aos.ap-east-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Thailand)",
+      "region_code": "ap-southeast-7",
+      "endpoint": "es.ap-southeast-7.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Thailand)",
+      "region_code": "ap-southeast-7",
+      "endpoint": "aos.ap-southeast-7.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "es.ap-northeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "aos.ap-northeast-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "es.ca-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "aos.ca-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "es.ca-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "aos.ca-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "es.eu-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "aos.eu-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "es.eu-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "aos.eu-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "es.eu-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "aos.eu-west-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Milan)",
+      "region_code": "eu-south-1",
+      "endpoint": "es.eu-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Milan)",
+      "region_code": "eu-south-1",
+      "endpoint": "aos.eu-south-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "es.eu-west-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "aos.eu-west-3.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Spain)",
+      "region_code": "eu-south-2",
+      "endpoint": "es.eu-south-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Spain)",
+      "region_code": "eu-south-2",
+      "endpoint": "aos.eu-south-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "es.eu-north-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "aos.eu-north-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Zurich)",
+      "region_code": "eu-central-2",
+      "endpoint": "es.eu-central-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Zurich)",
+      "region_code": "eu-central-2",
+      "endpoint": "aos.eu-central-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Israel (Tel Aviv)",
+      "region_code": "il-central-1",
+      "endpoint": "es.il-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Israel (Tel Aviv)",
+      "region_code": "il-central-1",
+      "endpoint": "aos.il-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Mexico (Central)",
+      "region_code": "mx-central-1",
+      "endpoint": "es.mx-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Mexico (Central)",
+      "region_code": "mx-central-1",
+      "endpoint": "aos.mx-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Middle East (Bahrain)",
+      "region_code": "me-south-1",
+      "endpoint": "es.me-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Middle East (Bahrain)",
+      "region_code": "me-south-1",
+      "endpoint": "aos.me-south-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Middle East (UAE)",
+      "region_code": "me-central-1",
+      "endpoint": "es.me-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Middle East (UAE)",
+      "region_code": "me-central-1",
+      "endpoint": "aos.me-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "es.sa-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "aos.sa-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "es.us-gov-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "es-fips.us-gov-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "aos.us-gov-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "es.us-gov-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "es-fips.us-gov-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "aos.us-gov-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "aoss.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "dashboards.us-east-2.aoss-fips.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "us-east-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "dashboards.us-east-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "us-east-2.aoss-fips.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "aoss.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "us-east-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "dashboards.us-east-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "dashboards.us-east-1.aoss-fips.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "us-east-1.aoss-fips.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "aoss.us-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "dashboards.us-west-1.aoss-fips.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "dashboards.us-west-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "us-west-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "us-west-1.aoss-fips.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "aoss.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "dashboards.us-west-2.aoss-fips.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "dashboards.us-west-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "us-west-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "us-west-2.aoss-fips.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hong Kong)",
+      "region_code": "ap-east-1",
+      "endpoint": "aoss.ap-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hong Kong)",
+      "region_code": "ap-east-1",
+      "endpoint": "ap-east-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hong Kong)",
+      "region_code": "ap-east-1",
+      "endpoint": "dashboards.ap-east-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hyderabad)",
+      "region_code": "ap-south-2",
+      "endpoint": "aoss.ap-south-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hyderabad)",
+      "region_code": "ap-south-2",
+      "endpoint": "dashboards.ap-south-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hyderabad)",
+      "region_code": "ap-south-2",
+      "endpoint": "ap-south-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "aoss.ap-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "dashboards.ap-south-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "ap-south-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Osaka)",
+      "region_code": "ap-northeast-3",
+      "endpoint": "aoss.ap-northeast-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Osaka)",
+      "region_code": "ap-northeast-3",
+      "endpoint": "ap-northeast-3.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Osaka)",
+      "region_code": "ap-northeast-3",
+      "endpoint": "dashboards.ap-northeast-3.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "aoss.ap-northeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "dashboards.ap-northeast-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "ap-northeast-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "aoss.ap-southeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "dashboards.ap-southeast-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "ap-southeast-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "aoss.ap-southeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "dashboards.ap-southeast-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "ap-southeast-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "aoss.ap-northeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "dashboards.ap-northeast-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "ap-northeast-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "aoss.ca-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "ca-central-1.aoss-fips.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "dashboards.ca-central-1.aoss-fips.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "dashboards.ca-central-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "ca-central-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "aoss.eu-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "dashboards.eu-central-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "eu-central-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "aoss.eu-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "eu-west-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "dashboards.eu-west-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "aoss.eu-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "eu-west-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "dashboards.eu-west-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Milan)",
+      "region_code": "eu-south-1",
+      "endpoint": "aoss.eu-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Milan)",
+      "region_code": "eu-south-1",
+      "endpoint": "eu-south-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Milan)",
+      "region_code": "eu-south-1",
+      "endpoint": "dashboards.eu-south-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "aoss.eu-west-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "eu-west-3.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "dashboards.eu-west-3.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Spain)",
+      "region_code": "eu-south-2",
+      "endpoint": "aoss.eu-south-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Spain)",
+      "region_code": "eu-south-2",
+      "endpoint": "dashboards.eu-south-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Spain)",
+      "region_code": "eu-south-2",
+      "endpoint": "eu-south-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "aoss.eu-north-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "eu-north-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "dashboards.eu-north-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Zurich)",
+      "region_code": "eu-central-2",
+      "endpoint": "aoss.eu-central-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Zurich)",
+      "region_code": "eu-central-2",
+      "endpoint": "eu-central-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Zurich)",
+      "region_code": "eu-central-2",
+      "endpoint": "dashboards.eu-central-2.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "aoss.sa-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "sa-east-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "dashboards.sa-east-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "aoss.us-gov-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "us-gov-east-1.aoss-fips.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "dashboards.us-gov-east-1.aoss-fips.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "us-gov-east-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "dashboards.us-gov-east-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "aoss.us-gov-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "dashboards.us-gov-west-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "us-gov-west-1.aoss-fips.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "us-gov-west-1.aoss.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "dashboards.us-gov-west-1.aoss-fips.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "osis.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "osis.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "osis.us-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "osis.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "osis.ap-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "osis.ap-northeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "osis.ap-southeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "osis.ap-southeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "osis.ap-northeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "osis.ca-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "osis.eu-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "osis.eu-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "osis.eu-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "osis.eu-west-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Spain)",
+      "region_code": "eu-south-2",
+      "endpoint": "osis.eu-south-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "osis.eu-north-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "osis.sa-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "osis.us-gov-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "osis.us-gov-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    }
+  ],
+  "quotas": []
+}
