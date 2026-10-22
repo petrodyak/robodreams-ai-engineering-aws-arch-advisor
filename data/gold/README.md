@@ -27,7 +27,7 @@ numbers.
 ## Selection
 
 6 `short` / 3 `medium` / 1 `edge`, to keep the manual check short; the limits this sets on the
-metrics (edge on one document, no `non_standard` and no global service in gold) are in
+metrics (edge on one document, no global service in gold) are in
 `docs/data-notes.md`.
 
 ## Decisions taken while checking

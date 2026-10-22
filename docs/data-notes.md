@@ -35,10 +35,11 @@ touching `data/`, the prompts, or the golden set. The schema the data is extract
       is an anecdote, not a measurement; the group breakdown in REPORT is read for `short` and
       `medium` only. Errors on long, FIPS-heavy or quota-heavy documents (S3, DynamoDB, EMR) are
       shown through validity (`% ok`, truncation) and the error analysis, not through accuracy.
-    - *No `non_standard` document in gold* (Redshift `042` left it). Accuracy of
-      `quota_table_format` covers `standard` and `none` (`007`) only; whether a model recognises a
-      non-standard quotas layout instead of inventing Quota Rows (ADR-0001) is checked by hand on
-      the non-gold documents `042` and `047` in the error analysis.
+    - *All three Quota Table Formats are still in gold* (corrected 22.10: the first version of
+      this note said `non_standard` was missing — it relied on the manifest notes, not on the
+      checked files). `standard`: six files; `none`: `007`, `085`; `non_standard`: `066`, `038`,
+      both confirmed against the PDF. So `quota_table_format` accuracy covers every value;
+      Redshift `042` (`none` in the draft) is left to the error analysis.
     - *No global service in gold* (CloudFront `010` left it). `endpoint_type` is excluded from
       accuracy anyway (contract item 6), so only the error analysis can show how a model handles
       the 3-row global table.
