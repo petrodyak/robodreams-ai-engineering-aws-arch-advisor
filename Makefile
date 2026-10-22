@@ -1,5 +1,5 @@
 # Every target runs inside the uv-managed .venv (`uv run` syncs it first if needed).
-.PHONY: install data text run estimate schema check
+.PHONY: install data text run estimate schema gold-drafts gold-check check
 
 # One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`.
 MODEL ?= claude
@@ -31,6 +31,14 @@ estimate:
 # the JSON Schema both models receive -> docs/service-document.schema.json
 schema:
 	uv run python -m scripts.export_schema
+
+# Golden Set (data/gold/README.md): drafts from claude__v1__t0 (never overwrites a file),
+# then the list of endpoint rows to check by hand against the PDF
+gold-drafts:
+	uv run python -m scripts.make_gold_drafts
+
+gold-check:
+	uv run python -m scripts.check_gold
 
 # pre-commit gates (docs/GIT_RULES.md §1): all three always run, exit non-zero if any failed;
 # `schema` first, so a schema.py change always lands in the documented schema file

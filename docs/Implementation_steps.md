@@ -54,8 +54,8 @@ Apply to every step and are not repeated in the steps:
 | 3.1 | Status row for step 3 | `patch-3.1-step-3-status-row` | — | — | 21.10 | ✅ PR #8 (`e4bfad3`) |
 | 3.2 | README: "Why this is not just table parsing" | `patch-3.2-readme-not-table-parsing` | review 5 min | repo quality | 21.10 | ✅ PR #9 (`d9f8116`) |
 | 4 | Prompt v1, sampling config, pipeline, `make run`, run `claude__v1__t0` | `step-4-pipeline-v1` | "ok" on the cost | step 1: all texts run (2); step 3: validation (3), logging (2) | 19.10 | ✅ PR #10 (`15e8d1a`) |
-| 4.1 | Status rows for steps 4 and 3.2 | `patch-4.1-step-4-status-row` | — | — | 21.10 | 🔄 branch `patch-4.1-step-4-status-row` |
-| 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | ⬜ |
+| 4.1 | Status rows for steps 4 and 3.2 | `patch-4.1-step-4-status-row` | — | — | 21.10 | ✅ PR #11 (`462e69c`) |
+| 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | 🔄 PR #12 |
 | 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | ⬜ |
 | 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | ⬜ |
 | 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ⬜ |
@@ -193,14 +193,19 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
   "model-assisted, human-verified"), a gold validity test.
 - **Done when:** every file checked against the PDF (endpoints, quotas, `quota_table_format`); the test passes;
   the README states the advantage of the model that produced the draft.
-- **Open:** checking order — start with `short` to calibrate the procedure. Endpoints are checked by
-  a script against the target section of the `.txt` (hostnames, wraps, `region_code`, `protocol`);
-  `region_name`, quotas and rows the script cannot parse are checked by hand against the PDF.
-  Decided 21.10: `005-amazon-aurora` prints the same 36 hostnames twice (MySQL- and
-  PostgreSQL-Compatible tables) → the gold file holds one row per hostname (36) and metrics
-  compare key sets; amend contract item 6 in this step. Open: how to write the templated
-  `gatewayId` endpoints of `007-amazon-bedrock-agentcore` (22 rows) — decide against the PDF.
-- **Done:** —
+- **Open:** — (decisions of 21.10–22.10 are in `data/gold/README.md` and contract item 6).
+- **Done:**
+  - 21.10, commit `3a80f0d`: `make gold-drafts` (drafts from `claude__v1__t0`, never overwrites),
+    `make gold-check` (printed hostnames of every endpoints table vs the gold rows, wraps
+    rejoined), `tests/test_gold.py`, `data/gold/README.md`; contract item 6 amended (every
+    endpoints table, one row per hostname, templated hostnames as printed). 133 tests.
+  - 22.10: all 10 files checked against the PDF by Petro (✅ in `data/gold/README.md`).
+    Corrections to the Claude draft: `048` +20 rows of the "Legacy endpoints" table that the
+    draft missed (a real Claude error, material for the error analysis); 5 rows removed by the
+    reviewer as not in the PDF or outside items 6/7 (`033`, `085`, `007` one endpoint each;
+    `048`, `076` one quota each) — `make gold-check` keeps listing those three hostnames
+    because the `.txt` prints them. Net: endpoints +20 / −3, quotas −2. The README states the
+    drafting model's advantage. F6 closed; F14 closed for the gold documents. 133 tests.
 
 ### Step 6 — Ollama + v1 runs
 
@@ -287,7 +292,7 @@ and the PR that closed it.
 | F3 | The README must name the known limits: Standard Quota Table only (ADR-0001), the AWS domain list (ADR-0003), Neighbour Tail | step 1 | step 8 | ⬜ |
 | F4 | The local branch `backup/step-0-1-grill-me-1-local-snapshot` is needed only as the basis for the tests | step 1 | after step 2 is merged — delete | ✅ deleted 17.10 after PR #5 (was `e2f27cf`) |
 | F5 | `Field(description=...)` texts in `schema.py` are model instructions outside `prompts/`, not covered by `prompt_version` | step 2 review | step 4 (state in `prompts/CHANGELOG.md` that schema descriptions are part of a prompt version) | ✅ step 4 (`step-4-pipeline-v1`); 21.10: the enum descriptions were not sent at all, fixed in the same step |
-| F6 | `endpoint_rows` in `data/raw/manifest.csv` undercounts: it matched hostnames on one line, but wrapped hostnames are split (S3: 254 in the manifest, 290 rows extracted, all 36 extra are rejoined wraps). S3 also has several endpoint sub-tables (`s3`, `s3tables`, `s3-accesspoint`, `s3-control`); contract item 6 says "the endpoints table" | step 4 | step 5 (gold check counts rows in the PDF, not from the manifest; state "all endpoint tables of the chapter" in item 6) | ⬜ |
+| F6 | `endpoint_rows` in `data/raw/manifest.csv` undercounts: it matched hostnames on one line, but wrapped hostnames are split (S3: 254 in the manifest, 290 rows extracted, all 36 extra are rejoined wraps). S3 also has several endpoint sub-tables (`s3`, `s3tables`, `s3-accesspoint`, `s3-control`); contract item 6 says "the endpoints table" | step 4 | step 5 (gold check counts rows in the PDF, not from the manifest; state "all endpoint tables of the chapter" in item 6) | ✅ step 5 (`step-5-golden-set`): contract item 6 names every endpoints table; gold rows are counted against the printed text and the PDF. The manifest column is left as is and is not used by metrics |
 | F7 | A transport failure (a non-retryable 4xx such as "credit balance is too low", or a 429/529 still failing after 3 attempts) is written as a permanent `failed` Run Record, and resume skips it: after a top-up the documents stay `failed` and count against validity. The backoff (1 s, 2 s) also ignores `retry-after` | step 4 review | step 4, before the full run | ✅ step 4 (`step-4-pipeline-v1`) |
 | F8 | `done_files` parses every line, so one half-written last line (killed process, full disk) makes every later resume crash with `JSONDecodeError` | step 4 review | step 4 | ✅ step 4 (`step-4-pipeline-v1`) |
 | F9 | `SCHEMA_FILE` and the example path in `tests/test_schema.py` are relative to the current directory: `cd tests && pytest` fails; `pipeline.py` already uses `ROOT / ...` | step 4 review | step 4 | ✅ step 4 (`step-4-pipeline-v1`) |
@@ -295,7 +300,7 @@ and the PR that closed it.
 | F11 | Every non-retryable error becomes `NoAnswer`, also a permanent one (400 "prompt is too long", a rejected schema): such a document never gets a record, `main.py` exits non-zero on every run, and step 7 waits for 30 records forever. Contract item 15 considers only temporary causes | review of the F7 fix | step 4 (contract items 15, 18: counted as failed in metrics; no error classification) | ✅ step 4 (`step-4-pipeline-v1`); metrics side in step 7 |
 | F12 | Results-file edge cases: a line that is JSON but not an object raises a bare `TypeError` without its line number; `{"file": null}` counts as done; a complete record whose final `\n` was stripped by hand is dropped as a cut-off line (recoverable from Git) | review of the F8 fix | Petro's call | ⬜ |
 | F13 | No test pins `main.py`'s non-zero exit (contract item 15) or `NoAnswer.__cause__` | review of the F7 fix | Petro's call | ⬜ |
-| F14 | `claude__v1__t0` is 30/30 valid, but endpoint row counts differ from the manifest in both directions. Fewer: `078` IAM Identity Center 78 of 234, `017` DynamoDB 94 of 203, `044` RDS 78 of 165, `092` Secrets Manager 44 of 62, `048` SQS 84 of 104 (gold). More: `007` AgentCore 39 vs 22 (templated `gatewayId`, gold), `055` App Mesh 120 vs 77, `042` Redshift 253 vs 201, `038` OpenSearch 183 vs 170 (Neighbour Tail of Network Security Manager? gold), `085` Lake Formation 88 vs 75 (gold). Also `042` Redshift has `quota_table_format: none` (ADR-0001 expects `non_standard`?) and `010` CloudFront has 97 Quota Rows. Expected or manifest-side: `005` Aurora 36 of 72 (decided: one row per hostname), `074` Global Accelerator 2 of 105 (the text has 5 hostnames — manifest, F6). The manifest undercounts wrapped hostnames (F6), so these are signals, not verdicts | step 4 (full run) | step 5 (gold `048`, `007`, `038`, `085`: count against the PDF); steps 8–9 (non-gold: error analysis and v2 changes) | ⬜ |
+| F14 | `claude__v1__t0` is 30/30 valid, but endpoint row counts differ from the manifest in both directions. Fewer: `078` IAM Identity Center 78 of 234, `017` DynamoDB 94 of 203, `044` RDS 78 of 165, `092` Secrets Manager 44 of 62, `048` SQS 84 of 104 (gold). More: `007` AgentCore 39 vs 22 (templated `gatewayId`, gold), `055` App Mesh 120 vs 77, `042` Redshift 253 vs 201, `038` OpenSearch 183 vs 170 (Neighbour Tail of Network Security Manager? gold), `085` Lake Formation 88 vs 75 (gold). Also `042` Redshift has `quota_table_format: none` (ADR-0001 expects `non_standard`?) and `010` CloudFront has 97 Quota Rows. Expected or manifest-side: `005` Aurora 36 of 72 (decided: one row per hostname), `074` Global Accelerator 2 of 105 (the text has 5 hostnames — manifest, F6). The manifest undercounts wrapped hostnames (F6), so these are signals, not verdicts | step 4 (full run) | step 5 (gold `048`, `007`, `038`, `085`: count against the PDF); steps 8–9 (non-gold: error analysis and v2 changes) | ◐ gold part ✅ step 5 (`step-5-golden-set`): `085`, `007`, `038` match the printed hostnames (the manifest undercounts, F6; no Neighbour Tail); `048` missed the 20-row "Legacy endpoints" table, added to gold. Non-gold documents (`078`, `017`, `044`, `092`, `055`, `042`, `010`) → steps 8–9 |
 
 ## 7. Risks
 
@@ -314,5 +319,6 @@ and the PR that closed it.
 | 17.10 | All `.md` files translated to English; repository docs are written in English from now on |
 | 17.10 | Step 2.1 added: `CLAUDE.md` split; this file is now the only place for status and next step |
 | 21.10 | Step 3.2 added: README section "Why this is not just table parsing" (answers the question whether a structured source is a fair structured-extraction task) |
-| 21.10 | Golden Set re-selected to 6 `short` / 3 `medium` / 1 `edge` to cut the manual check (step 5); the limits it sets on the metrics — `edge` on one document, no `non_standard` and no global service in gold — are in `data-notes.md` |
+| 21.10 | Golden Set re-selected to 6 `short` / 3 `medium` / 1 `edge` to cut the manual check (step 5); the limits it sets on the metrics — `edge` on one document, no global service in gold — are in `data-notes.md` |
+| 22.10 | Correction: the Golden Set does contain `non_standard` documents (`066`, `038`), so `quota_table_format` accuracy covers all three values; `data-notes.md` fixed |
 | 21.10 | Budget variant A: `claude__v1__t05` on the 10 Golden Set documents only, `claude__v2__t05` dropped (section 5); step 6 needs a `--gold` option in `main.py` |

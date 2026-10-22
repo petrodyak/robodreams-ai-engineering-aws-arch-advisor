@@ -1,0 +1,189 @@
+{
+  "schema_version": "1",
+  "service": "AWS Glue DataBrew",
+  "quota_table_format": "standard",
+  "endpoints": [
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "databrew.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "databrew-fips.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "databrew.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "databrew-fips.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "databrew.us-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "databrew-fips.us-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "databrew.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "databrew-fips.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Africa (Cape Town)",
+      "region_code": "af-south-1",
+      "endpoint": "databrew.af-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hong Kong)",
+      "region_code": "ap-east-1",
+      "endpoint": "databrew.ap-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "databrew.ap-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "databrew.ap-northeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "databrew.ap-southeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "databrew.ap-southeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "databrew.ap-northeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "databrew.ca-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "databrew.eu-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "databrew.eu-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "databrew.eu-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Milan)",
+      "region_code": "eu-south-1",
+      "endpoint": "databrew.eu-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "databrew.eu-west-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "databrew.eu-north-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "databrew.sa-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "databrew.us-gov-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    }
+  ],
+  "quotas": [
+    {
+      "name": "Concurrent jobs per AWS account",
+      "default": "Each supported Region: 10",
+      "adjustable": true,
+      "description": "The maximum number of jobs that you can run at the same time in this AWS account."
+    },
+    {
+      "name": "Datasets per AWS account",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of datasets that you can create in this AWS account."
+    },
+    {
+      "name": "Jobs per AWS account",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of jobs that you can create in this AWS account."
+    },
+    {
+      "name": "Node capacity per AWS account",
+      "default": "Each supported Region: 300",
+      "adjustable": true,
+      "description": "The maximum number of nodes available to jobs running in this AWS account."
+    },
+    {
+      "name": "Open projects per AWS account",
+      "default": "Each supported Region: 10",
+      "adjustable": true,
+      "description": "The maximum number of projects that you can open concurrently in this AWS account."
+    },
+    {
+      "name": "Projects per AWS account",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of projects that you can create in this AWS account."
+    }
+  ]
+}
