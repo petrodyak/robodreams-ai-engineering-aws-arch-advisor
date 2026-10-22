@@ -55,7 +55,7 @@ Apply to every step and are not repeated in the steps:
 | 3.2 | README: "Why this is not just table parsing" | `patch-3.2-readme-not-table-parsing` | review 5 min | repo quality | 21.10 | ✅ PR #9 (`d9f8116`) |
 | 4 | Prompt v1, sampling config, pipeline, `make run`, run `claude__v1__t0` | `step-4-pipeline-v1` | "ok" on the cost | step 1: all texts run (2); step 3: validation (3), logging (2) | 19.10 | ✅ PR #10 (`15e8d1a`) |
 | 4.1 | Status rows for steps 4 and 3.2 | `patch-4.1-step-4-status-row` | — | — | 21.10 | ✅ PR #11 (`462e69c`) |
-| 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | 🔄 branch `step-5-golden-set` |
+| 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | 🔄 PR #12 |
 | 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | ⬜ |
 | 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | ⬜ |
 | 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ⬜ |
