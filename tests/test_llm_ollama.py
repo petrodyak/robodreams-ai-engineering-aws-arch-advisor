@@ -65,7 +65,7 @@ def test_request_carries_the_same_schema_as_claude_and_the_provider_constants():
     assert request["options"] == {
         "temperature": 0.0,
         "num_ctx": 32768,
-        "num_predict": 16384,
+        "num_predict": 18432,  # S3 trial at 16384 was cut off (23.10)
     }  # top_p unset is not sent (contract item 14)
 
 

@@ -27,9 +27,11 @@ MODEL = "qwen2.5:7b"
 # Per attempt. A local 7B model writes tens of tokens per second, so a long answer takes
 # minutes; the S3 trial of step 6 measures it.
 TIMEOUT_S = 900
-# The output cap, Ollama's counterpart of Claude's max_tokens (contract item 14). A complete
-# S3 answer is ≈16.6k Claude tokens; qwen's tokenizer counts this text ≈0.73× as many.
-NUM_PREDICT = 16384
+# The output cap, Ollama's counterpart of Claude's max_tokens (contract item 14). qwen writes
+# about as many output tokens as Claude (006: 1,493 vs 1,454; its indented JSON costs
+# characters, not tokens), so S3 needs ≈17.1k: the trial at 16384 was cut off (23.10).
+# 18432 fits S3 into num_ctx (13,714 input + 18,432 = 32,146 < 32,768), the largest input.
+NUM_PREDICT = 18432
 # Keep the model loaded between the documents of a run instead of reloading it each time.
 KEEP_ALIVE = "30m"
 SAMPLING_CONFIG = Path(__file__).resolve().parents[3] / "config" / "sampling.yaml"

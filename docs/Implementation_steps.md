@@ -214,12 +214,13 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
   `claude__v1__t05__gold`.
 - **Done when:** the pipeline is unchanged (only a new provider); qwen runs in the background, latency
   recorded; finding F2 (`num_ctx`) closed.
-- **Open:** run order, each only after Petro's ok — (1) qwen t0 on S3 alone (`--only 049`):
-  speed and whether S3 fits `num_ctx`; (2) `qwen2.5-7b__v1__t0` and (3) `qwen2.5-7b__v1__t05`
-  in the background; (4) `claude__v1__t05__gold` (≈ $0.27: input $0.06 + ≈42k output tokens).
+- **Open:** run order, each only after Petro's ok — (1) `qwen2.5-7b__v1__t0` (S3 again,
+  now at `num_predict` 18432) and (2) `qwen2.5-7b__v1__t05` in the background; F15 makes every
+  qwen answer go through a repair call, so expect ≈2–3 h per run; (3) `claude__v1__t05__gold`
+  (≈ $0.27: input $0.06 + ≈42k output tokens).
 - **Done:**
   - 22.10, code: `OllamaClient` behind the same `LLMClient` interface — the identical schema
-    through `format`, `num_ctx` from the config (F2), `num_predict` 16384, a reply that hits
+    through `format`, `num_ctx` from the config (F2), `num_predict` (now 18432), a reply that hits
     `num_predict` or fills `num_ctx` is cut off (`stop_reason = max_tokens`), transport retry
     as for Claude. `main.py --model qwen2.5-7b`, `--gold` (run id suffix `__gold`; `make run
     GOLD=1`); `Document.gold` from the manifest. Contract items 11, 14, 18 amended. The
@@ -230,6 +231,11 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     JSONL after every record, so a long qwen run can be read while it runs. `src/extract/
     report_md.py`, `make runs-md` rebuilds every mirror; contract item 12 amended. The Run
     Record format is unchanged; only the JSONL path moved.
+  - 23.10, trials, $0: qwen t0 on S3 was cut off at `num_predict` 16384 (13,714 in / 16,384
+    out, 505 s ≈ 32 tokens/s; `num_ctx` held: 30,098 of 32,768) — kept in `results/trials/`. A
+    direct call on `006` (scratchpad, not a run) showed why: qwen writes indented JSON (1.32×
+    the characters) but about as many tokens as Claude (1,493 vs 1,454), so S3 needs ≈17.1k →
+    `num_predict` 18432 (contract item 14). The same call found F15.
 
 ### Step 7 — Metrics
 
@@ -315,6 +321,7 @@ and the PR that closed it.
 | F12 | Results-file edge cases: a line that is JSON but not an object raises a bare `TypeError` without its line number; `{"file": null}` counts as done; a complete record whose final `\n` was stripped by hand is dropped as a cut-off line (recoverable from Git) | review of the F8 fix | Petro's call | ⬜ |
 | F13 | No test pins `main.py`'s non-zero exit (contract item 15) or `NoAnswer.__cause__` | review of the F7 fix | Petro's call | ⬜ |
 | F14 | `claude__v1__t0` is 30/30 valid, but endpoint row counts differ from the manifest in both directions. Fewer: `078` IAM Identity Center 78 of 234, `017` DynamoDB 94 of 203, `044` RDS 78 of 165, `092` Secrets Manager 44 of 62, `048` SQS 84 of 104 (gold). More: `007` AgentCore 39 vs 22 (templated `gatewayId`, gold), `055` App Mesh 120 vs 77, `042` Redshift 253 vs 201, `038` OpenSearch 183 vs 170 (Neighbour Tail of Network Security Manager? gold), `085` Lake Formation 88 vs 75 (gold). Also `042` Redshift has `quota_table_format: none` (ADR-0001 expects `non_standard`?) and `010` CloudFront has 97 Quota Rows. Expected or manifest-side: `005` Aurora 36 of 72 (decided: one row per hostname), `074` Global Accelerator 2 of 105 (the text has 5 hostnames — manifest, F6). The manifest undercounts wrapped hostnames (F6), so these are signals, not verdicts | step 4 (full run) | step 5 (gold `048`, `007`, `038`, `085`: count against the PDF); steps 8–9 (non-gold: error analysis and v2 changes) | ◐ gold part ✅ step 5 (`step-5-golden-set`): `085`, `007`, `038` match the printed hostnames (the manifest undercounts, F6; no Neighbour Tail); `048` missed the 20-row "Legacy endpoints" table, added to gold. Non-gold documents (`078`, `017`, `044`, `092`, `055`, `042`, `010`) → steps 8–9 |
+| F15 | `anthropic.transform_schema` turns `schema_version: Literal["1"]` into a plain string with `{const: 1}` in its description, so the schema constrains neither model. Claude writes `"1"`; qwen wrote `"1.0"` (direct call on `006`, 23.10), which fails validation, so every qwen v1 answer needs a repair call — longer runs, and on the largest documents the repair (document + previous answer) may not fit `num_ctx`. Not fixed in v1: Claude v1 already ran with this schema, and both models must see the same one | step 6 (direct call) | step 8 (prompt v2: an enum `["1"]` the schema keeps, a CHANGELOG entry tied to this error) | ⬜ |
 
 ## 7. Risks
 

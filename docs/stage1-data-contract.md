@@ -81,9 +81,10 @@ This file is the single list to check code against; it is not a spec of the impl
     Rows): a complete answer is ≈14.4k Claude tokens (≈57 tokens per Endpoint Row, not the ≈35
     first assumed), so the earlier ≈8k and the first raise to 16384 both cut S3 off. The same holds for
     Ollama's `num_ctx`: a provider constant under `providers.ollama` in the same file, set
-    explicitly to 32768 (S3 input is 13,129 qwen tokens plus a complete answer of ≈16.6k
-    Claude tokens, ≈12k qwen tokens; Ollama's default varies with version and memory and
-    truncates silently). Its output cap `num_predict` is 16384, the counterpart of
+    explicitly to 32768 (S3 input is 13,714 qwen tokens plus a complete answer of ≈16.6k
+    Claude tokens, about as many qwen tokens; Ollama's default varies with version and memory and
+    truncates silently). Its output cap `num_predict` is 18432 (the S3 trial at 16384 was cut
+    off: qwen writes about as many output tokens as Claude), the counterpart of
     `max_tokens`; a reply that hits it, or fills `num_ctx`, counts as cut off (item 16).
     The paid model is `claude-haiku-4-5` (short name `claude` in run ids): the current Claude
     generation (Opus 5.5 / 5, Sonnet 5.5, Haiku 5.5) rejects non-default `temperature`, so
