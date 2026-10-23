@@ -13,7 +13,7 @@ Well-Architected lenses for retrieval.
 
 | Stage | What the system does | Status |
 |---|---|---|
-| 1. Extraction | Extracts endpoint and quota tables from per-service PDFs; compares a paid model vs a local model against a gold set | in progress |
+| 1. Extraction | Extracts endpoint and quota tables from per-service PDFs; compares a paid model vs a local model against a gold set | HW 1, in progress |
 | 2. RAG | Answers architecture questions with citations to document and page | — |
 | 3. Agent | Reviews a described architecture against best practices and limits | — |
 | 4. Service | API with auth, logging, monitoring and per-request cost | — |
@@ -73,3 +73,49 @@ from `uv.lock`; `make data` runs steps 2–3 and `make text` runs step 4.
 Copy `.env.example` to `.env` (git-ignored) and fill it in. Stage 1 needs `ANTHROPIC_API_KEY`
 (paid model) and a local Ollama (`OLLAMA_HOST`). `OPENROUTER_API_KEY` is optional: it serves
 the course exercises only and no stage-1 step reads it (see `docs/adr/0004`).
+
+## Stage 1: run the extraction
+
+Prerequisites: Python 3.12 and [uv](https://docs.astral.sh/uv/); for the local model,
+[Ollama](https://ollama.com) with `ollama pull qwen2.5:7b` (≈4.7 GB; a 7B model needs ≈8 GB
+of free memory). The 30 `*.txt` documents are committed, so a clean clone runs without the
+PDFs.
+
+```bash
+make install                                   # .venv from uv.lock
+make estimate                                  # input tokens and their cost, no paid call
+make run                                       # Claude, prompt v1, temperature 0 -> results/runs/
+make run MODEL=qwen2.5-7b SAMPLING=t05 GOLD=1  # local model, t05, the 10 Golden Set documents
+make metrics                                   # every run -> results/metrics.csv
+make check                                     # ruff + pytest, the pre-commit gate
+```
+
+One run = model × prompt version × sampling configuration, named
+`<model>__<prompt>__<sampling>[__gold]`; its records go to `results/runs/jsonl/<run_id>.jsonl`
+(resumable: rerun the same command after an interruption) with a readable mirror in
+`results/runs/md/`. Prompts are versioned files in `prompts/` with a `CHANGELOG.md`; sampling
+configurations live in `config/sampling.yaml`; the metrics definitions are in
+[`docs/stage1-data-contract.md`](docs/stage1-data-contract.md) (items 17–19). The comparison
+itself is `REPORT.md`.
+
+## Known limits
+
+- **Standard quota tables only.** Quota rows are extracted only from a table with exactly the
+  columns Name, Default, Adjustable, Description; any other layout is classified as
+  `non_standard` and yields no rows ([ADR-0001](docs/adr/0001-standard-quota-tables-only.md)).
+- **AWS domains only.** An endpoint must be a hostname on `amazonaws.com`, `amazonaws.com.cn`,
+  `api.aws` or `on.aws`; anything else fails validation
+  ([ADR-0003](docs/adr/0003-format-checks-are-validation-failures.md)). A new AWS domain means a
+  code change.
+- **Neighbour tails are detected, not removed.** The text keeps the pieces of neighbouring
+  chapters; the prompt tells the model to ignore them, and a `service` mismatch is the only
+  automatic detector. Rows silently taken from a neighbour are caught by the Golden Set, not
+  by validation.
+- **Text as extracted.** Broken words, split hostnames and repeated page headers are left in the
+  input on purpose; the model is expected to rejoin them. Only ligatures are normalised.
+- **Golden Set bias.** The reference was drafted by `claude__v1__t0` and corrected by hand
+  against the PDF, so a Claude error the check did not catch counts as correct for Claude
+  (`data/gold/README.md`).
+- **Local model limits.** `qwen2.5:7b` runs with `num_ctx` 32768 and an output cap of 18432
+  tokens; the largest documents fill them, and an answer cut off at the cap is `failed`
+  without a repair call.

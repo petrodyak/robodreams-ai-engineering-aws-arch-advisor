@@ -86,6 +86,16 @@ def test_prompt_v1_has_its_three_sections():
     )  # no placeholders: the same system text for every document
 
 
+def test_prompt_v2_loads_and_differs_from_v1_only_in_the_system_section():
+    v2 = pipeline.load_prompt("v2")
+    assert v2.version == "v2"
+    assert (v2.user, v2.repair) == (PROMPT.user, PROMPT.repair)
+    assert v2.system != PROMPT.system
+    # the four v1 errors the CHANGELOG ties the changes to
+    for phrase in ("placeholder", "Resource, Quota, Adjustable", "legacy", "page"):
+        assert phrase in v2.system, phrase
+
+
 def test_user_message_leaves_braces_in_the_document_alone():
     text = 'a JSON example {"a": 1} and a literal {service}'
     message = PROMPT.user_message("Amazon Athena", text)

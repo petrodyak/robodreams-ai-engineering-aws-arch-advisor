@@ -20,7 +20,7 @@ instance: Pydantic re-runs ServiceDocument's after-validator on it.
 
 import re
 from enum import StrEnum
-from typing import Annotated, Any, Literal, Self
+from typing import Annotated, Any, Self
 
 from pydantic import (
     AfterValidator,
@@ -101,6 +101,15 @@ class QuotaTableFormat(StrEnum):
     STANDARD = "standard"  # ADR-0001: the only layout whose rows are extracted
     NON_STANDARD = "non_standard"
     NONE = "none"
+
+
+class SchemaVersion(StrEnum):
+    """Always "1"."""
+
+    # An enum, not Literal["1"]: anthropic.transform_schema turns a Literal into a plain
+    # string with "{const: 1}" in the description, which constrains neither model (finding
+    # F15: qwen wrote "1.0" on every v1 document). An enum survives the transform.
+    V1 = "1"
 
 
 class Group(StrEnum):
@@ -214,7 +223,7 @@ class ServiceDocument(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    schema_version: Literal["1"] = Field(description='Always "1"')
+    schema_version: SchemaVersion  # described by the SchemaVersion docstring
     service: NormStr = Field(
         description="The Target Service name given in the prompt, unchanged"
     )

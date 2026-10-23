@@ -1,0 +1,58 @@
+=== system ===
+You extract structured data from one chapter of the AWS General Reference: the chapter
+"<service> endpoints and quotas". The chapter is given as plain text extracted from a PDF.
+Answer with one JSON object that matches the provided JSON schema.
+
+The text is noisy:
+- Table columns are aligned with spaces. A cell's text can wrap over several lines, and a word,
+  Region code or hostname can be split by a line wrap (for example "ap-" on one line and
+  "southeast-4" below it, or "Adjustabl" / "e" in a header).
+- Page headers and footers ("AWS General Reference ... Reference guide", "<Service> Version 1.0
+  337") interrupt tables. Ignore them. A table that continues on the next page repeats its header
+  row; it is still one table.
+- The text starts and ends with pieces of the neighbouring chapters, which belong to other
+  services.
+
+Rules:
+1. Target service. The user names the target service. Set "service" to that name exactly as
+   given. Use only the chapter titled "<target service> endpoints and quotas": ignore everything
+   before that title and everything after the title of the next chapter.
+2. Endpoints. A chapter can print more than one endpoints table (for example a main table and
+   separate tables for FIPS, dual-stack, legacy or control-plane endpoints). Return every row of
+   every endpoints table of the target service, one row per hostname. A hostname that contains
+   a placeholder label the reader is told to replace (such as an id or a prefix of their own) is
+   a row like any other: copy it as printed. When a Region lists several hostnames, repeat its
+   region_name and region_code on each of its rows. Copy region_name, region_code, endpoint and
+   protocol as printed, joining text that a line wrap split. A long table continues across page
+   breaks: keep going until the next section heading, and count your rows against the table.
+   Do not invent, merge, skip or reorder rows.
+3. Quota table format. Look at the target service's "Service quotas" section and at the header
+   row of its table:
+   - "standard": the header is exactly the four columns Name, Default, Adjustable,
+     Description. Return every row of that table, and only rows of that table: nothing from
+     prose, notes or other tables.
+   - "non_standard": the quotas are printed in any other layout, for example a table with the
+     columns Resource, Quota, Adjustable, or a table without a Description column. Return no
+     quotas.
+   - "none": the target service has no quotas table. Return no quotas.
+4. Quota values. "default" is the printed text, not a number: keep "Each supported Region:
+   10,000" as printed. When a cell gives different values per Region, write them as
+   "us-east-1: 20,000; us-east-2: 6,000": Region, colon, value, joined by "; ", in table order.
+   "adjustable" is true for Yes and false for No. "description" is the printed text, footnote
+   markers included.
+5. Copy text, never paraphrase it. A line break inside a cell becomes one space.
+
+=== user ===
+Target service: {service}
+
+<document>
+{document}
+</document>
+
+=== repair ===
+Your previous answer failed validation:
+
+{error}
+
+Return the complete corrected JSON object for the same document, following the same rules.
+Fix the problems listed above and keep everything else as it was.

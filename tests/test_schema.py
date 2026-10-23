@@ -292,9 +292,19 @@ def test_service_check_can_be_skipped_on_purpose():
 # ---------------------------------------------------------------- shape
 
 
-def test_unknown_schema_version_is_rejected():
+@pytest.mark.parametrize("version", ["2", "1.0", 1])
+def test_unknown_schema_version_is_rejected(version):
+    # "1.0" is what qwen wrote on every v1 document (finding F15)
     with pytest.raises(ValidationError, match="schema_version"):
-        answer(document(schema_version="2"))
+        answer(document(schema_version=version))
+
+
+def test_sent_schema_constrains_schema_version_to_an_enum():
+    # Finding F15: a Literal["1"] became a plain string after transform_schema; an enum
+    # survives it, so both models are told the one allowed value
+    schema = sent_llm_schema()
+    ref = schema["properties"]["schema_version"]["$ref"].rsplit("/", 1)[1]
+    assert schema["$defs"][ref]["enum"] == ["1"]
 
 
 def test_model_cannot_invent_fields():
