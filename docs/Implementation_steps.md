@@ -56,8 +56,8 @@ Apply to every step and are not repeated in the steps:
 | 4 | Prompt v1, sampling config, pipeline, `make run`, run `claude__v1__t0` | `step-4-pipeline-v1` | "ok" on the cost | step 1: all texts run (2); step 3: validation (3), logging (2) | 19.10 | ✅ PR #10 (`15e8d1a`) |
 | 4.1 | Status rows for steps 4 and 3.2 | `patch-4.1-step-4-status-row` | — | — | 21.10 | ✅ PR #11 (`462e69c`) |
 | 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | ✅ PR #12 (`7d0d50a`) |
-| 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | 🔄 branch `step-6-llm-ollama` |
-| 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | ⬜ |
+| 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | ✅ PR #13 (`a7df1d4`) |
+| 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | 🔄 branch `step-7-metrics` |
 | 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ⬜ |
 | 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ⬜ |
 
@@ -244,10 +244,27 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 - **Done when:** key precision/recall + per-field accuracy on gold; `% ok`, `% ok + repaired`;
   latency p50/p95; cost per 1,000 documents — by group and in total. **Checkpoint 24.10:** link in
   `#ai-engineering-2-flood`.
-- **Open:** the denominator of validity is the 30 documents of the manifest, not the lines of the
-  run file: a document without a record counts as failed and is reported as "no answer"
-  (contract item 18, finding F11) — needs its own test here.
-- **Done:** —
+- **Open:** —
+- **Done:**
+  - 23.10, code: `src/extract/metrics.py` (`make metrics`: every `results/runs/jsonl/*.jsonl`
+    → `results/metrics.csv`, one row per run × group + total, and a one-line-per-run summary
+    table in the terminal), `tests/test_metrics.py` (28 tests, hand-made records and gold
+    files, plus one on the committed run and gold). Decisions: rows are matched as key
+    *sets* (`endpoint` / `name`), so a hostname a model prints twice is one row (contract
+    item 6); per-field accuracy only on matched rows, `description` case-insensitive; a gold
+    document without an output (`failed` or no answer) is scored as an empty extraction
+    (every gold row missing, format wrong), so a model is not rewarded for failing on the
+    hard documents; group and total accuracy are micro-averages over rows. Validity's
+    denominator is the run's scope from the manifest — 30, or the `gold=1` rows for a `__gold`
+    run — and a document without a record is `failed` + `no_answer` (F11; tested). Percentile
+    with linear interpolation (numpy's default). Cost per 1,000 from the recorded documents
+    only (tokens lost before a `NoAnswer` are in the run log, F10); local model $0 and the
+    summed per-document wall clock as `wallclock_s` (item 19). 180 tests.
+  - 23.10, `claude__v1__t0` (30 documents): 100 % ok, p50 35.6 s / p95 86.2 s, $40.2 per
+    1,000; on the Golden Set endpoints precision 99.6 % / recall 97.3 %, quotas 98.0 % /
+    100 %, every scored field ≥ 99 %, `quota_table_format` 10/10. The recall gap is the
+    20-row "Legacy endpoints" table of `048` that the draft missed (step 5), the precision gap
+    the 3 rows the reviewer removed from gold — the numbers agree with the step 5 log.
 
 ### Step 8 — Prompt v2, README
 
@@ -273,8 +290,9 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 |---|---|---|---|---|
 | `claude__v1__t0` | 4 | yes (also the gold draft) | ≈$1.9 (input measured: 262,867 tokens ≈ $0.26; output from the S3 trial) | **$1.21** — in 264,757 / out 188,292; 30/30 `ok`, 30 calls |
 | `claude__v1__t05__gold` | 6 | yes — **the 10 Golden Set documents only** (budget decision 21.10; run id suffix decided 22.10) | ≈$0.27 | — |
-| `qwen2.5-7b__v1__t0` | 6 | yes | $0, ≈30–60 min | — |
-| `qwen2.5-7b__v1__t05` | 6 | yes | $0, ≈30–60 min | — |
+| `qwen2.5-7b__v1__t0__gold` | 6 | yes (checkpoint scope, 23.10) | $0, ≈40–60 min (F15: every document repaired) | — |
+| `qwen2.5-7b__v1__t0` | 8 | yes (moved from 6, 23.10) | $0, ≈2–3 h | — |
+| `qwen2.5-7b__v1__t05__gold` | 6 | yes (checkpoint scope, 23.10) | $0, ≈40–60 min | — |
 | `claude__v2__t0` | 8 | yes | ≈$1.8 | — |
 | `qwen2.5-7b__v2__t0` | 8 | yes | $0 | — |
 | `qwen2.5-7b__v2__t05` | 8 | desirable | $0 | — |
@@ -317,7 +335,7 @@ and the PR that closed it.
 | F8 | `done_files` parses every line, so one half-written last line (killed process, full disk) makes every later resume crash with `JSONDecodeError` | step 4 review | step 4 | ✅ step 4 (`step-4-pipeline-v1`) |
 | F9 | `SCHEMA_FILE` and the example path in `tests/test_schema.py` are relative to the current directory: `cd tests && pytest` fails; `pipeline.py` already uses `ROOT / ...` | step 4 review | step 4 | ✅ step 4 (`step-4-pipeline-v1`) |
 | F10 | Tokens paid before a `NoAnswer` (the first call when the repair call has no answer) appear only in the run log, not in the `main.py` cost summary or any record-based cost metric, so spending against the $5 budget is under-reported | review of the F7 fix | step 4 | ✅ step 4 (`step-4-pipeline-v1`) |
-| F11 | Every non-retryable error becomes `NoAnswer`, also a permanent one (400 "prompt is too long", a rejected schema): such a document never gets a record, `main.py` exits non-zero on every run, and step 7 waits for 30 records forever. Contract item 15 considers only temporary causes | review of the F7 fix | step 4 (contract items 15, 18: counted as failed in metrics; no error classification) | ✅ step 4 (`step-4-pipeline-v1`); metrics side in step 7 |
+| F11 | Every non-retryable error becomes `NoAnswer`, also a permanent one (400 "prompt is too long", a rejected schema): such a document never gets a record, `main.py` exits non-zero on every run, and step 7 waits for 30 records forever. Contract item 15 considers only temporary causes | review of the F7 fix | step 4 (contract items 15, 18: counted as failed in metrics; no error classification) | ✅ step 4 (`step-4-pipeline-v1`); metrics side ✅ step 7 (`step-7-metrics`: no record → `failed` + `no_answer`, tested) |
 | F12 | Results-file edge cases: a line that is JSON but not an object raises a bare `TypeError` without its line number; `{"file": null}` counts as done; a complete record whose final `\n` was stripped by hand is dropped as a cut-off line (recoverable from Git) | review of the F8 fix | Petro's call | ⬜ |
 | F13 | No test pins `main.py`'s non-zero exit (contract item 15) or `NoAnswer.__cause__` | review of the F7 fix | Petro's call | ⬜ |
 | F14 | `claude__v1__t0` is 30/30 valid, but endpoint row counts differ from the manifest in both directions. Fewer: `078` IAM Identity Center 78 of 234, `017` DynamoDB 94 of 203, `044` RDS 78 of 165, `092` Secrets Manager 44 of 62, `048` SQS 84 of 104 (gold). More: `007` AgentCore 39 vs 22 (templated `gatewayId`, gold), `055` App Mesh 120 vs 77, `042` Redshift 253 vs 201, `038` OpenSearch 183 vs 170 (Neighbour Tail of Network Security Manager? gold), `085` Lake Formation 88 vs 75 (gold). Also `042` Redshift has `quota_table_format: none` (ADR-0001 expects `non_standard`?) and `010` CloudFront has 97 Quota Rows. Expected or manifest-side: `005` Aurora 36 of 72 (decided: one row per hostname), `074` Global Accelerator 2 of 105 (the text has 5 hostnames — manifest, F6). The manifest undercounts wrapped hostnames (F6), so these are signals, not verdicts | step 4 (full run) | step 5 (gold `048`, `007`, `038`, `085`: count against the PDF); steps 8–9 (non-gold: error analysis and v2 changes) | ◐ gold part ✅ step 5 (`step-5-golden-set`): `085`, `007`, `038` match the printed hostnames (the manifest undercounts, F6; no Neighbour Tail); `048` missed the 20-row "Legacy endpoints" table, added to gold. Non-gold documents (`078`, `017`, `044`, `092`, `055`, `042`, `010`) → steps 8–9 |
@@ -344,3 +362,4 @@ and the PR that closed it.
 | 22.10 | Correction: the Golden Set does contain `non_standard` documents (`066`, `038`), so `quota_table_format` accuracy covers all three values; `data-notes.md` fixed |
 | 22.10 | The Golden-Set-only Claude run is `claude__v1__t05__gold`: the scope is in the run id (contract items 11, 18), so a full run never resumes into its file and metrics use the gold rows as its denominator |
 | 21.10 | Budget variant A: `claude__v1__t05` on the 10 Golden Set documents only, `claude__v2__t05` dropped (section 5); step 6 needs a `--gold` option in `main.py` |
+| 23.10 | Checkpoint scope: all three step 6 runs today on the Golden Set only (`qwen2.5-7b__v1__t0__gold`, `qwen2.5-7b__v1__t05__gold`, `claude__v1__t05__gold`), because F15 makes a full qwen run ≈ 2–3 h; the full `qwen2.5-7b__v1__t0` moves to step 8 (error analysis), its validity and latency on 30 documents follow then |
