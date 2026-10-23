@@ -236,6 +236,21 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     direct call on `006` (scratchpad, not a run) showed why: qwen writes indented JSON (1.32×
     the characters) but about as many tokens as Claude (1,493 vs 1,454), so S3 needs ≈17.1k →
     `num_predict` 18432 (contract item 14). The same call found F15.
+  - 23.10–24.10, the three Golden Set runs (`patch-6.1-v1-runs`; checkpoint scope, see the
+    plan change log): `claude__v1__t05__gold` 10/10 `ok`, 306 s, $0.27 — identical row counts
+    and accuracy to `t0` (temperature 0.5 changes nothing for Haiku 4.5 here);
+    `qwen2.5-7b__v1__t0__gold` 9 `repaired` + 1 `failed` (`048` cut off at `num_predict`
+    after a repetition loop, 18,432 output tokens for a 4.8k-token input), 40 min wall;
+    `qwen2.5-7b__v1__t05__gold` 7 `repaired` + 3 `failed` (`075`, `048`: four hostnames of a
+    Region merged into one `endpoint` cell, caught by ADR-0003 and not repaired; `038` cut
+    off), 37 min wall. Every qwen first answer failed on `schema_version: "1.0"` (F15), so
+    qwen `% ok` is 0 and `% ok + repaired` is 90 / 70. Accuracy on gold (endpoints P / R):
+    Claude 99.6 / 97.3, qwen t0 96.8 / 75.8, qwen t05 93.0 / 46.3; `quota_table_format`
+    10/10 vs 7/10 vs 6/10 — `066` and `038` taken for `standard` with invented Quota Rows
+    (ADR-0001). `region_name` on matched rows: Claude 100 %, qwen 65 % (t0) — the Region
+    code written into `region_name` on some rows, and "Canada West (Calgary)" shortened to
+    "Canada (Calgary)". All of it in `results/metrics.csv` (16 rows) and `prompts/CHANGELOG.md`
+    v2; the error analysis itself is step 9. F2 closed (`num_ctx` held on every document).
 
 ### Step 7 — Metrics
 
@@ -289,10 +304,10 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 | Run id | Step | Required | Cost estimate | Actual |
 |---|---|---|---|---|
 | `claude__v1__t0` | 4 | yes (also the gold draft) | ≈$1.9 (input measured: 262,867 tokens ≈ $0.26; output from the S3 trial) | **$1.21** — in 264,757 / out 188,292; 30/30 `ok`, 30 calls |
-| `claude__v1__t05__gold` | 6 | yes — **the 10 Golden Set documents only** (budget decision 21.10; run id suffix decided 22.10) | ≈$0.27 | — |
-| `qwen2.5-7b__v1__t0__gold` | 6 | yes (checkpoint scope, 23.10) | $0, ≈40–60 min (F15: every document repaired) | — |
+| `claude__v1__t05__gold` | 6 | yes — **the 10 Golden Set documents only** (budget decision 21.10; run id suffix decided 22.10) | ≈$0.27 | **$0.27** — in 60,968 / out 42,366; 10/10 `ok`, 10 calls, 306 s (23.10) |
+| `qwen2.5-7b__v1__t0__gold` | 6 | yes (checkpoint scope, 23.10) | $0, ≈40–60 min (F15: every document repaired) | **$0**, 40 min — 9 `repaired`, 1 `failed` (23.10) |
 | `qwen2.5-7b__v1__t0` | 8 | yes (moved from 6, 23.10) | $0, ≈2–3 h | — |
-| `qwen2.5-7b__v1__t05__gold` | 6 | yes (checkpoint scope, 23.10) | $0, ≈40–60 min | — |
+| `qwen2.5-7b__v1__t05__gold` | 6 | yes (checkpoint scope, 23.10) | $0, ≈40–60 min | **$0**, 37 min — 7 `repaired`, 3 `failed` (24.10) |
 | `claude__v2__t0` | 8 | yes | ≈$1.8 | — |
 | `qwen2.5-7b__v2__t0` | 8 | yes | $0 | — |
 | `qwen2.5-7b__v2__t05` | 8 | desirable | $0 | — |
@@ -306,6 +321,9 @@ fixed schema ($0.10, the record in `claude__v1__t0`).
 **Spent after `claude__v1__t0`: $1.53** — the run $1.21 (its S3 record included) + the two S3 trials kept in
 `results/trials/` ($0.22 + $0.10). With the actual run cost, the plan below is ≈ $1.53 + $0.3
 (`claude__v1__t05`, gold) + ≈ $1.3 (`claude__v2__t0`) ≈ **$3.1**.
+
+**Spent after `claude__v1__t05__gold` (23.10): $1.80** — $1.53 + $0.27. Remaining for `claude__v2__t0`:
+$3.20 against an estimate of ≈ $1.3.
 
 **Budget decision (21.10, variant A).** Three full Claude runs would cost ≈ $5.2, over the limit. Per-field
 accuracy — the main comparison — is computed on the Golden Set only (contract item 17), so
@@ -326,7 +344,7 @@ and the PR that closed it.
 | # | Finding | Found in | Closed in | Status |
 |---|---|---|---|---|
 | F1 | `max_tokens` ≈8k (contract item 14) may not be enough: S3 — 254 rows with `region_name` ≈ 9k tokens. 21.10 trial: a complete S3 answer is 16,589 tokens (290 rows, ≈57 tokens/row), cut off at 16384 → `MAX_TOKENS` 32000, `TIMEOUT_S` 300, contract items 14/16 amended (no repair for a cut-off answer) | step 1 | step 4 (`count_tokens` + a trial call on S3) | ✅ step 4 (`step-4-pipeline-v1`) |
-| F2 | Ollama's default `num_ctx` may truncate long input. 17.10: value 32768 in `config/sampling.yaml` (`providers.ollama`), justified by S3/EMR token measurements; still to be passed in `ollama.py`. 21.10: the S3 answer is ≈16.6k Claude tokens, so S3 needs ≈13.1k + ≈17k ≈ 30k of 32768 — check S3 first in step 6 | plan | step 6 (explicit `num_ctx`) | ⬜ |
+| F2 | Ollama's default `num_ctx` may truncate long input. 17.10: value 32768 in `config/sampling.yaml` (`providers.ollama`), justified by S3/EMR token measurements; still to be passed in `ollama.py`. 21.10: the S3 answer is ≈16.6k Claude tokens, so S3 needs ≈13.1k + ≈17k ≈ 30k of 32768 — check S3 first in step 6 | plan | step 6 (explicit `num_ctx`) | ✅ step 6 (`patch-6.1-v1-runs`): `num_ctx` 32768 held on every Golden Set document; the cap that bites is `num_predict` (`048`, `038`) |
 | F3 | The README must name the known limits: Standard Quota Table only (ADR-0001), the AWS domain list (ADR-0003), Neighbour Tail | step 1 | step 8 | ⬜ |
 | F4 | The local branch `backup/step-0-1-grill-me-1-local-snapshot` is needed only as the basis for the tests | step 1 | after step 2 is merged — delete | ✅ deleted 17.10 after PR #5 (was `e2f27cf`) |
 | F5 | `Field(description=...)` texts in `schema.py` are model instructions outside `prompts/`, not covered by `prompt_version` | step 2 review | step 4 (state in `prompts/CHANGELOG.md` that schema descriptions are part of a prompt version) | ✅ step 4 (`step-4-pipeline-v1`); 21.10: the enum descriptions were not sent at all, fixed in the same step |
