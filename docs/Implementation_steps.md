@@ -58,7 +58,7 @@ Apply to every step and are not repeated in the steps:
 | 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | ✅ PR #12 (`7d0d50a`) |
 | 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | ✅ PR #13 (`a7df1d4`) |
 | 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | 🔄 branch `step-7-metrics` |
-| 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | 🔄 branch `step-8-prompt-v2` |
+| 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ✅ PR #16 (`df1a8cd`); v2 runs 🔄 branch `patch-8.1-v2-runs` |
 | 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ⬜ |
 
 ## 4. Steps
@@ -313,6 +313,17 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     patch-style repair would change the pipeline for both providers, contract item 16).
     README: a "run the extraction" section (`make install` … `make metrics`) and "Known
     limits" (F3 closed). 184 tests.
+  - 24.10, `claude__v2__t0` (`patch-8.1-v2-runs`; 30 documents, 29 `ok` + 1 `repaired`,
+    $1.28, p50 44 s / p95 89 s, $42.7 per 1,000): endpoints recall on gold 97.3 → **100 %**
+    (`048` took the "Legacy endpoints" table: 84 → 104 rows); precision 99.6, quotas 98.0 /
+    100, format 10/10, `default` 99.0 (one gold row). Outside gold, rule 2 closed F14's
+    "fewer" cases: `078` 78 → 234, `017` 94 → 248, `044` 78 → 166 rows. The one `repaired`:
+    `010` CloudFront, a prose line taken as a row (`region_code` empty, "AWS
+    account.cloudfront-kvs.global.api.aws"), caught by ADR-0003 and fixed by the repair — the
+    side effect of a wider rule 2, material for the error analysis. Cost +$2.5 per 1,000 and
+    +8 s p50 from the extra rows. Two concurrent `make run` processes wrote `092` and `023`
+    twice (two paid calls each, ≈ $0.05): the duplicates were removed by hand before the
+    commit (first record kept) → finding F16.
 
 ### Step 9 — REPORT.md
 
@@ -350,7 +361,7 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 | `qwen2.5-7b__v1__t0__gold` | 6 | yes (checkpoint scope, 23.10) | $0, ≈40–60 min (F15: every document repaired) | **$0**, 40 min — 9 `repaired`, 1 `failed` (23.10) |
 | `qwen2.5-7b__v1__t0` | 8 | yes (moved from 6, 23.10) | $0, ≈2–3 h | — |
 | `qwen2.5-7b__v1__t05__gold` | 6 | yes (checkpoint scope, 23.10) | $0, ≈40–60 min | **$0**, 37 min — 7 `repaired`, 3 `failed` (24.10) |
-| `claude__v2__t0` | 8 | yes | ≈$1.8 | — |
+| `claude__v2__t0` | 8 | yes | ≈$1.8 (≈$1.3 after the v1 actual) | **$1.28** — in 285,494 / out 199,197; 29 `ok` + 1 `repaired`, 31 calls (24.10); ≈ $0.05 more paid for the duplicate calls (F16) |
 | `qwen2.5-7b__v2__t0` | 8 | yes | $0 | — |
 | `qwen2.5-7b__v2__t05` | 8 | desirable | $0 | — |
 | `claude__v2__t05` | 8 | no (budget decision 21.10) | ≈$1.8 | — |
@@ -366,6 +377,9 @@ fixed schema ($0.10, the record in `claude__v1__t0`).
 
 **Spent after `claude__v1__t05__gold` (23.10): $1.80** — $1.53 + $0.27. Remaining for `claude__v2__t0`:
 $3.20 against an estimate of ≈ $1.3.
+
+**Spent after `claude__v2__t0` (24.10): ≈ $3.13** — $1.80 + $1.28 + ≈ $0.05 (F16). ≈ $1.87 reserve; no
+further Claude run is planned (`claude__v2__t05` stays dropped).
 
 **Budget decision (21.10, variant A).** Three full Claude runs would cost ≈ $5.2, over the limit. Per-field
 accuracy — the main comparison — is computed on the Golden Set only (contract item 17), so
@@ -398,8 +412,9 @@ and the PR that closed it.
 | F11 | Every non-retryable error becomes `NoAnswer`, also a permanent one (400 "prompt is too long", a rejected schema): such a document never gets a record, `main.py` exits non-zero on every run, and step 7 waits for 30 records forever. Contract item 15 considers only temporary causes | review of the F7 fix | step 4 (contract items 15, 18: counted as failed in metrics; no error classification) | ✅ step 4 (`step-4-pipeline-v1`); metrics side ✅ step 7 (`step-7-metrics`: no record → `failed` + `no_answer`, tested) |
 | F12 | Results-file edge cases: a line that is JSON but not an object raises a bare `TypeError` without its line number; `{"file": null}` counts as done; a complete record whose final `\n` was stripped by hand is dropped as a cut-off line (recoverable from Git) | review of the F8 fix | Petro's call | ⬜ |
 | F13 | No test pins `main.py`'s non-zero exit (contract item 15) or `NoAnswer.__cause__` | review of the F7 fix | Petro's call | ⬜ |
-| F14 | `claude__v1__t0` is 30/30 valid, but endpoint row counts differ from the manifest in both directions. Fewer: `078` IAM Identity Center 78 of 234, `017` DynamoDB 94 of 203, `044` RDS 78 of 165, `092` Secrets Manager 44 of 62, `048` SQS 84 of 104 (gold). More: `007` AgentCore 39 vs 22 (templated `gatewayId`, gold), `055` App Mesh 120 vs 77, `042` Redshift 253 vs 201, `038` OpenSearch 183 vs 170 (Neighbour Tail of Network Security Manager? gold), `085` Lake Formation 88 vs 75 (gold). Also `042` Redshift has `quota_table_format: none` (ADR-0001 expects `non_standard`?) and `010` CloudFront has 97 Quota Rows. Expected or manifest-side: `005` Aurora 36 of 72 (decided: one row per hostname), `074` Global Accelerator 2 of 105 (the text has 5 hostnames — manifest, F6). The manifest undercounts wrapped hostnames (F6), so these are signals, not verdicts | step 4 (full run) | step 5 (gold `048`, `007`, `038`, `085`: count against the PDF); steps 8–9 (non-gold: error analysis and v2 changes) | ◐ gold part ✅ step 5 (`step-5-golden-set`): `085`, `007`, `038` match the printed hostnames (the manifest undercounts, F6; no Neighbour Tail); `048` missed the 20-row "Legacy endpoints" table, added to gold. Non-gold documents (`078`, `017`, `044`, `092`, `055`, `042`, `010`) → steps 8–9 |
+| F14 | `claude__v1__t0` is 30/30 valid, but endpoint row counts differ from the manifest in both directions. Fewer: `078` IAM Identity Center 78 of 234, `017` DynamoDB 94 of 203, `044` RDS 78 of 165, `092` Secrets Manager 44 of 62, `048` SQS 84 of 104 (gold). More: `007` AgentCore 39 vs 22 (templated `gatewayId`, gold), `055` App Mesh 120 vs 77, `042` Redshift 253 vs 201, `038` OpenSearch 183 vs 170 (Neighbour Tail of Network Security Manager? gold), `085` Lake Formation 88 vs 75 (gold). Also `042` Redshift has `quota_table_format: none` (ADR-0001 expects `non_standard`?) and `010` CloudFront has 97 Quota Rows. Expected or manifest-side: `005` Aurora 36 of 72 (decided: one row per hostname), `074` Global Accelerator 2 of 105 (the text has 5 hostnames — manifest, F6). The manifest undercounts wrapped hostnames (F6), so these are signals, not verdicts | step 4 (full run) | step 5 (gold `048`, `007`, `038`, `085`: count against the PDF); steps 8–9 (non-gold: error analysis and v2 changes) | ◐ gold part ✅ step 5 (`step-5-golden-set`): `085`, `007`, `038` match the printed hostnames (the manifest undercounts, F6; no Neighbour Tail); `048` missed the 20-row "Legacy endpoints" table, added to gold. Non-gold ✅ step 8 (`patch-8.1-v2-runs`): v2 rule 2 took the missing tables — `078` 234, `017` 248, `044` 166 rows (the manifest undercounts, F6); `092` 44 unchanged, `055`, `042`, `010` unchanged — the "more" cases are rejoined wraps (F6), not errors; `042` `none` and `010`'s 97 Quota Rows stay as v1 printed them → step 9 if the error analysis needs them |
 | F15 | `anthropic.transform_schema` turns `schema_version: Literal["1"]` into a plain string with `{const: 1}` in its description, so the schema constrains neither model. Claude writes `"1"`; qwen wrote `"1.0"` (direct call on `006`, 23.10), which fails validation, so every qwen v1 answer needs a repair call — longer runs, and on the largest documents the repair (document + previous answer) may not fit `num_ctx`. Not fixed in v1: Claude v1 already ran with this schema, and both models must see the same one | step 6 (direct call) | step 8 (prompt v2: an enum `["1"]` the schema keeps, a CHANGELOG entry tied to this error) | ◐ schema part ✅ step 8 (`step-8-prompt-v2`): enum `SchemaVersion`, kept by the transform (tested); the v2 runs show whether the repair calls disappear |
+| F16 | Nothing stops two `make run` processes from appending to the same run file: both skip the documents already done and then extract the same next ones (`claude__v2__t0`: `092`, `023` twice, two paid calls each). Cheap fix: a lock file next to the JSONL, or `main.py` refusing when one exists | step 8 (v2 run) | Petro's call | ⬜ |
 
 ## 7. Risks
 
