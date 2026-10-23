@@ -85,6 +85,14 @@
       ],
       "description": "Layout of the target service's quotas table.\n\nstandard: exactly the columns Name, Default, Adjustable, Description;\nnon_standard: a quotas table in any other layout;\nnone: no quotas table for the target service",
       "title": "QuotaTableFormat"
+    },
+    "SchemaVersion": {
+      "type": "string",
+      "enum": [
+        "1"
+      ],
+      "description": "Always \"1\".",
+      "title": "SchemaVersion"
     }
   },
   "type": "object",
@@ -92,9 +100,7 @@
   "title": "ServiceDocument",
   "properties": {
     "schema_version": {
-      "type": "string",
-      "description": "Always \"1\"\n\n{const: 1}",
-      "title": "Schema Version"
+      "$ref": "#/$defs/SchemaVersion"
     },
     "service": {
       "type": "string",

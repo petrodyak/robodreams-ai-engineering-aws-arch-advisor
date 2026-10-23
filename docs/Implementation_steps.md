@@ -58,7 +58,7 @@ Apply to every step and are not repeated in the steps:
 | 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | ✅ PR #12 (`7d0d50a`) |
 | 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | ✅ PR #13 (`a7df1d4`) |
 | 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | 🔄 branch `step-7-metrics` |
-| 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ⬜ |
+| 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | 🔄 branch `step-8-prompt-v2` |
 | 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ⬜ |
 
 ## 4. Steps
@@ -288,7 +288,31 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
   `README.md` (problem, how to install and run, how to reproduce the data, known limits).
 - **Done when:** every change in v2 is tied to a specific v1 error; the README passes "clean
   clone → `make install` → `make run`"; finding F3 (known limits in the README) closed.
-- **Done:** —
+- **Open:**
+  - the v2 runs — `claude__v2__t0` (30, ≈ $1.3, budget $3.20 left) after the qwen t05 gold run
+    has finished (no concurrent runs: latency); `qwen2.5-7b__v2__t0` (30, ≈ 2–3 h) and the
+    moved `qwen2.5-7b__v1__t0` (30) in the background on 24.10.
+  - **No real values as examples in v2** (Petro, 24.10). A weak model copies concrete example
+    values from the prompt into its answers: in another HW 1 project qwen2.5:3b wrote the
+    prompt's example address into texts that had none. v2 rules describe a format in words or
+    with placeholders (`<quota name>`, `<default value>`) and never quote a real quota, endpoint
+    or service name. A copied row shows up as a precision drop on gold; check qwen v2 output
+    for prompt strings. Applied 24.10: the AgentCore hostname example in rule 2 replaced by a
+    placeholder description; the v1 examples kept by v2 (`"Each supported Region: 10,000"`,
+    `"us-east-1: 20,000; us-east-2: 6,000"`, `"ap-" / "southeast-4"`) are format patterns,
+    not values of any Working Set document — left as is so that v1 → v2 changes only what the
+    error table names.
+- **Done:**
+  - 23.10, code: `prompts/extract_v2.txt` + the v2 entry in `prompts/CHANGELOG.md`, a table of
+    four v1 errors → four changes (F15 `schema_version`; `066` Resource / Quota layout taken
+    for `standard`; `007` templated hostnames dropped and `076` a row from outside the table;
+    rows lost on long tables, `048` whole "Legacy endpoints" table by Claude). Only the system
+    section changed; user and repair sections are v1's. Schema: `schema_version` is the enum
+    `SchemaVersion` ("1"), which `transform_schema` keeps as `"enum": ["1"]` (tested) — records
+    and gold files unchanged. Deliberately unchanged: the full-object repair message (a
+    patch-style repair would change the pipeline for both providers, contract item 16).
+    README: a "run the extraction" section (`make install` … `make metrics`) and "Known
+    limits" (F3 closed). 184 tests.
 
 ### Step 9 — REPORT.md
 
@@ -297,6 +321,24 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 - **Done when:** all numbers come from `results/metrics.csv`; the Q&A feedback of 26.10 is taken into account. The report is a **dated
   snapshot**: it states at the top the commit and run ids the numbers were taken from; later code changes do not
   retroactively edit the report.
+- **Structure** (adapted from another HW 1 report):
+  1. **Header line** — commit and run ids; `make metrics` rebuilds every number.
+  2. **Summary** — 4–5 sentences: the headline numbers and the recommendation.
+  3. **What was compared** — task, data (30 documents, 10 gold), models, prompts, sampling; one
+     line per metric definition (contract items 17–19): key precision/recall, per-field accuracy
+     on matched rows, a failed gold document scored as an empty extraction, validity denominator.
+  4. **Results** — the table from `results/metrics.csv`, one row per run (% ok / % ok + repaired,
+     precision/recall, field accuracy, p50/p95, $ per 1,000), then 3–4 "what the table says" bullets.
+  5. **Error analysis** — 3–5 errors, each: what → how often (n of N) → one document, expected vs
+     got → why → what v2 changed → effect in numbers. Candidates: Neighbour Tail, non-standard
+     layout (empty list expected), multi-region default cells, placeholders, `048` legacy endpoints.
+  6. **Choice for production and when to change it** — with the scale arithmetic: the cost of
+     100,000 documents, and the days one laptop needs at the measured p50.
+  7. **Limitations** — at least: gold drafted from `claude__v1__t0` (an advantage to Claude);
+     `claude__v1__t05` on gold only (budget decision 21.10); one run per configuration and 10 gold
+     documents, so 1–2 rows can be noise; qwen context limits (S3).
+  8. **Reproduce** — the metrics command and a link to the README run section.
+- **Not taken:** a held-out test set — no time before 27.10; named under Limitations instead.
 - **Done:** —
 
 ## 5. Run matrix and budget
@@ -345,7 +387,7 @@ and the PR that closed it.
 |---|---|---|---|---|
 | F1 | `max_tokens` ≈8k (contract item 14) may not be enough: S3 — 254 rows with `region_name` ≈ 9k tokens. 21.10 trial: a complete S3 answer is 16,589 tokens (290 rows, ≈57 tokens/row), cut off at 16384 → `MAX_TOKENS` 32000, `TIMEOUT_S` 300, contract items 14/16 amended (no repair for a cut-off answer) | step 1 | step 4 (`count_tokens` + a trial call on S3) | ✅ step 4 (`step-4-pipeline-v1`) |
 | F2 | Ollama's default `num_ctx` may truncate long input. 17.10: value 32768 in `config/sampling.yaml` (`providers.ollama`), justified by S3/EMR token measurements; still to be passed in `ollama.py`. 21.10: the S3 answer is ≈16.6k Claude tokens, so S3 needs ≈13.1k + ≈17k ≈ 30k of 32768 — check S3 first in step 6 | plan | step 6 (explicit `num_ctx`) | ✅ step 6 (`patch-6.1-v1-runs`): `num_ctx` 32768 held on every Golden Set document; the cap that bites is `num_predict` (`048`, `038`) |
-| F3 | The README must name the known limits: Standard Quota Table only (ADR-0001), the AWS domain list (ADR-0003), Neighbour Tail | step 1 | step 8 | ⬜ |
+| F3 | The README must name the known limits: Standard Quota Table only (ADR-0001), the AWS domain list (ADR-0003), Neighbour Tail | step 1 | step 8 | ✅ step 8 (`step-8-prompt-v2`): README "Known limits" |
 | F4 | The local branch `backup/step-0-1-grill-me-1-local-snapshot` is needed only as the basis for the tests | step 1 | after step 2 is merged — delete | ✅ deleted 17.10 after PR #5 (was `e2f27cf`) |
 | F5 | `Field(description=...)` texts in `schema.py` are model instructions outside `prompts/`, not covered by `prompt_version` | step 2 review | step 4 (state in `prompts/CHANGELOG.md` that schema descriptions are part of a prompt version) | ✅ step 4 (`step-4-pipeline-v1`); 21.10: the enum descriptions were not sent at all, fixed in the same step |
 | F6 | `endpoint_rows` in `data/raw/manifest.csv` undercounts: it matched hostnames on one line, but wrapped hostnames are split (S3: 254 in the manifest, 290 rows extracted, all 36 extra are rejoined wraps). S3 also has several endpoint sub-tables (`s3`, `s3tables`, `s3-accesspoint`, `s3-control`); contract item 6 says "the endpoints table" | step 4 | step 5 (gold check counts rows in the PDF, not from the manifest; state "all endpoint tables of the chapter" in item 6) | ✅ step 5 (`step-5-golden-set`): contract item 6 names every endpoints table; gold rows are counted against the printed text and the PDF. The manifest column is left as is and is not used by metrics |
@@ -357,7 +399,7 @@ and the PR that closed it.
 | F12 | Results-file edge cases: a line that is JSON but not an object raises a bare `TypeError` without its line number; `{"file": null}` counts as done; a complete record whose final `\n` was stripped by hand is dropped as a cut-off line (recoverable from Git) | review of the F8 fix | Petro's call | ⬜ |
 | F13 | No test pins `main.py`'s non-zero exit (contract item 15) or `NoAnswer.__cause__` | review of the F7 fix | Petro's call | ⬜ |
 | F14 | `claude__v1__t0` is 30/30 valid, but endpoint row counts differ from the manifest in both directions. Fewer: `078` IAM Identity Center 78 of 234, `017` DynamoDB 94 of 203, `044` RDS 78 of 165, `092` Secrets Manager 44 of 62, `048` SQS 84 of 104 (gold). More: `007` AgentCore 39 vs 22 (templated `gatewayId`, gold), `055` App Mesh 120 vs 77, `042` Redshift 253 vs 201, `038` OpenSearch 183 vs 170 (Neighbour Tail of Network Security Manager? gold), `085` Lake Formation 88 vs 75 (gold). Also `042` Redshift has `quota_table_format: none` (ADR-0001 expects `non_standard`?) and `010` CloudFront has 97 Quota Rows. Expected or manifest-side: `005` Aurora 36 of 72 (decided: one row per hostname), `074` Global Accelerator 2 of 105 (the text has 5 hostnames — manifest, F6). The manifest undercounts wrapped hostnames (F6), so these are signals, not verdicts | step 4 (full run) | step 5 (gold `048`, `007`, `038`, `085`: count against the PDF); steps 8–9 (non-gold: error analysis and v2 changes) | ◐ gold part ✅ step 5 (`step-5-golden-set`): `085`, `007`, `038` match the printed hostnames (the manifest undercounts, F6; no Neighbour Tail); `048` missed the 20-row "Legacy endpoints" table, added to gold. Non-gold documents (`078`, `017`, `044`, `092`, `055`, `042`, `010`) → steps 8–9 |
-| F15 | `anthropic.transform_schema` turns `schema_version: Literal["1"]` into a plain string with `{const: 1}` in its description, so the schema constrains neither model. Claude writes `"1"`; qwen wrote `"1.0"` (direct call on `006`, 23.10), which fails validation, so every qwen v1 answer needs a repair call — longer runs, and on the largest documents the repair (document + previous answer) may not fit `num_ctx`. Not fixed in v1: Claude v1 already ran with this schema, and both models must see the same one | step 6 (direct call) | step 8 (prompt v2: an enum `["1"]` the schema keeps, a CHANGELOG entry tied to this error) | ⬜ |
+| F15 | `anthropic.transform_schema` turns `schema_version: Literal["1"]` into a plain string with `{const: 1}` in its description, so the schema constrains neither model. Claude writes `"1"`; qwen wrote `"1.0"` (direct call on `006`, 23.10), which fails validation, so every qwen v1 answer needs a repair call — longer runs, and on the largest documents the repair (document + previous answer) may not fit `num_ctx`. Not fixed in v1: Claude v1 already ran with this schema, and both models must see the same one | step 6 (direct call) | step 8 (prompt v2: an enum `["1"]` the schema keeps, a CHANGELOG entry tied to this error) | ◐ schema part ✅ step 8 (`step-8-prompt-v2`): enum `SchemaVersion`, kept by the transform (tested); the v2 runs show whether the repair calls disappear |
 
 ## 7. Risks
 
@@ -381,3 +423,4 @@ and the PR that closed it.
 | 22.10 | The Golden-Set-only Claude run is `claude__v1__t05__gold`: the scope is in the run id (contract items 11, 18), so a full run never resumes into its file and metrics use the gold rows as its denominator |
 | 21.10 | Budget variant A: `claude__v1__t05` on the 10 Golden Set documents only, `claude__v2__t05` dropped (section 5); step 6 needs a `--gold` option in `main.py` |
 | 23.10 | Checkpoint scope: all three step 6 runs today on the Golden Set only (`qwen2.5-7b__v1__t0__gold`, `qwen2.5-7b__v1__t05__gold`, `claude__v1__t05__gold`), because F15 makes a full qwen run ≈ 2–3 h; the full `qwen2.5-7b__v1__t0` moves to step 8 (error analysis), its validity and latency on 30 documents follow then |
+| 24.10 | From another HW 1 report: the REPORT structure in step 9 and the "no real values as examples" rule for prompt v2 in step 8 |
