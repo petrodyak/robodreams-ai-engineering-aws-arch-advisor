@@ -1,5 +1,5 @@
 # Every target runs inside the uv-managed .venv (`uv run` syncs it first if needed).
-.PHONY: install data text run estimate runs-md schema gold-drafts gold-check check
+.PHONY: install data text run estimate runs-md metrics schema gold-drafts gold-check check
 
 # One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`,
 # `make run MODEL=qwen2.5-7b`, or `make run SAMPLING=t05 GOLD=1` (Golden Set only).
@@ -30,6 +30,10 @@ run:
 # rebuild every results/runs/md/*.md from results/runs/jsonl/*.jsonl (after a layout change)
 runs-md:
 	uv run python -m scripts.render_runs_md
+
+# every results/runs/jsonl/*.jsonl -> results/metrics.csv (contract items 13, 17-19)
+metrics:
+	uv run python -m src.extract.metrics
 
 # input tokens and their cost before a paid run (free count_tokens endpoint)
 estimate:

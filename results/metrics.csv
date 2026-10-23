@@ -1,0 +1,5 @@
+run_id,model,prompt_version,sampling,scope,group,n_docs,ok,repaired,failed,no_answer,pct_ok,pct_ok_or_repaired,latency_p50_ms,latency_p95_ms,cost_per_1000_usd,wallclock_s,gold_docs,gold_scored,quota_table_format_acc,ep_precision,ep_recall,ep_region_name_acc,ep_region_code_acc,ep_protocol_acc,q_precision,q_recall,q_default_acc,q_adjustable_acc,q_description_acc
+claude__v1__t0,claude,v1,t0,full,short,10,10,0,0,0,100.0,100.0,28410,41676,26.23,260,6,6,100.0,99.1,100.0,100.0,100.0,100.0,91.7,100.0,100.0,100.0,100.0
+claude__v1__t0,claude,v1,t0,full,medium,10,10,0,0,0,100.0,100.0,34583,69737,35.61,392,3,3,100.0,100.0,91.2,100.0,100.0,100.0,98.9,100.0,100.0,100.0,100.0
+claude__v1__t0,claude,v1,t0,full,edge,10,10,0,0,0,100.0,100.0,63136,86263,58.78,604,1,1,100.0,100.0,100.0,100.0,100.0,100.0,,,,,
+claude__v1__t0,claude,v1,t0,full,total,30,30,0,0,0,100.0,100.0,35598,86243,40.21,1256,10,10,100.0,99.6,97.3,100.0,100.0,100.0,98.0,100.0,100.0,100.0,100.0
