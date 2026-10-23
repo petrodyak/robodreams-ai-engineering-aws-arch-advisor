@@ -5,22 +5,25 @@ judges an answer lives here, once, so Claude and Ollama go through identical log
 validation against the schema with the service check (contract items 2, 9), the one repair
 call (item 16), and the Run Record with summed usage, latency and attempts (items 12, 19).
 
-A run appends one line per document to results/runs/<run_id>.jsonl and skips documents that
-are already in the file, so an interrupted run resumes without paying twice. The run id names
-the model, prompt version and sampling, so one file never mixes configurations.
+A run appends one line per document to results/runs/jsonl/<run_id>.jsonl and skips documents
+that are already in the file, so an interrupted run resumes without paying twice. The run id
+names the model, prompt version and sampling, so one file never mixes configurations. After
+every record the file is mirrored as results/runs/md/<run_id>.md for reading by a person
+(src/extract/report_md.py); the JSONL stays the only thing code reads.
 """
 
 import csv
 import json
 import re
 from collections.abc import Callable, Iterable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import yaml
 from pydantic import ValidationError
 
 from src.extract.llm import LLMCallError, LLMClient, LLMReply
+from src.extract.report_md import write_markdown
 from src.extract.schema import (
     Group,
     RunRecord,
@@ -36,7 +39,8 @@ RAW_DIR = ROOT / "data" / "raw"
 MANIFEST = RAW_DIR / "manifest.csv"
 PROMPTS_DIR = ROOT / "prompts"
 SAMPLING_CONFIG = ROOT / "config" / "sampling.yaml"
-RUNS_DIR = ROOT / "results" / "runs"
+RUNS_DIR = ROOT / "results" / "runs" / "jsonl"  # contract item 12: the source of truth
+RUNS_MD_DIR = ROOT / "results" / "runs" / "md"  # its human-readable mirror, derived
 
 # Sections of a prompt file and the placeholders each must contain (prompts/CHANGELOG.md).
 PROMPT_SECTIONS = {
@@ -125,6 +129,8 @@ class Document:
     file: str  # the PDF name, e.g. 006-amazon-aurora-dsql.pdf
     service: str
     group: Group
+    # in the Golden Set (gold=1); not part of equality, a document is the same either way
+    gold: bool = field(default=False, compare=False)
 
     def text(self, raw_dir: Path = RAW_DIR) -> str:
         return (raw_dir / self.file).with_suffix(".txt").read_text()
@@ -133,14 +139,27 @@ class Document:
 def load_manifest(path: Path = MANIFEST) -> list[Document]:
     with open(path, newline="") as f:
         return [
-            Document(file=r["file"], service=r["service"], group=Group(r["group"]))
+            Document(
+                file=r["file"],
+                service=r["service"],
+                group=Group(r["group"]),
+                gold=r["gold"] == "1",
+            )
             for r in csv.DictReader(f)
         ]
 
 
-def make_run_id(model: str, prompt_version: str, sampling_name: str) -> str:
-    """Contract item 11, e.g. claude__v1__t0."""
-    return f"{model}__{prompt_version}__{sampling_name}"
+GOLD_SCOPE = (
+    "__gold"  # run id suffix of a run over the Golden Set only (contract item 11)
+)
+
+
+def make_run_id(
+    model: str, prompt_version: str, sampling_name: str, *, gold: bool = False
+) -> str:
+    """Contract item 11, e.g. claude__v1__t0, or claude__v1__t05__gold for a run over the
+    Golden Set only: the scope is in the name, so a full run never resumes into its file."""
+    return f"{model}__{prompt_version}__{sampling_name}" + (GOLD_SCOPE if gold else "")
 
 
 # ---------------------------------------------------------------- one document
@@ -298,14 +317,21 @@ def run(
     sampling: Sampling,
     out_path: Path,
     *,
+    md_path: Path | None = None,
     raw_dir: Path = RAW_DIR,
     log: Callable[[str], None] = print,
 ) -> RunResult:
-    """Extract every document not yet in `out_path`; return what this call added."""
+    """Extract every document not yet in `out_path`; return what this call added.
+
+    `md_path` (default: `out_path` with the suffix .md) is rewritten from the whole JSONL
+    after every record, so it is complete even when this call adds nothing.
+    """
     docs = list(docs)
+    md_path = md_path or out_path.with_suffix(".md")
     drop_cut_off_tail(out_path, log)
     done = done_files(out_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
+    write_markdown(out_path, md_path)  # the mirror of a run that was resumed or cut off
     new: list[RunRecord] = []
     lost = Usage(input_tokens=0, output_tokens=0)
     with out_path.open("a") as f:
@@ -330,6 +356,7 @@ def run(
             # one line per document, flushed at once: a crash loses at most this document
             f.write(rec.model_dump_json() + "\n")
             f.flush()
+            write_markdown(out_path, md_path)
             new.append(rec)
             log(
                 f"{prefix}: {rec.status.value}, {rec.attempts} call(s), "

@@ -127,6 +127,18 @@ def test_run_id_follows_the_contract():
     assert pipeline.make_run_id("claude", "v1", "t0") == "claude__v1__t0"
 
 
+def test_a_golden_set_run_carries_its_scope_in_the_run_id():
+    # contract item 11: a full t05 run must never resume into the gold-only file
+    run_id = pipeline.make_run_id("claude", "v1", "t05", gold=True)
+    assert run_id == "claude__v1__t05__gold"
+
+
+def test_manifest_marks_the_10_golden_set_documents():
+    gold = [d for d in pipeline.load_manifest() if d.gold]
+    assert len(gold) == 10
+    assert DOC.file in {d.file for d in gold}
+
+
 # ---------------------------------------------------------------- one document
 
 
@@ -272,6 +284,32 @@ def test_run_writes_one_loadable_record_per_document_and_resumes(tmp_path, raw):
     )
     assert again.requests == []
     assert len(out.read_text().splitlines()) == 2
+
+
+def test_run_keeps_a_markdown_mirror_of_the_whole_run_file(tmp_path, raw):
+    out = tmp_path / "jsonl" / "fake__v1__t0.jsonl"
+    md = tmp_path / "md" / "fake__v1__t0.md"
+    llm = FakeLLM(reply(answer()), reply("not json"), reply("not json"))
+    pipeline.run(
+        llm, [DOC, ATHENA], PROMPT, T0, out, md_path=md, raw_dir=raw, log=lambda _: None
+    )
+    text = md.read_text()
+    assert "# Run `fake__v1__t0`" in text and "- Documents: 2" in text
+    assert f"### {DOC.file}" in text and f"### {ATHENA.file}" in text
+
+    # a resumed run adds nothing, yet the mirror is rebuilt from the whole file
+    md.write_text("stale")
+    pipeline.run(
+        FakeLLM(),
+        [DOC, ATHENA],
+        PROMPT,
+        T0,
+        out,
+        md_path=md,
+        raw_dir=raw,
+        log=lambda _: None,
+    )
+    assert "- Documents: 2" in md.read_text()
 
 
 def test_document_without_an_answer_is_left_out_and_retried_next_run(tmp_path, raw):
