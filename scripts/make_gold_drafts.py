@@ -10,7 +10,6 @@ An existing gold file is never overwritten, so hand corrections are safe to re-r
 Usage:  python -m scripts.make_gold_drafts [run_id]   (default: claude__v1__t0)
 """
 
-import csv
 import json
 import sys
 from pathlib import Path
@@ -24,9 +23,7 @@ DRAFT_RUN = "claude__v1__t0"  # contract item 10
 
 def gold_documents() -> dict[str, pipeline.Document]:
     """Manifest rows with gold=1, by file name."""
-    with open(pipeline.MANIFEST, newline="") as f:
-        gold = {r["file"] for r in csv.DictReader(f) if r["gold"] == "1"}
-    return {d.file: d for d in pipeline.load_manifest() if d.file in gold}
+    return {d.file: d for d in pipeline.load_manifest() if d.gold}
 
 
 def gold_path(file: str, gold_dir: Path = GOLD_DIR) -> Path:

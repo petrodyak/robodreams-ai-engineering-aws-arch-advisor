@@ -6,7 +6,7 @@ Its validation JSON Schema, `ServiceDocument.model_json_schema()`, is what both 
 receive. Format checks live in validators, not in the schema (ADR-0003): the schema stays
 identical for Claude and Ollama, and a failed check becomes the text of the one repair call.
 
-RunRecord is one line of results/runs/<run_id>.jsonl (contract item 12); the model never
+RunRecord is one line of results/runs/jsonl/<run_id>.jsonl (contract item 12); the model never
 sees it. The gold and record formats are read by RAG (stage 2) and the agent (stage 3):
 change them only together with `schema_version`.
 
@@ -287,7 +287,7 @@ _STATUS_RULES = {
 
 
 class RunRecord(BaseModel):
-    """One line of results/runs/<run_id>.jsonl (contract item 12)."""
+    """One line of results/runs/jsonl/<run_id>.jsonl (contract item 12)."""
 
     model_config = ConfigDict(extra="forbid")
 

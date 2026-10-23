@@ -3,7 +3,8 @@
 Decisions reached in the design interview of 2026-10-15, amended on 2026-10-16 (items 6, 9,
 14, 16; review of the earlier schema grill against this contract) and on 2026-10-21 (items 14,
 15, 16, 18; the S3 trial call and the reviews of step 4; item 6, the Golden Set check of
-step 5). Terms are defined in
+step 5; on 2026-10-22 items 11, 14, 18 for the Ollama provider and the Golden-Set-only run of
+step 6). Terms are defined in
 [`GLOSSARY.md`](../GLOSSARY.md); the decisions that are hard to reverse have ADRs
 ([0001](adr/0001-standard-quota-tables-only.md), [0002](adr/0002-model-extracts-code-derives.md),
 [0003](adr/0003-format-checks-are-validation-failures.md)).
@@ -62,10 +63,16 @@ This file is the single list to check code against; it is not a spec of the impl
 ## Runs and results
 
 11. Run id: `<model>__<prompt_version>__<sampling_name>`, e.g. `claude__v1__t0`,
-    `qwen2.5-7b__v2__t05`.
-12. `results/runs/<run_id>.jsonl`, one Run Record per document:
+    `qwen2.5-7b__v2__t05`. A run over the Golden Set only adds the scope suffix `__gold`
+    (`claude__v1__t05__gold`, budget decision of 21.10): the scope is part of the name, so a
+    later full run with the same model, prompt and sampling never resumes into its file.
+12. `results/runs/jsonl/<run_id>.jsonl`, one Run Record per document:
     `file, group, model, prompt_version, sampling, attempts, latency_ms, usage{input_tokens,
     output_tokens}, status (ok | repaired | failed), output (Service Document | null), error`.
+    This file is the source of truth and the only one code reads. `results/runs/md/<run_id>.md`
+    is its mirror for a person (summary table, then the endpoint and quota tables and the error
+    text per document), rewritten from the whole JSONL after every record; its layout is free
+    to change (22.10).
 13. `results/metrics.csv` — one row per run × group plus a total row per run.
 14. Sampling Configurations in `config/sampling.yaml`: `t0` (temperature 0) and `t05`
     (temperature 0.5); `top_p` left unset for both, because the Claude API asks for temperature
@@ -74,8 +81,10 @@ This file is the single list to check code against; it is not a spec of the impl
     Rows): a complete answer is ≈14.4k Claude tokens (≈57 tokens per Endpoint Row, not the ≈35
     first assumed), so the earlier ≈8k and the first raise to 16384 both cut S3 off. The same holds for
     Ollama's `num_ctx`: a provider constant under `providers.ollama` in the same file, set
-    explicitly to 32768 (S3 input is 13,129 qwen tokens plus ≈9k output; Ollama's default
-    varies with version and memory and truncates silently).
+    explicitly to 32768 (S3 input is 13,129 qwen tokens plus a complete answer of ≈16.6k
+    Claude tokens, ≈12k qwen tokens; Ollama's default varies with version and memory and
+    truncates silently). Its output cap `num_predict` is 16384, the counterpart of
+    `max_tokens`; a reply that hits it, or fills `num_ctx`, counts as cut off (item 16).
     The paid model is `claude-haiku-4-5` (short name `claude` in run ids): the current Claude
     generation (Opus 5.5 / 5, Sonnet 5.5, Haiku 5.5) rejects non-default `temperature`, so
     `t0`/`t05` would be impossible there; Haiku 4.5 accepts it, supports structured outputs and
@@ -110,7 +119,9 @@ This file is the single list to check code against; it is not a spec of the impl
 18. Validity (`% ok` first try, `% ok + repaired`), latency p50 / p95, and cost per 1,000
     documents are computed on all 30 documents and broken down by Group as well as in total.
     The denominator comes from the manifest, not from the run file: a document without a Run
-    Record (item 15) counts as failed and is also reported separately as "no answer".
+    Record (item 15) counts as failed and is also reported separately as "no answer". For a
+    `__gold` run (item 11) the denominator is the `gold=1` rows of the manifest, and the
+    report marks its numbers as computed on the Golden Set only.
 19. `latency_ms` is the wall-clock time for the whole document, including transport retries and
     the repair call. Cost for Claude is derived from `usage` and list prices; for the local
     model the API cost is $0, reported together with the run's total wall-clock as the compute

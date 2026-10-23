@@ -9,6 +9,7 @@ from src.extract.llm.base import (
     llm_schema_json,
 )
 from src.extract.llm.claude import ClaudeClient
+from src.extract.llm.ollama import OllamaClient
 
 __all__ = [
     "SCHEMA_FILE",
@@ -16,6 +17,7 @@ __all__ = [
     "LLMCallError",
     "LLMClient",
     "LLMReply",
+    "OllamaClient",
     "llm_schema",
     "llm_schema_json",
 ]

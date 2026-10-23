@@ -51,7 +51,7 @@ class LLMCallError(Exception):
 
 
 class LLMClient(Protocol):
-    """A provider: Claude now (claude.py), Ollama in step 6."""
+    """A provider: Claude (claude.py) or the local model through Ollama (ollama.py)."""
 
     model: str  # the full model id written to the Run Record
 

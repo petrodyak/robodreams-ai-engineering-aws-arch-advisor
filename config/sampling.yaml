@@ -12,8 +12,9 @@ sampling:
 providers:
   ollama:
     # Context window = input + output tokens; anything beyond it is truncated silently.
-    # Measured with the qwen tokenizer (17.10): largest input is S3 (049) at 13,129 tokens,
-    # and its 254 Endpoint Rows need ≈9k output tokens, so 16384 is too small.
+    # Measured with the qwen tokenizer (17.10): largest input is S3 (049) at 13,129 tokens;
+    # its complete answer is ≈16.6k Claude tokens (21.10), ≈12k qwen tokens, so 16384 is
+    # too small. The output cap num_predict (16384) is a constant in src/extract/llm/ollama.py.
     # 32768 is qwen2.5's trained maximum. Set explicitly because Ollama's default depends on
     # version and free memory (32768 on a 48 GB Mac, as low as 4096 on a smaller laptop).
     num_ctx: 32768

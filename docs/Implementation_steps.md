@@ -154,7 +154,7 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 - **Goal:** one-command launch; the first Run over all 30 documents.
 - **Files:** `prompts/extract_v1.txt`, `prompts/CHANGELOG.md`, `config/sampling.yaml` (`t0`, `t05`),
   `src/extract/pipeline.py` (repair loop, item 16), `main.py`, the `make run` target,
-  `results/runs/claude__v1__t0.jsonl`.
+  `results/runs/jsonl/claude__v1__t0.jsonl`.
 - **Done when:** 30 Run Records with model, prompt version, sampling, `attempts`, `status`;
   finding F1 (`max_tokens`) closed.
 - **Open:** — (S3 re-run under the fixed schema, decided 21.10; the earlier record is in
@@ -211,11 +211,25 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 
 - **Goal:** qwen2.5:7b through the same interface; the second sampling configurations.
 - **Files:** `src/extract/llm/ollama.py`; runs `qwen2.5-7b__v1__t0`, `qwen2.5-7b__v1__t05`,
-  `claude__v1__t05`.
+  `claude__v1__t05__gold`.
 - **Done when:** the pipeline is unchanged (only a new provider); qwen runs in the background, latency
   recorded; finding F2 (`num_ctx`) closed.
-- **Open:** —
-- **Done:** —
+- **Open:** run order, each only after Petro's ok — (1) qwen t0 on S3 alone (`--only 049`):
+  speed and whether S3 fits `num_ctx`; (2) `qwen2.5-7b__v1__t0` and (3) `qwen2.5-7b__v1__t05`
+  in the background; (4) `claude__v1__t05__gold` (≈ $0.27: input $0.06 + ≈42k output tokens).
+- **Done:**
+  - 22.10, code: `OllamaClient` behind the same `LLMClient` interface — the identical schema
+    through `format`, `num_ctx` from the config (F2), `num_predict` 16384, a reply that hits
+    `num_predict` or fills `num_ctx` is cut off (`stop_reason = max_tokens`), transport retry
+    as for Claude. `main.py --model qwen2.5-7b`, `--gold` (run id suffix `__gold`; `make run
+    GOLD=1`); `Document.gold` from the manifest. Contract items 11, 14, 18 amended. The
+    pipeline is unchanged.
+  - 22.10, readable run files: `results/runs/jsonl/` (the JSONL, source of truth, existing
+    files moved with `git mv`) and `results/runs/md/` (a Markdown mirror per run — summary
+    table, then endpoints, quotas and the error text per document), rewritten from the whole
+    JSONL after every record, so a long qwen run can be read while it runs. `src/extract/
+    report_md.py`, `make runs-md` rebuilds every mirror; contract item 12 amended. The Run
+    Record format is unchanged; only the JSONL path moved.
 
 ### Step 7 — Metrics
 
@@ -252,7 +266,7 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 | Run id | Step | Required | Cost estimate | Actual |
 |---|---|---|---|---|
 | `claude__v1__t0` | 4 | yes (also the gold draft) | ≈$1.9 (input measured: 262,867 tokens ≈ $0.26; output from the S3 trial) | **$1.21** — in 264,757 / out 188,292; 30/30 `ok`, 30 calls |
-| `claude__v1__t05` | 6 | yes — **the 10 Golden Set documents only** (budget decision 21.10) | ≈$0.3 | — |
+| `claude__v1__t05__gold` | 6 | yes — **the 10 Golden Set documents only** (budget decision 21.10; run id suffix decided 22.10) | ≈$0.27 | — |
 | `qwen2.5-7b__v1__t0` | 6 | yes | $0, ≈30–60 min | — |
 | `qwen2.5-7b__v1__t05` | 6 | yes | $0, ≈30–60 min | — |
 | `claude__v2__t0` | 8 | yes | ≈$1.8 | — |
@@ -321,4 +335,5 @@ and the PR that closed it.
 | 21.10 | Step 3.2 added: README section "Why this is not just table parsing" (answers the question whether a structured source is a fair structured-extraction task) |
 | 21.10 | Golden Set re-selected to 6 `short` / 3 `medium` / 1 `edge` to cut the manual check (step 5); the limits it sets on the metrics — `edge` on one document, no global service in gold — are in `data-notes.md` |
 | 22.10 | Correction: the Golden Set does contain `non_standard` documents (`066`, `038`), so `quota_table_format` accuracy covers all three values; `data-notes.md` fixed |
+| 22.10 | The Golden-Set-only Claude run is `claude__v1__t05__gold`: the scope is in the run id (contract items 11, 18), so a full run never resumes into its file and metrics use the gold rows as its denominator |
 | 21.10 | Budget variant A: `claude__v1__t05` on the 10 Golden Set documents only, `claude__v2__t05` dropped (section 5); step 6 needs a `--gold` option in `main.py` |

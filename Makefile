@@ -1,11 +1,13 @@
 # Every target runs inside the uv-managed .venv (`uv run` syncs it first if needed).
-.PHONY: install data text run estimate schema gold-drafts gold-check check
+.PHONY: install data text run estimate runs-md schema gold-drafts gold-check check
 
-# One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`.
+# One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`,
+# `make run MODEL=qwen2.5-7b`, or `make run SAMPLING=t05 GOLD=1` (Golden Set only).
 MODEL ?= claude
 PROMPT ?= v1
 SAMPLING ?= t0
-RUN_ARGS = --model $(MODEL) --prompt $(PROMPT) --sampling $(SAMPLING)
+GOLD ?=
+RUN_ARGS = --model $(MODEL) --prompt $(PROMPT) --sampling $(SAMPLING) $(if $(GOLD),--gold)
 
 # create .venv and install the locked dependencies from uv.lock
 install:
@@ -20,9 +22,14 @@ data:
 text:
 	uv run python scripts/extract_text.py
 
-# extract all 30 documents -> results/runs/<model>__<prompt>__<sampling>.jsonl (resumable)
+# extract all 30 documents -> results/runs/jsonl/<run_id>.jsonl (resumable)
+# + a readable mirror results/runs/md/<run_id>.md, rewritten after every record
 run:
 	uv run python main.py $(RUN_ARGS)
+
+# rebuild every results/runs/md/*.md from results/runs/jsonl/*.jsonl (after a layout change)
+runs-md:
+	uv run python -m scripts.render_runs_md
 
 # input tokens and their cost before a paid run (free count_tokens endpoint)
 estimate:
