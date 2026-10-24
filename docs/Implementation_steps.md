@@ -59,7 +59,7 @@ Apply to every step and are not repeated in the steps:
 | 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | ✅ PR #13 (`a7df1d4`) |
 | 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | 🔄 branch `step-7-metrics` |
 | 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ✅ PR #16 (`df1a8cd`); Claude v2 run PR #17 (`ea70c6e`); qwen runs 🔄 branch `patch-8.2-qwen-runs` |
-| 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ⬜ |
+| 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | 🔄 branch `step-9-report` |
 
 ## 4. Steps
 
@@ -365,7 +365,18 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
      documents, so 1–2 rows can be noise; qwen context limits (S3).
   8. **Reproduce** — the metrics command and a link to the README run section.
 - **Not taken:** a held-out test set — no time before 27.10; named under Limitations instead.
-- **Done:** —
+- **Done:**
+  - 24.10, first draft (`step-9-report`, before the Q&A of 26.10): `REPORT.md` in the eight
+    sections above, snapshot at `55892ec` (the eight run files). Five analysed errors: (1) a
+    second endpoints table skipped — Claude v1, fixed by v2 rule 2; (2) a non-standard quota
+    table reported as `standard` with invented rows — qwen, both prompts, v2 rule 3 did not
+    land; (3) the Region code written as `region_name` — qwen, 205 of 686 matched rows, a
+    model limit; (4) the output cap — 14 of qwen's 17 failures, six documents, two causes
+    (size, repetition loop); (5) a prose line taken as a row — Claude v2, the side effect of
+    (1)'s fix, caught by ADR-0003. Production choice: Claude v2 t0; the scale arithmetic
+    (100k documents ≈ $4,300 vs ≈ 157 laptop-days) and four conditions under which it flips.
+    Limitations name the gold bias, the 10-document / one-run noise floor, the gold-only
+    Claude t05, F17 and the in-sample nature of v2. Q&A feedback goes into a `patch-9.1`.
 
 ## 5. Run matrix and budget
 
