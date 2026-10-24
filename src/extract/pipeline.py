@@ -282,10 +282,21 @@ def drop_cut_off_tail(path: Path, log: Callable[[str], None]) -> None:
         log(f"{path.name}: dropped a cut-off last line ({len(data) - keep:,} bytes)")
 
 
-def done_files(path: Path) -> set[str]:
+class ProvenanceMismatch(Exception):
+    """A resume would append records made with another prompt or schema (contract item 12).
+
+    A run file is one configuration. When the prompt file or the schema changed since the
+    run started, the right move is a new run id, not a second configuration under the old
+    one (finding F17); so `run` refuses instead of writing.
+    """
+
+
+def done_files(path: Path, provenance: tuple[str, str] | None = None) -> set[str]:
     """Documents that already have a Run Record in this run's file.
 
-    A line that is not JSON is real damage (only the last line can be cut off, and
+    With `provenance` = (prompt_sha, schema_sha) of the run about to resume, every stored
+    record must carry the same pair, or `ProvenanceMismatch` is raised before any call is
+    made. A line that is not JSON is real damage (only the last line can be cut off, and
     `run` drops that one first), so it raises instead of being skipped silently.
     """
     if not path.exists():
@@ -297,11 +308,20 @@ def done_files(path: Path) -> set[str]:
         if not line.strip():
             continue
         try:
-            done.add(json.loads(line)["file"])
+            rec = json.loads(line)
+            done.add(rec["file"])
+            stored = (rec["prompt_sha"], rec["schema_sha"])
         except (ValueError, KeyError) as error:
             raise ValueError(
                 f"{path}: line {n} is not a Run Record: {error}"
             ) from error
+        if provenance is not None and stored != provenance:
+            raise ProvenanceMismatch(
+                f"{path.name}: line {n} ({rec['file']}) was made with prompt "
+                f"{stored[0]} / schema {stored[1]}, this run has prompt "
+                f"{provenance[0]} / schema {provenance[1]}: the prompt or schema "
+                "changed since the run started — start a new run id, do not resume"
+            )
     return done
 
 
@@ -339,7 +359,7 @@ def run(
     docs = list(docs)
     md_path = md_path or out_path.with_suffix(".md")
     drop_cut_off_tail(out_path, log)
-    done = done_files(out_path)
+    done = done_files(out_path, (prompt.sha, llm_schema_sha()))
     out_path.parent.mkdir(parents=True, exist_ok=True)
     write_markdown(out_path, md_path)  # the mirror of a run that was resumed or cut off
     new: list[RunRecord] = []

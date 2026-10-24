@@ -73,7 +73,10 @@ def main() -> None:
     out_path = pipeline.RUNS_DIR / f"{run_id}.jsonl"
     md_path = pipeline.RUNS_MD_DIR / f"{run_id}.md"
     print(f"Run {run_id}: {len(docs)} document(s) -> {out_path} (readable: {md_path})")
-    result = pipeline.run(client, docs, prompt, sampling, out_path, md_path=md_path)
+    try:
+        result = pipeline.run(client, docs, prompt, sampling, out_path, md_path=md_path)
+    except pipeline.ProvenanceMismatch as error:
+        raise SystemExit(f"refusing to resume: {error}") from error
     records, lost = result.records, result.lost
 
     statuses = Counter(r.status.value for r in records)

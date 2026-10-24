@@ -72,8 +72,9 @@ This file is the single list to check code against; it is not a spec of the impl
     (Service Document | null), error`. `prompt_sha` and `schema_sha` (24.10) are the first 12
     hex chars of sha256 of the prompt file and of the JSON Schema text sent to the model: the
     run id names a configuration, the two shas pin the exact bytes the model saw. A prompt
-    version name and the shared `schema.py` can drift under a run (finding F17), so metrics
-    refuse a run file whose records carry more than one (prompt_sha, schema_sha) pair.
+    version name and the shared `schema.py` can drift under a run (finding F17), so a resume
+    into a run file whose records carry another (prompt_sha, schema_sha) pair is refused
+    before any call, and metrics refuse a file that already mixes two pairs.
     This file is the source of truth and the only one code reads. `results/runs/md/<run_id>.md`
     is its mirror for a person (summary table, then the endpoint and quota tables and the error
     text per document), rewritten from the whole JSONL after every record; its layout is free
