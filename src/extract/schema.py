@@ -303,7 +303,12 @@ class RunRecord(BaseModel):
     file: str  # the `file` column of data/raw/manifest.csv
     group: Group
     model: str  # the full model id, e.g. claude-haiku-4-5, qwen2.5:7b
-    prompt_version: str  # v1, v2
+    prompt_version: str  # v1, v2 — the name; the bytes are pinned by prompt_sha
+    # Provenance (contract item 12): what the model was actually told. A prompt version
+    # name and the shared schema.py can drift under a run (finding F17), so every record
+    # pins the exact prompt file and the exact JSON Schema sent, as 12 hex chars of sha256.
+    prompt_sha: str = Field(pattern=r"^[0-9a-f]{12}$")
+    schema_sha: str = Field(pattern=r"^[0-9a-f]{12}$")
     sampling: Sampling
     attempts: int = Field(ge=1)  # API calls: transport retries and the repair included
     # wall clock for the whole document (item 19)

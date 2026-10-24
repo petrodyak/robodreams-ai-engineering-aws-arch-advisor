@@ -3,7 +3,8 @@
 Generated from the JSONL run file by `src/extract/report_md.py`; do not edit.
 
 - Model: `qwen2.5:7b`
-- Prompt version: `v1`
+- Prompt version: `v1` (file sha `8a0da697aa92`)
+- Schema sha: `e707d2e9616f`
 - Sampling: `t05` (temperature 0.5, top_p None)
 - Documents: 10
 

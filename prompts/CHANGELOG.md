@@ -17,6 +17,18 @@ to either one is a new version with an entry here, so that a run id
 Each entry says what changed and why; from v2 on, every change is tied to a specific error seen
 in the runs of the previous version.
 
+## Version → provenance
+
+A run record stores `prompt_sha` (sha256 of the prompt file, 12 hex chars) and `schema_sha`
+(the same for the JSON Schema text sent, `docs/service-document.schema.json`) — contract
+item 12. The names below are what a run id says; the shas are what the model saw.
+
+| Prompt file | sha | Schema | sha | Runs |
+|---|---|---|---|---|
+| `extract_v1.txt` | `8a0da697aa92` | `Literal["1"]` | `e707d2e9616f` | `claude__v1__t0`, the three `__gold` v1 runs |
+| `extract_v1.txt` | `8a0da697aa92` | enum `SchemaVersion` | `d4010de95c65` | `qwen2.5-7b__v1__t0` (24.10; finding F17) |
+| `extract_v2.txt` | `a3adf0379524` | enum `SchemaVersion` | `d4010de95c65` | `claude__v2__t0`, `qwen2.5-7b__v2__t0`, `qwen2.5-7b__v2__t05` |
+
 ## v1 — 2026-10-21
 
 Baseline prompt.

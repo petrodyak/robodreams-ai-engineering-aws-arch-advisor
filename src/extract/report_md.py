@@ -52,7 +52,8 @@ def render_markdown(run_id: str, records: list[RunRecord]) -> str:
     first, sampling = records[0], records[0].sampling
     lines += [
         f"- Model: `{first.model}`",
-        f"- Prompt version: `{first.prompt_version}`",
+        f"- Prompt version: `{first.prompt_version}` (file sha `{first.prompt_sha}`)",
+        f"- Schema sha: `{first.schema_sha}`",
         f"- Sampling: `{sampling.name}` (temperature {sampling.temperature}, top_p {sampling.top_p})",
         f"- Documents: {len(records)}",
         "",

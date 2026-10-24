@@ -63,7 +63,7 @@ QUOTA_FIELDS = ("default", "adjustable", "description")
 CASE_INSENSITIVE = {"description"}
 
 COLUMNS = [
-    "run_id", "model", "prompt_version", "sampling", "scope", "group",
+    "run_id", "model", "prompt_version", "prompt_sha", "schema_sha", "sampling", "scope", "group",
     "n_docs", "ok", "repaired", "failed", "no_answer", "pct_ok", "pct_ok_or_repaired",
     "latency_p50_ms", "latency_p95_ms", "cost_per_1000_usd", "wallclock_s",
     "gold_docs", "gold_scored", "quota_table_format_acc",
@@ -99,6 +99,22 @@ def parse_run_id(run_id: str) -> RunId:
 def run_scope(run: RunId, docs: Iterable[Document]) -> list[Document]:
     """The documents the run was meant to cover: the denominator of validity (item 18)."""
     return [d for d in docs if d.gold or not run.gold]
+
+
+def run_provenance(run_id: str, records: list[RunRecord]) -> tuple[str, str]:
+    """The one (prompt_sha, schema_sha) of a run (contract item 12).
+
+    A run file is one prompt and one schema by definition: its records are compared as one
+    configuration. A resumed run after a prompt or schema edit would mix two
+    configurations under one run id (finding F17) — that is an error, not a row.
+    """
+    pairs = {(r.prompt_sha, r.schema_sha) for r in records}
+    if len(pairs) > 1:
+        raise ValueError(
+            f"{run_id}: records with different provenance in one run file: "
+            f"{sorted(pairs)} — the prompt or schema changed under the run"
+        )
+    return pairs.pop() if pairs else ("", "")
 
 
 # ---------------------------------------------------------------- accuracy (item 17)
@@ -224,6 +240,7 @@ class GroupMetrics:
     group: str
     docs: list[Document]  # the denominator (item 18)
     records: list[RunRecord]
+    provenance: tuple[str, str] = ("", "")  # (prompt_sha, schema_sha) of the whole run
     gold_docs: int = 0
     gold_scored: int = 0  # gold documents with an output
     format_correct: int = 0
@@ -253,6 +270,8 @@ class GroupMetrics:
             "run_id": self.run_id,
             "model": self.run.model,
             "prompt_version": self.run.prompt_version,
+            "prompt_sha": self.provenance[0],
+            "schema_sha": self.provenance[1],
             "sampling": self.run.sampling,
             "scope": self.run.scope,
             "group": self.group,
@@ -314,6 +333,7 @@ def run_metrics(
     """Rows for one run: one per Group that has documents in the run's scope, then total."""
     run = parse_run_id(run_id)
     scope = run_scope(run, docs)
+    provenance = run_provenance(run_id, records)
     by_file = {r.file: r for r in records}
     unknown = set(by_file) - {d.file for d in scope}
     if unknown:
@@ -340,6 +360,7 @@ def run_metrics(
             group=group,
             docs=group_docs,
             records=[by_file[d.file] for d in group_docs if d.file in by_file],
+            provenance=provenance,
         )
         for d in group_docs:
             if d.file not in accuracy:

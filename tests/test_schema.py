@@ -354,6 +354,8 @@ def run_record(**overrides):
         "group": "short",
         "model": "claude-haiku-4-5",
         "prompt_version": "v1",
+        "prompt_sha": "8a0da697aa92",
+        "schema_sha": "d4010de95c65",
         "sampling": {"name": "t0", "temperature": 0.0, "top_p": None},
         "attempts": 1,
         "latency_ms": 1234,
@@ -381,6 +383,22 @@ def test_record_built_from_a_validated_answer_still_needs_a_context():
         RunRecord(**fields)
     record = RunRecord.model_validate(fields, context=answer_context(SERVICE))
     assert record.output.service == SERVICE
+
+
+@pytest.mark.parametrize("field", ["prompt_sha", "schema_sha"])
+@pytest.mark.parametrize("value", ["", "8a0d", "8A0DA697AA92", "8a0da697aa92ff", None])
+def test_provenance_must_be_12_lowercase_hex_chars(field, value):
+    # Contract item 12: a record without the exact prompt and schema it was made with is
+    # not a record (finding F17)
+    with pytest.raises(ValidationError, match=field):
+        load_record(run_record(**{field: value}))
+
+
+def test_provenance_is_required():
+    fields = run_record()
+    del fields["prompt_sha"], fields["schema_sha"]
+    with pytest.raises(ValidationError, match="prompt_sha"):
+        load_record(fields)
 
 
 def test_float_latency_is_rounded_to_whole_milliseconds():

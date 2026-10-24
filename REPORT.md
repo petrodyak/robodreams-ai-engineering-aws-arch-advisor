@@ -55,7 +55,10 @@ machine or the volume is small enough that a day of laptop time per 600 document
   prompt v2 but lives in `schema.py`, which every run shares. The three `__gold` v1 runs of
   23.10 saw the old `Literal` schema; the 30-document `qwen2.5-7b__v1__t0` of 24.10 already
   saw the enum. So the 30-document v1 → v2 comparison isolates the rule text, and the effect
-  of the schema fix is read from the `__gold` v1 runs.
+  of the schema fix is read from the `__gold` v1 runs. Since step 10 every record pins this:
+  `prompt_sha` and `schema_sha` in the run files and in `results/metrics.csv` (two schemas,
+  `e707d2e9616f` and `d4010de95c65`; two prompts, `8a0da697aa92` and `a3adf0379524`; the
+  table in `prompts/CHANGELOG.md`).
 
 ## 3. Results
 

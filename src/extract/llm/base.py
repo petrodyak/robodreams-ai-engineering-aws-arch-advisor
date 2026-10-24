@@ -5,6 +5,7 @@ schema and the one repair call (contract item 16) live once in the pipeline, so 
 Ollama are judged by exactly the same logic.
 """
 
+import hashlib
 import json
 import time
 from collections.abc import Callable
@@ -74,6 +75,21 @@ def llm_schema() -> dict[str, Any]:
 def llm_schema_json() -> str:
     """llm_schema() as the text of SCHEMA_FILE: stable, so a diff shows only real changes."""
     return json.dumps(llm_schema(), indent=2, ensure_ascii=False) + "\n"
+
+
+def short_sha(data: bytes | str) -> str:
+    """The first 12 hex chars of sha256: the provenance id of a prompt file or a schema
+    text in a Run Record (contract item 12). 48 bits is enough to tell versions apart;
+    the full hash is one `sha256sum` away."""
+    if isinstance(data, str):
+        data = data.encode()
+    return hashlib.sha256(data).hexdigest()[:12]
+
+
+@cache
+def llm_schema_sha() -> str:
+    """Provenance of the schema both providers receive: short_sha(llm_schema_json())."""
+    return short_sha(llm_schema_json())
 
 
 def call_with_retry[T](
