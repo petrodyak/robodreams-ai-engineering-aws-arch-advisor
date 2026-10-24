@@ -13,7 +13,7 @@ Well-Architected lenses for retrieval.
 
 | Stage | What the system does | Status |
 |---|---|---|
-| 1. Extraction | Extracts endpoint and quota tables from per-service PDFs; compares a paid model vs a local model against a gold set | HW 1, in progress |
+| 1. Extraction | Extracts endpoint and quota tables from per-service PDFs; compares a paid model vs a local model against a gold set | HW 1 done — [`REPORT.md`](REPORT.md) |
 | 2. RAG | Answers architecture questions with citations to document and page | — |
 | 3. Agent | Reviews a described architecture against best practices and limits | — |
 | 4. Service | API with auth, logging, monitoring and per-request cost | — |
@@ -97,6 +97,28 @@ One run = model × prompt version × sampling configuration, named
 configurations live in `config/sampling.yaml`; the metrics definitions are in
 [`docs/stage1-data-contract.md`](docs/stage1-data-contract.md) (items 17–19). The comparison
 itself is `REPORT.md`.
+
+## Stage 1 results (HW 1)
+
+Every document of the run for validity, latency and cost; the 10 Golden Set documents for
+recall. Full tables, definitions and the error analysis: [`REPORT.md`](REPORT.md); the
+numbers come from `results/metrics.csv` (`make metrics`).
+
+| Run | n | ok + repaired % | latency p50 | $ per 1,000 docs | endpoints recall | quotas recall |
+|---|---|---|---|---|---|---|
+| `claude__v1__t0` | 30 | 100 | 36 s | 40.2 | 97.3 | 100 |
+| `claude__v2__t0` | 30 | 100 | 44 s | 42.7 | **100** | 100 |
+| `qwen2.5-7b__v1__t0` | 30 | 83.3 | 148 s | 0 | 78.6 | 76.0 |
+| `qwen2.5-7b__v2__t0` | 30 | **86.7** | 136 s | 0 | **91.0** | **93.0** |
+| `qwen2.5-7b__v2__t05` | 30 | 73.3 | 154 s | 0 | 79.8 | 76.0 |
+
+Claude Haiku 4.5 with prompt v2 is valid on every document and recovers every Golden Set
+row at ≈ $43 per 1,000 documents; the local qwen2.5:7b is free but valid on 87 % of the
+documents, recovers 91 % of the rows, takes 3× longer and misreads `region_name` on 30 % of
+the rows it finds. Prompt v2 helped both models (a second endpoints table, placeholder
+hostnames, tables across page breaks); temperature 0.5 changed nothing for Claude and only
+hurt qwen. The production choice is Claude; the conditions under which it would flip are in
+the report.
 
 ## Known limits
 
