@@ -58,7 +58,7 @@ Apply to every step and are not repeated in the steps:
 | 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | ✅ PR #12 (`7d0d50a`) |
 | 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | ✅ PR #13 (`a7df1d4`) |
 | 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | 🔄 branch `step-7-metrics` |
-| 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ✅ PR #16 (`df1a8cd`); v2 runs 🔄 branch `patch-8.1-v2-runs` |
+| 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ✅ PR #16 (`df1a8cd`); Claude v2 run PR #17 (`ea70c6e`); qwen runs 🔄 branch `patch-8.2-qwen-runs` |
 | 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ⬜ |
 
 ## 4. Steps
@@ -324,6 +324,21 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     +8 s p50 from the extra rows. Two concurrent `make run` processes wrote `092` and `023`
     twice (two paid calls each, ≈ $0.05): the duplicates were removed by hand before the
     commit (first record kept) → finding F16.
+  - 24.10, the three qwen runs overnight (`patch-8.2-qwen-runs`; 30 documents each, one
+    after another under `caffeinate`): `qwen2.5-7b__v1__t0` 21 `ok` + 4 `repaired` + 5
+    `failed`, 110 min; `qwen2.5-7b__v2__t0` 26 `ok` + 4 `failed`, **no repair call**, 99 min;
+    `qwen2.5-7b__v2__t05` 21 `ok` + 1 `repaired` + 8 `failed`, 113 min. v1 → v2 at t0:
+    validity 70 → 86.7 %, endpoints recall on gold 78.6 → 91.0, quotas recall 76 → 93,
+    `quota_table_format` 7 → 8 of 10; `048` SQS `failed` → `ok` (80 rows, 23 quotas), `038`
+    173 → 184 rows. Not fixed by v2: `066` and `038` still `standard` with invented Quota
+    Rows (quota precision 69.9), `region_name` 63 → 70 % (Region code written as the name).
+    The four v2 failures are the largest documents: `017`, `049`, `025` cut off at
+    `num_predict`, `074` a hostname outside the AWS domains (ADR-0003). t05 again only
+    hurts qwen: −17 pp validity, 8 `failed`. **F17:** the overnight `qwen2.5-7b__v1__t0` ran on
+    `main` after PR #16, i.e. with the `SchemaVersion` enum — it is "prompt v1 text + the
+    fixed schema", not the v1 the Golden Set runs saw. The 30-document v1 → v2 comparison
+    therefore isolates the rule text; the F15 effect (0 % ok, every document repaired) is
+    read from the `__gold` v1 runs. The report says so next to the table. 32 metric rows.
 
 ### Step 9 — REPORT.md
 
@@ -359,11 +374,11 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 | `claude__v1__t0` | 4 | yes (also the gold draft) | ≈$1.9 (input measured: 262,867 tokens ≈ $0.26; output from the S3 trial) | **$1.21** — in 264,757 / out 188,292; 30/30 `ok`, 30 calls |
 | `claude__v1__t05__gold` | 6 | yes — **the 10 Golden Set documents only** (budget decision 21.10; run id suffix decided 22.10) | ≈$0.27 | **$0.27** — in 60,968 / out 42,366; 10/10 `ok`, 10 calls, 306 s (23.10) |
 | `qwen2.5-7b__v1__t0__gold` | 6 | yes (checkpoint scope, 23.10) | $0, ≈40–60 min (F15: every document repaired) | **$0**, 40 min — 9 `repaired`, 1 `failed` (23.10) |
-| `qwen2.5-7b__v1__t0` | 8 | yes (moved from 6, 23.10) | $0, ≈2–3 h | — |
+| `qwen2.5-7b__v1__t0` | 8 | yes (moved from 6, 23.10) | $0, ≈2–3 h | **$0**, 110 min — 21 `ok`, 4 `repaired`, 5 `failed` (24.10; enum schema, F17) |
 | `qwen2.5-7b__v1__t05__gold` | 6 | yes (checkpoint scope, 23.10) | $0, ≈40–60 min | **$0**, 37 min — 7 `repaired`, 3 `failed` (24.10) |
 | `claude__v2__t0` | 8 | yes | ≈$1.8 (≈$1.3 after the v1 actual) | **$1.28** — in 285,494 / out 199,197; 29 `ok` + 1 `repaired`, 31 calls (24.10); ≈ $0.05 more paid for the duplicate calls (F16) |
-| `qwen2.5-7b__v2__t0` | 8 | yes | $0 | — |
-| `qwen2.5-7b__v2__t05` | 8 | desirable | $0 | — |
+| `qwen2.5-7b__v2__t0` | 8 | yes | $0 | **$0**, 99 min — 26 `ok`, 4 `failed`, no repair call (24.10) |
+| `qwen2.5-7b__v2__t05` | 8 | desirable | $0 | **$0**, 113 min — 21 `ok`, 1 `repaired`, 8 `failed` (24.10) |
 | `claude__v2__t05` | 8 | no (budget decision 21.10) | ≈$1.8 | — |
 
 **API budget:** $5 for the whole of HW 1. Spent before the full `claude__v1__t0` run: **$0.42** — three
@@ -413,8 +428,9 @@ and the PR that closed it.
 | F12 | Results-file edge cases: a line that is JSON but not an object raises a bare `TypeError` without its line number; `{"file": null}` counts as done; a complete record whose final `\n` was stripped by hand is dropped as a cut-off line (recoverable from Git) | review of the F8 fix | Petro's call | ⬜ |
 | F13 | No test pins `main.py`'s non-zero exit (contract item 15) or `NoAnswer.__cause__` | review of the F7 fix | Petro's call | ⬜ |
 | F14 | `claude__v1__t0` is 30/30 valid, but endpoint row counts differ from the manifest in both directions. Fewer: `078` IAM Identity Center 78 of 234, `017` DynamoDB 94 of 203, `044` RDS 78 of 165, `092` Secrets Manager 44 of 62, `048` SQS 84 of 104 (gold). More: `007` AgentCore 39 vs 22 (templated `gatewayId`, gold), `055` App Mesh 120 vs 77, `042` Redshift 253 vs 201, `038` OpenSearch 183 vs 170 (Neighbour Tail of Network Security Manager? gold), `085` Lake Formation 88 vs 75 (gold). Also `042` Redshift has `quota_table_format: none` (ADR-0001 expects `non_standard`?) and `010` CloudFront has 97 Quota Rows. Expected or manifest-side: `005` Aurora 36 of 72 (decided: one row per hostname), `074` Global Accelerator 2 of 105 (the text has 5 hostnames — manifest, F6). The manifest undercounts wrapped hostnames (F6), so these are signals, not verdicts | step 4 (full run) | step 5 (gold `048`, `007`, `038`, `085`: count against the PDF); steps 8–9 (non-gold: error analysis and v2 changes) | ◐ gold part ✅ step 5 (`step-5-golden-set`): `085`, `007`, `038` match the printed hostnames (the manifest undercounts, F6; no Neighbour Tail); `048` missed the 20-row "Legacy endpoints" table, added to gold. Non-gold ✅ step 8 (`patch-8.1-v2-runs`): v2 rule 2 took the missing tables — `078` 234, `017` 248, `044` 166 rows (the manifest undercounts, F6); `092` 44 unchanged, `055`, `042`, `010` unchanged — the "more" cases are rejoined wraps (F6), not errors; `042` `none` and `010`'s 97 Quota Rows stay as v1 printed them → step 9 if the error analysis needs them |
-| F15 | `anthropic.transform_schema` turns `schema_version: Literal["1"]` into a plain string with `{const: 1}` in its description, so the schema constrains neither model. Claude writes `"1"`; qwen wrote `"1.0"` (direct call on `006`, 23.10), which fails validation, so every qwen v1 answer needs a repair call — longer runs, and on the largest documents the repair (document + previous answer) may not fit `num_ctx`. Not fixed in v1: Claude v1 already ran with this schema, and both models must see the same one | step 6 (direct call) | step 8 (prompt v2: an enum `["1"]` the schema keeps, a CHANGELOG entry tied to this error) | ◐ schema part ✅ step 8 (`step-8-prompt-v2`): enum `SchemaVersion`, kept by the transform (tested); the v2 runs show whether the repair calls disappear |
+| F15 | `anthropic.transform_schema` turns `schema_version: Literal["1"]` into a plain string with `{const: 1}` in its description, so the schema constrains neither model. Claude writes `"1"`; qwen wrote `"1.0"` (direct call on `006`, 23.10), which fails validation, so every qwen v1 answer needs a repair call — longer runs, and on the largest documents the repair (document + previous answer) may not fit `num_ctx`. Not fixed in v1: Claude v1 already ran with this schema, and both models must see the same one | step 6 (direct call) | step 8 (prompt v2: an enum `["1"]` the schema keeps, a CHANGELOG entry tied to this error) | ✅ step 8: enum `SchemaVersion` (PR #16); `qwen2.5-7b__v2__t0` has no repair call at all, `qwen2.5-7b__v1__t0` with the enum 21/30 `ok` vs 0/10 before (`patch-8.2-qwen-runs`) |
 | F16 | Nothing stops two `make run` processes from appending to the same run file: both skip the documents already done and then extract the same next ones (`claude__v2__t0`: `092`, `023` twice, two paid calls each). Cheap fix: a lock file next to the JSONL, or `main.py` refusing when one exists | step 8 (v2 run) | Petro's call | ⬜ |
+| F17 | The schema is part of a prompt version (`prompts/CHANGELOG.md`), but `schema.py` is not versioned per prompt: once PR #16 merged, every later run — v1 included — used the `SchemaVersion` enum. `qwen2.5-7b__v1__t0` (30) is therefore "v1 text + fixed schema" and differs from the `__gold` v1 runs on exactly F15. Not a bug to fix now (one schema for all runs is the contract, item 1); the report states which runs saw which schema | step 8 (overnight runs) | step 9 (stated in REPORT; a `schema_version`-per-prompt mechanism is out of scope) | ◐ |
 
 ## 7. Risks
 
@@ -439,3 +455,4 @@ and the PR that closed it.
 | 21.10 | Budget variant A: `claude__v1__t05` on the 10 Golden Set documents only, `claude__v2__t05` dropped (section 5); step 6 needs a `--gold` option in `main.py` |
 | 23.10 | Checkpoint scope: all three step 6 runs today on the Golden Set only (`qwen2.5-7b__v1__t0__gold`, `qwen2.5-7b__v1__t05__gold`, `claude__v1__t05__gold`), because F15 makes a full qwen run ≈ 2–3 h; the full `qwen2.5-7b__v1__t0` moves to step 8 (error analysis), its validity and latency on 30 documents follow then |
 | 24.10 | From another HW 1 report: the REPORT structure in step 9 and the "no real values as examples" rule for prompt v2 in step 8 |
+| 24.10 | `qwen2.5-7b__v2__t05` (desirable) run overnight together with the two required qwen runs; F17 recorded: runs after PR #16 use the enum schema whatever the prompt version |
