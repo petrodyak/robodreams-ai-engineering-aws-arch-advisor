@@ -4,7 +4,7 @@ Decisions reached in the design interview of 2026-10-15, amended on 2026-10-16 (
 14, 16; review of the earlier schema grill against this contract) and on 2026-10-21 (items 14,
 15, 16, 18; the S3 trial call and the reviews of step 4; item 6, the Golden Set check of
 step 5; on 2026-10-22 items 11, 14, 18 for the Ollama provider and the Golden-Set-only run of
-step 6). Terms are defined in
+step 6; on 2026-10-24 item 12 for run provenance). Terms are defined in
 [`GLOSSARY.md`](../GLOSSARY.md); the decisions that are hard to reverse have ADRs
 ([0001](adr/0001-standard-quota-tables-only.md), [0002](adr/0002-model-extracts-code-derives.md),
 [0003](adr/0003-format-checks-are-validation-failures.md)).
@@ -67,8 +67,13 @@ This file is the single list to check code against; it is not a spec of the impl
     (`claude__v1__t05__gold`, budget decision of 21.10): the scope is part of the name, so a
     later full run with the same model, prompt and sampling never resumes into its file.
 12. `results/runs/jsonl/<run_id>.jsonl`, one Run Record per document:
-    `file, group, model, prompt_version, sampling, attempts, latency_ms, usage{input_tokens,
-    output_tokens}, status (ok | repaired | failed), output (Service Document | null), error`.
+    `file, group, model, prompt_version, prompt_sha, schema_sha, sampling, attempts,
+    latency_ms, usage{input_tokens, output_tokens}, status (ok | repaired | failed), output
+    (Service Document | null), error`. `prompt_sha` and `schema_sha` (24.10) are the first 12
+    hex chars of sha256 of the prompt file and of the JSON Schema text sent to the model: the
+    run id names a configuration, the two shas pin the exact bytes the model saw. A prompt
+    version name and the shared `schema.py` can drift under a run (finding F17), so metrics
+    refuse a run file whose records carry more than one (prompt_sha, schema_sha) pair.
     This file is the source of truth and the only one code reads. `results/runs/md/<run_id>.md`
     is its mirror for a person (summary table, then the endpoint and quota tables and the error
     text per document), rewritten from the whole JSONL after every record; its layout is free

@@ -10,7 +10,7 @@ import json
 import pytest
 
 from src.extract import pipeline
-from src.extract.llm import LLMCallError, LLMReply
+from src.extract.llm import LLMCallError, LLMReply, llm_schema_sha
 from src.extract.schema import Group, RunRecord, Status, Usage, stored_context
 
 T0 = pipeline.load_sampling("t0")
@@ -75,6 +75,17 @@ def extract(*script):
 
 
 # ---------------------------------------------------------------- inputs
+
+
+def test_prompt_sha_pins_the_file_bytes(tmp_path):
+    # Contract item 12 / finding F17: the sha is of the bytes, so any edit — even one
+    # character inside a rule — gives a new provenance id, while the version name stays
+    import hashlib
+
+    src = (pipeline.PROMPTS_DIR / "extract_v1.txt").read_bytes()
+    assert PROMPT.sha == hashlib.sha256(src).hexdigest()[:12]
+    (tmp_path / "extract_vx.txt").write_bytes(src.replace(b"Rules:", b"Rules :"))
+    assert pipeline.load_prompt("vx", tmp_path).sha != PROMPT.sha
 
 
 def test_prompt_v1_has_its_three_sections():
@@ -283,6 +294,9 @@ def test_run_writes_one_loadable_record_per_document_and_resumes(tmp_path, raw):
     assert len(lines) == 2
     first = RunRecord.model_validate_json(lines[0], context=stored_context(DOC.service))
     assert first.output.endpoints[0].endpoint_type.value == "dual_stack"
+    # every record pins what the model was told (contract item 12)
+    assert first.prompt_sha == PROMPT.sha
+    assert first.schema_sha == llm_schema_sha()
 
     # second run with the same command: nothing is asked again
     again = FakeLLM()

@@ -22,7 +22,13 @@ from pathlib import Path
 import yaml
 from pydantic import ValidationError
 
-from src.extract.llm import LLMCallError, LLMClient, LLMReply
+from src.extract.llm import (
+    LLMCallError,
+    LLMClient,
+    LLMReply,
+    llm_schema_sha,
+    short_sha,
+)
 from src.extract.report_md import write_markdown
 from src.extract.schema import (
     Group,
@@ -76,6 +82,7 @@ class Prompt:
     """One prompt version: prompts/extract_<version>.txt."""
 
     version: str
+    sha: str  # short_sha of the file's bytes: the provenance id written to every record
     system: str
     user: str
     repair: str
@@ -95,7 +102,8 @@ def _fill(template: str, **values: str) -> str:
 
 def load_prompt(version: str, prompts_dir: Path = PROMPTS_DIR) -> Prompt:
     path = prompts_dir / f"extract_{version}.txt"
-    parts = _SECTION_RE.split(path.read_text())
+    raw = path.read_bytes()
+    parts = _SECTION_RE.split(raw.decode())
     # split() gives [text before the first header, name, body, name, body, ...]
     sections = {name: body.strip() for name, body in zip(parts[1::2], parts[2::2])}
     if set(sections) != set(PROMPT_SECTIONS):
@@ -109,7 +117,7 @@ def load_prompt(version: str, prompts_dir: Path = PROMPTS_DIR) -> Prompt:
                 f"{path.name} [{name}]: placeholders {sorted(found)}, "
                 f"expected {sorted(required)}"
             )
-    return Prompt(version=version, **sections)
+    return Prompt(version=version, sha=short_sha(raw), **sections)
 
 
 def load_sampling(name: str, path: Path = SAMPLING_CONFIG) -> Sampling:
@@ -212,6 +220,8 @@ def extract_document(
                 "group": doc.group,
                 "model": client.model,
                 "prompt_version": prompt.version,
+                "prompt_sha": prompt.sha,
+                "schema_sha": llm_schema_sha(),
                 "sampling": sampling,
                 "attempts": sum(c.attempts for c in calls),
                 "latency_ms": sum(c.latency_ms for c in calls),

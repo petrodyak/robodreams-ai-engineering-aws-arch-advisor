@@ -71,6 +71,8 @@ def record(
     latency_ms=1000,
     usage=(100, 50),
     model="claude-haiku-4-5",
+    prompt_sha="8a0da697aa92",
+    schema_sha="d4010de95c65",
 ):
     status = status or (Status.OK if output is not None else Status.FAILED)
     return RunRecord.model_validate(
@@ -79,6 +81,8 @@ def record(
             "group": doc.group,
             "model": model,
             "prompt_version": "v1",
+            "prompt_sha": prompt_sha,
+            "schema_sha": schema_sha,
             "sampling": T0,
             "attempts": 1 if status == Status.OK else 2,
             "latency_ms": latency_ms,
@@ -415,6 +419,44 @@ def test_csv_has_one_row_per_run_and_group_plus_total(tmp_path, gold_dir):
     assert read[3]["n_docs"] == "4" and read[-1]["n_docs"] == "2"
     assert read[2]["latency_p50_ms"] == ""  # undefined is an empty cell, not "None"
     assert "claude__v1__t0" in metrics.summary(rows)
+
+
+def test_provenance_is_one_pair_per_run_and_reported(gold_dir):
+    records = [record(DOCS[0], GOLD_A), record(DOCS[2], GOLD_C)]
+    total = rows_by_group(
+        metrics.run_metrics("claude__v1__t05__gold", records, DOCS, gold_dir)
+    )["total"]
+    assert (total["prompt_sha"], total["schema_sha"]) == (
+        "8a0da697aa92",
+        "d4010de95c65",
+    )
+
+
+def test_mixed_provenance_in_one_run_file_is_an_error(gold_dir):
+    # Finding F17: a run resumed after a schema change would mix two configurations
+    # under one run id; metrics refuse it instead of averaging them
+    records = [
+        record(DOCS[0], GOLD_A, schema_sha="e707d2e9616f"),
+        record(DOCS[2], GOLD_C, schema_sha="d4010de95c65"),
+    ]
+    with pytest.raises(ValueError, match="different provenance"):
+        metrics.run_metrics("claude__v1__t05__gold", records, DOCS, gold_dir)
+
+
+def test_real_runs_carry_the_two_schemas_of_hw1():
+    """The backfilled provenance (scripts/backfill_provenance.py): the Literal schema on
+    the 21.10–23.10 runs, the enum schema after PR #16 — including the v1 prompt run of
+    24.10, which is finding F17 made visible in the data."""
+    rows = {gm.run_id: gm.row() for gm in metrics.all_metrics() if gm.group == "total"}
+    literal, enum = "e707d2e9616f", "d4010de95c65"
+    assert rows["claude__v1__t0"]["schema_sha"] == literal
+    assert rows["qwen2.5-7b__v1__t0__gold"]["schema_sha"] == literal
+    assert rows["claude__v2__t0"]["schema_sha"] == enum
+    assert rows["qwen2.5-7b__v1__t0"]["schema_sha"] == enum  # F17
+    assert (
+        rows["qwen2.5-7b__v1__t0"]["prompt_sha"] == rows["claude__v1__t0"]["prompt_sha"]
+    )
+    assert rows["claude__v2__t0"]["prompt_sha"] != rows["claude__v1__t0"]["prompt_sha"]
 
 
 def test_metrics_on_the_real_golden_set_and_runs():

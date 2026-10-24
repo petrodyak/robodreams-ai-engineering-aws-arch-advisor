@@ -60,6 +60,7 @@ Apply to every step and are not repeated in the steps:
 | 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | 🔄 branch `step-7-metrics` |
 | 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ✅ PR #16 (`df1a8cd`); Claude v2 run PR #17 (`ea70c6e`); qwen runs 🔄 branch `patch-8.2-qwen-runs` |
 | 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ✅ PR #19 (`0869fda`); Q&A feedback → `patch-9.1` |
+| 10 | Run provenance: `prompt_sha` / `schema_sha` in every record (Q&A feedback, remark 2) | `step-10-run-provenance` | review ~15 min | step 3: logging (2); repo quality | 25.10 | 🔄 branch `step-10-run-provenance` |
 
 ## 4. Steps
 
@@ -378,6 +379,32 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     Limitations name the gold bias, the 10-document / one-run noise floor, the gold-only
     Claude t05, F17 and the in-sample nature of v2. Q&A feedback goes into a `patch-9.1`.
 
+### Step 10 — Run provenance (lecturer's remark 2 of 24.10)
+
+- **Remark:** "tie every run to the exact prompt and schema version" — finding F17 showed a
+  run id (`v1`) naming a prompt while the schema under it had changed.
+- **Goal:** every Run Record pins the bytes the model saw; two configurations can never sit
+  under one run id unnoticed.
+- **Files:** `src/extract/schema.py` (`RunRecord.prompt_sha`, `schema_sha`),
+  `src/extract/llm/base.py` (`short_sha`, `llm_schema_sha`), `src/extract/pipeline.py`
+  (`Prompt.sha`), `src/extract/metrics.py` (two columns, the mixed-provenance guard),
+  `src/extract/report_md.py` (header), `scripts/backfill_provenance.py`, the eight run files
+  and their mirrors, `results/metrics.csv`; contract item 12, `prompts/CHANGELOG.md` table.
+- **Done when:** the fields are required and validated; a run file with two provenance pairs
+  fails metrics; the eight existing runs carry the shas recovered from git; F17 closed.
+- **Not done on purpose:** a schema file per prompt version. The remark asks for a binding,
+  not an isolation; one `schema.py` for every run is contract item 1, and the sha makes the
+  drift visible instead of impossible — enough for a one-person project.
+- **Done:**
+  - 24.10, code: `prompt_sha` = sha256 of the prompt file bytes, `schema_sha` = sha256 of
+    `llm_schema_json()` (the text of `docs/service-document.schema.json`), both 12 hex chars,
+    required, pattern-validated. `metrics.py` refuses a run file whose records carry more
+    than one pair (a resume after a prompt or schema edit). `scripts/backfill_provenance.py`
+    hashes the files as they were at the commit each run was made (`git show`), run once:
+    8 files, 180 records. Result, now in the data: two schemas (`e707…` Literal on the
+    21.10–23.10 runs, `d401…` enum after PR #16) and two prompts (`8a0d…` v1, `a3ad…` v2);
+    `qwen2.5-7b__v1__t0` = `8a0d…` + `d401…`, F17 visible in the CSV and tested. 199 tests.
+
 ## 5. Run matrix and budget
 
 | Run id | Step | Required | Cost estimate | Actual |
@@ -441,7 +468,7 @@ and the PR that closed it.
 | F14 | `claude__v1__t0` is 30/30 valid, but endpoint row counts differ from the manifest in both directions. Fewer: `078` IAM Identity Center 78 of 234, `017` DynamoDB 94 of 203, `044` RDS 78 of 165, `092` Secrets Manager 44 of 62, `048` SQS 84 of 104 (gold). More: `007` AgentCore 39 vs 22 (templated `gatewayId`, gold), `055` App Mesh 120 vs 77, `042` Redshift 253 vs 201, `038` OpenSearch 183 vs 170 (Neighbour Tail of Network Security Manager? gold), `085` Lake Formation 88 vs 75 (gold). Also `042` Redshift has `quota_table_format: none` (ADR-0001 expects `non_standard`?) and `010` CloudFront has 97 Quota Rows. Expected or manifest-side: `005` Aurora 36 of 72 (decided: one row per hostname), `074` Global Accelerator 2 of 105 (the text has 5 hostnames — manifest, F6). The manifest undercounts wrapped hostnames (F6), so these are signals, not verdicts | step 4 (full run) | step 5 (gold `048`, `007`, `038`, `085`: count against the PDF); steps 8–9 (non-gold: error analysis and v2 changes) | ◐ gold part ✅ step 5 (`step-5-golden-set`): `085`, `007`, `038` match the printed hostnames (the manifest undercounts, F6; no Neighbour Tail); `048` missed the 20-row "Legacy endpoints" table, added to gold. Non-gold ✅ step 8 (`patch-8.1-v2-runs`): v2 rule 2 took the missing tables — `078` 234, `017` 248, `044` 166 rows (the manifest undercounts, F6); `092` 44 unchanged, `055`, `042`, `010` unchanged — the "more" cases are rejoined wraps (F6), not errors; `042` `none` and `010`'s 97 Quota Rows stay as v1 printed them → step 9 if the error analysis needs them |
 | F15 | `anthropic.transform_schema` turns `schema_version: Literal["1"]` into a plain string with `{const: 1}` in its description, so the schema constrains neither model. Claude writes `"1"`; qwen wrote `"1.0"` (direct call on `006`, 23.10), which fails validation, so every qwen v1 answer needs a repair call — longer runs, and on the largest documents the repair (document + previous answer) may not fit `num_ctx`. Not fixed in v1: Claude v1 already ran with this schema, and both models must see the same one | step 6 (direct call) | step 8 (prompt v2: an enum `["1"]` the schema keeps, a CHANGELOG entry tied to this error) | ✅ step 8: enum `SchemaVersion` (PR #16); `qwen2.5-7b__v2__t0` has no repair call at all, `qwen2.5-7b__v1__t0` with the enum 21/30 `ok` vs 0/10 before (`patch-8.2-qwen-runs`) |
 | F16 | Nothing stops two `make run` processes from appending to the same run file: both skip the documents already done and then extract the same next ones (`claude__v2__t0`: `092`, `023` twice, two paid calls each). Cheap fix: a lock file next to the JSONL, or `main.py` refusing when one exists | step 8 (v2 run) | Petro's call | ⬜ accepted, not fixed (24.10): one user, one terminal; a lock file is the fix if stage 2–4 runs hit it again |
-| F17 | The schema is part of a prompt version (`prompts/CHANGELOG.md`), but `schema.py` is not versioned per prompt: once PR #16 merged, every later run — v1 included — used the `SchemaVersion` enum. `qwen2.5-7b__v1__t0` (30) is therefore "v1 text + fixed schema" and differs from the `__gold` v1 runs on exactly F15. Not a bug to fix now (one schema for all runs is the contract, item 1); the report states which runs saw which schema | step 8 (overnight runs) | step 9 (stated in REPORT; a `schema_version`-per-prompt mechanism is out of scope) | ◐ |
+| F17 | The schema is part of a prompt version (`prompts/CHANGELOG.md`), but `schema.py` is not versioned per prompt: once PR #16 merged, every later run — v1 included — used the `SchemaVersion` enum. `qwen2.5-7b__v1__t0` (30) is therefore "v1 text + fixed schema" and differs from the `__gold` v1 runs on exactly F15. Not a bug to fix now (one schema for all runs is the contract, item 1); the report states which runs saw which schema | step 8 (overnight runs) | step 9 (stated in REPORT; a `schema_version`-per-prompt mechanism is out of scope) | ✅ step 10 (`step-10-run-provenance`): `prompt_sha` / `schema_sha` in every record, backfilled from git; metrics refuse mixed provenance |
 
 ## 7. Risks
 
@@ -468,3 +495,4 @@ and the PR that closed it.
 | 24.10 | From another HW 1 report: the REPORT structure in step 9 and the "no real values as examples" rule for prompt v2 in step 8 |
 | 24.10 | `qwen2.5-7b__v2__t05` (desirable) run overnight together with the two required qwen runs; F17 recorded: runs after PR #16 use the enum schema whatever the prompt version |
 | 24.10 | Patch 9.2: README "Stage 1 results" with the five main runs and the conclusion, pointing to `REPORT.md`; F16 accepted as is |
+| 24.10 | Lecturer's feedback after the checkpoint, four remarks: (1) validation grounded in the source text, (2) run tied to the exact prompt and schema, (3) long documents in parts, (4) prompt changes checked on unseen data. Steps 10–13 planned in that order of cost: 10 provenance, 11 grounded validation, 12 held-out set, 13 chunking (13-lite before the deadline, full after) |
