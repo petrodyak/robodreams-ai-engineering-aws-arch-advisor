@@ -60,7 +60,7 @@ Apply to every step and are not repeated in the steps:
 | 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | 🔄 branch `step-7-metrics` |
 | 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ✅ PR #16 (`df1a8cd`); Claude v2 run PR #17 (`ea70c6e`); qwen runs 🔄 branch `patch-8.2-qwen-runs` |
 | 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ✅ PR #19 (`0869fda`); Q&A feedback → `patch-9.1` |
-| 10 | Run provenance: `prompt_sha` / `schema_sha` in every record (Q&A feedback, remark 2) | `step-10-run-provenance` | review ~15 min | step 3: logging (2); repo quality | 25.10 | 🔄 branch `step-10-run-provenance` |
+| 10 | Run provenance: `prompt_sha` / `schema_sha` in every record (Q&A feedback, remark 2) | `step-10-run-provenance` | review ~15 min | step 3: logging (2); repo quality | 25.10 | ✅ PR #21 (`095b560`); guard 🔄 branch `patch-10.1-provenance-guard` |
 
 ## 4. Steps
 
@@ -404,6 +404,15 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     8 files, 180 records. Result, now in the data: two schemas (`e707…` Literal on the
     21.10–23.10 runs, `d401…` enum after PR #16) and two prompts (`8a0d…` v1, `a3ad…` v2);
     `qwen2.5-7b__v1__t0` = `8a0d…` + `d401…`, F17 visible in the CSV and tested. 199 tests.
+  - 24.10, `patch-10.1-provenance-guard` — the remark as a property test. `run()` now
+    refuses to resume a run file whose records were made with another prompt or schema
+    (`ProvenanceMismatch`, raised before any call; `main.py` exits with "refusing to resume
+    … start a new run id"), so the F17 situation is stopped at the source, not only at
+    metrics. `tests/test_provenance.py` replays it end to end: a run, the schema changes
+    under it, the same command resumes → refused, nothing appended; the same for a one-
+    character prompt edit under the same version name; an unchanged configuration still
+    resumes; a file that already mixes two pairs is refused by metrics (second line of
+    defence). 204 tests.
 
 ## 5. Run matrix and budget
 
