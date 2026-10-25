@@ -6,6 +6,7 @@ Usage:
     uv run python main.py ... --only 049-amazon-simple-storage-service.pdf
     uv run python main.py --model qwen2.5-7b --sampling t05
     uv run python main.py --sampling t05 --gold   # the 10 Golden Set documents only
+    uv run python main.py --prompt v2 --set holdout --gold   # the Held-out Set's 5 gold documents
 
 Writes results/runs/jsonl/<run_id>.jsonl (contract items 11-12) and its readable mirror
 results/runs/md/<run_id>.md. Documents already in the JSONL are skipped, so a run
@@ -37,6 +38,12 @@ def main() -> None:
     parser.add_argument(
         "--sampling", default="t0", help="a key of config/sampling.yaml"
     )
+    parser.add_argument(
+        "--set",
+        choices=sorted(pipeline.DOCUMENT_SETS),
+        default="raw",
+        help="the document set: raw (the Working Set) or holdout (the Held-out Set)",
+    )
     parser.add_argument("--only", nargs="+", metavar="FILE", help="manifest file names")
     parser.add_argument(
         "--gold",
@@ -51,11 +58,12 @@ def main() -> None:
     load_dotenv()  # ANTHROPIC_API_KEY, OLLAMA_HOST from .env
     prompt = pipeline.load_prompt(args.prompt)
     sampling = pipeline.load_sampling(args.sampling)
-    docs = pipeline.load_manifest()
+    doc_set = pipeline.DOCUMENT_SETS[args.set]
+    docs = pipeline.load_manifest(doc_set.manifest)
     if args.only:
         unknown = set(args.only) - {d.file for d in docs}
         if unknown:
-            parser.error(f"not in data/raw/manifest.csv: {sorted(unknown)}")
+            parser.error(f"not in {doc_set.manifest}: {sorted(unknown)}")
         docs = [d for d in docs if d.file in args.only]
     if args.gold:
         docs = [d for d in docs if d.gold]
@@ -63,7 +71,7 @@ def main() -> None:
         parser.error("--estimate counts Claude tokens; a local model costs $0")
     client = MODELS[args.model]()
     run_id = pipeline.make_run_id(
-        args.model, prompt.version, sampling.name, gold=args.gold
+        args.model, prompt.version, sampling.name, gold=args.gold, doc_set=doc_set
     )
 
     if args.estimate:
@@ -74,7 +82,15 @@ def main() -> None:
     md_path = pipeline.RUNS_MD_DIR / f"{run_id}.md"
     print(f"Run {run_id}: {len(docs)} document(s) -> {out_path} (readable: {md_path})")
     try:
-        result = pipeline.run(client, docs, prompt, sampling, out_path, md_path=md_path)
+        result = pipeline.run(
+            client,
+            docs,
+            prompt,
+            sampling,
+            out_path,
+            md_path=md_path,
+            raw_dir=doc_set.dir,
+        )
     except pipeline.ProvenanceMismatch as error:
         raise SystemExit(f"refusing to resume: {error}") from error
     records, lost = result.records, result.lost

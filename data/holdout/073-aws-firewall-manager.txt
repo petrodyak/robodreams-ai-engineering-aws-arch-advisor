@@ -1,0 +1,541 @@
+AWS General Reference                                                                                     Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Rate of data                                        us-east-1: 5             No       The maximum capacity
+                                                                                       in mebibyte per second
+                                                     us-west-2: 5                      for a delivery stream in
+
+                                                     eu-west-1: 5                      the current Region.
+
+
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 1
+
+ Rate of records                                     us-east-1:               No       The maximum capacity
+                                                     500,000                           in records per second for
+                                                                                       a delivery stream in the
+                                                     us-west-2:                        current Region.
+                                                     500,000
+
+                                                     eu-west-1:
+                                                     500,000
+
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 100,000
+
+
+
+For more information, see Amazon Data Firehose Quotas in the Amazon Data Firehose Developer
+Guide.
+
+AWS Firewall Manager endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+
+
+Firewall Manager                                                                                          Version 1.0 1825
+AWS General Reference                                                                                Reference guide
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+
+ Region        Region         Endpoint                                                Protocol
+ Name
+
+ US East       us-east-2      fms.us-east-2.amazonaws.com                             HTTPS
+ (Ohio)
+                              fms-fips.us-east-2.amazonaws.com                         HTTPS
+
+ US            us-east-1      fms.us-east-1.amazonaws.com                             HTTPS
+ East (N.
+ Virginia)                    fms-fips.us-east-1.amazonaws.com                         HTTPS
+
+
+ US            us-            fms.us-west-1.amazonaws.com                             HTTPS
+ West (N.      west-1
+ Californi                    fms-fips.us-west-1.amazonaws.com                         HTTPS
+
+ a)
+
+ US West       us-            fms.us-west-2.amazonaws.com                             HTTPS
+ (Oregon)      west-2
+                              fms-fips.us-west-2.amazonaws.com                         HTTPS
+
+ Africa        af-south-      fms.af-south-1.amazonaws.com                            HTTPS
+ (Cape         1
+ Town)                        fms-fips.af-south-1.amazonaws.com                        HTTPS
+
+
+ Asia          ap-            fms.ap-east-1.amazonaws.com                             HTTPS
+ Pacific        east-1
+ (Hong                        fms-fips.ap-east-1.amazonaws.com                         HTTPS
+
+ Kong)
+
+ Asia          ap-            fms.ap-south-2.amazonaws.com                            HTTPS
+ Pacific        south-2
+ (Hyderaba
+ d)
+
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 1826
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                 Protocol
+ Name
+
+ Asia           ap-           fms.ap-southeast-3.amazonaws.com                         HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3
+
+ Asia           ap-           fms.ap-southeast-5.amazonaws.com                         HTTPS
+ Pacific         southe
+ (Malaysia      ast-5
+ )
+
+ Asia           ap-           fms.ap-southeast-4.amazonaws.com                         HTTPS
+ Pacific         southe
+ (Melbourn      ast-4
+ e)
+
+ Asia           ap-           fms.ap-south-1.amazonaws.com                             HTTPS
+ Pacific         south-1
+ (Mumbai)                     fms-fips.ap-south-1.amazonaws.com                         HTTPS
+
+
+ Asia           ap-           fms.ap-southeast-6.amazonaws.com                         HTTPS
+ Pacific         southe
+ (New           ast-6
+ Zealand)
+
+ Asia           ap-           fms.ap-northeast-3.amazonaws.com                         HTTPS
+ Pacific         northe
+ (Osaka)        ast-3
+
+ Asia           ap-           fms.ap-northeast-2.amazonaws.com                         HTTPS
+ Pacific         northe
+ (Seoul)        ast-2         fms-fips.ap-northeast-2.amazonaws.com                     HTTPS
+
+
+ Asia           ap-           fms.ap-southeast-1.amazonaws.com                         HTTPS
+ Pacific         southe
+ (Singapor      ast-1         fms-fips.ap-southeast-1.amazonaws.com                     HTTPS
+
+ e)
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 1827
+AWS General Reference                                                                               Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-           fms.ap-southeast-2.amazonaws.com                         HTTPS
+ Pacific        southe
+ (Sydney)      ast-2         fms-fips.ap-southeast-2.amazonaws.com                     HTTPS
+
+
+ Asia          ap-           fms.ap-east-2.amazonaws.com                              HTTPS
+ Pacific        east-2
+ (Taipei)
+
+ Asia          ap-           fms.ap-southeast-7.amazonaws.com                         HTTPS
+ Pacific        southe
+ (Thailand     ast-7
+ )
+
+ Asia          ap-           fms.ap-northeast-1.amazonaws.com                         HTTPS
+ Pacific        northe
+ (Tokyo)       ast-1         fms-fips.ap-northeast-1.amazonaws.com                     HTTPS
+
+
+ Canada        ca-centra     fms.ca-central-1.amazonaws.com                           HTTPS
+ (Central)     l-1
+                             fms-fips.ca-central-1.amazonaws.com                       HTTPS
+
+ Canada        ca-           fms.ca-west-1.amazonaws.com                              HTTPS
+ West          west-1
+ (Calgary)                   fms-fips.ca-west-1.amazonaws.com                          HTTPS
+
+
+ Europe        eu-           fms.eu-central-1.amazonaws.com                           HTTPS
+ (Frankfur     central-1
+ t)                          fms-fips.eu-central-1.amazonaws.com                       HTTPS
+
+
+ Europe        eu-           fms.eu-west-1.amazonaws.com                              HTTPS
+ (Ireland)     west-1
+                             fms-fips.eu-west-1.amazonaws.com                          HTTPS
+
+ Europe        eu-           fms.eu-west-2.amazonaws.com                              HTTPS
+ (London)      west-2
+                             fms-fips.eu-west-2.amazonaws.com                          HTTPS
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 1828
+AWS General Reference                                                                                Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ Europe        eu-           fms.eu-south-1.amazonaws.com                             HTTPS
+ (Milan)       south-1
+                             fms-fips.eu-south-1.amazonaws.com                         HTTPS
+
+ Europe        eu-           fms.eu-west-3.amazonaws.com                              HTTPS
+ (Paris)       west-3
+                             fms-fips.eu-west-3.amazonaws.com                          HTTPS
+
+ Europe        eu-           fms.eu-south-2.amazonaws.com                             HTTPS
+ (Spain)       south-2
+
+ Europe        eu-           fms.eu-north-1.amazonaws.com                             HTTPS
+ (Stockhol     north-1
+ m)
+
+ Europe        eu-           fms.eu-central-2.amazonaws.com                           HTTPS
+ (Zurich)      central-2
+
+ Israel        il-centra     fms.il-central-1.amazonaws.com                           HTTPS
+ (Tel Aviv)    l-1
+
+ Mexico        mx-           fms.mx-central-1.amazonaws.com                           HTTPS
+ (Central)     central-1
+
+ Middle        me-           fms.me-south-1.amazonaws.com                             HTTPS
+ East          south-1
+ (Bahrain)                   fms-fips.me-south-1.amazonaws.com                         HTTPS
+
+
+ Middle        me-           fms.me-central-1.amazonaws.com                           HTTPS
+ East          central-1
+ (UAE)
+
+ South         sa-east-1     fms.sa-east-1.amazonaws.com                              HTTPS
+ America
+ (São                        fms-fips.sa-east-1.amazonaws.com                          HTTPS
+
+ Paulo)
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 1829
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ AWS            us-gov-       fms.us-gov-east-1.amazonaws.com                           HTTPS
+ GovCloud       east-1
+ (US-East)                    fms-fips.us-gov-east-1.amazonaws.com                       HTTPS
+
+
+ AWS            us-gov-       fms.us-gov-west-1.amazonaws.com                           HTTPS
+ GovCloud       west-1
+ (US-                         fms-fips.us-gov-west-1.amazonaws.com                       HTTPS
+
+ West)
+
+
+Service quotas
+
+
+ Name                                              Default                 Adjustabl Description
+                                                                           e
+
+ AWS WAF Classic rule groups per AWS               Each supported          No      The maximum number
+ WAF Classic policy                                Region: 2                       of AWS WAF Classic rule
+                                                                                   groups that you can use
+                                                                                   in a Firewall Manager
+                                                                                   AWS WAF Classic policy.
+
+ Accounts per Firewall Manager admin               Each supported          Yes     The maximum number
+                                                   Region: 10,000                  of accounts that you can
+                                                                                   be managed by Firewall
+                                                                                   Manager under a single
+                                                                                   FMS admin.
+
+ Admins per organization in Firewall               Each supported          No      The maximum number
+ Manager                                           Region: 10                      of admin accounts that
+                                                                                   you can onboard under
+                                                                                   a single organization in
+                                                                                   Firewall Manager
+
+ Amazon VPC instances in scope of a                Each supported          Yes     The maximum number
+ common security group policy                      Region: 100                     of Amazon VPC instances
+
+
+
+Service quotas                                                                                        Version 1.0 1830
+AWS General Reference                                                                                         Reference guide
+
+ Name                                                 Default                    Adjustabl Description
+                                                                                 e
+
+                                                                                          that you can have in
+                                                                                          scope per Firewall
+                                                                                          Manager common
+                                                                                          security group policy per
+                                                                                          account. This number
+                                                                                          represents the combined
+                                                                                          count of VPCs that you
+                                                                                          own and VPCs that are
+                                                                                          shared with you.
+
+ Applications per application list                    Each supported             Yes      The maximum number of
+                                                      Region: 50                          applications that you can
+                                                                                          define in an application
+                                                                                          list.
+
+ Audit security groups per security                   Each supported             Yes      The maximum number
+ group content audit policy                           Region: 1                           of audit security groups
+                                                                                          that you can use in a
+                                                                                          Firewall Manager content
+                                                                                          audit security group
+                                                                                          policy.
+
+ Custom managed application lists for                 Each supported             Yes      The maximum number
+ rules that allow all traffic                           Region: 1                           of managed application
+                                                                                          lists for rules that allow
+                                                                                          all traffic in a Firewall
+                                                                                          Manager content audit
+                                                                                          security group policy.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 1831
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ Custom managed application lists in                  Each supported            Yes     The maximum number
+ any content audit security group policy              Region: 1                         of custom managed
+ setting                                                                                application lists that you
+                                                                                        can use in any setting
+                                                                                        in a Firewall Manager
+                                                                                        content audit security
+                                                                                        group policy.
+
+ Custom managed application lists per                 Each supported            Yes     The maximum number
+ account                                              Region: 10                        of custom managed
+                                                                                        application lists that
+                                                                                        you can define for an
+                                                                                        account.
+
+ Custom managed protocol lists in any                 Each supported            Yes     The maximum number
+ content audit security group policy                  Region: 1                         of custom managed
+ setting                                                                                protocol lists that you
+                                                                                        can use in any setting
+                                                                                        in a Firewall Manager
+                                                                                        content audit security
+                                                                                        group policy.
+
+ Custom managed protocol lists per                    Each supported            Yes     The maximum number
+ account                                              Region: 10                        of custom managed
+                                                                                        protocol lists that
+                                                                                        you can define for an
+                                                                                        account.
+
+ Explicitly included or excluded accounts             Each supported            Yes     The maximum number of
+ per policy per Region                                Region: 200                       accounts per Region that
+                                                                                        you can explicitly include
+                                                                                        in scope or explicitly
+                                                                                        exclude from scope for a
+                                                                                        Firewall Manager policy.
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 1832
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Firewall Manager policies per organizat             Each supported            Yes      The maximum number of
+ ion per Region                                      Region: 50                         Firewall Manager policies
+                                                                                        for any pair of Region
+                                                                                        and organization in AWS
+                                                                                        Organizations.
+
+ IPV4 CIDRs for a Network Firewall                   Each supported            Yes      The maximum number
+ policy                                              Region: 50                         of IPV4 CIDR ranges
+                                                                                        that you can provide in a
+                                                                                        single Firewall Manager
+                                                                                        Network Firewall policy,
+                                                                                        for use in firewall
+                                                                                        endpoint management.
+
+ Inbound/outbound rules per network                  Each supported            Yes      The maximum number
+ ACL policy                                          Region: 5                          of inbound/outbound
+                                                                                        rules that you can use
+                                                                                        in a Firewall Manager
+                                                                                        Network ACL policy.
+
+ Organizational units in scope per policy            Each supported            Yes      The maximum number
+ per Region                                          Region: 20                         of organizational units
+                                                                                        that can be in scope of a
+                                                                                        Firewall Manager policy
+                                                                                        for any Region.
+
+ Partner rule groups per AWS WAF                     Each supported            Yes      The maximum number
+ policy                                              Region: 1                          of partner rule groups
+                                                                                        that can be applied to a
+                                                                                        single policy, limited by
+                                                                                        Web Application Firewall
+                                                                                        WebACL limits.
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1833
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Primary security groups per common                  Each supported            Yes     The maximum number
+ security group policy                               Region: 3                         of primary security
+                                                                                       groups that you can use
+                                                                                       in a Firewall Manager
+                                                                                       common security group
+                                                                                       policy.
+
+ Protocols per protocol list                         Each supported            Yes     The maximum number
+                                                     Region: 5                         of protocols that you can
+                                                                                       define in a protocol list.
+
+ Resource sets per Firewall Manager                  Each supported            Yes     The maximum number
+ admin account                                       Region: 20                        of resource sets that you
+                                                                                       can create under a single
+                                                                                       Firewall Manager admin
+                                                                                       account.
+
+ Resources per resource set                          Each supported            Yes     The maximum number
+                                                     Region: 100                       of resources that a single
+                                                                                       resource set can contain.
+
+ Route 53 Resolver DNS Firewall rule                 Each supported            Yes     The maximum number of
+ groups per DNS Firewall policy                      Region: 2                         Route 53 Resolver DNS
+                                                                                       Firewall rule groups that
+                                                                                       you can use in a Firewall
+                                                                                       Manager DNS Firewall
+                                                                                       policy.
+
+ Rule groups per AWS WAF policy                      Each supported            Yes     The maximum number of
+                                                     Region: 50                        rule groups that you can
+                                                                                       use in a Firewall Manager
+                                                                                       AWS WAF policy.
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1834
+AWS General Reference                                                                                        Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ Stateful rule group capacity per                     Each supported            Yes      The maximum number
+ Network Firewall policy                              Region: 30,000                     of rules that can be
+                                                                                         included in a stateful rule
+                                                                                         group within a Firewall
+                                                                                         Manager Network
+                                                                                         Firewall policy.
+
+ Stateful rule groups per Network                     Each supported            No       The maximum number
+ Firewall policy                                      Region: 20                         of stateful rule groups
+                                                                                         that you can use in
+                                                                                         a Firewall Manager
+                                                                                         Network Firewall policy.
+
+ Stateless rule group capacity per                    Each supported            No       The maximum number
+ Network Firewall policy                              Region: 30,000                     of rules that can be
+                                                                                         included in a stateless
+                                                                                         rule group within
+                                                                                         a Firewall Manager
+                                                                                         Network Firewall policy.
+
+ Stateless rule groups per Network                    Each supported            No       The maximum number
+ Firewall policy                                      Region: 20                         of stateless rule groups
+                                                                                         that you can use in
+                                                                                         a Firewall Manager
+                                                                                         Network Firewall policy.
+
+ Tags to include or exclude resources                 Each supported            Yes      The maximum number
+ per policy                                           Region: 8                          of tags that you can use
+                                                                                         to include or exclude
+                                                                                         resources for a Firewall
+                                                                                         Manager policy.
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 1835

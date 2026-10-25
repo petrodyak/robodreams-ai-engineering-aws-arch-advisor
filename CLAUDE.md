@@ -24,7 +24,7 @@ If a decision at the current stage affects later stages (data structure, file na
 - **Stack:** Python 3.12, `uv` (not poetry, not a hand-made pip venv), Anthropic (Claude) as the only paid model, Ollama with `qwen2.5:7b` as the local one. Do not suggest OpenAI or other providers. The `openai` SDK is a dependency only as the client for OpenRouter in course lectures and exercises; it is not a second paid provider for the HW 1 comparison (ADR-0004).
 - New dependencies only via `uv add`, never by editing `pyproject.toml` by hand.
 - No private data — public data only.
-- API budget — up to $5 for the whole of HW 1. Before bulk runs, estimate the cost and state it.
+- API budget — up to $10 for the whole of HW 1 (raised from $5 on 25.10 for the held-out runs after the lecturer's feedback). Before bulk runs, estimate the cost and state it.
 - Keys — only in `.env`; only `.env.example` goes into Git.
 
 ## How to work with me

@@ -47,6 +47,20 @@ touching `data/`, the prompts, or the golden set. The schema the data is extract
 **Affects later stages:** the file names and the JSON format are fixed — `raw/*.txt` and
 `gold/*.json` are reused by RAG (stage 2) and by the agent (stage 3).
 
+## Held-out Set (step 12, 25.10)
+
+- **10 documents in `data/holdout/`**, never used while writing prompt v2 (contract item 20):
+  selected from the 69 pool documents outside the Working Set by a fixed rule (seed 20261025,
+  under 20 pages, `093` excluded). **No `short` document was left in the pool** — the Working
+  Set took all ten of them — so the set is 6 `medium` (1,275–1,624 words) and 4 `edge`
+  (2,417–2,929 words): on average harder than the Working Set, which the report states.
+- **Gold for 5 of the 10**, the five lightest `medium` documents (`027`, `068`, `051`, `028`,
+  `073`; 39–88 endpoint rows each), in `data/holdout/gold/`. Drafted from
+  `claude__v2__t0__holdout__gold__val2` — so, unlike the step 5 drafts, every drafted row is
+  grounded in the chapter (ADR-0005) — and checked by hand against the PDF.
+- Same text extraction as the Working Set (`scripts/extract_text.py --set holdout`); word
+  counts match the pool profile for all ten.
+
 ## Text extraction
 
 - `scripts/extract_text.py` — `pypdf` layout mode → 30 `.txt` files in `data/raw/`; pages are

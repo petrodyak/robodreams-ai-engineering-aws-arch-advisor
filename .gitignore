@@ -4,6 +4,7 @@
 data/source/
 data/pool/*.pdf
 data/raw/*.pdf
+data/holdout/*.pdf
 # python
 .venv/
 __pycache__/

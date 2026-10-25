@@ -13,7 +13,7 @@ pipeline's grounding since step 11). Quota names are compared with the Name colu
 Standard Quota Table the same way. The readers are helpers for a person, not a judge:
 anything they cannot read shows up as a difference to look at, never as a silent pass.
 
-Usage:  python -m scripts.check_gold [name ...]   (default: every gold file)
+Usage:  python -m scripts.check_gold [--set raw|holdout] [name ...]   (default: every gold file)
 """
 
 import json
@@ -39,13 +39,17 @@ def region_names() -> dict[str, Counter]:
     return names
 
 
-def check(doc: pipeline.Document, names: dict[str, Counter]) -> list[str]:
+def check(
+    doc: pipeline.Document,
+    names: dict[str, Counter],
+    doc_set: pipeline.DocumentSet = pipeline.WORKING_SET,
+) -> list[str]:
     """What to look at in the PDF for one gold file; an empty list means nothing flagged."""
-    path = gold_path(doc.file)
+    path = gold_path(doc.file, doc_set.gold_dir)
     gold = ServiceDocument.model_validate_json(
         path.read_text(), context=stored_context(doc.service)
     )
-    printed = printed_hostnames(target_chapter(doc.text(), doc.service))
+    printed = printed_hostnames(target_chapter(doc.text(doc_set.dir), doc.service))
     in_gold = [e.endpoint for e in gold.endpoints]
     notes = []
 
@@ -56,7 +60,9 @@ def check(doc: pipeline.Document, names: dict[str, Counter]) -> list[str]:
     for host, n in Counter(in_gold).items():
         if n > 1:
             notes.append(f"{n} rows with the same hostname: {host}")
-    printed_names = printed_quota_names(target_chapter(doc.text(), doc.service))
+    printed_names = printed_quota_names(
+        target_chapter(doc.text(doc_set.dir), doc.service)
+    )
     gold_names = [q.name for q in gold.quotas]
     lower = {n.lower() for n in printed_names}
     for name in dict.fromkeys(
@@ -86,18 +92,18 @@ def check(doc: pipeline.Document, names: dict[str, Counter]) -> list[str]:
     return notes
 
 
-def main(only: list[str]) -> None:
+def main(only: list[str], doc_set: pipeline.DocumentSet = pipeline.WORKING_SET) -> None:
     names = region_names()
-    docs = gold_documents()
+    docs = gold_documents(doc_set)
     flagged = 0
     for file, doc in docs.items():
         if only and not any(file.startswith(o) for o in only):
             continue
-        path = gold_path(file)
+        path = gold_path(file, doc_set.gold_dir)
         if not path.exists():
             print(f"\n{path.name}: missing, run python -m scripts.make_gold_drafts")
             continue
-        notes = check(doc, names)
+        notes = check(doc, names, doc_set)
         gold = json.loads(path.read_text())
         print(
             f"\n{path.name}: {len(gold['endpoints'])} endpoints, "
@@ -111,4 +117,10 @@ def main(only: list[str]) -> None:
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    argv = sys.argv[1:]
+    doc_set = pipeline.WORKING_SET
+    if "--set" in argv:
+        i = argv.index("--set")
+        doc_set = pipeline.DOCUMENT_SETS[argv[i + 1]]
+        argv = argv[:i] + argv[i + 2 :]
+    main(argv, doc_set)

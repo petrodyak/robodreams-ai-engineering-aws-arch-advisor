@@ -1,0 +1,873 @@
+AWS General Reference                                                                                  Reference guide
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ StandardTypeSourceEndpoints                       Each supported           Yes     The maximum number
+                                                   Region: 1,000                    of standard type source
+                                                                                    endpoints that you can
+                                                                                    create in an AWS region
+
+
+
+For more information, see Quotas in the AWS Elemental MediaConnect User Guide.
+
+AWS Elemental MediaConvert endpoints and quotas
+
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ US East        us-east-2     mediaconvert.us-east-2.amazonaws.com                       HTTPS
+ (Ohio)
+
+ US             us-east-1     mediaconvert.us-east-1.amazonaws.com                       HTTPS
+ East (N.
+ Virginia)
+
+ US             us-           mediaconvert.us-west-1.amazonaws.com                       HTTPS
+ West (N.       west-1
+
+
+
+
+MediaConvert                                                                                           Version 1.0 2605
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Californi
+ a)
+
+ US West        us-           mediaconvert.us-west-2.amazonaws.com                      HTTPS
+ (Oregon)       west-2
+
+ Africa         af-south-     mediaconvert.af-south-1.amazonaws.com                     HTTPS
+ (Cape          1
+ Town)
+
+ Asia           ap-           mediaconvert.ap-southeast-5.amazonaws.com                 HTTPS
+ Pacific         southe
+ (Malaysia      ast-5
+ )
+
+ Asia           ap-           mediaconvert.ap-southeast-4.amazonaws.com                 HTTPS
+ Pacific         southe
+ (Melbourn      ast-4
+ e)
+
+ Asia           ap-           mediaconvert.ap-south-1.amazonaws.com                     HTTPS
+ Pacific         south-1
+ (Mumbai)
+
+ Asia           ap-           mediaconvert.ap-northeast-3.amazonaws.com                 HTTPS
+ Pacific         northe
+ (Osaka)        ast-3
+
+ Asia           ap-           mediaconvert.ap-northeast-2.amazonaws.com                 HTTPS
+ Pacific         northe
+ (Seoul)        ast-2
+
+ Asia           ap-           mediaconvert.ap-southeast-1.amazonaws.com                 HTTPS
+ Pacific         southe
+ (Singapor      ast-1
+ e)
+
+
+
+
+Service endpoints                                                                                     Version 1.0 2606
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-            mediaconvert.ap-southeast-2.amazonaws.com                HTTPS
+ Pacific        southe
+ (Sydney)      ast-2
+
+ Asia          ap-            mediaconvert.ap-northeast-1.amazonaws.com                HTTPS
+ Pacific        northe
+ (Tokyo)       ast-1
+
+ Canada        ca-centra      mediaconvert.ca-central-1.amazonaws.com                  HTTPS
+ (Central)     l-1
+
+ Europe        eu-            mediaconvert.eu-central-1.amazonaws.com                  HTTPS
+ (Frankfur     central-1
+ t)
+
+ Europe        eu-            mediaconvert.eu-west-1.amazonaws.com                     HTTPS
+ (Ireland)     west-1
+
+ Europe        eu-            mediaconvert.eu-west-2.amazonaws.com                     HTTPS
+ (London)      west-2
+
+ Europe        eu-            mediaconvert.eu-west-3.amazonaws.com                     HTTPS
+ (Paris)       west-3
+
+ Europe        eu-            mediaconvert.eu-north-1.amazonaws.com                    HTTPS
+ (Stockhol     north-1
+ m)
+
+ Middle        me-            mediaconvert.me-central-1.amazonaws.com                  HTTPS
+ East          central-1
+ (UAE)
+
+ South         sa-east-1      mediaconvert.sa-east-1.amazonaws.com                     HTTPS
+ America
+ (São
+ Paulo)
+
+
+
+
+Service endpoints                                                                                    Version 1.0 2607
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ AWS            us-gov-       mediaconvert.us-gov-west-1.amazonaws.com                   HTTPS
+ GovCloud       west-1
+ (US-
+ West)
+
+
+Service quotas
+
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Concurrent jobs per account                       us-east-1: 2,000         No       The maximum number of
+                                                                                     jobs that MediaConvert
+                                                   us-west-2: 2,000                  can process at one time,
+
+                                                   eu-west-1: 2,000                  across all of your on-
+                                                                                     demand queues in the
+                                                   Each of the                       current AWS Region. For
+                                                   other supported                   more information about
+                                                   Regions: 1,000                    configuring on-demand
+                                                                                     queues, see: https://d
+                                                                                     ocs.aws.amazon.com/
+                                                                                     mediaconvert/latest/ug/
+                                                                                     working-with-on-deman
+                                                                                     d-queues.html
+
+ Concurrent jobs per on-demand queue               us-east-1: 500           Yes      The maximum number
+                                                                                     of concurrent jobs that
+                                                   us-east-2: 250                    are available when
+
+                                                   us-west-2: 500                    you configure an on-
+                                                                                     demand queue in the
+                                                   ap-northeast-1:                   current AWS Region. For
+                                                   250                               more information about
+                                                                                     configuring on-demand
+                                                   ap-south-1: 250                   queues, see: https://d
+
+
+
+Service quotas                                                                                         Version 1.0 2608
+AWS General Reference                                                                                     Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+                                                    eu-west-1: 500                    ocs.aws.amazon.com/
+                                                                                      mediaconvert/latest/ug/
+                                                    eu-west-2: 250                    working-with-on-deman
+
+                                                    Each of the                       d-queues.html
+
+                                                    other supported
+                                                    Regions: 100
+
+
+ Concurrent jobs per on-demand queue,               us-east-1: 200            No      The default value for
+ default                                                                              concurrent jobs that
+                                                    us-west-2: 200                    MediaConvert applies
+
+                                                    eu-west-1: 200                    to new on-demand
+                                                                                      queues in the current
+                                                    Each of the                       AWS Region. For more
+                                                    other supported                   information about
+                                                    Regions: 100                      configuring on-demand
+                                                                                      queues, see: https://d
+                                                                                      ocs.aws.amazon.com/
+                                                                                      mediaconvert/latest/ug/
+                                                                                      working-with-on-deman
+                                                                                      d-queues.html
+
+ Concurrent jobs queries per account                Each supported            No      The maximum number of
+                                                    Region: 10                        concurrent jobs queries
+                                                                                      you can create in this
+                                                                                      account in the current
+                                                                                      AWS Region.
+
+ Custom job templates                               Each supported            Yes     The maximum number
+                                                    Region: 100                       of custom job templates
+                                                                                      that you can create
+                                                                                      in this account in the
+                                                                                      current AWS Region.
+
+
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 2609
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Custom output presets                               Each supported            Yes     The maximum number
+                                                     Region: 100                       of custom output presets
+                                                                                       that you can create
+                                                                                       in this account in the
+                                                                                       current AWS Region.
+
+ Queues per AWS Region                               Each supported            Yes     The maximum number of
+                                                     Region: 10                        on-demand and reserved
+                                                                                       queues combined that
+                                                                                       you can create in the
+                                                                                       current AWS Region.
+
+ Request rate for AssociateCertificate                Each supported            No      The maximum number
+                                                     Region: 2 per                     of AssociateCertifica
+                                                     second                            te requests per second
+                                                                                       that you can send in this
+                                                                                       account in the current
+                                                                                       AWS Region.
+
+ Request rate for AssociateCertificate, in            Each supported            No      The maximum number
+ a burst                                             Region: 100                       of AssociateCertificate
+                                                                                       requests that you can
+                                                                                       send in one burst in this
+                                                                                       account in the current
+                                                                                       AWS Region.
+
+ Request rate for CancelJob                          Each supported            Yes     The maximum number
+                                                     Region: 2 per                     of CancelJob requests
+                                                     second                            per second that you can
+                                                                                       send in this account in
+                                                                                       the current AWS Region.
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 2610
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Request rate for CancelJob, in a burst              Each supported            Yes      The maximum number
+                                                     Region: 100                        of CancelJob requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for CreateJob                          Each supported            Yes      The maximum number
+                                                     Region: 5 per                      of CreateJob requests
+                                                     second                             per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for CreateJob, in a burst              Each supported            Yes      The maximum number
+                                                     Region: 100                        of CreateJob requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for CreateJobTemplate                  Each supported            Yes      The maximum number
+                                                     Region: 2 per                      of CreateJobTemplate
+                                                     second                             requests per second
+                                                                                        that you can send in this
+                                                                                        account in the current
+                                                                                        AWS Region.
+
+ Request rate for CreateJobTemplate, in              Each supported            Yes      The maximum number
+ a burst                                             Region: 100                        of CreateJobTemplate
+                                                                                        requests that you can
+                                                                                        send in one burst in this
+                                                                                        account in the current
+                                                                                        AWS Region.
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 2611
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Request rate for CreatePreset                       Each supported            Yes      The maximum number
+                                                     Region: 2 per                      of CreatePreset requests
+                                                     second                             per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for CreatePreset, in a                 Each supported            Yes      The maximum number
+ burst                                               Region: 100                        of CreatePreset requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for CreateQueue                        Each supported            Yes      The maximum number
+                                                     Region: 2 per                      of CreateQueue requests
+                                                     second                             per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for CreateQueue, in a                  Each supported            Yes      The maximum number
+ burst                                               Region: 100                        of CreateQueue requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for CreateResourceShare                Each supported            No       The maximum number
+                                                     Region: 0.1                        of Share requests per
+                                                                                        second that you can send
+                                                                                        in this account in the
+                                                                                        current AWS Region.
+
+ Request rate for CreateResourceShare,               Each supported            No       The maximum number of
+ in a burst                                          Region: 10                         Share requests that you
+                                                                                        can send in one burst
+                                                                                        in this account in the
+                                                                                        current AWS Region.
+
+
+
+
+Service quotas                                                                                             Version 1.0 2612
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Request rate for DeleteJobTemplate                  Each supported            Yes      The maximum number
+                                                     Region: 2 per                      of DeleteJobTemplate
+                                                     second                             requests per second
+                                                                                        that you can send in this
+                                                                                        account in the current
+                                                                                        AWS Region.
+
+ Request rate for DeleteJobTemplate, in              Each supported            Yes      The maximum number
+ a burst                                             Region: 100                        of DeleteJobTemplate
+                                                                                        requests that you can
+                                                                                        send in one burst in this
+                                                                                        account in the current
+                                                                                        AWS Region.
+
+ Request rate for DeletePolicy                       Each supported            No       The maximum number
+                                                     Region: 2 per                      of DeletePolicy requests
+                                                     second                             per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for DeletePolicy, in a burst           Each supported            No       The maximum number
+                                                     Region: 100                        of DeletePolicy requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for DeletePreset                       Each supported            Yes      The maximum number
+                                                     Region: 2 per                      of DeletePreset requests
+                                                     second                             per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 2613
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ Request rate for DeletePreset, in a                  Each supported            Yes     The maximum number
+ burst                                                Region: 100                       of DeletePreset requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for DeleteQueue                         Each supported            Yes     The maximum number
+                                                      Region: 2 per                     of DeleteQueue requests
+                                                      second                            per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for DeleteQueue, in a                   Each supported            Yes     The maximum number
+ burst                                                Region: 100                       of DeleteQueue requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for DisassociateCertificate             Each supported            No      The maximum number
+                                                      Region: 2 per                     of DisassociateCertif
+                                                      second                            icate requests per second
+                                                                                        that you can send in this
+                                                                                        account in the current
+                                                                                        AWS Region.
+
+ Request rate for DisassociateCertif                  Each supported            No      The maximum number
+ icate, in a burst                                    Region: 100                       of DisassociateCertificate
+                                                                                        requests that you can
+                                                                                        send in one burst in this
+                                                                                        account in the current
+                                                                                        AWS Region.
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 2614
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Request rate for GetJob                             Each supported            Yes     The maximum number
+                                                     Region: 2 per                     of GetJob requests per
+                                                     second                            second that you can send
+                                                                                       in this account in the
+                                                                                       current AWS Region.
+
+ Request rate for GetJob, in a burst                 Each supported            Yes     The maximum number of
+                                                     Region: 100                       GetJob requests that you
+                                                                                       can send in one burst
+                                                                                       in this account in the
+                                                                                       current AWS Region.
+
+ Request rate for GetJobTemplate                     Each supported            Yes     The maximum number of
+                                                     Region: 2 per                     GetJobTemplate requests
+                                                     second                            per second that you can
+                                                                                       send in this account in
+                                                                                       the current AWS Region.
+
+ Request rate for GetJobTemplate, in a               Each supported            Yes     The maximum number of
+ burst                                               Region: 100                       GetJobTemplate requests
+                                                                                       that you can send in one
+                                                                                       burst in this account in
+                                                                                       the current AWS Region.
+
+ Request rate for GetJobsQueryResults                Each supported            No      The maximum number
+                                                     Region: 2 per                     of GetJobsQueryResult
+                                                     second                            s requests per second
+                                                                                       that you can send in this
+                                                                                       account in the current
+                                                                                       AWS Region.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 2615
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Request rate for GetJobsQueryResults,               Each supported            No       The maximum number
+ in a burst                                          Region: 100                        of GetJobsQueryResult
+                                                                                        s requests that you can
+                                                                                        send in one burst in this
+                                                                                        account in the current
+                                                                                        AWS Region.
+
+ Request rate for GetPolicy                          Each supported            No       The maximum number
+                                                     Region: 2 per                      of GetPolicy requests
+                                                     second                             per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for GetPolicy, in a burst              Each supported            No       The maximum number
+                                                     Region: 100                        of GetPolicy requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for GetPreset                          Each supported            Yes      The maximum number
+                                                     Region: 2 per                      of GetPreset requests
+                                                     second                             per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for GetPreset, in a burst              Each supported            Yes      The maximum number
+                                                     Region: 100                        of GetPreset requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 2616
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Request rate for GetQueue                           Each supported            Yes      The maximum number
+                                                     Region: 2 per                      of GetQueue requests
+                                                     second                             per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for GetQueue, in a burst               Each supported            Yes      The maximum number
+                                                     Region: 100                        of GetQueue requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for ListJobTemplates                   Each supported            Yes      The maximum number
+                                                     Region: 2 per                      of ListJobTemplates
+                                                     second                             requests per second
+                                                                                        that you can send in this
+                                                                                        account in the current
+                                                                                        AWS Region.
+
+ Request rate for ListJobTemplates, in a             Each supported            Yes      The maximum number
+ burst                                               Region: 100                        of ListJobTemplates
+                                                                                        requests that you can
+                                                                                        send in one burst in this
+                                                                                        account in the current
+                                                                                        AWS Region.
+
+ Request rate for ListJobs                           Each supported            Yes      The maximum number
+                                                     Region: 2 per                      of ListJobs requests per
+                                                     second                             second that you can send
+                                                                                        in this account in the
+                                                                                        current AWS Region.
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 2617
+AWS General Reference                                                                                        Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ Request rate for ListJobs, in a burst                Each supported            Yes      The maximum number
+                                                      Region: 100                        of ListJobs requests that
+                                                                                         you can send in one
+                                                                                         burst in this account in
+                                                                                         the current AWS Region.
+
+ Request rate for ListPresets                         Each supported            Yes      The maximum number
+                                                      Region: 2 per                      of ListPresets requests
+                                                      second                             per second that you can
+                                                                                         send in this account in
+                                                                                         the current AWS Region.
+
+ Request rate for ListPresets, in a burst             Each supported            Yes      The maximum number
+                                                      Region: 100                        of ListPresets requests
+                                                                                         that you can send in one
+                                                                                         burst in this account in
+                                                                                         the current AWS Region.
+
+ Request rate for ListQueues                          Each supported            Yes      The maximum number
+                                                      Region: 2 per                      of ListQueues requests
+                                                      second                             per second that you can
+                                                                                         send in this account in
+                                                                                         the current AWS Region.
+
+ Request rate for ListQueues, in a burst              Each supported            Yes      The maximum number
+                                                      Region: 100                        of ListQueues requests
+                                                                                         that you can send in one
+                                                                                         burst in this account in
+                                                                                         the current AWS Region.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 2618
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ Request rate for ListTagsForResource                 Each supported            Yes     The maximum number
+                                                      Region: 2 per                     of ListTagsForResourc
+                                                      second                            e requests per second
+                                                                                        that you can send in this
+                                                                                        account in the current
+                                                                                        AWS Region.
+
+ Request rate for ListTagsForResource,                Each supported            Yes     The maximum number
+ in a burst                                           Region: 100                       of ListTagsForResourc
+                                                                                        e requests that you can
+                                                                                        send in one burst in this
+                                                                                        account in the current
+                                                                                        AWS Region.
+
+ Request rate for ListVersions                        Each supported            Yes     The maximum number
+                                                      Region: 2                         of ListVersions requests
+                                                                                        per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for ListVersions, in a burst            Each supported            Yes     The maximum number
+                                                      Region: 100                       of ListVersions requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for Probe                               Each supported            Yes     The maximum number
+                                                      Region: 5                         of Probe requests per
+                                                                                        second that you can send
+                                                                                        in this account in the
+                                                                                        current AWS Region.
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 2619
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Request rate for Probe, in a burst                  Each supported            Yes      The maximum number of
+                                                     Region: 100                        Probe requests that you
+                                                                                        can send in one burst
+                                                                                        in this account in the
+                                                                                        current AWS Region.
+
+ Request rate for PutPolicy                          Each supported            No       The maximum number
+                                                     Region: 2 per                      of PutPolicy requests
+                                                     second                             per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for PutPolicy, in a burst              Each supported            No       The maximum number
+                                                     Region: 100                        of PutPolicy requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for SearchJobs                         Each supported            No       The maximum number
+                                                     Region: 1 per                      of SearchJobs requests
+                                                     second                             per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for SearchJobs, in a burst             Each supported            No       The maximum number
+                                                     Region: 20                         of SearchJobs requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for StartJobsQuery                     Each supported            No       The maximum number of
+                                                     Region: 1 per                      StartJobsQuery requests
+                                                     second                             per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+
+
+
+Service quotas                                                                                             Version 1.0 2620
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Request rate for StartJobsQuery, in a               Each supported            No       The maximum number of
+ burst                                               Region: 10                         StartJobsQuery requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for TagResource                        Each supported            Yes      The maximum number
+                                                     Region: 2 per                      of TagResource requests
+                                                     second                             per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for TagResource, in a                  Each supported            Yes      The maximum number
+ burst                                               Region: 100                        of TagResource requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for UntagResource                      Each supported            Yes      The maximum number of
+                                                     Region: 2 per                      UntagResource requests
+                                                     second                             per second that you can
+                                                                                        send in this account in
+                                                                                        the current AWS Region.
+
+ Request rate for UntagResource, in a                Each supported            Yes      The maximum number of
+ burst                                               Region: 100                        UntagResource requests
+                                                                                        that you can send in one
+                                                                                        burst in this account in
+                                                                                        the current AWS Region.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 2621
+AWS General Reference                                                                                     Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ Request rate for UpdateJobTemplate                  Each supported           Yes      The maximum number
+                                                     Region: 2 per                     of UpdateJobTemplate
+                                                     second                            requests per second
+                                                                                       that you can send in this
+                                                                                       account in the current
+                                                                                       AWS Region.
+
+ Request rate for UpdateJobTemplate,                 Each supported           Yes      The maximum number
+ in a burst                                          Region: 100                       of UpdateJobTemplate
+                                                                                       requests that you can
+                                                                                       send in one burst in this
+                                                                                       account in the current
+                                                                                       AWS Region.
+
+ Request rate for UpdatePreset                       Each supported           Yes      The maximum number
+                                                     Region: 2 per                     of UpdatePreset requests
+                                                     second                            per second that you can
+                                                                                       send in this account in
+                                                                                       the current AWS Region.
+
+ Request rate for UpdatePreset, in a                 Each supported           Yes      The maximum number
+ burst                                               Region: 100                       of UpdatePreset requests
+                                                                                       that you can send in one
+                                                                                       burst in this account in
+                                                                                       the current AWS Region.
+
+ Request rate for UpdateQueue                        Each supported           Yes      The maximum number of
+                                                     Region: 2 per                     UpdateQueue requests
+                                                     second                            per second that you can
+                                                                                       send in this account in
+                                                                                       the current AWS Region.
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 2622

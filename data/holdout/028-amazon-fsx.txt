@@ -1,0 +1,584 @@
+AWS General Reference                                                                                 Reference guide
+
+ Region             Region             Endpoint                                                  Protocol
+ Name
+
+ Middle East        me-south-1         prefix.iot.me-south-1.amazonaws.com                        MQTT
+ (Bahrain)
+
+ South              sa-east-1          prefix.iot.sa-east-1.amazonaws.com                         MQTT
+ America (São
+ Paulo)
+
+
+Service quotas
+
+FreeRTOS OTA Resource Quotas
+
+ Resource                                                 Default
+
+ File size                                                16MB
+
+
+
+FreeRTOS OTA Throttling
+
+ API                                                      Transactions Per Second
+
+ CreateOTAUpdate                                          10 TPS
+
+ DeleteOTAUpdate                                          5 TPS
+
+ GetOTAUpdate                                             15 TPS
+
+ ListOTAUpdates                                           15 TPS
+
+
+Amazon FSx endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+
+
+
+Service quotas                                                                                       Version 1.0 1853
+AWS General Reference                                                                                   Reference guide
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2      fsx.us-east-2.amazonaws.com                               HTTPS
+ (Ohio)
+                               fsx-fips.us-east-2.api.aws                                 HTTPS
+
+                               fsx-fips.us-east-2.amazonaws.com                           HTTPS
+
+ US             us-east-1      fsx.us-east-1.amazonaws.com                               HTTPS
+ East (N.
+ Virginia)                     fsx-fips.us-east-1.api.aws                                 HTTPS
+
+                               fsx-fips.us-east-1.amazonaws.com                           HTTPS
+
+ US             us-            fsx.us-west-1.amazonaws.com                               HTTPS
+ West (N.       west-1
+ Californi                     fsx-fips.us-west-1.api.aws                                 HTTPS
+
+ a)                            fsx-fips.us-west-1.amazonaws.com                           HTTPS
+
+
+ US West        us-            fsx.us-west-2.amazonaws.com                               HTTPS
+ (Oregon)       west-2
+                               fsx-fips.us-west-2.api.aws                                 HTTPS
+
+                               fsx-fips.us-west-2.amazonaws.com                           HTTPS
+
+ Africa         af-south-      fsx.af-south-1.amazonaws.com                              HTTPS
+ (Cape          1
+ Town)
+
+ Asia           ap-            fsx.ap-east-1.amazonaws.com                               HTTPS
+ Pacific         east-1
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 1854
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ (Hong
+ Kong)
+
+ Asia           ap-            fsx.ap-south-2.amazonaws.com                              HTTPS
+ Pacific         south-2
+ (Hyderaba
+ d)
+
+ Asia           ap-            fsx.ap-southeast-3.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3
+
+ Asia           ap-            fsx.ap-southeast-5.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Malaysia      ast-5
+ )
+
+ Asia           ap-            fsx.ap-southeast-4.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Melbourn      ast-4
+ e)
+
+ Asia           ap-            fsx.ap-south-1.amazonaws.com                              HTTPS
+ Pacific         south-1
+ (Mumbai)
+
+ Asia           ap-            fsx.ap-southeast-6.amazonaws.com                          HTTPS
+ Pacific         southe
+ (New           ast-6
+ Zealand)
+
+ Asia           ap-            fsx.ap-northeast-3.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Osaka)        ast-3
+
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 1855
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-           fsx.ap-northeast-2.amazonaws.com                           HTTPS
+ Pacific         northe
+ (Seoul)        ast-2
+
+ Asia           ap-           fsx.ap-southeast-1.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Singapor      ast-1
+ e)
+
+ Asia           ap-           fsx.ap-southeast-2.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Sydney)       ast-2
+
+ Asia           ap-           fsx.ap-east-2.amazonaws.com                                HTTPS
+ Pacific         east-2
+ (Taipei)
+
+ Asia           ap-           fsx.ap-southeast-7.amazonaws.com                           HTTPS
+ Pacific         southe
+ (Thailand      ast-7
+ )
+
+ Asia           ap-           fsx.ap-northeast-1.amazonaws.com                           HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1
+
+ Canada         ca-centra     fsx.ca-central-1.amazonaws.com                             HTTPS
+ (Central)      l-1
+                              fsx-fips.ca-central-1.amazonaws.com                         HTTPS
+
+                              fsx-fips.ca-central-1.api.aws                               HTTPS
+
+ Canada         ca-           fsx.ca-west-1.amazonaws.com                                HTTPS
+ West           west-1
+ (Calgary)                    fsx-fips.ca-west-1.amazonaws.com                            HTTPS
+
+                              fsx-fips.ca-west-1.api.aws                                  HTTPS
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1856
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           fsx.eu-central-1.amazonaws.com                            HTTPS
+ (Frankfur      central-1
+ t)
+
+ Europe         eu-           fsx.eu-west-1.amazonaws.com                               HTTPS
+ (Ireland)      west-1
+
+ Europe         eu-           fsx.eu-west-2.amazonaws.com                               HTTPS
+ (London)       west-2
+
+ Europe         eu-           fsx.eu-south-1.amazonaws.com                              HTTPS
+ (Milan)        south-1
+
+ Europe         eu-           fsx.eu-west-3.amazonaws.com                               HTTPS
+ (Paris)        west-3
+
+ Europe         eu-           fsx.eu-south-2.amazonaws.com                              HTTPS
+ (Spain)        south-2
+
+ Europe         eu-           fsx.eu-north-1.amazonaws.com                              HTTPS
+ (Stockhol      north-1
+ m)
+
+ Europe         eu-           fsx.eu-central-2.amazonaws.com                            HTTPS
+ (Zurich)       central-2
+
+ Israel         il-centra     fsx.il-central-1.amazonaws.com                            HTTPS
+ (Tel Aviv)     l-1
+
+ Mexico         mx-           fsx.mx-central-1.amazonaws.com                            HTTPS
+ (Central)      central-1
+
+ Middle         me-           fsx.me-south-1.amazonaws.com                              HTTPS
+ East           south-1
+ (Bahrain)
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1857
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Middle         me-           fsx.me-central-1.amazonaws.com                            HTTPS
+ East           central-1
+ (UAE)
+
+ South          sa-east-1     fsx.sa-east-1.amazonaws.com                               HTTPS
+ America
+ (São
+ Paulo)
+
+ AWS            us-gov-       fsx.us-gov-east-1.amazonaws.com                           HTTPS
+ GovCloud       east-1
+ (US-East)                    fsx-fips.us-gov-east-1.amazonaws.com                       HTTPS
+
+                              fsx-fips.us-gov-east-1.api.aws                             HTTPS
+
+ AWS            us-gov-       fsx.us-gov-west-1.amazonaws.com                           HTTPS
+ GovCloud       west-1
+ (US-                         fsx-fips.us-gov-west-1.amazonaws.com                       HTTPS
+
+ West)                        fsx-fips.us-gov-west-1.api.aws                             HTTPS
+
+
+Service quotas
+
+
+
+ Name                                              Default                 Adjustabl Description
+                                                                           e
+
+ Lustre Cache_1 caches                             Each supported          Yes     The maximum number
+                                                   Region: 100                     of Amazon File Cache
+                                                                                   caches with cache type
+                                                                                   Lustre and deploymen
+                                                                                   t type Cache_1 that
+                                                                                   you can create in this
+                                                                                   account.
+
+
+
+
+
+
+
+Service quotas                                                                                        Version 1.0 1858
+AWS General Reference                                                                                        Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ Lustre Cache_1 storage capacity                      Each supported            Yes      The maximum amount
+                                                      Region: 100,800                    of storage capacity
+                                                                                         (in GiB) that you can
+                                                                                         configure in this account
+                                                                                         for all Amazon File Cache
+                                                                                         caches with cache type
+                                                                                         Lustre and deployment
+                                                                                         type Cache_1.
+
+ Lustre Persistent HDD storage capacity               Each supported            Yes      The maximum amount
+ (per file system)                                     Region: 102,000                    of HDD storage capacity
+                                                                                         (in GiB) that you can
+                                                                                         configure for an Amazon
+                                                                                         FSx for Lustre persistent
+                                                                                         file system.
+
+ Lustre Persistent Intelligent-Tiering                Each supported            Yes      The maximum amount
+ SSD read cache storage capacity                      Region: 100,800                    of provisioned SSD read
+                                                                                         cache storage capacity
+                                                                                         (in GiB) that you can
+                                                                                         configure for all Amazon
+                                                                                         FSx for Lustre Intellige
+                                                                                         nt-Tiering file systems in
+                                                                                         this account.
+
+ Lustre Persistent Intelligent-Tiering                Each supported            Yes      The total amount of
+ throughput capacity                                  Region: 100,000                    throughput capacity (in
+                                                                                         MBps) allowed for all
+                                                                                         Amazon FSx for Lustre
+                                                                                         Intelligent-Tiering file
+                                                                                         systems in this account.
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 1859
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ Lustre Persistent_1 file systems                      Each supported            Yes     The maximum number
+                                                      Region: 100                       of Amazon FSx for Lustre
+                                                                                        persistent_1 file systems
+                                                                                        that you can create in
+                                                                                        this account
+
+ Lustre Persistent_1 storage capacity                 Each supported            Yes     The maximum amount of
+                                                      Region: 100,800                   storage capacity (in GiB)
+                                                                                        that you can configure
+                                                                                        for all Amazon FSx for
+                                                                                        Lustre persistent_1 file
+                                                                                        systems in this account.
+
+ Lustre Persistent_2 file systems                      Each supported            Yes     The maximum number
+                                                      Region: 100                       of Amazon FSx for Lustre
+                                                                                        persistent_2 file systems
+                                                                                        that you can create in
+                                                                                        this account
+
+ Lustre Persistent_2 storage capacity                 Each supported            Yes     The maximum amount of
+                                                      Region: 100,800                   storage capacity (in GiB)
+                                                                                        that you can configure
+                                                                                        for all Amazon FSx for
+                                                                                        Lustre persistent_2 file
+                                                                                        systems in this account.
+
+ Lustre Scratch file systems                           Each supported            Yes     The maximum number
+                                                      Region: 100                       of Amazon FSx for Lustre
+                                                                                        scratch file systems that
+                                                                                        you can create in this
+                                                                                        account.
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 1860
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ Lustre Scratch storage capacity                     Each supported            Yes     The maximum amount
+                                                     Region: 100,800                   of storage capacity
+                                                                                       (in GiB) that you can
+                                                                                       configure for all Amazon
+                                                                                       FSx for Lustre scratch file
+                                                                                       systems in this account.
+
+ Lustre backups                                      Each supported            Yes     The maximum number
+                                                     Region: 500                       of user-initiated backups
+                                                                                       that you can have for
+                                                                                       all Amazon FSx for
+                                                                                       Lustre file systems in this
+                                                                                       account.
+
+ ONTAP SSD IOPS                                      Each supported            Yes     The total amount of
+                                                     Region: 2,000,000                 SSD IOPS allowed for all
+                                                                                       Amazon FSx for NetApp
+                                                                                       ONTAP file systems in
+                                                                                       this account.
+
+ ONTAP SSD storage capacity                          Each supported            Yes     The maximum amount
+                                                     Region: 1,048,576                 of SSD storage capacity
+                                                                                       (in GiB) for all Amazon
+                                                                                       FSx for NetApp ONTAP
+                                                                                       file systems that you can
+                                                                                       have in this account.
+
+ ONTAP backups                                       Each supported            Yes     The maximum number
+                                                     Region: 10,000                    of user-initiated backups
+                                                                                       for all Amazon FSx for
+                                                                                       NetApp ONTAP file
+                                                                                       systems that you can
+                                                                                       have in this account.
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1861
+AWS General Reference                                                                                     Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ ONTAP file systems                                   Each supported           Yes      The maximum number of
+                                                     Region: 100                       Amazon FSx for NetApp
+                                                                                       ONTAP file systems that
+                                                                                       you can create in this
+                                                                                       account.
+
+ ONTAP throughput capacity                           Each supported           Yes      The total amount of
+                                                     Region: 10,240                    throughput capacity (in
+                                                                                       MBps) allowed for all
+                                                                                       Amazon FSx for NetApp
+                                                                                       ONTAP file systems in
+                                                                                       this account.
+
+ OpenZFS SSD storage capacity                        us-east-1:               Yes      The maximum amount
+                                                     262,144                           of SSD storage capacity
+                                                                                       (in GiB) that you can
+                                                     us-east-2:                        configure for all Amazon
+                                                     262,144                           FSx for OpenZFS file
+
+                                                     us-west-2:                        systems in this account.
+
+                                                     262,144
+
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 65,536
+
+ OpenZFS SSD storage capacity (per file               Each supported           Yes      The maximum amount
+ system)                                             Region: 524,288                   of SSD storage capacity
+                                                                                       (in GiB) that you can
+                                                                                       configure for an Amazon
+                                                                                       FSx for OpenZFS file
+                                                                                       system.
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1862
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ OpenZFS backups                                     Each supported            Yes     The maximum number
+                                                     Region: 10,000                    of user-initiated backups
+                                                                                       for all Amazon FSx for
+                                                                                       OpenZFS file systems
+                                                                                       that you can have in this
+                                                                                       account.
+
+ OpenZFS disk IOPS                                   Each supported            Yes     The total amount of
+                                                     Region: 400,000                   disk IOPS allowed for
+                                                                                       all Amazon FSx for
+                                                                                       OpenZFS file systems in
+                                                                                       this account.
+
+ OpenZFS file systems                                 Each supported            Yes     The maximum number of
+                                                     Region: 100                       Amazon FSx for OpenZFS
+                                                                                       file systems that you can
+                                                                                       create in this account.
+
+ OpenZFS provisioned SSD read cache                  us-east-1:                Yes     The maximum amount
+ storage capacity                                    262,144                           of provisioned SSD read
+                                                                                       cache storage capacity
+                                                     us-east-2:                        (in GiB) that you can
+                                                     262,144                           configure for all Amazon
+
+                                                     us-west-2:                        FSx for OpenZFS file
+                                                     262,144                           systems in this account.
+
+
+                                                     Each of the
+                                                     other supported
+                                                     Regions: 65,536
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1863
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ OpenZFS throughput capacity                         Each supported           Yes      The total amount of
+                                                     Region: 10,240                    throughput capacity
+                                                                                       (in MBps) allowed for
+                                                                                       all Amazon FSx for
+                                                                                       OpenZFS file systems in
+                                                                                       this account.
+
+ Windows HDD storage capacity                        Each supported           Yes      The maximum amount
+                                                     Region: 524,288                   of HDD storage capacity
+                                                                                       (in GiB) allowed for all
+                                                                                       Amazon FSx for Windows
+                                                                                       File Server file systems in
+                                                                                       this account.
+
+ Windows SSD storage capacity                        Each supported           Yes      The maximum amount of
+                                                     Region: 524,288                   SSD storage capacity (in
+                                                                                       GiB) for all Amazon FSx
+                                                                                       for Windows File Server
+                                                                                       file systems that you can
+                                                                                       have in this account.
+
+ Windows backups                                     Each supported           Yes      The maximum number
+                                                     Region: 500                       of user-initiated backups
+                                                                                       for all Amazon FSx for
+                                                                                       Windows File Server file
+                                                                                       systems that you can
+                                                                                       have in this account.
+
+ Windows file systems                                 Each supported           Yes      The maximum number of
+                                                     Region: 100                       Amazon FSx for Windows
+                                                                                       Server file systems that
+                                                                                       you can create in this
+                                                                                       account.
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1864

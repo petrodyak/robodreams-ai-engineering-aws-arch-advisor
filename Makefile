@@ -2,12 +2,14 @@
 .PHONY: install data text run estimate runs-md metrics schema gold-drafts gold-check check
 
 # One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`,
-# `make run MODEL=qwen2.5-7b`, or `make run SAMPLING=t05 GOLD=1` (Golden Set only).
+# `make run MODEL=qwen2.5-7b`, `make run SAMPLING=t05 GOLD=1` (Golden Set only), or
+# `make run PROMPT=v2 SET=holdout` (the Held-out Set, step 12).
 MODEL ?= claude
 PROMPT ?= v1
 SAMPLING ?= t0
 GOLD ?=
-RUN_ARGS = --model $(MODEL) --prompt $(PROMPT) --sampling $(SAMPLING) $(if $(GOLD),--gold)
+SET ?= raw
+RUN_ARGS = --model $(MODEL) --prompt $(PROMPT) --sampling $(SAMPLING) --set $(SET) $(if $(GOLD),--gold)
 
 # create .venv and install the locked dependencies from uv.lock
 install:
@@ -46,10 +48,10 @@ schema:
 # Golden Set (data/gold/README.md): drafts from claude__v1__t0 (never overwrites a file),
 # then the list of endpoint rows to check by hand against the PDF
 gold-drafts:
-	uv run python -m scripts.make_gold_drafts
+	uv run python -m scripts.make_gold_drafts --set $(SET)
 
 gold-check:
-	uv run python -m scripts.check_gold
+	uv run python -m scripts.check_gold --set $(SET)
 
 # pre-commit gates (docs/GIT_RULES.md §1): all three always run, exit non-zero if any failed;
 # `schema` first, so a schema.py change always lands in the documented schema file

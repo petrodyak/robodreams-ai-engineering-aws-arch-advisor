@@ -30,9 +30,12 @@ from pathlib import Path
 from src.extract.llm.claude import cost_usd
 from src.extract.pipeline import (
     GOLD_SCOPE,
+    HOLDOUT_SET,
     ROOT,
     RUNS_DIR,
+    WORKING_SET,
     Document,
+    DocumentSet,
     load_manifest,
 )
 from src.extract.report_md import load_records
@@ -54,7 +57,7 @@ CLAUDE_MODEL = "claude"  # the only paid model (short name in run ids)
 # <model>__<prompt_version>__<sampling_name>[__gold] (contract item 11)
 RUN_ID_RE = re.compile(
     r"^(?P<model>[^_]+(?:_[^_]+)*)__(?P<prompt>v\d+)__(?P<sampling>\w+?)"
-    r"(?P<gold>__gold)?(?:__val(?P<val>\d+))?$"
+    r"(?P<holdout>__holdout)?(?P<gold>__gold)?(?:__val(?P<val>\d+))?$"
 )
 
 # Endpoint and quota fields scored on matched rows (item 17). `endpoint_type` is computed
@@ -84,10 +87,12 @@ class RunId:
     sampling: str
     gold: bool  # the __gold scope suffix: only the Golden Set documents were run
     validation: str = "1"  # the __val<N> suffix; "1" when absent (contract item 11)
+    doc_set: DocumentSet = WORKING_SET  # the __holdout suffix (contract item 20)
 
     @property
     def scope(self) -> str:
-        return "gold" if self.gold else "full"
+        scope = "gold" if self.gold else "full"
+        return scope if self.doc_set is WORKING_SET else f"{self.doc_set.name}-{scope}"
 
 
 def parse_run_id(run_id: str) -> RunId:
@@ -97,7 +102,12 @@ def parse_run_id(run_id: str) -> RunId:
             f"not a run id like claude__v1__t0 or claude__v1__t05__gold: {run_id!r}"
         )
     return RunId(
-        m["model"], m["prompt"], m["sampling"], m["gold"] == GOLD_SCOPE, m["val"] or "1"
+        m["model"],
+        m["prompt"],
+        m["sampling"],
+        m["gold"] == GOLD_SCOPE,
+        m["val"] or "1",
+        HOLDOUT_SET if m["holdout"] else WORKING_SET,
     )
 
 
@@ -397,12 +407,16 @@ def run_metrics(
 def all_metrics(
     runs_dir: Path = RUNS_DIR,
     docs: list[Document] | None = None,
-    gold_dir: Path = GOLD_DIR,
+    gold_dir: Path | None = None,
 ) -> list[GroupMetrics]:
-    docs = docs if docs is not None else load_manifest()
+    """Every run file, each against the manifest and gold files of its own document set
+    (the `__holdout` suffix, contract item 20); `docs` / `gold_dir` override both (tests)."""
     rows: list[GroupMetrics] = []
     for path in sorted(runs_dir.glob("*.jsonl")):
-        rows.extend(run_metrics(path.stem, load_records(path), docs, gold_dir))
+        doc_set = parse_run_id(path.stem).doc_set
+        set_docs = docs if docs is not None else load_manifest(doc_set.manifest)
+        set_gold = gold_dir if gold_dir is not None else doc_set.gold_dir
+        rows.extend(run_metrics(path.stem, load_records(path), set_docs, set_gold))
     return rows
 
 

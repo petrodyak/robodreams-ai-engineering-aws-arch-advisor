@@ -1,0 +1,583 @@
+AWS General Reference                                                                                    Reference guide
+
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Nodes per cluster                                  Each supported           No       The maximum number
+                                                    Region: 11                        of nodes per cluster,
+                                                                                      including the primary
+                                                                                      node as well as any read
+                                                                                      replica nodes.
+
+ Parameter groups                                   Each supported           No       The maximum number
+                                                    Region: 20                        of parameter groups in a
+                                                                                      single AWS region.
+
+ Subnet groups                                      Each supported           No       The maximum number of
+                                                    Region: 50                        subnet groups in a single
+                                                                                      AWS region.
+
+ Subnets per subnet group                           Each supported           No       The maximum number
+                                                    Region: 20                        of subnets per subnet
+                                                                                      group in a single AWS
+                                                                                      region.
+
+ Total number of nodes                              Each supported           Yes      The maximum total
+                                                    Region: 50                        number of nodes per
+                                                                                      AWS account in a single
+                                                                                      AWS region.
+
+
+AWS Elastic Beanstalk endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+
+
+Elastic Beanstalk                                                                                        Version 1.0 1520
+AWS General Reference                                                                                      Reference guide
+Service endpoints
+
+
+      Note
+      The AWS Elastic Beanstalk service offers dual stack endpoints, so that you can send it
+      either IPv4 or IPv6 requests. For more information about the naming syntax for dual-
+      stack endpoints, see Dual stack endpoints in this guide. For more information about Elastic
+      Beanstalk support for dual-stack endpoints, see IPv6 support in the AWS Elastic Beanstalk
+      Developer Guide.
+
+
+
+Elastic Beanstalk
+
+
+ Region        Region       Endpoint                                              Protocol     Route
+ Name                                                                                          53
+                                                                                               Hosted
+                                                                                               Zone ID
+
+ US East       us-          elasticbeanstalk.us-east-2.amazonaws                  HTTPS        Z14LCN19Q
+ (Ohio)        east-2       .com                                                               5QHIC
+                                                                                  HTTPS
+                            elasticbeanstalk-fips.us-east-2.api.aws
+                                                                                  HTTPS
+                            elasticbeanstalk-fips.us-east-2.amaz
+                            onaws.com                                             HTTPS
+
+                            elasticbeanstalk.us-east-2.api.aws
+
+ US            us-          elasticbeanstalk.us-east-1.amazonaws                  HTTPS        Z117KPS5G
+ East (N.      east-1       .com                                                               TRQ2G
+ Virginia)                                                                        HTTPS
+                            elasticbeanstalk-fips.us-east-1.api.aws
+                                                                                  HTTPS
+                            elasticbeanstalk-fips.us-east-1.amaz
+                            onaws.com                                             HTTPS
+
+                            elasticbeanstalk.us-east-1.api.aws
+
+
+
+
+
+
+Service endpoints                                                                                         Version 1.0 1521
+AWS General Reference                                                                                   Reference guide
+
+ Region       Region       Endpoint                                            Protocol     Route
+ Name                                                                                       53
+                                                                                            Hosted
+                                                                                            Zone ID
+
+ US           us-          elasticbeanstalk.us-west-1.amazonaws                HTTPS        Z1LQECGX5
+ West         west-1       .com                                                             PH1X
+ (N.                                                                           HTTPS
+ Californi                 elasticbeanstalk-fips.us-west-1.api.aws
+                                                                               HTTPS
+ a)                        elasticbeanstalk-fips.us-west-1.amaz
+                           onaws.com                                           HTTPS
+
+                           elasticbeanstalk.us-west-1.api.aws
+
+ US           us-          elasticbeanstalk.us-west-2.amazonaws                HTTPS        Z38NKT9BP
+ West         west-2       .com                                                             95V3O
+ (Oregon)                                                                      HTTPS
+                           elasticbeanstalk-fips.us-west-2.api.aws
+                                                                               HTTPS
+                           elasticbeanstalk-fips.us-west-2.amaz
+                           onaws.com                                           HTTPS
+
+                           elasticbeanstalk.us-west-2.api.aws
+
+ Africa       af-          elasticbeanstalk.af-south-1.amazonaw                HTTPS        Z1EI3BVKM
+ (Cape        south-1      s.com                                                            KK4AM
+ Town)                                                                         HTTPS
+                           elasticbeanstalk.af-south-1.api.aws
+
+ Asia         ap-          elasticbeanstalk.ap-east-1.amazonaws                HTTPS        ZPWYUBWRU
+ Pacific       east-1       .com                                                             171A
+ (Hong                                                                         HTTPS
+ Kong)                     elasticbeanstalk.ap-east-1.api.aws
+
+
+ Asia         ap-          elasticbeanstalk.ap-south-2.amazonaw                HTTPS        Z10223522
+ Pacific       south-2      s.com                                                            IBWPBF2C2
+ (Hyderaba                                                                     HTTPS        FJS
+ d)                        elasticbeanstalk.ap-south-2.api.aws
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1522
+AWS General Reference                                                                                  Reference guide
+
+ Region       Region       Endpoint                                           Protocol     Route
+ Name                                                                                      53
+                                                                                           Hosted
+                                                                                           Zone ID
+
+ Asia         ap-          elasticbeanstalk.ap-southeast-3.amaz               HTTPS        Z05913172
+ Pacific       southe       onaws.com                                                       VM7EAZB40
+ (Jakarta)    ast-3                                                           HTTPS        TA8
+                           elasticbeanstalk.ap-southeast-3.api.aws
+
+
+ Asia         ap-          elasticbeanstalk.ap-southeast-5.amaz               HTTPS        Z01812971
+ Pacific       southe       onaws.com                                                       H0QCYWSL7
+ (Malaysia    ast-5                                                           HTTPS        WOH
+ )                         elasticbeanstalk.ap-southeast-5.api.aws
+
+
+ Asia         ap-          elasticbeanstalk.ap-southeast-4.amaz               HTTPS        Z0666869L
+ Pacific       southe       onaws.com                                                       C74UHAO5Y
+ (Melbourn ast-4                                                              HTTPS        E4
+ e)                        elasticbeanstalk.ap-southeast-4.api.aws
+
+
+ Asia         ap-          elasticbeanstalk.ap-south-1.amazonaw               HTTPS        Z18NTBI3Y
+ Pacific       south-1      s.com                                                           7N9TZ
+ (Mumbai)                                                                     HTTPS
+                           elasticbeanstalk.ap-south-1.api.aws
+
+ Asia         ap-          elasticbeanstalk.ap-southeast-6.amaz               HTTPS        Z01144401
+ Pacific       southe       onaws.com                                                       H1NECCLJD
+ (New         ast-6                                                           HTTPS        D4D
+ Zealand)                  elasticbeanstalk.ap-southeast-6.api.aws
+
+
+ Asia         ap-          elasticbeanstalk.ap-northeast-3.amaz               HTTPS        ZNE5GEY1T
+ Pacific       northe       onaws.com                                                       IAGY
+ (Osaka)      ast-3                                                           HTTPS
+                           elasticbeanstalk.ap-northeast-3.api.aws
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1523
+AWS General Reference                                                                                   Reference guide
+
+ Region       Region       Endpoint                                            Protocol     Route
+ Name                                                                                       53
+                                                                                            Hosted
+                                                                                            Zone ID
+
+ Asia         ap-          elasticbeanstalk.ap-northeast-2.amaz                HTTPS        Z3JE5OI70
+ Pacific       northe       onaws.com                                                        TWKCP
+ (Seoul)      ast-2                                                            HTTPS
+                           elasticbeanstalk.ap-northeast-2.api.aws
+
+ Asia         ap-          elasticbeanstalk.ap-southeast-1.amaz                HTTPS        Z16FZ9L24
+ Pacific       southe       onaws.com                                                        9IFLT
+ (Singapor    ast-1                                                            HTTPS
+ e)                        elasticbeanstalk.ap-southeast-1.api.aws
+
+
+ Asia         ap-          elasticbeanstalk.ap-southeast-2.amaz                HTTPS        Z2PCDNR3V
+ Pacific       southe       onaws.com                                                        C2G1N
+ (Sydney)     ast-2                                                            HTTPS
+                           elasticbeanstalk.ap-southeast-2.api.aws
+
+ Asia         ap-          elasticbeanstalk.ap-southeast-7.amaz                HTTPS        Z08384933
+ Pacific       southe       onaws.com                                                        QM5LSQCVM
+ (Thailand    ast-7                                                            HTTPS        NZM
+ )                         elasticbeanstalk.ap-southeast-7.api.aws
+
+
+ Asia         ap-          elasticbeanstalk.ap-northeast-1.amaz                HTTPS        Z1R25G3KI
+ Pacific       northe       onaws.com                                                        G2GBW
+ (Tokyo)      ast-1                                                            HTTPS
+                           elasticbeanstalk.ap-northeast-1.api.aws
+
+ Canada       ca-          elasticbeanstalk.ca-central-1.amazon                HTTPS        ZJFCZL7SS
+ (Central)    centra       aws.com                                                          ZB5I
+              l-1                                                              HTTPS
+                           elasticbeanstalk.ca-central-1.api.aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1524
+AWS General Reference                                                                                 Reference guide
+
+ Region       Region       Endpoint                                           Protocol     Route
+ Name                                                                                      53
+                                                                                           Hosted
+                                                                                           Zone ID
+
+ Canada       ca-          elasticbeanstalk.ca-west-1.amazonaws               HTTPS        Z10210283
+ West         west-1       .com                                                            56Y0CYS11
+ (Calgary)                                                                    HTTPS        DQI
+                           elasticbeanstalk.ca-west-1.api.aws
+
+
+ Europe       eu-          elasticbeanstalk.eu-central-1.amazon               HTTPS        Z1FRNW7UH
+ (Frankfur    centra       aws.com                                                         4DEZJ
+ t)           l-1                                                             HTTPS
+                           elasticbeanstalk.eu-central-1.api.aws
+
+ Europe       eu-          elasticbeanstalk.eu-west-1.amazonaws               HTTPS        Z2NYPWQ7D
+ (Ireland)    west-1       .com                                                            FZAZH
+                                                                              HTTPS
+                           elasticbeanstalk.eu-west-1.api.aws
+
+ Europe       eu-          elasticbeanstalk.eu-west-2.amazonaws               HTTPS        Z1GKAAAUG
+ (London)     west-2       .com                                                            ATPF1
+                                                                              HTTPS
+                           elasticbeanstalk.eu-west-2.api.aws
+
+ Europe       eu-          elasticbeanstalk.eu-south-1.amazonaw               HTTPS        Z10VDYYOA
+ (Milan)      south-1      s.com                                                           2JFKM
+                                                                              HTTPS
+                           elasticbeanstalk.eu-south-1.api.aws
+
+ Europe       eu-          elasticbeanstalk.eu-west-3.amazonaws               HTTPS        Z5WN6GAYW
+ (Paris)      west-3       .com                                                            G5OB
+                                                                              HTTPS
+                           elasticbeanstalk.eu-west-3.api.aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1525
+AWS General Reference                                                                                  Reference guide
+
+ Region       Region       Endpoint                                            Protocol     Route
+ Name                                                                                       53
+                                                                                            Hosted
+                                                                                            Zone ID
+
+ Europe       eu-          elasticbeanstalk.eu-south-2.amazonaw                HTTPS        Z0243492A
+ (Spain)      south-2      s.com                                                            O4B9S3KI6
+                                                                               HTTPS        8O
+                           elasticbeanstalk.eu-south-2.api.aws
+
+
+ Europe       eu-          elasticbeanstalk.eu-north-1.amazonaw                HTTPS        Z23GO28BZ
+ (Stockhol    north-1      s.com                                                            5AETM
+ m)                                                                            HTTPS
+                           elasticbeanstalk.eu-north-1.api.aws
+
+ Europe       eu-          elasticbeanstalk.eu-central-2.amazon                HTTPS        Z00227012
+ (Zurich)     centra       aws.com                                                          FSHBMZNNS
+              l-2                                                              HTTPS        JJI
+                           elasticbeanstalk.eu-central-2.api.aws
+
+
+ Israel       il-          elasticbeanstalk.il-central-1.amazon                HTTPS        Z02941091
+ (Tel         centra       aws.com                                                          PERNCB1MI
+ Aviv)        l-1                                                              HTTPS        5H7
+                           elasticbeanstalk.il-central-1.api.aws
+
+
+ Middle       me-          elasticbeanstalk.me-south-1.amazonaw                HTTPS        Z2BBTEKR2
+ East         south-1      s.com                                                            I36N2
+ (Bahrain)                                                                     HTTPS
+                           elasticbeanstalk.me-south-1.api.aws
+
+ Middle       me-          elasticbeanstalk.me-central-1.amazon                HTTPS        Z0650511N
+ East         centra       aws.com                                                          84AAKGW7Q
+ (UAE)        l-1                                                              HTTPS        UK
+                           elasticbeanstalk.me-central-1.api.aws
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1526
+AWS General Reference                                                                                  Reference guide
+
+ Region       Region       Endpoint                                           Protocol     Route
+ Name                                                                                      53
+                                                                                           Hosted
+                                                                                           Zone ID
+
+ South        sa-          elasticbeanstalk.sa-east-1.amazonaws               HTTPS        Z10X7K2B4
+ America      east-1       .com                                                            QSOFV
+ (São                                                                         HTTPS
+ Paulo)                    elasticbeanstalk.sa-east-1.api.aws
+
+
+ AWS          us-gov-      elasticbeanstalk.us-gov-east-1.amazo               HTTPS        Z35TSARG0
+ GovCloud     east-1       naws.com                                                        EJ4VU
+ (US-                                                                         HTTPS
+ East)                     elasticbeanstalk.us-gov-east-1.api.aws
+
+
+ AWS          us-gov-      elasticbeanstalk.us-gov-west-1.amazo               HTTPS        Z4KAURWC4
+ GovCloud     west-1       naws.com                                                        UUUG
+ (US-                                                                         HTTPS
+ West)                     elasticbeanstalk.us-gov-west-1.api.aws
+
+
+
+Elastic Beanstalk Health Service
+
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2     elasticbeanstalk-health.us-east-2.am                      HTTPS
+ (Ohio)                       azonaws.com
+
+ US             us-east-1     elasticbeanstalk-health.us-east-1.am                      HTTPS
+ East (N.                     azonaws.com
+ Virginia)
+
+ US             us-           elasticbeanstalk-health.us-west-1.am                      HTTPS
+ West (N.       west-1        azonaws.com
+ Californi
+ a)
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1527
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ US West        us-            elasticbeanstalk-health.us-west-2.am                       HTTPS
+ (Oregon)       west-2         azonaws.com
+
+ Asia           ap-            elasticbeanstalk-health.ap-east-1.am                       HTTPS
+ Pacific         east-1         azonaws.com
+ (Hong
+ Kong)
+
+ Asia           ap-            elasticbeanstalk-health.ap-south-2.a                       HTTPS
+ Pacific         south-2        mazonaws.com
+ (Hyderaba
+ d)
+
+ Asia           ap-            elasticbeanstalk-health.ap-southeast                       HTTPS
+ Pacific         southe         -3.amazonaws.com
+ (Jakarta)      ast-3
+
+ Asia           ap-            elasticbeanstalk-health.ap-southeast                       HTTPS
+ Pacific         southe         -5.amazonaws.com
+ (Malaysia      ast-5
+ )
+
+ Asia           ap-            elasticbeanstalk-health.ap-southeast                       HTTPS
+ Pacific         southe         -4.amazonaws.com
+ (Melbourn      ast-4
+ e)
+
+ Asia           ap-            elasticbeanstalk-health.ap-south-1.a                       HTTPS
+ Pacific         south-1        mazonaws.com
+ (Mumbai)
+
+ Asia           ap-            elasticbeanstalk-health.ap-southeast                       HTTPS
+ Pacific         southe         -6.amazonaws.com
+ (New           ast-6
+ Zealand)
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 1528
+AWS General Reference                                                                                     Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Asia           ap-            elasticbeanstalk-health.ap-northeast                       HTTPS
+ Pacific         northe         -3.amazonaws.com
+ (Osaka)        ast-3
+
+ Asia           ap-            elasticbeanstalk-health.ap-northeast                       HTTPS
+ Pacific         northe         -2.amazonaws.com
+ (Seoul)        ast-2
+
+ Asia           ap-            elasticbeanstalk-health.ap-southeast                       HTTPS
+ Pacific         southe         -1.amazonaws.com
+ (Singapor      ast-1
+ e)
+
+ Asia           ap-            elasticbeanstalk-health.ap-southeast                       HTTPS
+ Pacific         southe         -2.amazonaws.com
+ (Sydney)       ast-2
+
+ Asia           ap-            elasticbeanstalk-health.ap-southeast                       HTTPS
+ Pacific         southe         -7.amazonaws.com
+ (Thailand      ast-7
+ )
+
+ Asia           ap-            elasticbeanstalk-health.ap-northeast                       HTTPS
+ Pacific         northe         -1.amazonaws.com
+ (Tokyo)        ast-1
+
+ Canada         ca-centra      elasticbeanstalk-health.ca-central-1                       HTTPS
+ (Central)      l-1            .amazonaws.com
+
+ Canada         ca-            elasticbeanstalk-health.ca-west-1.am                       HTTPS
+ West           west-1         azonaws.com
+ (Calgary)
+
+ Europe         eu-            elasticbeanstalk-health.eu-central-1                       HTTPS
+ (Frankfur      central-1      .amazonaws.com
+ t)
+
+
+
+
+Service endpoints                                                                                        Version 1.0 1529
+AWS General Reference                                                                                    Reference guide
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ Europe         eu-            elasticbeanstalk-health.eu-west-1.am                       HTTPS
+ (Ireland)      west-1         azonaws.com
+
+ Europe         eu-            elasticbeanstalk-health.eu-west-2.am                       HTTPS
+ (London)       west-2         azonaws.com
+
+ Europe         eu-            elasticbeanstalk-health.eu-west-3.am                       HTTPS
+ (Paris)        west-3         azonaws.com
+
+ Europe         eu-            elasticbeanstalk-health.eu-south-2.a                       HTTPS
+ (Spain)        south-2        mazonaws.com
+
+ Europe         eu-            elasticbeanstalk-health.eu-north-1.a                       HTTPS
+ (Stockhol      north-1        mazonaws.com
+ m)
+
+ Europe         eu-            elasticbeanstalk-health.eu-central-2                       HTTPS
+ (Zurich)       central-2      .amazonaws.com
+
+ Israel         il-centra      elasticbeanstalk-health.il-central-1.amazonaw              HTTPS
+ (Tel Aviv)     l-1            s.com
+
+ Middle         me-            elasticbeanstalk-health.me-south-1.a                       HTTPS
+ East           south-1        mazonaws.com
+ (Bahrain)
+
+ Middle         me-            elasticbeanstalk-health.me-central-1                       HTTPS
+ East           central-1      .amazonaws.com
+ (UAE)
+
+ South          sa-east-1      elasticbeanstalk-health.sa-east-1.amazonaws.c              HTTPS
+ America                       om
+ (São
+ Paulo)
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 1530
+AWS General Reference                                                                                     Reference guide
+
+ Region         Region         Endpoint                                                    Protocol
+ Name
+
+ AWS            us-gov-        elasticbeanstalk-health.us-gov-east-                        HTTPS
+ GovCloud       east-1         1.amazonaws.com
+ (US-East)
+
+ AWS            us-gov-        elasticbeanstalk-health.us-gov-west-                        HTTPS
+ GovCloud       west-1         1.amazonaws.com
+ (US-
+ West)
+
+
+Service quotas
+
+
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+ Application versions                               Each supported            Yes      The maximum number of
+                                                    Region: 1,000                      application versions that
+                                                                                       you can create in this
+                                                                                       account in the current
+                                                                                       Region. The limit applies
+                                                                                       across applications, not
+                                                                                       per application.
+
+ Applications                                       Each supported            Yes      The maximum number of
+                                                    Region: 75                         applications that you can
+                                                                                       create in this account in
+                                                                                       the current Region.
+
+ Configuration templates                             Each supported            Yes      The maximum number of
+                                                    Region: 2,000                      configuration templates
+                                                                                       that you can create
+                                                                                       in this account in the
+                                                                                       current Region.
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 1531
