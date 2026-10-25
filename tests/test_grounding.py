@@ -123,6 +123,11 @@ def test_standard_table_detection():
     assert grounding.has_standard_quota_table(CHAPTER)
     assert not grounding.has_standard_quota_table(RESOURCE_CHAPTER)
     assert grounding.printed_quota_names(RESOURCE_CHAPTER) == []
+    # all four columns are required: "Name | Default | Adjustable | Notes" and the
+    # three-column "Name | Default | Adjustable" of 038 are non_standard (ADR-0001)
+    notes = CHAPTER.replace("Adjustabl Description", "Adjustabl Notes")
+    assert not grounding.has_standard_quota_table(notes)
+    assert grounding.printed_quota_names(notes) == []
 
 
 # ---------------------------------------------------------------- G1–G3
@@ -202,10 +207,9 @@ def real_grounding():
 
 
 def test_every_gold_file_is_grounded_in_its_chapter():
-    """The Golden Set was checked against the PDF by hand (step 5); the readers must
-    find every one of its rows in the text. The one exception is 038 until its gold is
-    re-checked (finding F18): the chapter prints Standard Quota Tables."""
-    exceptions = {"038-amazon-opensearch-service.pdf": ["quota_table_format"]}
+    """The Golden Set was checked against the PDF by hand (step 5, and 038 again in
+    step 11 after finding F18); the readers must find every one of its rows in the text."""
+    exceptions: dict[str, list[str]] = {}
     for file, (d, g) in real_grounding().items():
         if not d.gold:
             continue

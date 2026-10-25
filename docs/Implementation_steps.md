@@ -432,10 +432,8 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 - **Done when:** every Golden Set file passes grounding (except `038` until re-checked);
   every row grounding flags in `claude__v2__t0` is a real error confirmed against the raw
   text; the v2 runs re-done under validation "2" and the report updated.
-- **Open:** (1) gold `038` → `standard` with the rows of its eleven Standard Quota Tables
-  (F18): draft from a one-document run `claude__v2__t0__val2 --only 038…` on the laptop,
-  checked by Petro against the PDF (`make gold-check 038` lists the 38 printed names);
-  (2) the re-runs `claude__v2__t0__val2` (≈ $1.3) and `qwen2.5-7b__v2__t0__val2` (≈ 100
+- **Open:** (1) ✅ `patch-11.1-gold-038` — gold `038` → `standard` with the five rows of
+  its one Standard Quota Table (F18, below); (2) the re-runs `claude__v2__t0__val2` (≈ $1.3) and `qwen2.5-7b__v2__t0__val2` (≈ 100
   min, more repair calls now); (3) REPORT §§3–5 with both validations side by side.
 - **Done:**
   - 24.10, code: `Grounding.of(text, service)` reads the chapter once per document —
@@ -462,6 +460,16 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     row cut by a page break was split in two (now rejoined by its lower-case tail).
     `validation_version` in every record, `__val2` in the run id, the provenance triple on
     resume and in metrics. 217 tests.
+  - 25.10, `patch-11.1-gold-038`: the one-document run `claude__v2__t0__val2 --only 038`
+    ($0.08): first answer `non_standard` → G3 error → the repair call returned `standard`
+    with exactly the five rows of the domain table, 183 endpoints, 0 grounding errors —
+    the pipeline doing what ADR-0005 says. While drafting, the G3 header regex was found
+    to accept `Name / Default / Adjustable / Notes` and three-column headers (`038` has
+    ten of those); it now requires `Description`, F18 recounted (one standard table, not
+    eleven). Gold `038` re-drafted from that answer and checked against the PDF by Petro;
+    every gold file passes grounding with zero errors; `make gold-check` clean. The run
+    file stays as the start of `claude__v2__t0__val2` (the full re-run resumes into it).
+    217 tests.
 
 ## 5. Run matrix and budget
 
@@ -527,7 +535,7 @@ and the PR that closed it.
 | F15 | `anthropic.transform_schema` turns `schema_version: Literal["1"]` into a plain string with `{const: 1}` in its description, so the schema constrains neither model. Claude writes `"1"`; qwen wrote `"1.0"` (direct call on `006`, 23.10), which fails validation, so every qwen v1 answer needs a repair call — longer runs, and on the largest documents the repair (document + previous answer) may not fit `num_ctx`. Not fixed in v1: Claude v1 already ran with this schema, and both models must see the same one | step 6 (direct call) | step 8 (prompt v2: an enum `["1"]` the schema keeps, a CHANGELOG entry tied to this error) | ✅ step 8: enum `SchemaVersion` (PR #16); `qwen2.5-7b__v2__t0` has no repair call at all, `qwen2.5-7b__v1__t0` with the enum 21/30 `ok` vs 0/10 before (`patch-8.2-qwen-runs`) |
 | F16 | Nothing stops two `make run` processes from appending to the same run file: both skip the documents already done and then extract the same next ones (`claude__v2__t0`: `092`, `023` twice, two paid calls each). Cheap fix: a lock file next to the JSONL, or `main.py` refusing when one exists | step 8 (v2 run) | Petro's call | ⬜ accepted, not fixed (24.10): one user, one terminal; a lock file is the fix if stage 2–4 runs hit it again |
 | F17 | The schema is part of a prompt version (`prompts/CHANGELOG.md`), but `schema.py` is not versioned per prompt: once PR #16 merged, every later run — v1 included — used the `SchemaVersion` enum. `qwen2.5-7b__v1__t0` (30) is therefore "v1 text + fixed schema" and differs from the `__gold` v1 runs on exactly F15. Not a bug to fix now (one schema for all runs is the contract, item 1); the report states which runs saw which schema | step 8 (overnight runs) | step 9 (stated in REPORT; a `schema_version`-per-prompt mechanism is out of scope) | ✅ step 10 (`step-10-run-provenance`): `prompt_sha` / `schema_sha` in every record, backfilled from git; metrics refuse mixed provenance |
-| F18 | **Gold `038` is wrong on `quota_table_format`.** The chapter prints eleven Standard Quota Tables (domain, Serverless, Ingestion, UI quotas) with the header `Name / Default / Adjustable / Description`; the gold says `non_standard`, 0 rows, because the Claude v1 draft said so and the hand check confirmed the draft rather than the definition. qwen's 28 "invented" rows on `038` (REPORT error 2) are printed rows. Found by grounding G3 on the gold file itself — the case for ADR-0005 | step 11 (calibration) | step 11: gold `038` re-drafted from `claude__v2__t0__val2` and re-checked by Petro against the PDF; contract item 7 says every Standard Quota Table of the chapter; REPORT error 2 corrected | 🔄 |
+| F18 | **Gold `038` was wrong on `quota_table_format`.** The chapter prints one Standard Quota Table (domain and instance quotas, `Name / Default / Adjustable / Description`, 5 rows) and ten other quota tables with `Notes` instead of `Description` or three columns — `non_standard` by definition. The Claude v1 draft saw the ten and called the document `non_standard`; the hand check confirmed the draft. Found by G3 on the gold file. First read as "eleven standard tables" (PR #23): the G3 header regex did not require the `Description` column; it does now, and the recount gives one. qwen's 28 rows on `038` (REPORT error 2): 5 printed in the standard table, 23 from the non-standard ones — the error stands, the gold format did not | step 11 (calibration) | ✅ `patch-11.1-gold-038`: gold re-drafted from `claude__v2__t0__val2` (its repair call returned exactly the five printed rows, 0 grounding errors), checked by Petro against the PDF; header regex requires `Description`; contract item 7 says so |
 
 ## 7. Risks
 

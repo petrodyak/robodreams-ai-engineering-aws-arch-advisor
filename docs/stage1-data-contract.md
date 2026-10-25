@@ -39,10 +39,11 @@ This file is the single list to check code against; it is not a spec of the impl
    `region_code`; dual-stack when the domain is `api.aws` / `on.aws` or a label is `dualstack`;
    FIPS when the hostname contains `fips`; both → `fips_dual_stack`; otherwise `ipv4`.
 7. `quotas: list[QuotaRow]` — `name`, `default: str`, `adjustable: bool`, `description`. Only
-   rows of a Standard Quota Table (ADR-0001); the rows of every Standard Quota Table of the
-   Target Service's chapter (24.10: `038` prints eleven of them under sub-headings, one per
-   product line — all of them count, as every endpoints table does in item 6). `adjustable`
-   is required: the column is always printed as Yes/No.
+   rows of a Standard Quota Table (ADR-0001) — every table of the chapter whose header is
+   exactly `Name | Default | Adjustable | Description`, as every endpoints table counts in
+   item 6. A table with `Notes` instead of `Description`, or with three columns, is not one
+   (24.10: `038` prints one Standard Quota Table and ten such others). `adjustable` is
+   required: the column is always printed as Yes/No.
 8. `default` is the printed text, not a parsed number (ADR-0002). Multi-region cells are
    serialised as `"us-east-1: 20,000; us-east-2: 6,000"` — separator `; `, table order;
    `"Each supported Region: 10,000"` stays verbatim. The convention lives in the field's
