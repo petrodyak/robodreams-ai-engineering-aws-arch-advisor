@@ -356,6 +356,7 @@ def run_record(**overrides):
         "prompt_version": "v1",
         "prompt_sha": "8a0da697aa92",
         "schema_sha": "d4010de95c65",
+        "validation_version": "2",
         "sampling": {"name": "t0", "temperature": 0.0, "top_p": None},
         "attempts": 1,
         "latency_ms": 1234,

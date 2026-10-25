@@ -2,13 +2,13 @@
 
 The gold files are the reference for every accuracy metric, so they must load with the same
 schema and checks as a model answer, and exactly the gold=1 rows of the manifest must have
-one. The hostname parser of scripts/check_gold.py is pinned on small layout-mode samples.
+one. The hostname reader (src/extract/grounding.py) is pinned on small layout-mode samples.
 """
 
 import pytest
 
-from scripts.check_gold import printed_hostnames, target_chapter
 from scripts.make_gold_drafts import GOLD_DIR, gold_documents, gold_path
+from src.extract.grounding import printed_hostnames, target_chapter
 from src.extract.schema import ServiceDocument, stored_context
 
 GOLD = gold_documents()

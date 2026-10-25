@@ -130,9 +130,11 @@ the report.
   ([ADR-0003](docs/adr/0003-format-checks-are-validation-failures.md)). A new AWS domain means a
   code change.
 - **Neighbour tails are detected, not removed.** The text keeps the pieces of neighbouring
-  chapters; the prompt tells the model to ignore them, and a `service` mismatch is the only
-  automatic detector. Rows silently taken from a neighbour are caught by the Golden Set, not
-  by validation.
+  chapters; the prompt tells the model to ignore them. Since step 11 every endpoint row must
+  be printed in an endpoints table of the target chapter and every quota name in one of its
+  Standard Quota Tables ([ADR-0005](docs/adr/0005-validation-grounded-in-the-source.md)), so
+  a row taken from a neighbour fails validation; `region_name`, `default` and `description`
+  are not grounded and are checked by the Golden Set only.
 - **Text as extracted.** Broken words, split hostnames and repeated page headers are left in the
   input on purpose; the model is expected to rejoin them. Only ligatures are normalised.
 - **Golden Set bias.** The reference was drafted by `claude__v1__t0` and corrected by hand

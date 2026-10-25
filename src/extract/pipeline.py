@@ -22,6 +22,7 @@ from pathlib import Path
 import yaml
 from pydantic import ValidationError
 
+from src.extract.grounding import VALIDATION_VERSION, Grounding
 from src.extract.llm import (
     LLMCallError,
     LLMClient,
@@ -163,25 +164,42 @@ GOLD_SCOPE = (
 
 
 def make_run_id(
-    model: str, prompt_version: str, sampling_name: str, *, gold: bool = False
+    model: str,
+    prompt_version: str,
+    sampling_name: str,
+    *,
+    gold: bool = False,
+    validation_version: str = VALIDATION_VERSION,
 ) -> str:
     """Contract item 11, e.g. claude__v1__t0, or claude__v1__t05__gold for a run over the
-    Golden Set only: the scope is in the name, so a full run never resumes into its file."""
-    return f"{model}__{prompt_version}__{sampling_name}" + (GOLD_SCOPE if gold else "")
+    Golden Set only: the scope is in the name, so a full run never resumes into its file.
+    A validation other than the first adds `__val<N>` (claude__v2__t0__val2): the runs
+    judged by validation "1" keep their names, and a re-run under a stricter validation
+    never resumes into them (the provenance guard would refuse it anyway)."""
+    run_id = f"{model}__{prompt_version}__{sampling_name}" + (
+        GOLD_SCOPE if gold else ""
+    )
+    if validation_version != "1":
+        run_id += f"__val{validation_version}"
+    return run_id
 
 
 # ---------------------------------------------------------------- one document
 
 
 def validate_answer(
-    reply: LLMReply, service: str
+    reply: LLMReply, service: str, grounding: Grounding | None = None
 ) -> tuple[ServiceDocument | None, str | None]:
-    """The answer as a Service Document, or the error text the repair call carries."""
+    """The answer as a Service Document, or the error text the repair call carries.
+
+    Two layers, in order: the schema with the format checks (ADR-0003) — does the answer
+    look right — and, with a `grounding`, the chapter itself (ADR-0005) — is every row
+    printed in it. A grounding error is reported in the schema's `- path: message` form.
+    """
     try:
         doc = ServiceDocument.model_validate_json(
             reply.text, context=answer_context(service)
         )
-        return doc, None
     except ValidationError as error:
         problems = "\n".join(
             f"- {'.'.join(map(str, e['loc'])) or '(document)'}: {e['msg']}"
@@ -191,6 +209,9 @@ def validate_answer(
             # The JSON is cut off; say so, a bare "EOF while parsing" does not explain it.
             problems = "- the answer was cut off at the max_tokens limit\n" + problems
         return None, problems
+    if grounding is not None and (errors := grounding.errors(doc)):
+        return None, "\n".join(f"- {e}" for e in errors)
+    return doc, None
 
 
 def extract_document(
@@ -203,6 +224,7 @@ def extract_document(
     """Ask, validate, repair at most once (contract item 16), and record what happened."""
     messages = [{"role": "user", "content": prompt.user_message(doc.service, text)}]
     calls: list[LLMReply] = []
+    grounding = Grounding.of(text, doc.service)  # what the chapter prints (ADR-0005)
 
     def spent() -> Usage:
         return Usage(
@@ -222,6 +244,7 @@ def extract_document(
                 "prompt_version": prompt.version,
                 "prompt_sha": prompt.sha,
                 "schema_sha": llm_schema_sha(),
+                "validation_version": VALIDATION_VERSION,
                 "sampling": sampling,
                 "attempts": sum(c.attempts for c in calls),
                 "latency_ms": sum(c.latency_ms for c in calls),
@@ -238,7 +261,7 @@ def extract_document(
     except LLMCallError as error:
         raise NoAnswer(f"no answer: {error}", spent()) from error
 
-    output, first_error = validate_answer(calls[0], doc.service)
+    output, first_error = validate_answer(calls[0], doc.service, grounding)
     if output is not None:
         return record(Status.OK, output, None)
     if calls[0].stop_reason == "max_tokens":
@@ -255,7 +278,7 @@ def extract_document(
     except LLMCallError as error:
         raise NoAnswer(f"repair call: no answer: {error}", spent()) from error
 
-    output, second_error = validate_answer(calls[1], doc.service)
+    output, second_error = validate_answer(calls[1], doc.service, grounding)
     if output is not None:
         # error keeps the first failure: material for the error analysis in REPORT.md
         return record(Status.REPAIRED, output, first_error)
@@ -291,12 +314,15 @@ class ProvenanceMismatch(Exception):
     """
 
 
-def done_files(path: Path, provenance: tuple[str, str] | None = None) -> set[str]:
+Provenance = tuple[str, str, str]  # (prompt_sha, schema_sha, validation_version)
+
+
+def done_files(path: Path, provenance: Provenance | None = None) -> set[str]:
     """Documents that already have a Run Record in this run's file.
 
-    With `provenance` = (prompt_sha, schema_sha) of the run about to resume, every stored
-    record must carry the same pair, or `ProvenanceMismatch` is raised before any call is
-    made. A line that is not JSON is real damage (only the last line can be cut off, and
+    With `provenance` = (prompt_sha, schema_sha, validation_version) of the run about to
+    resume, every stored record must carry the same triple, or `ProvenanceMismatch` is
+    raised before any call is made. A line that is not JSON is real damage (only the last line can be cut off, and
     `run` drops that one first), so it raises instead of being skipped silently.
     """
     if not path.exists():
@@ -310,7 +336,7 @@ def done_files(path: Path, provenance: tuple[str, str] | None = None) -> set[str
         try:
             rec = json.loads(line)
             done.add(rec["file"])
-            stored = (rec["prompt_sha"], rec["schema_sha"])
+            stored = (rec["prompt_sha"], rec["schema_sha"], rec["validation_version"])
         except (ValueError, KeyError) as error:
             raise ValueError(
                 f"{path}: line {n} is not a Run Record: {error}"
@@ -318,9 +344,10 @@ def done_files(path: Path, provenance: tuple[str, str] | None = None) -> set[str
         if provenance is not None and stored != provenance:
             raise ProvenanceMismatch(
                 f"{path.name}: line {n} ({rec['file']}) was made with prompt "
-                f"{stored[0]} / schema {stored[1]}, this run has prompt "
-                f"{provenance[0]} / schema {provenance[1]}: the prompt or schema "
-                "changed since the run started — start a new run id, do not resume"
+                f"{stored[0]} / schema {stored[1]} / validation {stored[2]}, this run "
+                f"has prompt {provenance[0]} / schema {provenance[1]} / validation "
+                f"{provenance[2]}: the prompt, schema or validation changed since the "
+                "run started — start a new run id, do not resume"
             )
     return done
 
@@ -359,7 +386,7 @@ def run(
     docs = list(docs)
     md_path = md_path or out_path.with_suffix(".md")
     drop_cut_off_tail(out_path, log)
-    done = done_files(out_path, (prompt.sha, llm_schema_sha()))
+    done = done_files(out_path, (prompt.sha, llm_schema_sha(), VALIDATION_VERSION))
     out_path.parent.mkdir(parents=True, exist_ok=True)
     write_markdown(out_path, md_path)  # the mirror of a run that was resumed or cut off
     new: list[RunRecord] = []

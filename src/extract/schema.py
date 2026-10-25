@@ -20,7 +20,7 @@ instance: Pydantic re-runs ServiceDocument's after-validator on it.
 
 import re
 from enum import StrEnum
-from typing import Annotated, Any, Self
+from typing import Annotated, Any, Literal, Self
 
 from pydantic import (
     AfterValidator,
@@ -309,6 +309,11 @@ class RunRecord(BaseModel):
     # pins the exact prompt file and the exact JSON Schema sent, as 12 hex chars of sha256.
     prompt_sha: str = Field(pattern=r"^[0-9a-f]{12}$")
     schema_sha: str = Field(pattern=r"^[0-9a-f]{12}$")
+    # Which validation judged the answer (contract item 12): "1" = schema + format checks
+    # (ADR-0003), the runs before step 11; "2" = "1" + grounding in the source text
+    # (ADR-0005). The run id does not name it, so a record must: the same answer can be
+    # `ok` under "1" and `repaired` or `failed` under "2".
+    validation_version: Literal["1", "2"]
     sampling: Sampling
     attempts: int = Field(ge=1)  # API calls: transport retries and the repair included
     # wall clock for the whole document (item 19)

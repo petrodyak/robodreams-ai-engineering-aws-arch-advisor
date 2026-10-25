@@ -53,7 +53,8 @@ CLAUDE_MODEL = "claude"  # the only paid model (short name in run ids)
 
 # <model>__<prompt_version>__<sampling_name>[__gold] (contract item 11)
 RUN_ID_RE = re.compile(
-    r"^(?P<model>[^_]+(?:_[^_]+)*)__(?P<prompt>v\d+)__(?P<sampling>\w+?)(?P<gold>__gold)?$"
+    r"^(?P<model>[^_]+(?:_[^_]+)*)__(?P<prompt>v\d+)__(?P<sampling>\w+?)"
+    r"(?P<gold>__gold)?(?:__val(?P<val>\d+))?$"
 )
 
 # Endpoint and quota fields scored on matched rows (item 17). `endpoint_type` is computed
@@ -63,7 +64,8 @@ QUOTA_FIELDS = ("default", "adjustable", "description")
 CASE_INSENSITIVE = {"description"}
 
 COLUMNS = [
-    "run_id", "model", "prompt_version", "prompt_sha", "schema_sha", "sampling", "scope", "group",
+    "run_id", "model", "prompt_version", "prompt_sha", "schema_sha", "validation_version",
+    "sampling", "scope", "group",
     "n_docs", "ok", "repaired", "failed", "no_answer", "pct_ok", "pct_ok_or_repaired",
     "latency_p50_ms", "latency_p95_ms", "cost_per_1000_usd", "wallclock_s",
     "gold_docs", "gold_scored", "quota_table_format_acc",
@@ -81,6 +83,7 @@ class RunId:
     prompt_version: str
     sampling: str
     gold: bool  # the __gold scope suffix: only the Golden Set documents were run
+    validation: str = "1"  # the __val<N> suffix; "1" when absent (contract item 11)
 
     @property
     def scope(self) -> str:
@@ -93,7 +96,9 @@ def parse_run_id(run_id: str) -> RunId:
         raise ValueError(
             f"not a run id like claude__v1__t0 or claude__v1__t05__gold: {run_id!r}"
         )
-    return RunId(m["model"], m["prompt"], m["sampling"], m["gold"] == GOLD_SCOPE)
+    return RunId(
+        m["model"], m["prompt"], m["sampling"], m["gold"] == GOLD_SCOPE, m["val"] or "1"
+    )
 
 
 def run_scope(run: RunId, docs: Iterable[Document]) -> list[Document]:
@@ -101,20 +106,20 @@ def run_scope(run: RunId, docs: Iterable[Document]) -> list[Document]:
     return [d for d in docs if d.gold or not run.gold]
 
 
-def run_provenance(run_id: str, records: list[RunRecord]) -> tuple[str, str]:
-    """The one (prompt_sha, schema_sha) of a run (contract item 12).
+def run_provenance(run_id: str, records: list[RunRecord]) -> tuple[str, str, str]:
+    """The one (prompt_sha, schema_sha, validation_version) of a run (contract item 12).
 
-    A run file is one prompt and one schema by definition: its records are compared as one
-    configuration. A resumed run after a prompt or schema edit would mix two
-    configurations under one run id (finding F17) — that is an error, not a row.
+    A run file is one prompt, one schema and one validation by definition: its records
+    are compared as one configuration. A resumed run after an edit to any of them would
+    mix two configurations under one run id (finding F17) — that is an error, not a row.
     """
-    pairs = {(r.prompt_sha, r.schema_sha) for r in records}
-    if len(pairs) > 1:
+    triples = {(r.prompt_sha, r.schema_sha, r.validation_version) for r in records}
+    if len(triples) > 1:
         raise ValueError(
             f"{run_id}: records with different provenance in one run file: "
-            f"{sorted(pairs)} — the prompt or schema changed under the run"
+            f"{sorted(triples)} — the prompt, schema or validation changed under the run"
         )
-    return pairs.pop() if pairs else ("", "")
+    return triples.pop() if triples else ("", "", "")
 
 
 # ---------------------------------------------------------------- accuracy (item 17)
@@ -240,7 +245,11 @@ class GroupMetrics:
     group: str
     docs: list[Document]  # the denominator (item 18)
     records: list[RunRecord]
-    provenance: tuple[str, str] = ("", "")  # (prompt_sha, schema_sha) of the whole run
+    provenance: tuple[str, str, str] = (
+        "",
+        "",
+        "",
+    )  # prompt_sha, schema_sha, validation_version
     gold_docs: int = 0
     gold_scored: int = 0  # gold documents with an output
     format_correct: int = 0
@@ -272,6 +281,7 @@ class GroupMetrics:
             "prompt_version": self.run.prompt_version,
             "prompt_sha": self.provenance[0],
             "schema_sha": self.provenance[1],
+            "validation_version": self.provenance[2],
             "sampling": self.run.sampling,
             "scope": self.run.scope,
             "group": self.group,
@@ -334,6 +344,11 @@ def run_metrics(
     run = parse_run_id(run_id)
     scope = run_scope(run, docs)
     provenance = run_provenance(run_id, records)
+    if records and provenance[2] != run.validation:
+        raise ValueError(
+            f"{run_id}: the run id says validation {run.validation!r}, the records say "
+            f"{provenance[2]!r}"
+        )
     by_file = {r.file: r for r in records}
     unknown = set(by_file) - {d.file for d in scope}
     if unknown:

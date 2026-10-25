@@ -18,7 +18,29 @@ PROMPT = pipeline.load_prompt("v1")
 DOC = pipeline.Document(
     file="006-amazon-aurora-dsql.pdf", service="Amazon Aurora DSQL", group=Group.SHORT
 )
-TEXT = "Amazon Aurora DSQL endpoints and quotas\n..."
+# A minimal chapter in layout-mode shape: the title, one endpoints table that prints the
+# hostname of answer(), and no quotas table — so answer() is grounded (ADR-0005) and the
+# tests below exercise the schema, the repair loop and the run file, not the grounding.
+TEXT = """Amazon Aurora DSQL endpoints and quotas
+
+Service endpoints
+
+ Region Name        Region          Endpoint                                   Protocol
+
+ US East (Ohio)     us-east-2       dsql.us-east-2.api.aws                     HTTPS
+
+Service quotas
+
+Amazon Aurora DSQL has no quotas table in this sample.
+
+Amazon Athena endpoints and quotas
+
+Service endpoints
+
+ Region Name        Region          Endpoint                                   Protocol
+
+ US East (Ohio)     us-east-2       dsql.us-east-2.api.aws                     HTTPS
+"""
 
 
 def answer(service="Amazon Aurora DSQL", region_code="us-east-2"):
@@ -145,13 +167,37 @@ def test_manifest_gives_30_documents_with_their_text():
 
 
 def test_run_id_follows_the_contract():
-    assert pipeline.make_run_id("claude", "v1", "t0") == "claude__v1__t0"
+    # contract item 11 (24.10): validation "1" is implicit, any other is a suffix
+    assert pipeline.make_run_id("claude", "v1", "t0", validation_version="1") == (
+        "claude__v1__t0"
+    )
+    assert pipeline.make_run_id("claude", "v2", "t0") == "claude__v2__t0__val2"
 
 
 def test_a_golden_set_run_carries_its_scope_in_the_run_id():
     # contract item 11: a full t05 run must never resume into the gold-only file
-    run_id = pipeline.make_run_id("claude", "v1", "t05", gold=True)
+    run_id = pipeline.make_run_id(
+        "claude", "v1", "t05", gold=True, validation_version="1"
+    )
     assert run_id == "claude__v1__t05__gold"
+    assert pipeline.make_run_id("claude", "v1", "t05", gold=True) == (
+        "claude__v1__t05__gold__val2"
+    )
+
+
+def test_a_rerun_under_a_new_validation_gets_its_own_file(tmp_path, raw):
+    # the old file is judged by validation "1"; the same configuration under "2" neither
+    # resumes into it (provenance guard) nor shares its name
+    old = tmp_path / "runs" / "fake__v1__t0.jsonl"
+    old.parent.mkdir()
+    rec = json.loads(
+        (pipeline.RUNS_DIR / "claude__v1__t0.jsonl").read_text().split("\n")[0]
+    )
+    assert rec["validation_version"] == "1"
+    old.write_text(json.dumps(rec) + "\n")
+    with pytest.raises(pipeline.ProvenanceMismatch, match="validation 1"):
+        run(FakeLLM(), old, raw)
+    assert pipeline.make_run_id("fake", "v1", "t0") != old.stem
 
 
 def test_manifest_marks_the_10_golden_set_documents():

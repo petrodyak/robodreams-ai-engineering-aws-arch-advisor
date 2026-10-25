@@ -8,82 +8,25 @@ disagree with the name the drafts use for that Region code elsewhere. Quota Rows
 quota_table_format are not checked here: they are compared with the PDF by hand.
 
 A hostname printed across several lines ("…us-east-1.am" / "azonaws.com") is rejoined by
-reading the Endpoint column of each table: the column's position comes from the table
-header, and fragments are concatenated until they form a hostname on an AWS domain. The
-parser is a helper for a person, not a judge: anything it cannot read shows up as a
-difference to look at, never as a silent pass.
+reading the Endpoint column of each table (src/extract/grounding.py, shared with the
+pipeline's grounding since step 11). Quota names are compared with the Name column of every
+Standard Quota Table the same way. The readers are helpers for a person, not a judge:
+anything they cannot read shows up as a difference to look at, never as a silent pass.
 
 Usage:  python -m scripts.check_gold [name ...]   (default: every gold file)
 """
 
 import json
-import re
 import sys
 from collections import Counter
 
 from scripts.make_gold_drafts import DRAFT_RUN, gold_documents, gold_path
 from src.extract import pipeline
-from src.extract.schema import AWS_DOMAINS, ServiceDocument, stored_context
+from src.extract.grounding import printed_hostnames, printed_quota_names, target_chapter
+from src.extract.schema import ServiceDocument, stored_context
 
-_HEADER_RE = re.compile(r"\bEndpoint\b.*\bProtocol\b")
-# a run of words separated by single spaces: one table cell (cells are 2+ spaces apart)
-_CELL_RE = re.compile(r"\S+(?: \S+)*")
-_FRAGMENT_RE = re.compile(r"[A-Za-z0-9.-]+")
-_DOMAIN_RE = "|".join(re.escape(d) for d in AWS_DOMAINS)
-_HOSTNAME_RE = re.compile(rf"[A-Za-z0-9][A-Za-z0-9.-]*\.(?:{_DOMAIN_RE})")
-# page furniture inside tables: "AWS General Reference … Reference guide", "… Version 1.0 337"
-_FURNITURE_RE = re.compile(r"AWS General Reference|Version \d+\.\d+ \d+\s*$")
-# prose between tables: six or more words separated by single spaces
-_PROSE_RE = re.compile(r"\S+(?: \S+){5,}")
-_CHAPTER_RE = re.compile(r"^\S.* endpoints and(?: quotas)?\s*$", re.MULTILINE)
-SLACK = 4  # columns: layout-mode text shifts a cell by a few characters between lines
-
-
-def target_chapter(text: str, service: str) -> str:
-    """The Target Service's chapter: from its title to the next chapter's title."""
-    start = text.find(f"{service} endpoints and")
-    if start < 0:
-        raise ValueError(f"no chapter title for {service!r}")
-    later = [m.start() for m in _CHAPTER_RE.finditer(text) if m.start() > start]
-    return text[start : later[0] if later else len(text)]
-
-
-def printed_hostnames(chapter: str) -> list[str]:
-    """Hostnames of the Endpoint column of every table, in print order, wraps rejoined."""
-    hosts: list[str] = []
-    column: tuple[int, int] | None = (
-        None  # (Endpoint start, Protocol start) of the table
-    )
-    current = ""
-    for line in chapter.splitlines():
-        header = _HEADER_RE.search(line)
-        if header:
-            column = (line.index("Endpoint"), line.index("Protocol"))
-            current = ""
-            continue
-        if column is None or _FURNITURE_RE.search(line) or not line.strip():
-            continue
-        if _PROSE_RE.search(line):  # the table has ended
-            column, current = None, ""
-            continue
-        start, end = column
-        cells = [
-            m.group()
-            for m in _CELL_RE.finditer(line)
-            if start - SLACK <= m.start() < end - SLACK
-        ]
-        # "control. ap-" and "gatewayId      .gateway…": no hostname has a space in it
-        fragment = "".join(cells).replace(" ", "")
-        if not fragment:
-            continue
-        if not _FRAGMENT_RE.fullmatch(fragment):
-            current = ""
-            continue
-        current += fragment
-        if _HOSTNAME_RE.fullmatch(current):
-            hosts.append(current)
-            current = ""
-    return hosts
+# The readers moved to src/extract/grounding.py in step 11 (ADR-0005): the pipeline now
+# validates every answer with them, and this script keeps using the same ones.
 
 
 def region_names() -> dict[str, Counter]:
@@ -113,6 +56,20 @@ def check(doc: pipeline.Document, names: dict[str, Counter]) -> list[str]:
     for host, n in Counter(in_gold).items():
         if n > 1:
             notes.append(f"{n} rows with the same hostname: {host}")
+    printed_names = printed_quota_names(target_chapter(doc.text(), doc.service))
+    gold_names = [q.name for q in gold.quotas]
+    lower = {n.lower() for n in printed_names}
+    for name in dict.fromkeys(
+        n for n in printed_names if n.lower() not in {g.lower() for g in gold_names}
+    ):
+        notes.append(f"quota printed in a Standard Quota Table, not in gold: {name}")
+    for name in dict.fromkeys(n for n in gold_names if n.lower() not in lower):
+        notes.append(f"quota in gold, not found as printed: {name}")
+    if printed_names and gold.quota_table_format.value != "standard":
+        notes.append(
+            f"quota_table_format is {gold.quota_table_format.value!r} but the chapter "
+            f"prints {len(printed_names)} Standard Quota Table row(s)"
+        )
     for e in gold.endpoints:
         if e.region_code not in e.endpoint:
             notes.append(
@@ -150,10 +107,7 @@ def main(only: list[str]) -> None:
         for note in notes:
             print(f"  - {note}")
         flagged += bool(notes)
-    print(
-        f"\n{flagged} file(s) with endpoints to check; quotas and quota_table_format: "
-        "by hand against the PDF"
-    )
+    print(f"\n{flagged} file(s) with rows to check against the PDF")
 
 
 if __name__ == "__main__":

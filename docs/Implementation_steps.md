@@ -61,6 +61,7 @@ Apply to every step and are not repeated in the steps:
 | 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ✅ PR #16 (`df1a8cd`); Claude v2 run PR #17 (`ea70c6e`); qwen runs 🔄 branch `patch-8.2-qwen-runs` |
 | 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ✅ PR #19 (`0869fda`); Q&A feedback → `patch-9.1` |
 | 10 | Run provenance: `prompt_sha` / `schema_sha` in every record (Q&A feedback, remark 2) | `step-10-run-provenance` | review ~15 min | step 3: logging (2); repo quality | 25.10 | ✅ PR #21 (`095b560`); guard 🔄 branch `patch-10.1-provenance-guard` |
+| 11 | Source-grounded validation G1–G3, `validation_version`, gold `038` re-check (remark 1) | `step-11-grounded-validation` | review ~30 min + gold `038` ~30 min | step 3: validation (3); repo quality | 25.10 | 🔄 branch `step-11-grounded-validation` |
 
 ## 4. Steps
 
@@ -414,6 +415,54 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     resumes; a file that already mixes two pairs is refused by metrics (second line of
     defence). 204 tests.
 
+### Step 11 — Source-grounded validation (lecturer's remark 1 of 24.10)
+
+- **Remark:** "validation should check the data against the source, not what the model
+  copied from the prompt." Our checks compared the `service` echo, the `schema_version`
+  echo and the *shape* of hostnames and Region codes; none asked whether a row is printed.
+- **Goal:** every answer judged against the chapter by code, the same way for both models;
+  nothing invented passes as `ok`.
+- **Files:** `src/extract/grounding.py` (the chapter readers, moved from
+  `scripts/check_gold.py` and extended to Standard Quota Table rows; the checks G1–G3),
+  `src/extract/pipeline.py` (grounding after the schema, before the repair; run id
+  `__val2`), `src/extract/schema.py` (`validation_version`), `src/extract/metrics.py`
+  (column, provenance triple, run id ↔ records check), `scripts/check_gold.py` (quota names
+  and format now checked too), `tests/test_grounding.py`, ADR-0005, contract items 7, 9,
+  11, 12, 16, the eight run files (`validation_version: "1"` backfilled).
+- **Done when:** every Golden Set file passes grounding (except `038` until re-checked);
+  every row grounding flags in `claude__v2__t0` is a real error confirmed against the raw
+  text; the v2 runs re-done under validation "2" and the report updated.
+- **Open:** (1) gold `038` → `standard` with the rows of its eleven Standard Quota Tables
+  (F18): draft from a one-document run `claude__v2__t0__val2 --only 038…` on the laptop,
+  checked by Petro against the PDF (`make gold-check 038` lists the 38 printed names);
+  (2) the re-runs `claude__v2__t0__val2` (≈ $1.3) and `qwen2.5-7b__v2__t0__val2` (≈ 100
+  min, more repair calls now); (3) REPORT §§3–5 with both validations side by side.
+- **Done:**
+  - 24.10, code: `Grounding.of(text, service)` reads the chapter once per document —
+    hostnames of the Endpoint column of every endpoints table (wraps rejoined), Name cells
+    of every Standard Quota Table (rows wrapped over lines, rows cut by a page break with the
+    header repeated), and whether a Standard Quota Table header is printed — and
+    `errors(doc)` returns G1–G3 violations in the schema's `- path: message` form, so the
+    repair call carries them unchanged. **Calibration on the real data** (the method, not
+    just the result): every gold file passes with zero errors except `038`'s
+    `quota_table_format` (F18); on `claude__v2__t0` grounding flags exactly five documents,
+    one row each, every one confirmed against the raw text — `091` a Standard Quota Table
+    called `non_standard`, `044` `rds.ap-southeast-5.api.aws` completed by pattern (the
+    chapter prints only the `.amazonaws.com` twin), `038` (F18), `025` a quota name
+    paraphrased from neighbouring rows' pattern ("The maximum number of SetVisibleToAllUsers
+    API requests…" for the printed "Replenishment rate of SetVisibleToAllUsers calls"),
+    `010` the prose row (now caught by G1 as well as by the format check). On
+    `qwen2.5-7b__v2__t0` it flags 11 documents, 125 endpoint rows and 37 quota rows: FIPS
+    and dual-stack twins the tables do not print (`092` 38 rows, `042` 65), `us-gov` rows
+    (`095`), a Resource / Quota table reported as `standard` (`047`, `066`), a trailing
+    period dropped from a name (`075`), `038`'s rows that *are* printed (right, see F18).
+    Three reader faults found and fixed during calibration: a 7-word name tripped the
+    prose-ends-the-table rule (now a table ends at a column-0 line); the mid-word fallback
+    compared against whole lines, where other columns interleave (now per Name cell); a
+    row cut by a page break was split in two (now rejoined by its lower-case tail).
+    `validation_version` in every record, `__val2` in the run id, the provenance triple on
+    resume and in metrics. 217 tests.
+
 ## 5. Run matrix and budget
 
 | Run id | Step | Required | Cost estimate | Actual |
@@ -478,6 +527,7 @@ and the PR that closed it.
 | F15 | `anthropic.transform_schema` turns `schema_version: Literal["1"]` into a plain string with `{const: 1}` in its description, so the schema constrains neither model. Claude writes `"1"`; qwen wrote `"1.0"` (direct call on `006`, 23.10), which fails validation, so every qwen v1 answer needs a repair call — longer runs, and on the largest documents the repair (document + previous answer) may not fit `num_ctx`. Not fixed in v1: Claude v1 already ran with this schema, and both models must see the same one | step 6 (direct call) | step 8 (prompt v2: an enum `["1"]` the schema keeps, a CHANGELOG entry tied to this error) | ✅ step 8: enum `SchemaVersion` (PR #16); `qwen2.5-7b__v2__t0` has no repair call at all, `qwen2.5-7b__v1__t0` with the enum 21/30 `ok` vs 0/10 before (`patch-8.2-qwen-runs`) |
 | F16 | Nothing stops two `make run` processes from appending to the same run file: both skip the documents already done and then extract the same next ones (`claude__v2__t0`: `092`, `023` twice, two paid calls each). Cheap fix: a lock file next to the JSONL, or `main.py` refusing when one exists | step 8 (v2 run) | Petro's call | ⬜ accepted, not fixed (24.10): one user, one terminal; a lock file is the fix if stage 2–4 runs hit it again |
 | F17 | The schema is part of a prompt version (`prompts/CHANGELOG.md`), but `schema.py` is not versioned per prompt: once PR #16 merged, every later run — v1 included — used the `SchemaVersion` enum. `qwen2.5-7b__v1__t0` (30) is therefore "v1 text + fixed schema" and differs from the `__gold` v1 runs on exactly F15. Not a bug to fix now (one schema for all runs is the contract, item 1); the report states which runs saw which schema | step 8 (overnight runs) | step 9 (stated in REPORT; a `schema_version`-per-prompt mechanism is out of scope) | ✅ step 10 (`step-10-run-provenance`): `prompt_sha` / `schema_sha` in every record, backfilled from git; metrics refuse mixed provenance |
+| F18 | **Gold `038` is wrong on `quota_table_format`.** The chapter prints eleven Standard Quota Tables (domain, Serverless, Ingestion, UI quotas) with the header `Name / Default / Adjustable / Description`; the gold says `non_standard`, 0 rows, because the Claude v1 draft said so and the hand check confirmed the draft rather than the definition. qwen's 28 "invented" rows on `038` (REPORT error 2) are printed rows. Found by grounding G3 on the gold file itself — the case for ADR-0005 | step 11 (calibration) | step 11: gold `038` re-drafted from `claude__v2__t0__val2` and re-checked by Petro against the PDF; contract item 7 says every Standard Quota Table of the chapter; REPORT error 2 corrected | 🔄 |
 
 ## 7. Risks
 
@@ -505,3 +555,4 @@ and the PR that closed it.
 | 24.10 | `qwen2.5-7b__v2__t05` (desirable) run overnight together with the two required qwen runs; F17 recorded: runs after PR #16 use the enum schema whatever the prompt version |
 | 24.10 | Patch 9.2: README "Stage 1 results" with the five main runs and the conclusion, pointing to `REPORT.md`; F16 accepted as is |
 | 24.10 | Lecturer's feedback after the checkpoint, four remarks: (1) validation grounded in the source text, (2) run tied to the exact prompt and schema, (3) long documents in parts, (4) prompt changes checked on unseen data. Steps 10–13 planned in that order of cost: 10 provenance, 11 grounded validation, 12 held-out set, 13 chunking (13-lite before the deadline, full after) |
+| 24.10 | Step 11: run id gets `__val<N>` for a validation other than the first (contract item 11); `validation_version` in every record (item 12); contract item 7 — every Standard Quota Table of the chapter counts; F18 gold `038` |
