@@ -4,6 +4,7 @@ prompt v2, with their own manifest, text, gold folder and run id scope (contract
 import pytest
 
 from src.extract import grounding, metrics, pipeline
+from src.extract.schema import ServiceDocument, stored_context
 
 HOLDOUT = pipeline.HOLDOUT_SET
 WORKING = pipeline.load_manifest(pipeline.WORKING_SET.manifest)
@@ -53,3 +54,18 @@ def test_working_set_run_ids_are_unchanged():
         "claude__v1__t0"
     )
     assert metrics.parse_run_id("claude__v1__t0").doc_set is pipeline.WORKING_SET
+
+
+def test_held_out_gold_files_exist_load_and_are_grounded():
+    """The five held-out gold files (patch 12.1): drafted from a grounded run and checked
+    against the PDF; the service matches the manifest and every row is printed."""
+    gold = [d for d in DOCS if d.gold]
+    assert len(gold) == 5
+    for d in gold:
+        path = (HOLDOUT.gold_dir / d.file).with_suffix(".json")
+        doc = ServiceDocument.model_validate_json(
+            path.read_text(), context=stored_context(d.service)
+        )
+        g = grounding.Grounding.of(d.text(HOLDOUT.dir), d.service)
+        assert g.errors(doc) == [], d.file
+        assert doc.endpoints, d.file

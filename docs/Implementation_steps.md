@@ -63,7 +63,7 @@ Apply to every step and are not repeated in the steps:
 | 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ✅ PR #19 (`0869fda`); Q&A feedback → `patch-9.1` |
 | 10 | Run provenance: `prompt_sha` / `schema_sha` in every record (Q&A feedback, remark 2) | `step-10-run-provenance` | review ~15 min | step 3: logging (2); repo quality | 25.10 | ✅ PR #21 (`095b560`); guard 🔄 branch `patch-10.1-provenance-guard` |
 | 11 | Source-grounded validation G1–G3, `validation_version`, gold `038` re-check (remark 1) | `step-11-grounded-validation` | review ~30 min + gold `038` ~30 min | step 3: validation (3); repo quality | 25.10 | 🔄 branch `step-11-grounded-validation` |
-| 12 | Held-out Set: 10 unseen documents, gold for 5, runs with the `__holdout` scope (remark 4) | `step-12-holdout` | review ~15 min + gold ×5 ~1.5 h | step 3 (3); repo quality | 26.10 | 🔄 branch `step-12-holdout` |
+| 12 | Held-out Set: 10 unseen documents, gold for 5, runs with the `__holdout` scope (remark 4) | `step-12-holdout` | review ~15 min + gold ×5 ~1.5 h | step 3 (3); repo quality | 26.10 | ✅ PR #25 (`57a1a11`); gold 🔄 branch `patch-12.1-holdout-gold` |
 
 ## 4. Steps
 
@@ -499,6 +499,12 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     manifest, its gold folder and its run id scope; `WORKING_SET` and `HOLDOUT_SET`;
     everything that read `data/raw` or `data/gold` takes the set (`main.py --set`,
     metrics by the run id, the two gold scripts, `make … SET=holdout`). 223 tests.
+  - 25.10, `patch-12.1-holdout-gold`: `claude__v2__t0__holdout__gold__val2` — 5/5 `ok` on the
+    first answer, $0.17 — drafted into `data/holdout/gold/`; every row grounded; `make
+    gold-check SET=holdout` clean (two mid-word wraps it flagged were the script's
+    exact-match comparison, now the same squash comparison as G2); checked by Petro against
+    the PDF with no corrections. `data/holdout/gold/README.md`; a test that the five files
+    load, match the manifest and are grounded. 224 tests.
 
 ## 5. Run matrix and budget
 

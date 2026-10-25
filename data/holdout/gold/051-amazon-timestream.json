@@ -1,0 +1,705 @@
+{
+  "schema_version": "1",
+  "service": "Amazon Timestream",
+  "quota_table_format": "standard",
+  "endpoints": [
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "ingest.timestream.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "timestream-ingest-fips.us-east-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "ingest.timestream-fips.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "timestream-ingest.us-east-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "ingest.timestream.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "timestream-ingest-fips.us-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "ingest.timestream-fips.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "timestream-ingest.us-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "ingest.timestream.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "timestream-ingest-fips.us-west-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "ingest.timestream-fips.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "timestream-ingest.us-west-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "ingest.timestream.ap-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "timestream-ingest.ap-south-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "ingest.timestream.ap-southeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "timestream-ingest.ap-southeast-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "ingest.timestream.ap-northeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "timestream-ingest.ap-northeast-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "ingest.timestream.eu-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "timestream-ingest.eu-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "ingest.timestream.eu-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "timestream-ingest.eu-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "ingest.timestream.us-gov-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "timestream-ingest.us-gov-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "query.timestream.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "timestream-query-fips.us-east-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "query.timestream-fips.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "timestream-query.us-east-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "query.timestream.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "timestream-query-fips.us-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "query.timestream-fips.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "timestream-query.us-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "query.timestream.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "timestream-query-fips.us-west-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "query.timestream-fips.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "timestream-query.us-west-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "query.timestream.ap-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "timestream-query.ap-south-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "query.timestream.ap-southeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "timestream-query.ap-southeast-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "query.timestream.ap-northeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "timestream-query.ap-northeast-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "query.timestream.eu-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "timestream-query.eu-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "query.timestream.eu-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "timestream-query.eu-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "query.timestream.us-gov-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "timestream-query.us-gov-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "timestream-influxdb.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "timestream-influxdb-fips.us-east-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "timestream-influxdb-fips.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "timestream-influxdb.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "timestream-influxdb-fips.us-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "timestream-influxdb-fips.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "timestream-influxdb.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "timestream-influxdb-fips.us-west-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "timestream-influxdb-fips.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Africa (Cape Town)",
+      "region_code": "af-south-1",
+      "endpoint": "timestream-influxdb.af-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hong Kong)",
+      "region_code": "ap-east-1",
+      "endpoint": "timestream-influxdb.ap-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hyderabad)",
+      "region_code": "ap-south-2",
+      "endpoint": "timestream-influxdb.ap-south-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Jakarta)",
+      "region_code": "ap-southeast-3",
+      "endpoint": "timestream-influxdb.ap-southeast-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Melbourne)",
+      "region_code": "ap-southeast-4",
+      "endpoint": "timestream-influxdb.ap-southeast-4.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "timestream-influxdb.ap-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Osaka)",
+      "region_code": "ap-northeast-3",
+      "endpoint": "timestream-influxdb.ap-northeast-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "timestream-influxdb.ap-northeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "timestream-influxdb.ap-southeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "timestream-influxdb.ap-southeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Thailand)",
+      "region_code": "ap-southeast-7",
+      "endpoint": "timestream-influxdb.ap-southeast-7.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "timestream-influxdb.ap-northeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "timestream-influxdb.ca-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "timestream-influxdb-fips.ca-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "timestream-influxdb-fips.ca-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "timestream-influxdb.eu-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "timestream-influxdb.eu-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "timestream-influxdb.eu-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Milan)",
+      "region_code": "eu-south-1",
+      "endpoint": "timestream-influxdb.eu-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "timestream-influxdb.eu-west-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Spain)",
+      "region_code": "eu-south-2",
+      "endpoint": "timestream-influxdb.eu-south-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "timestream-influxdb.eu-north-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Zurich)",
+      "region_code": "eu-central-2",
+      "endpoint": "timestream-influxdb.eu-central-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Israel (Tel Aviv)",
+      "region_code": "il-central-1",
+      "endpoint": "timestream-influxdb.il-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Mexico (Central)",
+      "region_code": "mx-central-1",
+      "endpoint": "timestream-influxdb.mx-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Middle East (UAE)",
+      "region_code": "me-central-1",
+      "endpoint": "timestream-influxdb.me-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "timestream-influxdb.sa-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    }
+  ],
+  "quotas": [
+    {
+      "name": "CreateBatchLoadTask request rate",
+      "default": "Each supported Region: 1 per second",
+      "adjustable": false,
+      "description": "Maximum number of CreateBatchLoadTask requests per second."
+    },
+    {
+      "name": "CreateDatabase request rate",
+      "default": "Each supported Region: 1 per second",
+      "adjustable": false,
+      "description": "Maximum number of CreateDatabase requests per second."
+    },
+    {
+      "name": "CreateScheduledQuery request rate",
+      "default": "Each supported Region: 1 per second",
+      "adjustable": false,
+      "description": "Maximum number of CreateScheduledQuery requests per second."
+    },
+    {
+      "name": "CreateTable request rate",
+      "default": "Each supported Region: 1 per second",
+      "adjustable": false,
+      "description": "Maximum number of CreateTable requests per second."
+    },
+    {
+      "name": "Databases per account",
+      "default": "Each supported Region: 500",
+      "adjustable": false,
+      "description": "The maximum number of databases you can create per AWS account."
+    },
+    {
+      "name": "DeleteDatabase request rate",
+      "default": "Each supported Region: 1 per second",
+      "adjustable": false,
+      "description": "Maximum number of DeleteDatabase requests per second."
+    },
+    {
+      "name": "DeleteScheduledQuery request rate",
+      "default": "Each supported Region: 1 per second",
+      "adjustable": false,
+      "description": "Maximum number of DeleteScheduledQuery requests per second."
+    },
+    {
+      "name": "DeleteTable request rate",
+      "default": "Each supported Region: 1 per second",
+      "adjustable": false,
+      "description": "Maximum number of DeleteTable requests per second."
+    },
+    {
+      "name": "DescribeAccountSettings request rate",
+      "default": "Each supported Region: 1 per second",
+      "adjustable": false,
+      "description": "Maximum number of DescribeAccountSettings requests per second."
+    },
+    {
+      "name": "DescribeBatchLoadTask request rate",
+      "default": "Each supported Region: 5 per second",
+      "adjustable": false,
+      "description": "Maximum number of DescribeBatchLoadTask requests per second."
+    },
+    {
+      "name": "DescribeDatabase request rate",
+      "default": "Each supported Region: 5 per second",
+      "adjustable": false,
+      "description": "Maximum number of DescribeDatabase requests per second."
+    },
+    {
+      "name": "DescribeScheduledQuery request rate",
+      "default": "Each supported Region: 5 per second",
+      "adjustable": false,
+      "description": "Maximum number of DescribeScheduledQuery requests per second."
+    },
+    {
+      "name": "DescribeTable request rate",
+      "default": "Each supported Region: 5 per second",
+      "adjustable": false,
+      "description": "Maximum number of DescribeTable requests per second."
+    },
+    {
+      "name": "Dimensions per table",
+      "default": "Each supported Region: 128",
+      "adjustable": false,
+      "description": "The maximum number of dimensions per table."
+    },
+    {
+      "name": "ExecuteScheduledQuery request rate",
+      "default": "Each supported Region: 5 per second",
+      "adjustable": false,
+      "description": "Maximum number of ExecuteScheduledQuery requests per second."
+    },
+    {
+      "name": "ListBatchLoadTasks request rate",
+      "default": "Each supported Region: 5 per second",
+      "adjustable": false,
+      "description": "Maximum number of ListBatchLoadTasks requests per second."
+    },
+    {
+      "name": "ListDatabases request rate",
+      "default": "Each supported Region: 5 per second",
+      "adjustable": false,
+      "description": "Maximum number of ListDatabases requests per second."
+    },
+    {
+      "name": "ListScheduledQueries request rate",
+      "default": "Each supported Region: 5 per second",
+      "adjustable": false,
+      "description": "Maximum number of ListScheduledQueries requests per second."
+    },
+    {
+      "name": "ListTables request rate",
+      "default": "Each supported Region: 5 per second",
+      "adjustable": false,
+      "description": "Maximum number of ListTables requests per second."
+    },
+    {
+      "name": "Max allowed MaxQueryTCU",
+      "default": "Each supported Region: 1,000",
+      "adjustable": false,
+      "description": "The maximum allowed MaxQueryTCU in your account"
+    },
+    {
+      "name": "Max allowed ProvisionedQueryTCU",
+      "default": "Each supported Region: 1,000",
+      "adjustable": false,
+      "description": "The maximum allowed ProvisionedQueryTCU in your account"
+    },
+    {
+      "name": "Maximum count of active magnetic store partitions per database",
+      "default": "Each supported Region: 250",
+      "adjustable": false,
+      "description": "Maximum number of active magnetic store partitions per database. A partition may remain active for up to 6 hours after receiving ingestion."
+    },
+    {
+      "name": "Measures per table",
+      "default": "Each supported Region: 8,192",
+      "adjustable": false,
+      "description": "The maximum number of measures per table."
+    },
+    {
+      "name": "PrepareQuery request rate",
+      "default": "Each supported Region: 5 per second",
+      "adjustable": false,
+      "description": "Maximum number of PrepareQuery requests per second."
+    },
+    {
+      "name": "ResumeBatchLoadTask request rate",
+      "default": "Each supported Region: 1 per second",
+      "adjustable": false,
+      "description": "Maximum number of ResumeBatchLoadTask requests per second."
+    },
+    {
+      "name": "Scheduled queries per account",
+      "default": "Each supported Region: 10,000",
+      "adjustable": false,
+      "description": "The maximum number of scheduled queries you can create per AWS account."
+    },
+    {
+      "name": "Tables per account",
+      "default": "Each supported Region: 50,000",
+      "adjustable": false,
+      "description": "The maximum number of tables you can create per AWS account."
+    },
+    {
+      "name": "Unique measures across multi-measure records per table",
+      "default": "Each supported Region: 1,024",
+      "adjustable": false,
+      "description": "The unique measures in all the multi-measure records defined in a single table. A single multi-measure record can have MaximumMeasureAttributesPerRecord unique measures, and a table can have MaximumMeasureAttributesPerTable unique measures defined across multi-measure records."
+    },
+    {
+      "name": "UpdateAccountSettings request rate",
+      "default": "Each supported Region: 1 per second",
+      "adjustable": false,
+      "description": "Maximum number of UpdateAccountSettings requests per second."
+    },
+    {
+      "name": "UpdateDatabase request rate",
+      "default": "Each supported Region: 1 per second",
+      "adjustable": false,
+      "description": "Maximum number of UpdateDatabase requests per second."
+    },
+    {
+      "name": "UpdateScheduledQuery request rate",
+      "default": "Each supported Region: 1 per second",
+      "adjustable": false,
+      "description": "Maximum number of UpdateScheduledQuery requests per second."
+    },
+    {
+      "name": "UpdateTable request rate",
+      "default": "Each supported Region: 1 per second",
+      "adjustable": false,
+      "description": "Maximum number of UpdateTable requests per second."
+    }
+  ]
+}
