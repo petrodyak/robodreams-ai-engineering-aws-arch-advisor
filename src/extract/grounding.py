@@ -164,7 +164,7 @@ def has_standard_quota_table(chapter: str) -> bool:
     return _QUOTA_HEADER_RE.search(chapter) is not None
 
 
-def _squash(s: str) -> str:
+def squash(s: str) -> str:
     return re.sub(r"\s+", "", s).lower()
 
 
@@ -185,7 +185,7 @@ class Grounding:
         self.hostnames = set(printed_hostnames(self.chapter))
         names = printed_quota_names(self.chapter)
         self.quota_names = {n.lower() for n in names}
-        self.quota_names_squashed = {_squash(n) for n in names}
+        self.quota_names_squashed = {squash(n) for n in names}
         self.standard_table = has_standard_quota_table(self.chapter)
 
     @classmethod
@@ -204,7 +204,7 @@ class Grounding:
         for i, q in enumerate(doc.quotas):
             if (
                 q.name.lower() not in self.quota_names
-                and _squash(q.name) not in self.quota_names_squashed
+                and squash(q.name) not in self.quota_names_squashed
             ):
                 out.append(
                     f"quotas.{i}.name: not printed in a Standard Quota Table of the "

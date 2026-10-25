@@ -1,0 +1,525 @@
+{
+  "schema_version": "1",
+  "service": "AWS Firewall Manager",
+  "quota_table_format": "standard",
+  "endpoints": [
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "fms.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "fms-fips.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "fms.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "fms-fips.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "fms.us-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "fms-fips.us-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "fms.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "fms-fips.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Africa (Cape Town)",
+      "region_code": "af-south-1",
+      "endpoint": "fms.af-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Africa (Cape Town)",
+      "region_code": "af-south-1",
+      "endpoint": "fms-fips.af-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hong Kong)",
+      "region_code": "ap-east-1",
+      "endpoint": "fms.ap-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hong Kong)",
+      "region_code": "ap-east-1",
+      "endpoint": "fms-fips.ap-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hyderabad)",
+      "region_code": "ap-south-2",
+      "endpoint": "fms.ap-south-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Jakarta)",
+      "region_code": "ap-southeast-3",
+      "endpoint": "fms.ap-southeast-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Malaysia)",
+      "region_code": "ap-southeast-5",
+      "endpoint": "fms.ap-southeast-5.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Melbourne)",
+      "region_code": "ap-southeast-4",
+      "endpoint": "fms.ap-southeast-4.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "fms.ap-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "fms-fips.ap-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (New Zealand)",
+      "region_code": "ap-southeast-6",
+      "endpoint": "fms.ap-southeast-6.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Osaka)",
+      "region_code": "ap-northeast-3",
+      "endpoint": "fms.ap-northeast-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "fms.ap-northeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "fms-fips.ap-northeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "fms.ap-southeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "fms-fips.ap-southeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "fms.ap-southeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "fms-fips.ap-southeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Taipei)",
+      "region_code": "ap-east-2",
+      "endpoint": "fms.ap-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Thailand)",
+      "region_code": "ap-southeast-7",
+      "endpoint": "fms.ap-southeast-7.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "fms.ap-northeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "fms-fips.ap-northeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "fms.ca-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "fms-fips.ca-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "fms.ca-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "fms-fips.ca-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "fms.eu-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "fms-fips.eu-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "fms.eu-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "fms-fips.eu-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "fms.eu-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "fms-fips.eu-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Milan)",
+      "region_code": "eu-south-1",
+      "endpoint": "fms.eu-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Milan)",
+      "region_code": "eu-south-1",
+      "endpoint": "fms-fips.eu-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "fms.eu-west-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "fms-fips.eu-west-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Spain)",
+      "region_code": "eu-south-2",
+      "endpoint": "fms.eu-south-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "fms.eu-north-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Zurich)",
+      "region_code": "eu-central-2",
+      "endpoint": "fms.eu-central-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Israel (Tel Aviv)",
+      "region_code": "il-central-1",
+      "endpoint": "fms.il-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Mexico (Central)",
+      "region_code": "mx-central-1",
+      "endpoint": "fms.mx-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Middle East (Bahrain)",
+      "region_code": "me-south-1",
+      "endpoint": "fms.me-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Middle East (Bahrain)",
+      "region_code": "me-south-1",
+      "endpoint": "fms-fips.me-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Middle East (UAE)",
+      "region_code": "me-central-1",
+      "endpoint": "fms.me-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "fms.sa-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "fms-fips.sa-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "fms.us-gov-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "fms-fips.us-gov-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "fms.us-gov-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "fms-fips.us-gov-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    }
+  ],
+  "quotas": [
+    {
+      "name": "AWS WAF Classic rule groups per AWS WAF Classic policy",
+      "default": "Each supported Region: 2",
+      "adjustable": false,
+      "description": "The maximum number of AWS WAF Classic rule groups that you can use in a Firewall Manager AWS WAF Classic policy."
+    },
+    {
+      "name": "Accounts per Firewall Manager admin",
+      "default": "Each supported Region: 10,000",
+      "adjustable": true,
+      "description": "The maximum number of accounts that you can be managed by Firewall Manager under a single FMS admin."
+    },
+    {
+      "name": "Admins per organization in Firewall Manager",
+      "default": "Each supported Region: 10",
+      "adjustable": false,
+      "description": "The maximum number of admin accounts that you can onboard under a single organization in Firewall Manager"
+    },
+    {
+      "name": "Amazon VPC instances in scope of a common security group policy",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of Amazon VPC instances that you can have in scope per Firewall Manager common security group policy per account. This number represents the combined count of VPCs that you own and VPCs that are shared with you."
+    },
+    {
+      "name": "Applications per application list",
+      "default": "Each supported Region: 50",
+      "adjustable": true,
+      "description": "The maximum number of applications that you can define in an application list."
+    },
+    {
+      "name": "Audit security groups per security group content audit policy",
+      "default": "Each supported Region: 1",
+      "adjustable": true,
+      "description": "The maximum number of audit security groups that you can use in a Firewall Manager content audit security group policy."
+    },
+    {
+      "name": "Custom managed application lists for rules that allow all traffic",
+      "default": "Each supported Region: 1",
+      "adjustable": true,
+      "description": "The maximum number of managed application lists for rules that allow all traffic in a Firewall Manager content audit security group policy."
+    },
+    {
+      "name": "Custom managed application lists in any content audit security group policy setting",
+      "default": "Each supported Region: 1",
+      "adjustable": true,
+      "description": "The maximum number of custom managed application lists that you can use in any setting in a Firewall Manager content audit security group policy."
+    },
+    {
+      "name": "Custom managed application lists per account",
+      "default": "Each supported Region: 10",
+      "adjustable": true,
+      "description": "The maximum number of custom managed application lists that you can define for an account."
+    },
+    {
+      "name": "Custom managed protocol lists in any content audit security group policy setting",
+      "default": "Each supported Region: 1",
+      "adjustable": true,
+      "description": "The maximum number of custom managed protocol lists that you can use in any setting in a Firewall Manager content audit security group policy."
+    },
+    {
+      "name": "Custom managed protocol lists per account",
+      "default": "Each supported Region: 10",
+      "adjustable": true,
+      "description": "The maximum number of custom managed protocol lists that you can define for an account."
+    },
+    {
+      "name": "Explicitly included or excluded accounts per policy per Region",
+      "default": "Each supported Region: 200",
+      "adjustable": true,
+      "description": "The maximum number of accounts per Region that you can explicitly include in scope or explicitly exclude from scope for a Firewall Manager policy."
+    },
+    {
+      "name": "Firewall Manager policies per organization per Region",
+      "default": "Each supported Region: 50",
+      "adjustable": true,
+      "description": "The maximum number of Firewall Manager policies for any pair of Region and organization in AWS Organizations."
+    },
+    {
+      "name": "IPV4 CIDRs for a Network Firewall policy",
+      "default": "Each supported Region: 50",
+      "adjustable": true,
+      "description": "The maximum number of IPV4 CIDR ranges that you can provide in a single Firewall Manager Network Firewall policy, for use in firewall endpoint management."
+    },
+    {
+      "name": "Inbound/outbound rules per network ACL policy",
+      "default": "Each supported Region: 5",
+      "adjustable": true,
+      "description": "The maximum number of inbound/outbound rules that you can use in a Firewall Manager Network ACL policy."
+    },
+    {
+      "name": "Organizational units in scope per policy per Region",
+      "default": "Each supported Region: 20",
+      "adjustable": true,
+      "description": "The maximum number of organizational units that can be in scope of a Firewall Manager policy for any Region."
+    },
+    {
+      "name": "Partner rule groups per AWS WAF policy",
+      "default": "Each supported Region: 1",
+      "adjustable": true,
+      "description": "The maximum number of partner rule groups that can be applied to a single policy, limited by Web Application Firewall WebACL limits."
+    },
+    {
+      "name": "Primary security groups per common security group policy",
+      "default": "Each supported Region: 3",
+      "adjustable": true,
+      "description": "The maximum number of primary security groups that you can use in a Firewall Manager common security group policy."
+    },
+    {
+      "name": "Protocols per protocol list",
+      "default": "Each supported Region: 5",
+      "adjustable": true,
+      "description": "The maximum number of protocols that you can define in a protocol list."
+    },
+    {
+      "name": "Resource sets per Firewall Manager admin account",
+      "default": "Each supported Region: 20",
+      "adjustable": true,
+      "description": "The maximum number of resource sets that you can create under a single Firewall Manager admin account."
+    },
+    {
+      "name": "Resources per resource set",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of resources that a single resource set can contain."
+    },
+    {
+      "name": "Route 53 Resolver DNS Firewall rule groups per DNS Firewall policy",
+      "default": "Each supported Region: 2",
+      "adjustable": true,
+      "description": "The maximum number of Route 53 Resolver DNS Firewall rule groups that you can use in a Firewall Manager DNS Firewall policy."
+    },
+    {
+      "name": "Rule groups per AWS WAF policy",
+      "default": "Each supported Region: 50",
+      "adjustable": true,
+      "description": "The maximum number of rule groups that you can use in a Firewall Manager AWS WAF policy."
+    },
+    {
+      "name": "Stateful rule group capacity per Network Firewall policy",
+      "default": "Each supported Region: 30,000",
+      "adjustable": true,
+      "description": "The maximum number of rules that can be included in a stateful rule group within a Firewall Manager Network Firewall policy."
+    },
+    {
+      "name": "Stateful rule groups per Network Firewall policy",
+      "default": "Each supported Region: 20",
+      "adjustable": false,
+      "description": "The maximum number of stateful rule groups that you can use in a Firewall Manager Network Firewall policy."
+    },
+    {
+      "name": "Stateless rule group capacity per Network Firewall policy",
+      "default": "Each supported Region: 30,000",
+      "adjustable": false,
+      "description": "The maximum number of rules that can be included in a stateless rule group within a Firewall Manager Network Firewall policy."
+    },
+    {
+      "name": "Stateless rule groups per Network Firewall policy",
+      "default": "Each supported Region: 20",
+      "adjustable": false,
+      "description": "The maximum number of stateless rule groups that you can use in a Firewall Manager Network Firewall policy."
+    },
+    {
+      "name": "Tags to include or exclude resources per policy",
+      "default": "Each supported Region: 8",
+      "adjustable": true,
+      "description": "The maximum number of tags that you can use to include or exclude resources for a Firewall Manager policy."
+    }
+  ]
+}

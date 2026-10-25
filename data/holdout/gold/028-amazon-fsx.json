@@ -1,0 +1,489 @@
+{
+  "schema_version": "1",
+  "service": "Amazon FSx",
+  "quota_table_format": "standard",
+  "endpoints": [
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "fsx.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "fsx-fips.us-east-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (Ohio)",
+      "region_code": "us-east-2",
+      "endpoint": "fsx-fips.us-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "fsx.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "fsx-fips.us-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US East (N. Virginia)",
+      "region_code": "us-east-1",
+      "endpoint": "fsx-fips.us-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "fsx.us-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "fsx-fips.us-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (N. California)",
+      "region_code": "us-west-1",
+      "endpoint": "fsx-fips.us-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "fsx.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "fsx-fips.us-west-2.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "US West (Oregon)",
+      "region_code": "us-west-2",
+      "endpoint": "fsx-fips.us-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Africa (Cape Town)",
+      "region_code": "af-south-1",
+      "endpoint": "fsx.af-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hong Kong)",
+      "region_code": "ap-east-1",
+      "endpoint": "fsx.ap-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Hyderabad)",
+      "region_code": "ap-south-2",
+      "endpoint": "fsx.ap-south-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Jakarta)",
+      "region_code": "ap-southeast-3",
+      "endpoint": "fsx.ap-southeast-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Malaysia)",
+      "region_code": "ap-southeast-5",
+      "endpoint": "fsx.ap-southeast-5.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Melbourne)",
+      "region_code": "ap-southeast-4",
+      "endpoint": "fsx.ap-southeast-4.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Mumbai)",
+      "region_code": "ap-south-1",
+      "endpoint": "fsx.ap-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (New Zealand)",
+      "region_code": "ap-southeast-6",
+      "endpoint": "fsx.ap-southeast-6.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Osaka)",
+      "region_code": "ap-northeast-3",
+      "endpoint": "fsx.ap-northeast-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Seoul)",
+      "region_code": "ap-northeast-2",
+      "endpoint": "fsx.ap-northeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Singapore)",
+      "region_code": "ap-southeast-1",
+      "endpoint": "fsx.ap-southeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Sydney)",
+      "region_code": "ap-southeast-2",
+      "endpoint": "fsx.ap-southeast-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Taipei)",
+      "region_code": "ap-east-2",
+      "endpoint": "fsx.ap-east-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Thailand)",
+      "region_code": "ap-southeast-7",
+      "endpoint": "fsx.ap-southeast-7.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Asia Pacific (Tokyo)",
+      "region_code": "ap-northeast-1",
+      "endpoint": "fsx.ap-northeast-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "fsx.ca-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "fsx-fips.ca-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada (Central)",
+      "region_code": "ca-central-1",
+      "endpoint": "fsx-fips.ca-central-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "fsx.ca-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "fsx-fips.ca-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Canada West (Calgary)",
+      "region_code": "ca-west-1",
+      "endpoint": "fsx-fips.ca-west-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Frankfurt)",
+      "region_code": "eu-central-1",
+      "endpoint": "fsx.eu-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Ireland)",
+      "region_code": "eu-west-1",
+      "endpoint": "fsx.eu-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (London)",
+      "region_code": "eu-west-2",
+      "endpoint": "fsx.eu-west-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Milan)",
+      "region_code": "eu-south-1",
+      "endpoint": "fsx.eu-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Paris)",
+      "region_code": "eu-west-3",
+      "endpoint": "fsx.eu-west-3.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Spain)",
+      "region_code": "eu-south-2",
+      "endpoint": "fsx.eu-south-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Stockholm)",
+      "region_code": "eu-north-1",
+      "endpoint": "fsx.eu-north-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Europe (Zurich)",
+      "region_code": "eu-central-2",
+      "endpoint": "fsx.eu-central-2.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Israel (Tel Aviv)",
+      "region_code": "il-central-1",
+      "endpoint": "fsx.il-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Mexico (Central)",
+      "region_code": "mx-central-1",
+      "endpoint": "fsx.mx-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Middle East (Bahrain)",
+      "region_code": "me-south-1",
+      "endpoint": "fsx.me-south-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "Middle East (UAE)",
+      "region_code": "me-central-1",
+      "endpoint": "fsx.me-central-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "South America (São Paulo)",
+      "region_code": "sa-east-1",
+      "endpoint": "fsx.sa-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "fsx.us-gov-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "fsx-fips.us-gov-east-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-East)",
+      "region_code": "us-gov-east-1",
+      "endpoint": "fsx-fips.us-gov-east-1.api.aws",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "fsx.us-gov-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "fsx-fips.us-gov-west-1.amazonaws.com",
+      "protocol": "HTTPS"
+    },
+    {
+      "region_name": "AWS GovCloud (US-West)",
+      "region_code": "us-gov-west-1",
+      "endpoint": "fsx-fips.us-gov-west-1.api.aws",
+      "protocol": "HTTPS"
+    }
+  ],
+  "quotas": [
+    {
+      "name": "Lustre Cache_1 caches",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of Amazon File Cache caches with cache type Lustre and deployment type Cache_1 that you can create in this account."
+    },
+    {
+      "name": "Lustre Cache_1 storage capacity",
+      "default": "Each supported Region: 100,800",
+      "adjustable": true,
+      "description": "The maximum amount of storage capacity (in GiB) that you can configure in this account for all Amazon File Cache caches with cache type Lustre and deployment type Cache_1."
+    },
+    {
+      "name": "Lustre Persistent HDD storage capacity (per file system)",
+      "default": "Each supported Region: 102,000",
+      "adjustable": true,
+      "description": "The maximum amount of HDD storage capacity (in GiB) that you can configure for an Amazon FSx for Lustre persistent file system."
+    },
+    {
+      "name": "Lustre Persistent Intelligent-Tiering SSD read cache storage capacity",
+      "default": "Each supported Region: 100,800",
+      "adjustable": true,
+      "description": "The maximum amount of provisioned SSD read cache storage capacity (in GiB) that you can configure for all Amazon FSx for Lustre Intelligent-Tiering file systems in this account."
+    },
+    {
+      "name": "Lustre Persistent Intelligent-Tiering throughput capacity",
+      "default": "Each supported Region: 100,000",
+      "adjustable": true,
+      "description": "The total amount of throughput capacity (in MBps) allowed for all Amazon FSx for Lustre Intelligent-Tiering file systems in this account."
+    },
+    {
+      "name": "Lustre Persistent_1 file systems",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of Amazon FSx for Lustre persistent_1 file systems that you can create in this account"
+    },
+    {
+      "name": "Lustre Persistent_1 storage capacity",
+      "default": "Each supported Region: 100,800",
+      "adjustable": true,
+      "description": "The maximum amount of storage capacity (in GiB) that you can configure for all Amazon FSx for Lustre persistent_1 file systems in this account."
+    },
+    {
+      "name": "Lustre Persistent_2 file systems",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of Amazon FSx for Lustre persistent_2 file systems that you can create in this account"
+    },
+    {
+      "name": "Lustre Persistent_2 storage capacity",
+      "default": "Each supported Region: 100,800",
+      "adjustable": true,
+      "description": "The maximum amount of storage capacity (in GiB) that you can configure for all Amazon FSx for Lustre persistent_2 file systems in this account."
+    },
+    {
+      "name": "Lustre Scratch file systems",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of Amazon FSx for Lustre scratch file systems that you can create in this account."
+    },
+    {
+      "name": "Lustre Scratch storage capacity",
+      "default": "Each supported Region: 100,800",
+      "adjustable": true,
+      "description": "The maximum amount of storage capacity (in GiB) that you can configure for all Amazon FSx for Lustre scratch file systems in this account."
+    },
+    {
+      "name": "Lustre backups",
+      "default": "Each supported Region: 500",
+      "adjustable": true,
+      "description": "The maximum number of user-initiated backups that you can have for all Amazon FSx for Lustre file systems in this account."
+    },
+    {
+      "name": "ONTAP SSD IOPS",
+      "default": "Each supported Region: 2,000,000",
+      "adjustable": true,
+      "description": "The total amount of SSD IOPS allowed for all Amazon FSx for NetApp ONTAP file systems in this account."
+    },
+    {
+      "name": "ONTAP SSD storage capacity",
+      "default": "Each supported Region: 1,048,576",
+      "adjustable": true,
+      "description": "The maximum amount of SSD storage capacity (in GiB) for all Amazon FSx for NetApp ONTAP file systems that you can have in this account."
+    },
+    {
+      "name": "ONTAP backups",
+      "default": "Each supported Region: 10,000",
+      "adjustable": true,
+      "description": "The maximum number of user-initiated backups for all Amazon FSx for NetApp ONTAP file systems that you can have in this account."
+    },
+    {
+      "name": "ONTAP file systems",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of Amazon FSx for NetApp ONTAP file systems that you can create in this account."
+    },
+    {
+      "name": "ONTAP throughput capacity",
+      "default": "Each supported Region: 10,240",
+      "adjustable": true,
+      "description": "The total amount of throughput capacity (in MBps) allowed for all Amazon FSx for NetApp ONTAP file systems in this account."
+    },
+    {
+      "name": "OpenZFS SSD storage capacity",
+      "default": "us-east-1: 262,144; us-east-2: 262,144; us-west-2: 262,144; Each of the other supported Regions: 65,536",
+      "adjustable": true,
+      "description": "The maximum amount of SSD storage capacity (in GiB) that you can configure for all Amazon FSx for OpenZFS file systems in this account."
+    },
+    {
+      "name": "OpenZFS SSD storage capacity (per file system)",
+      "default": "Each supported Region: 524,288",
+      "adjustable": true,
+      "description": "The maximum amount of SSD storage capacity (in GiB) that you can configure for an Amazon FSx for OpenZFS file system."
+    },
+    {
+      "name": "OpenZFS backups",
+      "default": "Each supported Region: 10,000",
+      "adjustable": true,
+      "description": "The maximum number of user-initiated backups for all Amazon FSx for OpenZFS file systems that you can have in this account."
+    },
+    {
+      "name": "OpenZFS disk IOPS",
+      "default": "Each supported Region: 400,000",
+      "adjustable": true,
+      "description": "The total amount of disk IOPS allowed for all Amazon FSx for OpenZFS file systems in this account."
+    },
+    {
+      "name": "OpenZFS file systems",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of Amazon FSx for OpenZFS file systems that you can create in this account."
+    },
+    {
+      "name": "OpenZFS provisioned SSD read cache storage capacity",
+      "default": "us-east-1: 262,144; us-east-2: 262,144; us-west-2: 262,144; Each of the other supported Regions: 65,536",
+      "adjustable": true,
+      "description": "The maximum amount of provisioned SSD read cache storage capacity (in GiB) that you can configure for all Amazon FSx for OpenZFS file systems in this account."
+    },
+    {
+      "name": "OpenZFS throughput capacity",
+      "default": "Each supported Region: 10,240",
+      "adjustable": true,
+      "description": "The total amount of throughput capacity (in MBps) allowed for all Amazon FSx for OpenZFS file systems in this account."
+    },
+    {
+      "name": "Windows HDD storage capacity",
+      "default": "Each supported Region: 524,288",
+      "adjustable": true,
+      "description": "The maximum amount of HDD storage capacity (in GiB) allowed for all Amazon FSx for Windows File Server file systems in this account."
+    },
+    {
+      "name": "Windows SSD storage capacity",
+      "default": "Each supported Region: 524,288",
+      "adjustable": true,
+      "description": "The maximum amount of SSD storage capacity (in GiB) for all Amazon FSx for Windows File Server file systems that you can have in this account."
+    },
+    {
+      "name": "Windows backups",
+      "default": "Each supported Region: 500",
+      "adjustable": true,
+      "description": "The maximum number of user-initiated backups for all Amazon FSx for Windows File Server file systems that you can have in this account."
+    },
+    {
+      "name": "Windows file systems",
+      "default": "Each supported Region: 100",
+      "adjustable": true,
+      "description": "The maximum number of Amazon FSx for Windows Server file systems that you can create in this account."
+    }
+  ]
+}

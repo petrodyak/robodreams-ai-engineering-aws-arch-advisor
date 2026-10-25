@@ -22,7 +22,12 @@ from collections import Counter
 
 from scripts.make_gold_drafts import DRAFT_RUN, gold_documents, gold_path
 from src.extract import pipeline
-from src.extract.grounding import printed_hostnames, printed_quota_names, target_chapter
+from src.extract.grounding import (
+    printed_hostnames,
+    printed_quota_names,
+    squash,
+    target_chapter,
+)
 from src.extract.schema import ServiceDocument, stored_context
 
 # The readers moved to src/extract/grounding.py in step 11 (ADR-0005): the pipeline now
@@ -64,12 +69,13 @@ def check(
         target_chapter(doc.text(doc_set.dir), doc.service)
     )
     gold_names = [q.name for q in gold.quotas]
-    lower = {n.lower() for n in printed_names}
-    for name in dict.fromkeys(
-        n for n in printed_names if n.lower() not in {g.lower() for g in gold_names}
-    ):
+    # the same two comparisons as grounding G2: whitespace collapsed, or none at all for a
+    # name the PDF wrapped mid-word ("transacti ons")
+    printed_keys = {squash(n) for n in printed_names}
+    gold_keys = {squash(n) for n in gold_names}
+    for name in dict.fromkeys(n for n in printed_names if squash(n) not in gold_keys):
         notes.append(f"quota printed in a Standard Quota Table, not in gold: {name}")
-    for name in dict.fromkeys(n for n in gold_names if n.lower() not in lower):
+    for name in dict.fromkeys(n for n in gold_names if squash(n) not in printed_keys):
         notes.append(f"quota in gold, not found as printed: {name}")
     if printed_names and gold.quota_table_format.value != "standard":
         notes.append(
