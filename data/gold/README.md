@@ -70,11 +70,14 @@ expected differences named above.
 | `048-amazon-simple-queue-service.json` | 104 (20 legacy added) | 18 (1 removed) | ✅ |
 | `038-amazon-opensearch-service.json` | 183 | 0 (`non_standard`) | ✅ |
 
-## Re-check of 24.10 (finding F18)
+## Re-check of 25.10 (finding F18)
 
 Grounding the gold files in their chapters (step 11, ADR-0005) found that
-`038-amazon-opensearch-service.json` says `non_standard` while the chapter prints eleven
-Standard Quota Tables (domain, Serverless, Ingestion and UI quotas, 38 rows). The draft of
-21.10 (Claude v1) said `non_standard` and the hand check confirmed the draft, not the
-definition in `GLOSSARY.md`. The file is re-drafted from `claude__v2__t0__val2` and
-re-checked against the PDF; `make gold-check` now lists quota names and the format as well.
+`038-amazon-opensearch-service.json` said `non_standard` while the chapter prints one Standard
+Quota Table (the "domain and instance quotas" table: `Name | Default | Adjustable |
+Description`, 5 rows). The ten other quota tables of the chapter have `Notes` instead of
+`Description` or only three columns and are `non_standard` by definition — the draft of
+21.10 saw those and called the whole document `non_standard`. Re-drafted from
+`claude__v2__t0__val2` (whose repair call, carrying the G3 error, returned exactly the five
+printed rows) and checked against the PDF by Petro on 25.10. `make gold-check` now lists
+quota names and the format as well.

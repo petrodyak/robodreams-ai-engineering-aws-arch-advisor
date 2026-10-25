@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
   "service": "Amazon OpenSearch Service",
-  "quota_table_format": "non_standard",
+  "quota_table_format": "standard",
   "endpoints": [
     {
       "region_name": "US East (Ohio)",
@@ -1102,5 +1102,36 @@
       "protocol": "HTTPS"
     }
   ],
-  "quotas": []
+  "quotas": [
+    {
+      "name": "Dedicated master instances per domain",
+      "default": "Each supported Region: 5",
+      "adjustable": false,
+      "description": "The maximum number of dedicated master instances in a single Amazon OpenSearch Service domain."
+    },
+    {
+      "name": "Domains per Region",
+      "default": "Each supported Region: 500",
+      "adjustable": true,
+      "description": "The maximum number of Amazon OpenSearch Service domains you can create in each AWS Region."
+    },
+    {
+      "name": "Instances per domain",
+      "default": "Each supported Region: 200",
+      "adjustable": true,
+      "description": "The maximum number of instances in a single Amazon OpenSearch Service domain. You can request an increase up to 1002 instances per domain."
+    },
+    {
+      "name": "Instances per domain (T2 instance type)",
+      "default": "Each supported Region: 10",
+      "adjustable": false,
+      "description": "The maximum number of T2 instances in a single Amazon OpenSearch Service domain."
+    },
+    {
+      "name": "Warm instances per domain",
+      "default": "Each supported Region: 150",
+      "adjustable": false,
+      "description": "The maximum number of warm nodes in a single Amazon OpenSearch Service cluster."
+    }
+  ]
 }
