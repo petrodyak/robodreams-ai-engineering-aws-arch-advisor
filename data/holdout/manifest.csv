@@ -1,0 +1,11 @@
+file,service,group,gold,priority,pages,words,endpoint_rows,note
+079-aws-iot-device-defender.pdf,AWS IoT Device Defender,edge,0,0,19,2417,58,"held-out, selected 25.10 (seed 20261025)"
+059-aws-clean-rooms.pdf,AWS Clean Rooms,edge,0,0,17,2742,28,"held-out, selected 25.10 (seed 20261025)"
+016-amazon-comprehend.pdf,Amazon Comprehend,edge,0,0,19,2848,35,"held-out, selected 25.10 (seed 20261025)"
+069-aws-elemental-mediaconvert.pdf,AWS Elemental MediaConvert,edge,0,0,18,2929,22,"held-out, selected 25.10 (seed 20261025)"
+027-amazon-eventbridge-scheduler.pdf,Amazon EventBridge Scheduler,medium,1,0,14,1275,88,"held-out, selected 25.10 (seed 20261025)"
+068-aws-elastic-beanstalk.pdf,AWS Elastic Beanstalk,medium,1,0,12,1302,50,"held-out, selected 25.10 (seed 20261025)"
+051-amazon-timestream.pdf,Amazon Timestream,medium,1,0,12,1478,39,"held-out, selected 25.10 (seed 20261025)"
+028-amazon-fsx.pdf,Amazon FSx,medium,1,0,12,1504,54,"held-out, selected 25.10 (seed 20261025)"
+073-aws-firewall-manager.pdf,AWS Firewall Manager,medium,1,0,11,1558,58,"held-out, selected 25.10 (seed 20261025)"
+046-amazon-simple-email-service.pdf,Amazon Simple Email Service,medium,0,0,19,1624,121,"held-out, selected 25.10 (seed 20261025)"

@@ -1,0 +1,801 @@
+AWS General Reference                                                                                   Reference guide
+
+ Resource                               Regions                                Default limit
+
+ Concurrent pipe executions             •  US East (N. Virginia)               3000
+ per account                            •  US West (Oregon)
+
+                                        •  Europe (Ireland)
+
+ Pipes per account                      All                                    1000
+
+
+Amazon EventBridge Scheduler endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ US East        us-east-2     scheduler.us-east-2.amazonaws.com                          HTTPS
+ (Ohio)
+                              scheduler-fips.us-east-2.amazonaws.com                      HTTPS
+
+                              scheduler-fips.us-east-2.api.aws                            HTTPS
+
+                              scheduler.us-east-2.api.aws                                HTTPS
+
+ US             us-east-1     scheduler.us-east-1.amazonaws.com                          HTTPS
+ East (N.
+ Virginia)                    scheduler-fips.us-east-1.amazonaws.com                      HTTPS
+
+                              scheduler-fips.us-east-1.api.aws                            HTTPS
+
+
+
+EventBridge Scheduler                                                                                  Version 1.0 1769
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+                              scheduler.us-east-1.api.aws                               HTTPS
+
+ US             us-           scheduler.us-west-1.amazonaws.com                         HTTPS
+ West (N.       west-1
+ Californi                    scheduler-fips.us-west-1.amazonaws.com                     HTTPS
+
+ a)                           scheduler-fips.us-west-1.api.aws                           HTTPS
+
+
+                              scheduler.us-west-1.api.aws                               HTTPS
+
+ US West        us-           scheduler.us-west-2.amazonaws.com                         HTTPS
+ (Oregon)       west-2
+                              scheduler-fips.us-west-2.amazonaws.com                     HTTPS
+
+                              scheduler-fips.us-west-2.api.aws                           HTTPS
+
+                              scheduler.us-west-2.api.aws                               HTTPS
+
+ Africa         af-south-     scheduler.af-south-1.amazonaws.com                        HTTPS
+ (Cape          1
+ Town)                        scheduler.af-south-1.api.aws                              HTTPS
+
+
+ Asia           ap-           scheduler.ap-east-1.amazonaws.com                         HTTPS
+ Pacific         east-1
+ (Hong                        scheduler.ap-east-1.api.aws                               HTTPS
+
+ Kong)
+
+ Asia           ap-           scheduler.ap-south-2.amazonaws.com                        HTTPS
+ Pacific         south-2
+ (Hyderaba                    scheduler.ap-south-2.api.aws                              HTTPS
+
+ d)
+
+ Asia           ap-           scheduler.ap-southeast-3.amazonaws.com                    HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3         scheduler.ap-southeast-3.api.aws                          HTTPS
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1770
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           scheduler.ap-southeast-5.amazonaws.com                    HTTPS
+ Pacific         southe
+ (Malaysia      ast-5         scheduler.ap-southeast-5.api.aws                          HTTPS
+
+ )
+
+ Asia           ap-           scheduler.ap-southeast-4.amazonaws.com                    HTTPS
+ Pacific         southe
+ (Melbourn      ast-4         scheduler.ap-southeast-4.api.aws                          HTTPS
+
+ e)
+
+ Asia           ap-           scheduler.ap-south-1.amazonaws.com                        HTTPS
+ Pacific         south-1
+ (Mumbai)                     scheduler.ap-south-1.api.aws                              HTTPS
+
+
+ Asia           ap-           scheduler.ap-southeast-6.amazonaws.com                    HTTPS
+ Pacific         southe
+ (New           ast-6         scheduler.ap-southeast-6.api.aws                          HTTPS
+
+ Zealand)
+
+ Asia           ap-           scheduler.ap-northeast-3.amazonaws.com                    HTTPS
+ Pacific         northe
+ (Osaka)        ast-3         scheduler.ap-northeast-3.api.aws                          HTTPS
+
+
+ Asia           ap-           scheduler.ap-northeast-2.amazonaws.com                    HTTPS
+ Pacific         northe
+ (Seoul)        ast-2         scheduler.ap-northeast-2.api.aws                          HTTPS
+
+
+ Asia           ap-           scheduler.ap-southeast-1.amazonaws.com                    HTTPS
+ Pacific         southe
+ (Singapor      ast-1         scheduler.ap-southeast-1.api.aws                          HTTPS
+
+ e)
+
+ Asia           ap-           scheduler.ap-southeast-2.amazonaws.com                    HTTPS
+ Pacific         southe
+ (Sydney)       ast-2         scheduler.ap-southeast-2.api.aws                          HTTPS
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1771
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           scheduler.ap-east-2.amazonaws.com                         HTTPS
+ Pacific         east-2
+ (Taipei)                     scheduler.ap-east-2.api.aws                               HTTPS
+
+
+ Asia           ap-           scheduler.ap-southeast-7.amazonaws.com                    HTTPS
+ Pacific         southe
+ (Thailand      ast-7         scheduler.ap-southeast-7.api.aws                          HTTPS
+
+ )
+
+ Asia           ap-           scheduler.ap-northeast-1.amazonaws.com                    HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1         scheduler.ap-northeast-1.api.aws                          HTTPS
+
+
+ Canada         ca-centra     scheduler.ca-central-1.amazonaws.com                      HTTPS
+ (Central)      l-1
+                              scheduler-fips.ca-central-1.amazonaws.com                  HTTPS
+
+                              scheduler-fips.ca-central-1.api.aws                        HTTPS
+
+                              scheduler.ca-central-1.api.aws                            HTTPS
+
+ Canada         ca-           scheduler.ca-west-1.amazonaws.com                         HTTPS
+ West           west-1
+ (Calgary)                    scheduler-fips.ca-west-1.amazonaws.com                     HTTPS
+
+                              scheduler-fips.ca-west-1.api.aws                           HTTPS
+
+                              scheduler.ca-west-1.api.aws                               HTTPS
+
+ Europe         eu-           scheduler.eu-central-1.amazonaws.com                      HTTPS
+ (Frankfur      central-1
+ t)                           scheduler.eu-central-1.api.aws                            HTTPS
+
+
+ Europe         eu-           scheduler.eu-west-1.amazonaws.com                         HTTPS
+ (Ireland)      west-1
+                              scheduler.eu-west-1.api.aws                               HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 1772
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           scheduler.eu-west-2.amazonaws.com                         HTTPS
+ (London)       west-2
+                              scheduler.eu-west-2.api.aws                               HTTPS
+
+ Europe         eu-           scheduler.eu-south-1.amazonaws.com                        HTTPS
+ (Milan)        south-1
+                              scheduler.eu-south-1.api.aws                              HTTPS
+
+ Europe         eu-           scheduler.eu-west-3.amazonaws.com                         HTTPS
+ (Paris)        west-3
+                              scheduler.eu-west-3.api.aws                               HTTPS
+
+ Europe         eu-           scheduler.eu-south-2.amazonaws.com                        HTTPS
+ (Spain)        south-2
+                              scheduler.eu-south-2.api.aws                              HTTPS
+
+ Europe         eu-           scheduler.eu-north-1.amazonaws.com                        HTTPS
+ (Stockhol      north-1
+ m)                           scheduler.eu-north-1.api.aws                              HTTPS
+
+
+ Europe         eu-           scheduler.eu-central-2.amazonaws.com                      HTTPS
+ (Zurich)       central-2
+                              scheduler.eu-central-2.api.aws                            HTTPS
+
+ Israel         il-centra     scheduler.il-central-1.amazonaws.com                      HTTPS
+ (Tel Aviv)     l-1
+                              scheduler.il-central-1.api.aws                            HTTPS
+
+ Mexico         mx-           scheduler.mx-central-1.amazonaws.com                      HTTPS
+ (Central)      central-1
+                              scheduler.mx-central-1.api.aws                            HTTPS
+
+ Middle         me-           scheduler.me-south-1.amazonaws.com                        HTTPS
+ East           south-1
+ (Bahrain)                    scheduler.me-south-1.api.aws                              HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 1773
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                 Protocol
+ Name
+
+ Middle         me-           scheduler.me-central-1.amazonaws.com                     HTTPS
+ East           central-1
+ (UAE)                        scheduler.me-central-1.api.aws                           HTTPS
+
+
+ South          sa-east-1     scheduler.sa-east-1.amazonaws.com                        HTTPS
+ America
+ (São                         scheduler.sa-east-1.api.aws                              HTTPS
+
+ Paulo)
+
+ AWS            us-gov-       scheduler.us-gov-east-1.amazonaws.com                    HTTPS
+ GovCloud       east-1
+ (US-East)                    scheduler-fips.us-gov-east-1.amazonaws.com                HTTPS
+
+                              scheduler-fips.us-gov-east-1.api.aws                      HTTPS
+
+                              scheduler.us-gov-east-1.api.aws                          HTTPS
+
+ AWS            us-gov-       scheduler.us-gov-west-1.amazonaws.com                    HTTPS
+ GovCloud       west-1
+ (US-                         scheduler-fips.us-gov-west-1.amazonaws.com                HTTPS
+
+ West)                        scheduler-fips.us-gov-west-1.api.aws                      HTTPS
+
+
+                              scheduler.us-gov-west-1.api.aws                          HTTPS
+
+
+Service quotas
+
+
+
+ Name                                             Default                  Adjustabl Description
+                                                                           e
+
+ CreateSchedule request rate                      us-east-1: 5,000         Yes     Maximum CreateSch
+                                                                                   edule requests per
+                                                  us-east-2: 5,000                 second. When you
+
+                                                  us-west-2: 5,000                 reach this quota,
+                                                                                   EventBridge Scheduler
+
+
+
+
+Service quotas                                                                                        Version 1.0 1774
+AWS General Reference                                                                                          Reference guide
+
+ Name                                                  Default                   Adjustabl Description
+                                                                                 e
+
+                                                       ap-northeast-1:                    rejects requests for
+                                                       5,000                              this operation for
+                                                                                          the remainder of the
+                                                       ap-south-1: 5,000                  interval. This is adjustabl
+
+                                                       ap-southeast-1:                    e to tens of thousands of
+                                                       5,000                              requests per second.
+
+
+                                                       ap-southeast-2:
+                                                       5,000
+
+                                                       eu-central-1:
+                                                       5,000
+
+                                                       eu-west-1: 5,000
+
+                                                       eu-west-2: 5,000
+
+                                                       sa-east-1: 5,000
+
+                                                       Each of the
+                                                       other supported
+                                                       Regions: 250
+
+
+ CreateScheduleGroup request rate                      Each supported            Yes      Maximum CreateSch
+                                                       Region: 10                         eduleGroup requests
+                                                                                          per second. When
+                                                                                          you reach this quota,
+                                                                                          EventBridge Scheduler
+                                                                                          rejects requests for
+                                                                                          this operation for
+                                                                                          the remainder of the
+                                                                                          interval.
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                Version 1.0 1775
+AWS General Reference                                                                                          Reference guide
+
+ Name                                                  Default                    Adjustabl Description
+                                                                                  e
+
+ DeleteSchedule request rate                           us-east-1: 1,000           Yes     Maximum DeleteSch
+                                                                                          edule requests per
+                                                       us-east-2: 1,000                   second. When you
+
+                                                       us-west-2: 1,000                   reach this quota,
+                                                                                          EventBridge Scheduler
+                                                       ap-northeast-1:                    rejects requests for
+                                                       1,000                              this operation for
+                                                                                          the remainder of the
+                                                       ap-south-1: 1,000                  interval. This is adjustabl
+
+                                                       ap-southeast-1:                    e to tens of thousands of
+                                                       1,000                              requests per second.
+
+
+                                                       ap-southeast-2:
+                                                       1,000
+
+                                                       eu-central-1:
+                                                       1,000
+
+                                                       eu-west-1: 1,000
+
+                                                       eu-west-2: 1,000
+
+                                                       sa-east-1: 1,000
+
+                                                       Each of the
+                                                       other supported
+                                                       Regions: 250
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                Version 1.0 1776
+AWS General Reference                                                                                           Reference guide
+
+ Name                                                   Default                    Adjustabl Description
+                                                                                   e
+
+ DeleteScheduleGroup request rate                       Each supported             Yes      Maximum DeleteSch
+                                                        Region: 10                          eduleGroup requests
+                                                                                            per second. When
+                                                                                            you reach this quota,
+                                                                                            EventBridge Scheduler
+                                                                                            rejects requests for
+                                                                                            this operation for
+                                                                                            the remainder of the
+                                                                                            interval.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                  Version 1.0 1777
+AWS General Reference                                                                                          Reference guide
+
+ Name                                                  Default                    Adjustabl Description
+                                                                                  e
+
+ GetSchedule request rate                              us-east-1: 1,000           Yes     Maximum GetSchedu
+                                                                                          le requests per second.
+                                                       us-east-2: 1,000                   When you reach this
+
+                                                       us-west-2: 1,000                   quota, EventBridge
+                                                                                          Scheduler rejects
+                                                       ap-northeast-1:                    requests for this
+                                                       1,000                              operation for the
+                                                                                          remainder of the
+                                                       ap-south-1: 1,000                  interval. This is adjustabl
+
+                                                       ap-southeast-1:                    e to tens of thousands of
+                                                       1,000                              requests per second.
+
+
+                                                       ap-southeast-2:
+                                                       1,000
+
+                                                       eu-central-1:
+                                                       1,000
+
+                                                       eu-west-1: 1,000
+
+                                                       eu-west-2: 1,000
+
+                                                       sa-east-1: 1,000
+
+                                                       Each of the
+                                                       other supported
+                                                       Regions: 250
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                Version 1.0 1778
+AWS General Reference                                                                                           Reference guide
+
+ Name                                                   Default                    Adjustabl Description
+                                                                                   e
+
+ GetScheduleGroup request rate                          Each supported             Yes      Maximum GetSchedu
+                                                        Region: 10                          leGroup requests
+                                                                                            per second. When
+                                                                                            you reach this quota,
+                                                                                            EventBridge Scheduler
+                                                                                            rejects requests for
+                                                                                            this operation for
+                                                                                            the remainder of the
+                                                                                            interval.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                  Version 1.0 1779
+AWS General Reference                                                                                            Reference guide
+
+ Name                                                   Default                    Adjustabl Description
+                                                                                   e
+
+ Invocations throttle limit in transacti                us-east-1: 1,000           Yes      An invocation is a
+ ons per second                                                                             schedule payload being
+                                                        us-east-2: 1,000                    delivered to the defined
+
+                                                        us-west-2: 1,000                    target. After the limit is
+                                                                                            reached, the invocatio
+                                                        ap-northeast-1:                     ns are throttled; that
+                                                        1,000                               is, they still happen but
+                                                                                            they are delayed. This
+                                                        ap-south-1: 1,000                   is adjustable to tens of
+
+                                                        ap-southeast-1:                     thousands of transacti
+                                                        1,000                               ons per second.
+
+
+                                                        ap-southeast-2:
+                                                        1,000
+
+                                                        eu-central-1:
+                                                        1,000
+
+                                                        eu-west-1: 1,000
+
+                                                        eu-west-2: 1,000
+
+                                                        sa-east-1: 1,000
+
+                                                        Each of the
+                                                        other supported
+                                                        Regions: 500
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                                  Version 1.0 1780
+AWS General Reference                                                                                        Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ ListScheduleGroups request rate                      Each supported            Yes      Maximum ListSched
+                                                      Region: 10                         uleGroups requests
+                                                                                         per second. When
+                                                                                         you reach this quota,
+                                                                                         EventBridge Scheduler
+                                                                                         rejects requests for
+                                                                                         this operation for
+                                                                                         the remainder of the
+                                                                                         interval.
+
+ ListSchedules request rate                           Each supported            Yes      Maximum ListSched
+                                                      Region: 50                         ules requests per
+                                                                                         second. When you
+                                                                                         reach this quota,
+                                                                                         EventBridge Scheduler
+                                                                                         rejects requests for
+                                                                                         this operation for
+                                                                                         the remainder of the
+                                                                                         interval.
+
+ ListTagsForResource request rate                     Each supported            Yes      Lists the tags associate
+                                                      Region: 10                         d with the Scheduler
+                                                                                         resource.
+
+ Number of schedule groups                            Each supported            Yes      Maximum number of
+                                                      Region: 500                        schedule groups per
+                                                                                         region.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                               Version 1.0 1781
+AWS General Reference                                                                                        Reference guide
+
+ Name                                                 Default                   Adjustabl Description
+                                                                                e
+
+ Number of schedules                                  Each supported            Yes      The maximum number
+                                                      Region: 10,000,00                  of schedules per region.
+                                                      0                                  This quota includes one-
+                                                                                         time schedules that have
+                                                                                         completed running. We
+                                                                                         recommend configuri
+                                                                                         ng your schedules to
+                                                                                         automatically delete
+                                                                                         after completion using
+                                                                                         the ActionAfterComplet
+                                                                                         ion feature. This is
+                                                                                         adjustable to billions of
+                                                                                         schedules.
+
+ TagResource request rate                             Each supported            Yes      Assigns one or more
+                                                      Region: 1                          tags (key-value pairs) to
+                                                                                         the specified Scheduler
+                                                                                         resource.
+
+ UntagResource request rate                           Each supported            Yes      Removes one or more
+                                                      Region: 1                          tags from the specified
+                                                                                         Scheduler resource.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                              Version 1.0 1782

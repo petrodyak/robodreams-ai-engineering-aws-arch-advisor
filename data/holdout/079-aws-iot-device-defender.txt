@@ -1,0 +1,937 @@
+AWS General Reference                                                                                    Reference guide
+
+ Limit display name            Description                  Default value                Adjustable
+
+                               The maximum                  50                           No
+                               number of test cases
+ Test cases per                in one test suite.
+ test suite
+
+
+AWS IoT Device Defender endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2      iot.us-east-2.amazonaws.com                               https
+ (Ohio)
+                               iot-fips.us-east-2.api.aws                                 HTTPS
+
+                               iot-fips.us-east-2.amazonaws.com                           https
+
+                               iot.us-east-2.api.aws                                     HTTPS
+
+ US             us-east-1      iot.us-east-1.amazonaws.com                               https
+ East (N.
+ Virginia)                     iot-fips.us-east-1.api.aws                                 HTTPS
+
+                               iot-fips.us-east-1.amazonaws.com                           https
+
+                               iot.us-east-1.api.aws                                     HTTPS
+
+
+
+AWS IoT Device Defender                                                                                 Version 1.0 2148
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ US             us-            iot.us-west-1.amazonaws.com                               https
+ West (N.       west-1
+ Californi                     iot-fips.us-west-1.api.aws                                 HTTPS
+
+ a)                            iot-fips.us-west-1.amazonaws.com                           https
+
+
+                               iot.us-west-1.api.aws                                     HTTPS
+
+ US West        us-            iot.us-west-2.amazonaws.com                               https
+ (Oregon)       west-2
+                               iot-fips.us-west-2.api.aws                                 HTTPS
+
+                               iot-fips.us-west-2.amazonaws.com                           https
+
+                               iot.us-west-2.api.aws                                     HTTPS
+
+ Asia           ap-            iot.ap-east-1.amazonaws.com                               HTTPS
+ Pacific         east-1
+ (Hong                         iot.ap-east-1.api.aws                                     HTTPS
+
+ Kong)
+
+ Asia           ap-            iot.ap-southeast-5.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Malaysia      ast-5          iot.ap-southeast-5.api.aws                                HTTPS
+
+ )
+
+ Asia           ap-            iot.ap-south-1.amazonaws.com                              HTTPS
+ Pacific         south-1
+ (Mumbai)                      iot.ap-south-1.api.aws                                    HTTPS
+
+
+ Asia           ap-            iot.ap-northeast-2.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Seoul)        ast-2          iot.ap-northeast-2.api.aws                                HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 2149
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region         Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-            iot.ap-southeast-1.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Singapor      ast-1          iot.ap-southeast-1.api.aws                                HTTPS
+
+ e)
+
+ Asia           ap-            iot.ap-southeast-2.amazonaws.com                          HTTPS
+ Pacific         southe
+ (Sydney)       ast-2          iot.ap-southeast-2.api.aws                                HTTPS
+
+
+ Asia           ap-            iot.ap-northeast-1.amazonaws.com                          HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1          iot.ap-northeast-1.api.aws                                HTTPS
+
+
+ Canada         ca-centra      iot.ca-central-1.amazonaws.com                            https
+ (Central)      l-1
+                               iot-fips.ca-central-1.api.aws                              HTTPS
+
+                               iot-fips.ca-central-1.amazonaws.com                        https
+
+                               iot.ca-central-1.api.aws                                  HTTPS
+
+ Europe         eu-            iot.eu-central-1.amazonaws.com                            HTTPS
+ (Frankfur      central-1
+ t)                            iot.eu-central-1.api.aws                                  HTTPS
+
+
+ Europe         eu-            iot.eu-west-1.amazonaws.com                               HTTPS
+ (Ireland)      west-1
+                               iot.eu-west-1.api.aws                                     HTTPS
+
+ Europe         eu-            iot.eu-west-2.amazonaws.com                               HTTPS
+ (London)       west-2
+                               iot.eu-west-2.api.aws                                     HTTPS
+
+ Europe         eu-            iot.eu-west-3.amazonaws.com                               HTTPS
+ (Paris)        west-3
+                               iot.eu-west-3.api.aws                                     HTTPS
+
+
+
+
+
+
+
+Service endpoints                                                                                       Version 1.0 2150
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           iot.eu-south-2.amazonaws.com                              HTTPS
+ (Spain)        south-2
+                              iot.eu-south-2.api.aws                                    HTTPS
+
+ Europe         eu-           iot.eu-north-1.amazonaws.com                              HTTPS
+ (Stockhol      north-1
+ m)                           iot.eu-north-1.api.aws                                    HTTPS
+
+
+ Middle         me-           iot.me-south-1.amazonaws.com                              HTTPS
+ East           south-1
+ (Bahrain)                    iot.me-south-1.api.aws                                    HTTPS
+
+
+ Middle         me-           iot.me-central-1.amazonaws.com                            HTTPS
+ East           central-1
+ (UAE)                        iot.me-central-1.api.aws                                  HTTPS
+
+
+ AWS            us-gov-       iot.us-gov-east-1.amazonaws.com                           https
+ GovCloud       east-1
+ (US-East)                    iot-fips.us-gov-east-1.api.aws                             HTTPS
+
+                              iot-fips.us-gov-east-1.amazonaws.com                       https
+
+                              iot.us-gov-east-1.api.aws                                 HTTPS
+
+ AWS            us-gov-       iot.us-gov-west-1.amazonaws.com                           https
+ GovCloud       west-1
+ (US-                         iot-fips.us-gov-west-1.api.aws                             HTTPS
+
+ West)                        iot-fips.us-gov-west-1.amazonaws.com                       https
+
+
+                              iot.us-gov-west-1.api.aws                                 HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 2151
+AWS General Reference                                                                                 Reference guide
+Service quotas
+
+AWS IoT Device Defender audits limits and quotas
+
+ Limit display name           Description                  Default value                Adjustable
+
+                              The maximum                  5                            No
+                              number of scheduled
+ Scheduled audits             audits.
+
+
+                              The maximum                  10                           No
+                              number of simultane
+ Simultaneous                 ous in progress on-
+ in progress on-              demand audits.
+ demand audits
+
+                              The maximum time,            90                           No
+                              in days, that audit
+ Storage duration             findings are stored
+ for audit                    after being reported.
+ findings
+
+
+
+The following service quotas apply to mitigation actions and audit mitigation action tasks:
+
+AWS IoT Device Defender mitigation limits and quotas
+
+ Limit display name           Description                  Default value                Adjustable
+
+                              The maximum                  100                          No
+                              number of mitigation
+ Mitigation                   actions.
+ actions
+
+
+
+Audit mitigation action limits
+
+ Resource                                                  Limit
+
+ Number of audit mitigation action tasks                   10 tasks
+ running at the same time
+
+
+
+Service quotas                                                                                        Version 1.0 2152
+AWS General Reference                                                                                Reference guide
+
+ Resource                                                 Limit
+
+ Retention period for audit mitigation action             90 days
+ tasks
+
+
+
+AWS IoT Device Defender detect limits and quotas
+
+ Limit display name           Description                 Default value                Adjustable
+
+                              The maximum                 1000                         No
+                              number of behavior
+ Behavior metric              metric value
+ value elements               elements (counts, IP
+ for each                     addresses, ports) for
+ security profile             each security profile.
+
+
+                              The maximum                 100                          No
+                              number of behaviors
+ Behaviors for                for each security
+ each security                profile
+ profile
+
+                              The maximum                 100                          Yes
+                              number of detect
+ Custom metrics               custom metrics.
+
+
+                              The minimum time,           300 Seconds                  Yes
+                              in seconds, that a
+ Device metric                device must wait
+ minimum delay                between sending
+                              metric reports.
+
+                              The maximum                 3500                         Yes
+                              number of device-
+ Device metric                side metric reports
+ peak reporting               that can be sent,
+ rate for an                  per second, from all
+ account                      devices in an account.
+
+
+
+
+Service quotas                                                                                       Version 1.0 2153
+AWS General Reference                                                                                  Reference guide
+
+ Limit display name           Description                  Default value                Adjustable
+
+                              The maximum                  10                           No
+                              number of detect
+ Metric dimension             metric dimensions.
+ s
+
+                              The maximum                  5                            No
+                              number of security
+ Security                     profiles for each
+ profiles for                 target (things or
+ each target                  thing groups in the
+                              AWS account).
+
+                              The maximum time,            14                           No
+                              in days, that detect
+ Storage duration             metrics are stored
+ for detect                   after being ingested.
+ metrics
+
+                              The maximum time,            30                           No
+                              in days, that detect
+ Storage duration             violations are stored
+ for detect                   after being generated
+ violations                   .
+
+
+
+ML Detect limits
+
+ Resource                               Quota                                  Adjustable
+
+ Number of Detect mitigatio             5 maximum                              Yes
+ n action tasks that can be
+ running at the same time
+
+ Retention period for Detect            90 days maximum                        Yes
+ mitigation action tasks
+
+
+
+
+
+
+
+
+Service quotas                                                                                        Version 1.0 2154
+AWS General Reference                                                                                   Reference guide
+
+ Resource                               Quota                                  Adjustable
+
+ Retention period for models            30 days maximum                        No
+ (time after which models are
+ expired)
+
+
+
+AWS IoT Device Defender API throttling limits
+
+This table describes the maximum number of transactions per second (TPS) that can be made to
+each of these AWS IoT Device Defender API actions.
+
+AWS IoT Device Defender API throttling limits
+
+ Limit display name           Description                   Default value                Adjustable
+
+                              The maximum                   10                           No
+                              number of transacti
+ AttachSec                    ons per second (TPS)
+ urityProfile                 that can be made
+ API TPS                      for the AttachSec
+                              urityProfile API.
+
+                              The maximum                   10                           No
+                              number of transacti
+ CancelAud                    ons per second (TPS)
+ itMitigat                    that can be made
+ ionActionsTask               for the CancelAud
+ API TPS                      itMitigationAction
+                              sTask API.
+
+                              The maximum                   10                           No
+                              number of transacti
+ CancelAuditTask              ons per second (TPS)
+ API TPS                      that can be made for
+                              the CancelAuditTask
+                              API.
+
+
+
+
+
+
+
+Service quotas                                                                                         Version 1.0 2155
+AWS General Reference                                                                                 Reference guide
+
+ Limit display name           Description                 Default value                Adjustable
+
+                              The maximum                 10                           No
+                              number of transacti
+ CancelDet                    ons per second (TPS)
+ ectMitiga                    that can be made
+ tionActio                    for the CancelDet
+ nsTask API TPS               ectMitigationActio
+                              nsTask API.
+
+                              The maximum                 10                           No
+                              number of transacti
+ CreateAud                    ons per second (TPS)
+ itSuppression                that can be made
+ API TPS                      for the CreateAud
+                              itSuppression API.
+
+                              The maximum                 10                           No
+                              number of transacti
+ CreateCus                    ons per second (TPS)
+ tomMetric API                that can be made
+ TPS                          for the CreateCus
+                              tomMetric API.
+
+                              The maximum                 10                           No
+                              number of transacti
+ CreateMit                    ons per second (TPS)
+ igationAction                that can be made
+ API TPS                      for the CreateMit
+                              igationAction API.
+
+                              The maximum                 5                            No
+                              number of transacti
+ CreateSch                    ons per second (TPS)
+ eduledAudit                  that can be made
+ API TPS                      for the CreateSch
+                              eduledAudit API.
+
+
+
+
+
+Service quotas                                                                                       Version 1.0 2156
+AWS General Reference                                                                                 Reference guide
+
+ Limit display name           Description                 Default value                Adjustable
+
+                              The maximum                 10                           No
+                              number of transacti
+ CreateSec                    ons per second (TPS)
+ urityProfile                 that can be made
+ API TPS                      for the CreateSec
+                              urityProfile API.
+
+                              The maximum                 5                            No
+                              number of transacti
+ DeleteAcc                    ons per second (TPS)
+ ountAudit                    that can be made
+ Configuration                for the DeleteAcc
+ API TPS                      ountAuditConfigura
+                              tion API.
+
+                              The maximum                 10                           No
+                              number of transacti
+ DeleteAud                    ons per second (TPS)
+ itSuppression                that can be made
+ API TPS                      for the DeleteAud
+                              itSuppression API.
+
+                              The maximum                 10                           No
+                              number of transacti
+ DeleteCus                    ons per second (TPS)
+ tomMetric API                that can be made
+ TPS                          for the DeleteCus
+                              tomMetric API.
+
+                              The maximum                 10                           No
+                              number of transacti
+ DeleteDimension              ons per second (TPS)
+ API TPS                      that can be made for
+                              the DeleteDimension
+                              API.
+
+
+
+
+
+Service quotas                                                                                       Version 1.0 2157
+AWS General Reference                                                                                 Reference guide
+
+ Limit display name           Description                 Default value                Adjustable
+
+                              The maximum                 10                           No
+                              number of transacti
+ DeleteMit                    ons per second (TPS)
+ igationAction                that can be made
+ API TPS                      for the DeleteMit
+                              igationAction API.
+
+                              The maximum                 5                            No
+                              number of transacti
+ DeleteSch                    ons per second (TPS)
+ eduledAudit                  that can be made
+ API TPS                      for the DeleteSch
+                              eduledAudit API.
+
+                              The maximum                 10                           No
+                              number of transacti
+ DeleteSec                    ons per second (TPS)
+ urityProfile                 that can be made
+ API TPS                      for the DeleteSec
+                              urityProfile API.
+
+                              The maximum                 5                            No
+                              number of transacti
+ DescribeA                    ons per second (TPS)
+ ccountAud                    that can be made
+ itConfigu                    for the DescribeA
+ ration API TPS               ccountAuditConfigu
+                              ration API.
+
+                              The maximum                 25                           No
+                              number of transacti
+ DescribeA                    ons per second (TPS)
+ uditFinding                  that can be made
+ API TPS                      for the DescribeA
+                              uditFinding API.
+
+
+
+
+
+Service quotas                                                                                       Version 1.0 2158
+AWS General Reference                                                                                 Reference guide
+
+ Limit display name           Description                  Default value               Adjustable
+
+                              The maximum                  25                          No
+                              number of transacti
+ DescribeA                    ons per second (TPS)
+ uditMitig                    that can be made
+ ationActi                    for the DescribeA
+ onsTask API TPS              uditMitigationActi
+                              onsTask API.
+
+                              The maximum                  10                          No
+                              number of transacti
+ DescribeA                    ons per second (TPS)
+ uditSuppr                    that can be made
+ ession API TPS               for the DescribeA
+                              uditSuppression API.
+
+                              The maximum                  25                          No
+                              number of transacti
+ DescribeA                    ons per second (TPS)
+ uditTask API                 that can be made
+ TPS                          for the DescribeA
+                              uditTask API.
+
+                              The maximum                  25                          No
+                              number of transacti
+ DescribeC                    ons per second (TPS)
+ ustomMetric                  that can be made
+ API TPS                      for the DescribeC
+                              ustomMetric API.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                        Version 1.0 2159
+AWS General Reference                                                                                 Reference guide
+
+ Limit display name           Description                 Default value                Adjustable
+
+                              The maximum                 10                           No
+                              number of transacti
+ DescribeD                    ons per second (TPS)
+ etectMiti                    that can be made
+ gationAct                    for the DescribeD
+ ionsTask API                 etectMitigationAct
+ TPS                          ionsTask API.
+
+                              The maximum                 10                           No
+                              number of transacti
+ DescribeD                    ons per second (TPS)
+ imension API                 that can be made
+ TPS                          for the DescribeD
+                              imension API.
+
+                              The maximum                 25                           No
+                              number of transacti
+ DescribeM                    ons per second (TPS)
+ itigation                    that can be made
+ Action API TPS               for the DescribeM
+                              itigationAction API.
+
+                              The maximum                 5                            No
+                              number of transacti
+ DescribeS                    ons per second (TPS)
+ cheduledAudit                that can be made
+ API TPS                      for the DescribeS
+                              cheduledAudit API.
+
+                              The maximum                 25                           No
+                              number of transacti
+ DescribeS                    ons per second (TPS)
+ ecurityProfile               that can be made
+ API TPS                      for the DescribeS
+                              ecurityProfile API.
+
+
+
+
+
+Service quotas                                                                                       Version 1.0 2160
+AWS General Reference                                                                                 Reference guide
+
+ Limit display name           Description                  Default value               Adjustable
+
+                              The maximum                  10                          No
+                              number of transacti
+ DetachSec                    ons per second (TPS)
+ urityProfile                 that can be made
+ API TPS                      for the DetachSec
+                              urityProfile API.
+
+                              The maximum                  10                          No
+                              number of transacti
+ ListActiv                    ons per second (TPS)
+ eViolations                  that can be made for
+ API TPS                      the ListActiveViolatio
+                              ns API.
+
+                              The maximum                  10                          No
+                              number of transacti
+ ListAudit                    ons per second (TPS)
+ Findings API                 that can be made for
+ TPS                          the ListAuditFindings
+                              API.
+
+                              The maximum                  10                          No
+                              number of transacti
+ ListAudit                    ons per second (TPS)
+ Mitigatio                    that can be made for
+ nActionsE                    the ListAuditMitigatio
+ xecutions API                nActionsExecutions
+ TPS                          API.
+
+                              The maximum                  10                          No
+                              number of transacti
+ ListAudit                    ons per second (TPS)
+ Mitigatio                    that can be made for
+ nActionsTasks                the ListAuditMitigatio
+ API TPS                      nActionsTasks API.
+
+
+
+
+
+
+Service quotas                                                                                       Version 1.0 2161
+AWS General Reference                                                                                 Reference guide
+
+ Limit display name           Description                  Default value               Adjustable
+
+                              The maximum                  10                          No
+                              number of transacti
+ ListAudit                    ons per second (TPS)
+ Suppressions                 that can be made
+ API TPS                      for the ListAudit
+                              Suppressions API.
+
+                              The maximum                  10                          No
+                              number of transacti
+ ListAuditTasks               ons per second (TPS)
+ API TPS                      that can be made for
+
+                              the ListAuditTasks
+                              API.
+
+                              The maximum                  10                          No
+                              number of transacti
+ ListCusto                    ons per second (TPS)
+ mMetrics API                 that can be made
+ TPS                          for the ListCusto
+                              mMetrics API.
+
+                              The maximum                  10                          No
+                              number of transacti
+ ListDetec                    ons per second (TPS)
+ tMitigati                    that can be made for
+ onActions                    the ListDetectMitigati
+ Executions API               onActionsExecutions
+ TPS                          API.
+
+                              The maximum                  10                          No
+                              number of transacti
+ ListDetec                    ons per second (TPS)
+ tMitigati                    that can be made for
+ onActionsTasks               the ListDetectMitigati
+ API TPS                      onActionsTasks API.
+
+
+
+
+
+
+Service quotas                                                                                       Version 1.0 2162
+AWS General Reference                                                                                  Reference guide
+
+ Limit display name           Description                  Default value                Adjustable
+
+                              The maximum                  10                           No
+                              number of transacti
+ ListDimensions               ons per second (TPS)
+ API TPS                      that can be made for
+                              the ListDimensions
+                              API.
+
+                              The maximum                  15                           Yes
+                              number of transacti
+ ListMetri                    ons per second (TPS)
+ cValues API TPS              that can be made for
+
+                              the ListMetricValues
+                              API.
+
+                              The maximum                  10                           No
+                              number of transacti
+ ListMitig                    ons per second (TPS)
+ ationActions                 that can be made for
+ API TPS                      the ListMitigationActi
+                              ons API.
+
+                              The maximum                  5                            No
+                              number of transacti
+ ListSched                    ons per second (TPS)
+ uledAudits API               that can be made
+ TPS                          for the ListSched
+                              uledAudits API.
+
+                              The maximum                  10                           No
+                              number of transacti
+ ListSecur                    ons per second (TPS)
+ ityProfiles                  that can be made for
+ API TPS                      the ListSecurityProfil
+                              es API.
+
+
+
+
+
+
+
+
+Service quotas                                                                                        Version 1.0 2163
+AWS General Reference                                                                                 Reference guide
+
+ Limit display name           Description                  Default value                Adjustable
+
+                              The maximum                  10                           No
+                              number of transacti
+ ListSecur                    ons per second (TPS)
+ ityProfil                    that can be made for
+ esForTarget                  the ListSecurityProfil
+ API TPS                      esForTarget API.
+
+
+                              The maximum                  10                           No
+                              number of transacti
+ ListTarge                    ons per second (TPS)
+ tsForSecu                    that can be made
+ rityProfile                  for the ListTarge
+ API TPS                      tsForSecurityProfile
+                              API.
+
+                              The maximum                  10                           No
+                              number of transacti
+ ListViola                    ons per second (TPS)
+ tionEvents API               that can be made
+ TPS                          for the ListViola
+                              tionEvents API.
+
+                              The maximum                  10                           No
+                              number of transacti
+ PutVerifi                    ons per second (TPS)
+ cationSta                    that can be made
+ teOnViolation                for the PutVerifi
+ API TPS                      cationStateOnViola
+                              tion API.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                        Version 1.0 2164
+AWS General Reference                                                                                Reference guide
+
+ Limit display name           Description                 Default value                Adjustable
+
+                              The maximum                 10                           No
+                              number of transacti
+ StartAudi                    ons per second (TPS)
+ tMitigati                    that can be made for
+ onActionsTask                the StartAuditMitigati
+ API TPS                      onActionsTask API.
+
+
+                              The maximum                 10                           No
+                              number of transacti
+ StartDete                    ons per second (TPS)
+ ctMitigat                    that can be made
+ ionActionsTask               for the StartDete
+ API TPS                      ctMitigationAction
+                              sTask API.
+
+                              The maximum                 10                           No
+                              number of transacti
+ StartOnDe                    ons per second (TPS)
+ mandAuditTask                that can be made
+ API TPS                      for the StartOnDe
+                              mandAuditTask API.
+
+                              The maximum                 5                            No
+                              number of transacti
+ UpdateAcc                    ons per second (TPS)
+ ountAudit                    that can be made
+ Configuration                for the UpdateAcc
+ API TPS                      ountAuditConfigura
+                              tion API.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                       Version 1.0 2165
+AWS General Reference                                                                                Reference guide
+
+ Limit display name           Description                 Default value                Adjustable
+
+                              The maximum                 10                           No
+                              number of transacti
+ UpdateAud                    ons per second (TPS)
+ itSuppression                that can be made
+ API TPS                      for the UpdateAud
+                              itSuppression API.
+
+                              The maximum                 10                           No
+                              number of transacti
+ UpdateCus                    ons per second (TPS)
+ tomMetric API                that can be made
+ TPS                          for the UpdateCus
+                              tomMetric API.
+
+                              The maximum                 10                           No
+                              number of transacti
+ UpdateDimension              ons per second (TPS)
+ API TPS                      that can be made for
+                              the UpdateDimension
+                              API.
+
+                              The maximum                 10                           No
+                              number of transacti
+ UpdateMit                    ons per second (TPS)
+ igationAction                that can be made
+ API TPS                      for the UpdateMit
+                              igationAction API.
+
+                              The maximum                 5                            No
+                              number of transacti
+ UpdateSch                    ons per second (TPS)
+ eduledAudit                  that can be made
+ API TPS                      for the UpdateSch
+                              eduledAudit API.
+
+
+
+
+
+
+
+
+Service quotas                                                                                       Version 1.0 2166

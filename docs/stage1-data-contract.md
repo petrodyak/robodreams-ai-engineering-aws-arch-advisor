@@ -5,7 +5,7 @@ Decisions reached in the design interview of 2026-10-15, amended on 2026-10-16 (
 15, 16, 18; the S3 trial call and the reviews of step 4; item 6, the Golden Set check of
 step 5; on 2026-10-22 items 11, 14, 18 for the Ollama provider and the Golden-Set-only run of
 step 6; on 2026-10-24 item 12 for run provenance, items 7, 9, 11, 12, 16 for grounded
-validation). Terms are defined in
+validation; on 2026-10-25 item 20, the Held-out Set). Terms are defined in
 [`GLOSSARY.md`](../GLOSSARY.md); the decisions that are hard to reverse have ADRs
 ([0001](adr/0001-standard-quota-tables-only.md), [0002](adr/0002-model-extracts-code-derives.md),
 [0003](adr/0003-format-checks-are-validation-failures.md),
@@ -150,3 +150,19 @@ This file is the single list to check code against; it is not a spec of the impl
     the repair call. Cost for Claude is derived from `usage` and list prices; for the local
     model the API cost is $0, reported together with the run's total wall-clock as the compute
     note.
+
+## Held-out Set (25.10, lecturer's remark 4)
+
+20. A prompt change is judged on documents that were not seen while writing it. The Held-out
+    Set is 10 documents of `data/pool/` outside the Working Set, selected once by a fixed
+    rule (seed 20261025, under 20 pages, `093-aws-services` excluded, stratified by the
+    Working Set's word thresholds — the pool had no `short` document left, so 6 `medium` and
+    4 `edge`), in `data/holdout/` with the same files as `data/raw/` (`manifest.csv`, the
+    `.txt` texts; PDFs not in Git) and its own gold files in `data/holdout/gold/` for 5 of the
+    10 (`gold=1`), drafted by `claude__v2__t0__holdout__gold__val2` and checked by hand
+    against the PDF. A run over the Held-out Set adds the scope `__holdout` to its id after
+    the sampling name and before `__gold` (item 11); metrics take the manifest and gold
+    files from the run's set. Items 10 and 17–19 apply to the set as to the Working Set,
+    with its own denominators. Prompt v2 was written from the v1 errors on the Working Set
+    only, so its v1 → v2 difference on the Held-out Set is the out-of-sample number the
+    report quotes; the Working Set numbers are in-sample for v2 and the report says so.

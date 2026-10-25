@@ -44,6 +44,37 @@ from src.extract.schema import (
 ROOT = Path(__file__).resolve().parents[2]
 RAW_DIR = ROOT / "data" / "raw"
 MANIFEST = RAW_DIR / "manifest.csv"
+
+
+@dataclass(frozen=True)
+class DocumentSet:
+    """A folder of documents with its manifest and its gold files (contract item 20).
+
+    `raw` is the Working Set (30 documents, gold in data/gold/); `holdout` is the Held-out
+    Set of step 12 (10 documents never seen while writing prompt v2, gold in
+    data/holdout/gold/). The scope suffix is part of a run id over the set.
+    """
+
+    name: str
+    dir: Path
+    gold_dir: Path
+    scope: (
+        str  # run id suffix: "" for the Working Set, "__holdout" for the Held-out Set
+    )
+
+    @property
+    def manifest(self) -> Path:
+        return self.dir / "manifest.csv"
+
+
+WORKING_SET = DocumentSet("raw", RAW_DIR, ROOT / "data" / "gold", "")
+HOLDOUT_SET = DocumentSet(
+    "holdout",
+    ROOT / "data" / "holdout",
+    ROOT / "data" / "holdout" / "gold",
+    "__holdout",
+)
+DOCUMENT_SETS = {s.name: s for s in (WORKING_SET, HOLDOUT_SET)}
 PROMPTS_DIR = ROOT / "prompts"
 SAMPLING_CONFIG = ROOT / "config" / "sampling.yaml"
 RUNS_DIR = ROOT / "results" / "runs" / "jsonl"  # contract item 12: the source of truth
@@ -169,16 +200,19 @@ def make_run_id(
     sampling_name: str,
     *,
     gold: bool = False,
+    doc_set: DocumentSet = WORKING_SET,
     validation_version: str = VALIDATION_VERSION,
 ) -> str:
     """Contract item 11, e.g. claude__v1__t0, or claude__v1__t05__gold for a run over the
     Golden Set only: the scope is in the name, so a full run never resumes into its file.
-    A validation other than the first adds `__val<N>` (claude__v2__t0__val2): the runs
-    judged by validation "1" keep their names, and a re-run under a stricter validation
-    never resumes into them (the provenance guard would refuse it anyway)."""
-    run_id = f"{model}__{prompt_version}__{sampling_name}" + (
-        GOLD_SCOPE if gold else ""
-    )
+    A run over the Held-out Set adds `__holdout` before `__gold`
+    (claude__v2__t0__holdout__gold). A validation other than the first adds `__val<N>`
+    last (claude__v2__t0__val2): the runs judged by validation "1" keep their names, and
+    a re-run under a stricter validation never resumes into them (the provenance guard
+    would refuse it anyway)."""
+    run_id = f"{model}__{prompt_version}__{sampling_name}" + doc_set.scope
+    if gold:
+        run_id += GOLD_SCOPE
     if validation_version != "1":
         run_id += f"__val{validation_version}"
     return run_id

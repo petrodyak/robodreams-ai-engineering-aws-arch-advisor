@@ -1,0 +1,582 @@
+AWS General Reference                                                                                    Reference guide
+
+• Maximum AdapterVersions created per month - Number of successful adapter versions that can
+  be created per AWS account per month is 10 which will be reset at the start of every month. Use
+  the Service Quotas console to raise a service quota increase request.
+
+• Maximum in-progress AdapterVersions (analogous to adapter training) per account - 3
+
+
+For more information, see Amazon Textract Quotas in the Amazon Textract Developer Guide.
+
+Amazon Timestream endpoints and quotas
+
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+Timestream for Live Analytics endpoints
+
+Use the following endpoints to acquire the endpoints for the write API.
+
+
+ Region         Region         Endpoint                                                   Protocol
+ Name
+
+ US East        us-east-2      ingest.timestream.us-east-2.amazonaws.com                  HTTPS
+ (Ohio)
+                               timestream-ingest-fips.us-east-2.api.aws                    HTTPS
+
+                               ingest.timestream-fips.us-east-2.ama                        HTTPS
+                               zonaws.com
+                                                                                          HTTPS
+                               timestream-ingest.us-east-2.api.aws
+
+
+
+
+
+Timestream                                                                                              Version 1.0 3542
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US             us-east-1     ingest.timestream.us-east-1.amazonaws.com                 HTTPS
+ East (N.
+ Virginia)                    timestream-ingest-fips.us-east-1.api.aws                   HTTPS
+
+                              ingest.timestream-fips.us-east-1.ama                       HTTPS
+                              zonaws.com
+                                                                                        HTTPS
+                              timestream-ingest.us-east-1.api.aws
+
+ US West        us-           ingest.timestream.us-west-2.amazonaws.com                 HTTPS
+ (Oregon)       west-2
+                              timestream-ingest-fips.us-west-2.api.aws                   HTTPS
+
+                              ingest.timestream-fips.us-west-2.ama                       HTTPS
+                              zonaws.com
+                                                                                        HTTPS
+                              timestream-ingest.us-west-2.api.aws
+
+ Asia           ap-           ingest.timestream.ap-south-1.amazonaws.com                HTTPS
+ Pacific         south-1
+ (Mumbai)                     timestream-ingest.ap-south-1.api.aws                      HTTPS
+
+
+ Asia           ap-           ingest.timestream.ap-southeast-2.ama                      HTTPS
+ Pacific         southe        zonaws.com
+ (Sydney)       ast-2                                                                   HTTPS
+                              timestream-ingest.ap-southeast-2.api.aws
+
+ Asia           ap-           ingest.timestream.ap-northeast-1.ama                      HTTPS
+ Pacific         northe        zonaws.com
+ (Tokyo)        ast-1                                                                   HTTPS
+                              timestream-ingest.ap-northeast-1.api.aws
+
+ Europe         eu-           ingest.timestream.eu-central-1.amazo                      HTTPS
+ (Frankfur      central-1     naws.com
+ t)                                                                                     HTTPS
+                              timestream-ingest.eu-central-1.api.aws
+
+
+
+
+
+
+
+
+Service endpoints                                                                                      Version 1.0 3543
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Europe         eu-           ingest.timestream.eu-west-1.amazonaws.com                 HTTPS
+ (Ireland)      west-1
+                              timestream-ingest.eu-west-1.api.aws                       HTTPS
+
+ AWS            us-gov-       ingest.timestream.us-gov-west-1.amaz                      HTTPS
+ GovCloud       west-1        onaws.com
+ (US-                                                                                   HTTPS
+ West)                        timestream-ingest.us-gov-west-1.api.aws
+
+
+
+Use the following endpoints to acquire the endpoints for the query API.
+
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2     query.timestream.us-east-2.amazonaws.com                  HTTPS
+ (Ohio)
+                              timestream-query-fips.us-east-2.api.aws                   HTTPS
+
+                              query.timestream-fips.us-east-2.amaz                      HTTPS
+                              onaws.com
+                                                                                        HTTPS
+                              timestream-query.us-east-2.api.aws
+
+ US             us-east-1     query.timestream.us-east-1.amazonaws.com                  HTTPS
+ East (N.
+ Virginia)                    timestream-query-fips.us-east-1.api.aws                   HTTPS
+
+                              query.timestream-fips.us-east-1.amaz                      HTTPS
+                              onaws.com
+                                                                                        HTTPS
+                              timestream-query.us-east-1.api.aws
+
+ US West        us-           query.timestream.us-west-2.amazonaws.com                  HTTPS
+ (Oregon)       west-2
+                              timestream-query-fips.us-west-2.api.aws                   HTTPS
+
+                                                                                        HTTPS
+
+
+
+Service endpoints                                                                                     Version 1.0 3544
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+                              query.timestream-fips.us-west-2.amaz                      HTTPS
+                              onaws.com
+
+                              timestream-query.us-west-2.api.aws
+
+ Asia           ap-           query.timestream.ap-south-1.amazonaws.com                 HTTPS
+ Pacific         south-1
+ (Mumbai)                     timestream-query.ap-south-1.api.aws                       HTTPS
+
+
+ Asia           ap-           query.timestream.ap-southeast-2.amaz                      HTTPS
+ Pacific         southe        onaws.com
+ (Sydney)       ast-2                                                                   HTTPS
+                              timestream-query.ap-southeast-2.api.aws
+
+ Asia           ap-           query.timestream.ap-northeast-1.amaz                      HTTPS
+ Pacific         northe        onaws.com
+ (Tokyo)        ast-1                                                                   HTTPS
+                              timestream-query.ap-northeast-1.api.aws
+
+ Europe         eu-           query.timestream.eu-central-1.amazon                      HTTPS
+ (Frankfur      central-1     aws.com
+ t)                                                                                     HTTPS
+                              timestream-query.eu-central-1.api.aws
+
+ Europe         eu-           query.timestream.eu-west-1.amazonaws.com                  HTTPS
+ (Ireland)      west-1
+                              timestream-query.eu-west-1.api.aws                        HTTPS
+
+ AWS            us-gov-       query.timestream.us-gov-west-1.amazo                      HTTPS
+ GovCloud       west-1        naws.com
+ (US-                                                                                   HTTPS
+ West)                        timestream-query.us-gov-west-1.api.aws
+
+
+
+For more information, see Using the API in the Amazon Timestream Developer Guide.
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 3545
+AWS General Reference                                                                                 Reference guide
+Timestream for InfluxDB endpoints
+
+Use the following endpoints to acquire the endpoints for the Timestream for InfluxDB API.
+
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ US East       us-east-2      timestream-influxdb.us-east-2.amazon                      HTTPS
+ (Ohio)                       aws.com
+                                                                                       HTTPS
+                              timestream-influxdb-fips.us-east-2.api.aws
+                                                                                       HTTPS
+                              timestream-influxdb-fips.us-east-2.a
+                              mazonaws.com
+
+ US            us-east-1      timestream-influxdb.us-east-1.amazon                      HTTPS
+ East (N.                     aws.com
+ Virginia)                                                                             HTTPS
+                              timestream-influxdb-fips.us-east-1.api.aws
+                                                                                       HTTPS
+                              timestream-influxdb-fips.us-east-1.a
+                              mazonaws.com
+
+ US West       us-            timestream-influxdb.us-west-2.amazon                      HTTPS
+ (Oregon)      west-2         aws.com
+                                                                                       HTTPS
+                              timestream-influxdb-fips.us-west-2.api.aws
+                                                                                       HTTPS
+                              timestream-influxdb-fips.us-west-2.a
+                              mazonaws.com
+
+ Africa        af-south-      timestream-influxdb.af-south-1.amazo                      HTTPS
+ (Cape         1              naws.com
+ Town)
+
+ Asia          ap-            timestream-influxdb.ap-east-1.amazon                      HTTPS
+ Pacific        east-1         aws.com
+ (Hong
+ Kong)
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 3546
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           timestream-influxdb.ap-south-2.amazo                       HTTPS
+ Pacific         south-2       naws.com
+ (Hyderaba
+ d)
+
+ Asia           ap-           timestream-influxdb.ap-southeast-3.a                       HTTPS
+ Pacific         southe        mazonaws.com
+ (Jakarta)      ast-3
+
+ Asia           ap-           timestream-influxdb.ap-southeast-4.a                       HTTPS
+ Pacific         southe        mazonaws.com
+ (Melbourn      ast-4
+ e)
+
+ Asia           ap-           timestream-influxdb.ap-south-1.amazo                       HTTPS
+ Pacific         south-1       naws.com
+ (Mumbai)
+
+ Asia           ap-           timestream-influxdb.ap-northeast-3.a                       HTTPS
+ Pacific         northe        mazonaws.com
+ (Osaka)        ast-3
+
+ Asia           ap-           timestream-influxdb.ap-northeast-2.a                       HTTPS
+ Pacific         northe        mazonaws.com
+ (Seoul)        ast-2
+
+ Asia           ap-           timestream-influxdb.ap-southeast-1.a                       HTTPS
+ Pacific         southe        mazonaws.com
+ (Singapor      ast-1
+ e)
+
+ Asia           ap-           timestream-influxdb.ap-southeast-2.a                       HTTPS
+ Pacific         southe        mazonaws.com
+ (Sydney)       ast-2
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 3547
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-            timestream-influxdb.ap-southeast-7.a                      HTTPS
+ Pacific        southe         mazonaws.com
+ (Thailand     ast-7
+ )
+
+ Asia          ap-            timestream-influxdb.ap-northeast-1.a                      HTTPS
+ Pacific        northe         mazonaws.com
+ (Tokyo)       ast-1
+
+ Canada        ca-centra      timestream-influxdb.ca-central-1.ama                      HTTPS
+ (Central)     l-1            zonaws.com
+                                                                                       HTTPS
+                              timestream-influxdb-fips.ca-central-1.api.aws
+                                                                                       HTTPS
+                              timestream-influxdb-fips.ca-central-
+                              1.amazonaws.com
+
+ Europe        eu-            timestream-influxdb.eu-central-1.ama                      HTTPS
+ (Frankfur     central-1      zonaws.com
+ t)
+
+ Europe        eu-            timestream-influxdb.eu-west-1.amazon                      HTTPS
+ (Ireland)     west-1         aws.com
+
+ Europe        eu-            timestream-influxdb.eu-west-2.amazon                      HTTPS
+ (London)      west-2         aws.com
+
+ Europe        eu-            timestream-influxdb.eu-south-1.amazo                      HTTPS
+ (Milan)       south-1        naws.com
+
+ Europe        eu-            timestream-influxdb.eu-west-3.amazon                      HTTPS
+ (Paris)       west-3         aws.com
+
+ Europe        eu-            timestream-influxdb.eu-south-2.amazo                      HTTPS
+ (Spain)       south-2        naws.com
+
+
+
+
+
+
+
+Service endpoints                                                                                    Version 1.0 3548
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Europe        eu-            timestream-influxdb.eu-north-1.amazo                      HTTPS
+ (Stockhol     north-1        naws.com
+ m)
+
+ Europe        eu-            timestream-influxdb.eu-central-2.ama                      HTTPS
+ (Zurich)      central-2      zonaws.com
+
+ Israel        il-centra      timestream-influxdb.il-central-1.ama                      HTTPS
+ (Tel Aviv)    l-1            zonaws.com
+
+ Mexico        mx-            timestream-influxdb.mx-central-1.ama                      HTTPS
+ (Central)     central-1      zonaws.com
+
+ Middle        me-            timestream-influxdb.me-central-1.ama                      HTTPS
+ East          central-1      zonaws.com
+ (UAE)
+
+ South         sa-east-1      timestream-influxdb.sa-east-1.amazon                      HTTPS
+ America                      aws.com
+ (São
+ Paulo)
+
+
+Service quotas
+
+Timestream for Live Analytics quotas
+
+
+ Name                                             Default                  Adjustabl Description
+                                                                           e
+
+ CreateBatchLoadTask request rate                 Each supported           No      Maximum number of
+                                                  Region: 1 per                    CreateBatchLoadTask
+                                                  second                           requests per second.
+
+
+
+
+
+
+
+
+Service quotas                                                                                       Version 1.0 3549
+AWS General Reference                                                                                   Reference guide
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ CreateDatabase request rate                       Each supported           No      Maximum number of
+                                                   Region: 1 per                    CreateDatabase requests
+                                                   second                           per second.
+
+ CreateScheduledQuery request rate                 Each supported           No      Maximum number of
+                                                   Region: 1 per                    CreateScheduledQuery
+                                                   second                           requests per second.
+
+ CreateTable request rate                          Each supported           No      Maximum number of
+                                                   Region: 1 per                    CreateTable requests per
+                                                   second                           second.
+
+ Databases per account                             Each supported           No      The maximum number of
+                                                   Region: 500                      databases you can create
+                                                                                    per AWS account.
+
+ DeleteDatabase request rate                       Each supported           No      Maximum number of
+                                                   Region: 1 per                    DeleteDatabase requests
+                                                   second                           per second.
+
+ DeleteScheduledQuery request rate                 Each supported           No      Maximum number of
+                                                   Region: 1 per                    DeleteScheduledQuery
+                                                   second                           requests per second.
+
+ DeleteTable request rate                          Each supported           No      Maximum number of
+                                                   Region: 1 per                    DeleteTable requests per
+                                                   second                           second.
+
+ DescribeAccountSettings request rate              Each supported           No      Maximum number of
+                                                   Region: 1 per                    DescribeAccountSettings
+                                                   second                           requests per second.
+
+ DescribeBatchLoadTask request rate                Each supported           No      Maximum number of
+                                                   Region: 5 per                    DescribeBatchLoadTask
+                                                   second                           requests per second.
+
+
+
+
+
+
+Service quotas                                                                                         Version 1.0 3550
+AWS General Reference                                                                                   Reference guide
+
+ Name                                              Default                   Adjustabl Description
+                                                                             e
+
+ DescribeDatabase request rate                     Each supported            No      Maximum number
+                                                   Region: 5 per                     of DescribeDatabase
+                                                   second                            requests per second.
+
+ DescribeScheduledQuery request rate               Each supported            No      Maximum number of
+                                                   Region: 5 per                     DescribeScheduledQuery
+                                                   second                            requests per second.
+
+ DescribeTable request rate                        Each supported            No      Maximum number of
+                                                   Region: 5 per                     DescribeTable requests
+                                                   second                            per second.
+
+ Dimensions per table                              Each supported            No      The maximum number of
+                                                   Region: 128                       dimensions per table.
+
+ ExecuteScheduledQuery request rate                Each supported            No      Maximum number of
+                                                   Region: 5 per                     ExecuteScheduledQuery
+                                                   second                            requests per second.
+
+ ListBatchLoadTasks request rate                   Each supported            No      Maximum number of
+                                                   Region: 5 per                     ListBatchLoadTasks
+                                                   second                            requests per second.
+
+ ListDatabases request rate                        Each supported            No      Maximum number of
+                                                   Region: 5 per                     ListDatabases requests
+                                                   second                            per second.
+
+ ListScheduledQueries request rate                 Each supported            No      Maximum number of
+                                                   Region: 5 per                     ListScheduledQueries
+                                                   second                            requests per second.
+
+ ListTables request rate                           Each supported            No      Maximum number of
+                                                   Region: 5 per                     ListTables requests per
+                                                   second                            second.
+
+
+
+
+
+
+
+
+Service quotas                                                                                         Version 1.0 3551
+AWS General Reference                                                                                   Reference guide
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Max allowed MaxQueryTCU                           Each supported           No       The maximum allowed
+                                                   Region: 1,000                     MaxQueryTCU in your
+                                                                                     account
+
+ Max allowed ProvisionedQueryTCU                   Each supported           No       The maximum allowed
+                                                   Region: 1,000                     ProvisionedQueryTCU in
+                                                                                     your account
+
+ Maximum count of active magnetic                  Each supported           No       Maximum number of
+ store partitions per database                     Region: 250                       active magnetic store
+                                                                                     partitions per database.
+                                                                                     A partition may remain
+                                                                                     active for up to 6 hours
+                                                                                     after receiving ingestion.
+
+ Measures per table                                Each supported           No       The maximum number of
+                                                   Region: 8,192                     measures per table.
+
+ PrepareQuery request rate                         Each supported           No       Maximum number of
+                                                   Region: 5 per                     PrepareQuery requests
+                                                   second                            per second.
+
+ ResumeBatchLoadTask request rate                  Each supported           No       Maximum number of
+                                                   Region: 1 per                     ResumeBatchLoadTask
+                                                   second                            requests per second.
+
+ Scheduled queries per account                     Each supported           No       The maximum number
+                                                   Region: 10,000                    of scheduled queries
+                                                                                     you can create per AWS
+                                                                                     account.
+
+ Tables per account                                Each supported           No       The maximum number of
+                                                   Region: 50,000                    tables you can create per
+                                                                                     AWS account.
+
+
+
+
+
+
+
+Service quotas                                                                                         Version 1.0 3552
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Unique measures across multi-measure               Each supported           No      The unique measures
+ records per table                                  Region: 1,024                    in all the multi-mea
+                                                                                     sure records defined in
+                                                                                     a single table. A single
+                                                                                     multi-measure record
+                                                                                     can have MaximumMe
+                                                                                     asureAttributesPer
+                                                                                     Record unique measures,
+                                                                                     and a table can have
+                                                                                     MaximumMeasureAttr
+                                                                                     ibutesPerTable unique
+                                                                                     measures defined across
+                                                                                     multi-measure records.
+
+ UpdateAccountSettings request rate                 Each supported           No      Maximum number of
+                                                    Region: 1 per                    UpdateAccountSettings
+                                                    second                           requests per second.
+
+ UpdateDatabase request rate                        Each supported           No      Maximum number
+                                                    Region: 1 per                    of UpdateDatabase
+                                                    second                           requests per second.
+
+ UpdateScheduledQuery request rate                  Each supported           No      Maximum number of
+                                                    Region: 1 per                    UpdateScheduledQuery
+                                                    second                           requests per second.
+
+ UpdateTable request rate                           Each supported           No      Maximum number of
+                                                    Region: 1 per                    UpdateTable requests
+                                                    second                           per second.
+
+
+
+For more information, see Quotas in the Amazon Timestream Developer Guide.
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 3553

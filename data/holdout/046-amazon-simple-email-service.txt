@@ -1,0 +1,972 @@
+AWS General Reference                                                                                   Reference guide
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Provisioned capacity units                        Each supported           No       The maximum number
+                                                   Region: 2                         of provisioned capacity
+                                                                                     units available to
+                                                                                     purchase per account.
+
+ Vaults per account                                Each supported           No       The maximum number
+                                                   Region: 1,000                     of vaults an account can
+                                                                                     have.
+
+
+Amazon Simple Email Service endpoints and quotas
+
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service API endpoints
+
+
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ US East        us-east-2     email.us-east-2.amazonaws.com                              HTTPS
+ (Ohio)
+                              email-fips.us-east-2.api.aws                                HTTPS
+
+                              email-fips.us-east-2.amazonaws.com                          HTTPS
+
+                              email.us-east-2.api.aws                                    HTTPS
+
+
+
+
+
+
+Amazon SES                                                                                             Version 1.0 3352
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                 Protocol
+ Name
+
+ US             us-east-1     email.us-east-1.amazonaws.com                            HTTPS
+ East (N.
+ Virginia)                    email-fips.us-east-1.api.aws                              HTTPS
+
+                              email-fips.us-east-1.amazonaws.com                        HTTPS
+
+                              email.us-east-1.api.aws                                  HTTPS
+
+ US             us-           email.us-west-1.amazonaws.com                            HTTPS
+ West (N.       west-1
+ Californi                    email-fips.us-west-1.api.aws                              HTTPS
+
+ a)                           email-fips.us-west-1.amazonaws.com                        HTTPS
+
+
+                              email.us-west-1.api.aws                                  HTTPS
+
+ US West        us-           email.us-west-2.amazonaws.com                            HTTPS
+ (Oregon)       west-2
+                              email-fips.us-west-2.api.aws                              HTTPS
+
+                              email-fips.us-west-2.amazonaws.com                        HTTPS
+
+                              email.us-west-2.api.aws                                  HTTPS
+
+ Africa         af-south-     email.af-south-1.amazonaws.com                           HTTPS
+ (Cape          1
+ Town)                        email.af-south-1.api.aws                                 HTTPS
+
+
+ Asia           ap-           email.ap-south-2.amazonaws.com                           HTTPS
+ Pacific         south-2
+ (Hyderaba                    email.ap-south-2.api.aws                                 HTTPS
+
+ d)
+
+ Asia           ap-           email.ap-southeast-3.amazonaws.com                       HTTPS
+ Pacific         southe
+ (Jakarta)      ast-3         email.ap-southeast-3.api.aws                             HTTPS
+
+
+
+
+
+
+
+
+
+API endpoints                                                                                         Version 1.0 3353
+AWS General Reference                                                                                  Reference guide
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ Asia           ap-           email.ap-southeast-5.amazonaws.com                        HTTPS
+ Pacific         southe
+ (Malaysia      ast-5         email.ap-southeast-5.api.aws                              HTTPS
+
+ )
+
+ Asia           ap-           email.ap-south-1.amazonaws.com                            HTTPS
+ Pacific         south-1
+ (Mumbai)                     email.ap-south-1.api.aws                                  HTTPS
+
+
+ Asia           ap-           email.ap-northeast-3.amazonaws.com                        HTTPS
+ Pacific         northe
+ (Osaka)        ast-3         email.ap-northeast-3.api.aws                              HTTPS
+
+
+ Asia           ap-           email.ap-northeast-2.amazonaws.com                        HTTPS
+ Pacific         northe
+ (Seoul)        ast-2         email.ap-northeast-2.api.aws                              HTTPS
+
+
+ Asia           ap-           email.ap-southeast-1.amazonaws.com                        HTTPS
+ Pacific         southe
+ (Singapor      ast-1         email.ap-southeast-1.api.aws                              HTTPS
+
+ e)
+
+ Asia           ap-           email.ap-southeast-2.amazonaws.com                        HTTPS
+ Pacific         southe
+ (Sydney)       ast-2         email.ap-southeast-2.api.aws                              HTTPS
+
+
+ Asia           ap-           email.ap-northeast-1.amazonaws.com                        HTTPS
+ Pacific         northe
+ (Tokyo)        ast-1         email.ap-northeast-1.api.aws                              HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+API endpoints                                                                                          Version 1.0 3354
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Canada        ca-centra      email.ca-central-1.amazonaws.com                         HTTPS
+ (Central)     l-1
+                              email-fips.ca-central-1.api.aws                           HTTPS
+
+                              email-fips.ca-central-1.amazonaws.com                     HTTPS
+
+                              email.ca-central-1.api.aws                               HTTPS
+
+ Canada        ca-            email.ca-west-1.amazonaws.com                            HTTPS
+ West          west-1
+ (Calgary)                    email-fips.ca-west-1.api.aws                              HTTPS
+
+                              email-fips.ca-west-1.amazonaws.com                        HTTPS
+
+                              email.ca-west-1.api.aws                                  HTTPS
+
+ Europe        eu-            email.eu-central-1.amazonaws.com                         HTTPS
+ (Frankfur     central-1
+ t)                           email.eu-central-1.api.aws                               HTTPS
+
+
+ Europe        eu-            email.eu-west-1.amazonaws.com                            HTTPS
+ (Ireland)     west-1
+                              email.eu-west-1.api.aws                                  HTTPS
+
+ Europe        eu-            email.eu-west-2.amazonaws.com                            HTTPS
+ (London)      west-2
+                              email.eu-west-2.api.aws                                  HTTPS
+
+ Europe        eu-            email.eu-south-1.amazonaws.com                           HTTPS
+ (Milan)       south-1
+                              email.eu-south-1.api.aws                                 HTTPS
+
+ Europe        eu-            email.eu-west-3.amazonaws.com                            HTTPS
+ (Paris)       west-3
+                              email.eu-west-3.api.aws                                  HTTPS
+
+ Europe        eu-            email.eu-north-1.amazonaws.com                           HTTPS
+ (Stockhol     north-1
+ m)                           email.eu-north-1.api.aws                                 HTTPS
+
+
+
+
+API endpoints                                                                                        Version 1.0 3355
+AWS General Reference                                                                                 Reference guide
+
+ Region         Region        Endpoint                                                 Protocol
+ Name
+
+ Europe         eu-           email.eu-central-2.amazonaws.com                         HTTPS
+ (Zurich)       central-2
+                              email.eu-central-2.api.aws                               HTTPS
+
+ Israel         il-centra     email.il-central-1.amazonaws.com                         HTTPS
+ (Tel Aviv)     l-1
+                              email.il-central-1.api.aws                               HTTPS
+
+ Middle         me-           email.me-south-1.amazonaws.com                           HTTPS
+ East           south-1
+ (Bahrain)                    email.me-south-1.api.aws                                 HTTPS
+
+
+ Middle         me-           email.me-central-1.amazonaws.com                         HTTPS
+ East           central-1
+ (UAE)                        email.me-central-1.api.aws                               HTTPS
+
+
+ South          sa-east-1     email.sa-east-1.amazonaws.com                            HTTPS
+ America
+ (São                         email.sa-east-1.api.aws                                  HTTPS
+
+ Paulo)
+
+ AWS            us-gov-       email.us-gov-east-1.amazonaws.com                        HTTPS
+ GovCloud       east-1
+ (US-East)                    email-fips.us-gov-east-1.api.aws                          HTTPS
+
+                              email-fips.us-gov-east-1.amazonaws.com                    HTTPS
+
+                              email.us-gov-east-1.api.aws                              HTTPS
+
+ AWS            us-gov-       email.us-gov-west-1.amazonaws.com                        HTTPS
+ GovCloud       west-1
+ (US-                         email-fips.us-gov-west-1.api.aws                          HTTPS
+
+ West)                        email-fips.us-gov-west-1.amazonaws.com                    HTTPS
+
+
+                              email.us-gov-west-1.api.aws                              HTTPS
+
+
+
+
+
+
+
+
+API endpoints                                                                                         Version 1.0 3356
+AWS General Reference                                                                                      Reference guide
+SMTP endpoints
+
+
+      Note
+      SMTP endpoints are not currently available in Africa (Cape Town), Asia Pacific (Hyderabad),
+      Asia Pacific (Jakarta), Europe (Milan), Europe (Zurich), Israel (Tel Aviv), Middle East
+      (Bahrain), Middle East (UAE), Canada West (Calgary), Asia Pacific (Malaysia).
+
+
+
+
+ Region Name                   Region                        Endpoint                       Protocol
+
+ US East (Ohio)                us-east-2                     email-smtp.us-east             SMTP
+                                                             -2.amazonaws.com
+
+                                                             email-smtp.us-east
+                                                             -2.api.aws
+
+                                                             email-smtp-fips.us-
+                                                             east-2.amazonaws.
+                                                             com
+
+                                                             email-smtp-fips.us-
+                                                             east-2.api.aws
+
+ US East (N. Virginia)         us-east-1                     email-smtp.us-east             SMTP
+                                                             -1.amazonaws.com
+
+                                                             email-smtp.us-east
+                                                             -1.api.aws
+
+                                                             email-smtp-fips.us-
+                                                             east-1.amazonaws.
+                                                             com
+
+                                                             email-smtp-fips.us-
+                                                             east-1.api.aws
+
+ US West (N. Californi         us-west-1                     email-smtp.us-west             SMTP
+ a)                                                          -1.amazonaws.com
+
+
+
+SMTP endpoints                                                                                            Version 1.0 3357
+AWS General Reference                                                                                   Reference guide
+
+ Region Name                  Region                        Endpoint                     Protocol
+
+                                                            email-smtp.us-west
+                                                            -1.api.aws
+
+                                                            email-smtp-fips.us-
+                                                            west-1.amazonaws.
+                                                            com
+
+                                                            email-smtp-fips.us-
+                                                            west-1.api.aws
+
+ US West (Oregon)             us-west-2                     email-smtp.us-west           SMTP
+                                                            -2.amazonaws.com
+
+                                                            email-smtp.us-west
+                                                            -2.api.aws
+
+                                                            email-smtp-fips.us-
+                                                            west-2.amazonaws.
+                                                            com
+
+                                                            email-smtp-fips.us-
+                                                            west-2.api.aws
+
+ Asia Pacific (Mumbai)         ap-south-1                    email-smtp.ap-sout           SMTP
+                                                            h-1.amazonaws.com
+
+                                                            email-smtp.ap-sout
+                                                            h-1.api.aws
+
+ Asia Pacific (Osaka)          ap-northeast-3                email-smtp.ap-nort           SMTP
+                                                            heast-3.amazonaws.
+                                                            com
+
+                                                            email-smtp.ap-nort
+                                                            heast-3.api.aws
+
+
+
+
+
+
+
+
+
+
+
+SMTP endpoints                                                                                         Version 1.0 3358
+AWS General Reference                                                                                     Reference guide
+
+ Region Name                   Region                        Endpoint                     Protocol
+
+ Asia Pacific (Seoul)           ap-northeast-2                email-smtp.ap-nort           SMTP
+                                                             heast-2.amazonaws.
+                                                             com
+
+                                                             email-smtp.ap-nort
+                                                             heast-2.api.aws
+
+ Asia Pacific (Singapor         ap-southeast-1                email-smtp.ap-sout           SMTP
+ e)                                                          heast-1.amazonaws.
+                                                             com
+
+                                                             email-smtp.ap-sout
+                                                             heast-1.api.aws
+
+ Asia Pacific (Sydney)          ap-southeast-2                email-smtp.ap-sout           SMTP
+                                                             heast-2.amazonaws.
+                                                             com
+
+                                                             email-smtp.ap-sout
+                                                             heast-2.api.aws
+
+ Asia Pacific (Tokyo)           ap-northeast-1                email-smtp.ap-nort           SMTP
+                                                             heast-1.amazonaws.
+                                                             com
+
+                                                             email-smtp.ap-nort
+                                                             heast-1.api.aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SMTP endpoints                                                                                           Version 1.0 3359
+AWS General Reference                                                                                   Reference guide
+
+ Region Name                   Region                       Endpoint                     Protocol
+
+ Canada (Central)              ca-central-1                 email-smtp.ca-cent           SMTP
+                                                            ral-1.amazonaws.com
+
+                                                            email-smtp.ca-cent
+                                                            ral-1.api.aws
+
+                                                            email-smtp-fips.ca-
+                                                            central-1.amazona
+                                                            ws.com
+
+                                                            email-smtp-fips.ca-
+                                                            central-1.api.aws
+
+ Europe (Frankfurt)            eu-central-1                 email-smtp.eu-cent           SMTP
+                                                            ral-1.amazonaws.com
+
+                                                            email-smtp.eu-cent
+                                                            ral-1.api.aws
+
+ Europe (Ireland)              eu-west-1                    email-smtp.eu-west           SMTP
+                                                            -1.amazonaws.com
+
+                                                            email-smtp.eu-west
+                                                            -1.api.aws
+
+ Europe (London)               eu-west-2                    email-smtp.eu-west           SMTP
+                                                            -2.amazonaws.com
+
+                                                            email-smtp.eu-west
+                                                            -2.api.aws
+
+ Europe (Paris)                eu-west-3                    email-smtp.eu-west           SMTP
+                                                            -3.amazonaws.com
+
+                                                            email-smtp.eu-west
+                                                            -3.api.aws
+
+
+
+
+
+
+
+
+SMTP endpoints                                                                                          Version 1.0 3360
+AWS General Reference                                                                                   Reference guide
+
+ Region Name                  Region                        Endpoint                     Protocol
+
+ Europe (Stockholm)           eu-north-1                    email-smtp.eu-nort           SMTP
+                                                            h-1.amazonaws.com
+
+                                                            email-smtp.eu-nort
+                                                            h-1.api.aws
+
+ South America (São           sa-east-1                     email-smtp.sa-east           SMTP
+ Paulo)                                                     -1.amazonaws.com
+
+                                                            email-smtp.sa-east
+                                                            -1.api.aws
+
+ AWS GovCloud (US-            us-gov-west-1                 email-smtp.us-gov-           SMTP
+ West)                                                      west-1.amazonaws.c
+                                                            om
+
+                                                            email-smtp.us-gov-
+                                                            west-1.api.aws
+
+                                                            email-smtp-fips.us-
+                                                            gov-west-1.amazon
+                                                            aws.com
+
+                                                            email-smtp-fips.us-
+                                                            gov-west-1.api.aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SMTP endpoints                                                                                         Version 1.0 3361
+AWS General Reference                                                                                  Reference guide
+
+ Region Name                  Region                       Endpoint                     Protocol
+
+ AWS GovCloud (US-            us-gov-east-1                email-smtp.us-gov-           SMTP
+ East)                                                     east-1.amazonaws.c
+                                                           om
+
+                                                           email-smtp.us-gov-
+                                                           east-1.api.aws
+
+                                                           email-smtp-fips.us-
+                                                           gov-east-1.amazon
+                                                           aws.com
+
+                                                           email-smtp-fips.us-
+                                                           gov-east-1.api.aws
+
+
+Email Receiving endpoints
+
+
+
+ Region Name                            Region                                Email Receiving Endpoint
+
+ US East (N. Virginia)                  us-east-1                             inbound-smtp.us-east-1.amaz
+                                                                              onaws.com
+
+ US East (Ohio)                         us-east-2                             inbound-smtp.us-east-2.amaz
+                                                                              onaws.com
+
+ US West (N. California)                us-west-1                             inbound-smtp.us-we
+                                                                              st-1.amazonaws.com
+
+ US West (Oregon)                       us-west-2                             inbound-smtp.us-we
+                                                                              st-2.amazonaws.com
+
+ Africa (Cape Town)                     af-south-1                            inbound-smtp.af-south-1.ama
+                                                                              zonaws.com
+
+ Asia Pacific (Jakarta)                  ap-southeast-3                        inbound-smtp.ap-southeast-3
+                                                                              .amazonaws.com
+
+
+
+
+
+Email Receiving endpoints                                                                             Version 1.0 3362
+AWS General Reference                                                                                  Reference guide
+
+ Region Name                            Region                                Email Receiving Endpoint
+
+ Asia Pacific (Mumbai)                   ap-south-1                            inbound-smtp.ap-so
+                                                                              uth-1.amazonaws.com
+
+ Asia Pacific (Osaka)                    ap-northeast-3                        inbound-smtp.ap-northeast-3
+                                                                              .amazonaws.com
+
+ Asia Pacific (Seoul)                    ap-northeast-2                        inbound-smtp.ap-northeast-2
+                                                                              .amazonaws.com
+
+ Asia Pacific (Singapore)                ap-southeast-1                        inbound-smtp.ap-southeast-1
+                                                                              .amazonaws.com
+
+ Asia Pacific (Sydney)                   ap-southeast-2                        inbound-smtp.ap-southeast-2
+                                                                              .amazonaws.com
+
+ Asia Pacific (Tokyo)                    ap-northeast-1                        inbound-smtp.ap-northeast-1
+                                                                              .amazonaws.com
+
+ Canada (Central)                       ca-central-1                          inbound-smtp.ca-central-1.a
+                                                                              mazonaws.com
+
+ Europe (Frankfurt)                     eu-central-1                          inbound-smtp.eu-central-1.a
+                                                                              mazonaws.com
+
+ Europe (Ireland)                       eu-west-1                             inbound-smtp.eu-we
+                                                                              st-1.amazonaws.com
+
+ Europe (London)                        eu-west-2                             inbound-smtp.eu-we
+                                                                              st-2.amazonaws.com
+
+ Europe (Milan)                         eu-south-1                            inbound-smtp.eu-so
+                                                                              uth-1.amazonaws.com
+
+ Europe (Paris)                         eu-west-3                             inbound-smtp.eu-we
+                                                                              st-3.amazonaws.com
+
+ Europe (Stockholm)                     eu-north-1                            inbound-smtp.eu-no
+                                                                              rth-1.amazonaws.com
+
+
+
+
+Email Receiving endpoints                                                                             Version 1.0 3363
+AWS General Reference                                                                                  Reference guide
+
+ Region Name                            Region                                 Email Receiving Endpoint
+
+ Israel (Tel Aviv)                      il-central-1                           inbound-smtp.il-central-1.a
+                                                                               mazonaws.com
+
+ Middle East (Bahrain)                  me-south-1                             inbound-smtp.me-so
+                                                                               uth-1.amazonaws.com
+
+ South America (São Paulo)              sa-east-1                              inbound-smtp.sa-east-1.amaz
+                                                                               onaws.com
+
+
+
+Amazon SES does not support email receiving in the following Regions: AWS GovCloud (US-West)
+and AWS GovCloud (US-East)..
+
+DKIM domains
+
+
+ Region Name                            Region                                 SES DKIM Domain
+
+ Africa (Cape Town)                     af-south-1                             dkim.af-south-1.amazonses.c
+                                                                               om
+
+ Asia Pacific (Hyderabad)                ap-south-2                             dkim.ap-south-2.amazonses.c
+                                                                               om
+
+ Asia Pacific (Jakarta)                  ap-southeast-3                         dkim.ap-southeast-3.amazons
+                                                                               es.com
+
+ Asia Pacific (Malaysia)                 ap-southeast-5                         dkim.ap-southeast-5.amazons
+                                                                               es.com
+
+ Canada West (Calgary)                  ca-west-1                              dkim.ca-west-1.amazonses.co
+                                                                               m
+
+ Asia Pacific (Osaka)                    ap-northeast-3                         dkim.ap-northeast-3.amazons
+                                                                               es.com
+
+ Europe (Milan)                         eu-south-1                             dkim.eu-south-1.amazonses.c
+                                                                               om
+
+
+
+DKIM domains                                                                                           Version 1.0 3364
+AWS General Reference                                                                            Reference guide
+
+ Region Name                          Region                              SES DKIM Domain
+
+ Europe (Zurich)                      eu-central-2                        dkim.eu-central-2.amazonses
+                                                                          .com
+
+ Israel (Tel Aviv)                    il-central-1                        dkim.il-central-1.amazonses
+                                                                          .com
+
+ Middle East (UAE)                    me-central-1                        dkim.me-central-1.amazonses
+                                                                          .com
+
+ AWS GovCloud (US-East)               us-gov-east-1                       dkim.us-gov-east-1.amazonse
+                                                                          s.com
+
+                           All other regions                              dkim.amazonses.com
+
+
+Tracking domains for open/click links (HTTP & HTTPS)
+
+
+
+ Region Name                                            Tracking Domain
+
+ US East (Ohio)                                         r.us-east-2.awstrack.me
+
+ US East (N. Virginia)                                  r.us-east-1.awstrack.me
+
+ US West (N. California)                                r.us-west-1.awstrack.me
+
+ US West (Oregon)                                       r.us-west-2.awstrack.me
+
+ Africa (Cape Town)                                     r.af-south-1.awstrack.me
+
+ Asia Pacific (Hyderabad)                                r.ap-south-2.awstrack.me
+
+ Asia Pacific (Jakarta)                                  r.ap-southeast-3.awstrack.me
+
+ Asia Pacific (Malaysia)                                 r.ap-southeast-5.awstrack.me
+
+ Asia Pacific (Mumbai)                                   r.ap-south-1.awstrack.me
+
+ Asia Pacific (Osaka)                                    r.ap-northeast-3.awstrack.me
+
+
+
+
+Tracking domains                                                                                 Version 1.0 3365
+AWS General Reference                                                                         Reference guide
+
+ Region Name                                          Tracking Domain
+
+ Asia Pacific (Seoul)                                  r.ap-northeast-2.awstrack.me
+
+ Asia Pacific (Singapore)                              r.ap-southeast-1.awstrack.me
+
+ Asia Pacific (Sydney)                                 r.ap-southeast-2.awstrack.me
+
+ Asia Pacific (Tokyo)                                  r.ap-northeast-1.awstrack.me
+
+ Canada (Central)                                     r.ca-central-1.awstrack.me
+
+ Canada West (Calgary)                                r.ca-west-1.awstrack.me
+
+ Europe (Frankfurt)                                   r.eu-central-1.awstrack.me
+
+ Europe (Ireland)                                     r.eu-west-1.awstrack.me
+
+ Europe (London)                                      r.eu-west-2.awstrack.me
+
+ Europe (Milan)                                       r.eu-south-1.awstrack.me
+
+ Europe (Stockholm)                                   r.eu-north-1.awstrack.me
+
+ Europe (Zurich)                                      r.eu-central-2.awstrack.me
+
+ Israel (Tel Aviv)                                    r.il-central-1.awstrack.me
+
+ Middle East (Bahrain)                                r.me-south-1.awstrack.me
+
+ Middle East (UAE)                                    r.me-central-1.awstrack.me
+
+ South America (São Paulo)                            r.sa-east-1.awstrack.me
+
+ AWS GovCloud (US-West)                               r.us-gov-west-1.awstrack.me
+
+ AWS GovCloud (US-East)                               r.us-gov-east-1.awstrack.me
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Tracking domains                                                                              Version 1.0 3366
+AWS General Reference                                                                                 Reference guide
+Feedback endpoints used by SES for Custom MAIL FROM domains
+
+
+
+ Region Name                                              Endpoint
+
+ US East (Ohio)                                           feedback-smtp.us-east-2.amazonses.com
+
+ US East (N. Virginia)                                    feedback-smtp.us-east-1.amazonses.com
+
+ US West (N. California)                                  feedback-smtp.us-west-1.amazonses.com
+
+ US West (Oregon)                                         feedback-smtp.us-west-2.amazonses.com
+
+ Africa (Cape Town)                                       feedback-smtp.af-south-1.amazonses.com
+
+ Asia Pacific (Hyderabad)                                  feedback-smtp.ap-south-2.amazonses.com
+
+ Asia Pacific (Jakarta)                                    feedback-smtp.ap-southeast-3.amazons
+                                                          es.com
+
+ Asia Pacific (Mumbai)                                     feedback-smtp.ap-south-1.amazonses.com
+
+ Asia Pacific (Osaka)                                      feedback-smtp.ap-northeast-3.amazons
+                                                          es.com
+
+ Asia Pacific (Seoul)                                      feedback-smtp.ap-northeast-2.amazons
+                                                          es.com
+
+ Asia Pacific (Singapore)                                  feedback-smtp.ap-southeast-1.amazons
+                                                          es.com
+
+ Asia Pacific (Sydney)                                     feedback-smtp.ap-southeast-2.amazons
+                                                          es.com
+
+ Asia Pacific (Malaysia)                                   feedback-smtp.ap-southeast-5.amazons
+                                                          es.com
+
+ Asia Pacific (Tokyo)                                      feedback-smtp.ap-northeast-1.amazons
+                                                          es.com
+
+ Canada (Central)                                         feedback-smtp.ca-central-1.amazonses.com
+
+
+
+
+Feedback endpoints                                                                                   Version 1.0 3367
+AWS General Reference                                                                                Reference guide
+
+ Region Name                                              Endpoint
+
+ Canada West (Calgary)                                    feedback-smtp.ca-west-1.amazonses.com
+
+ Europe (Frankfurt)                                       feedback-smtp.eu-central-1.amazonses.com
+
+ Europe (Ireland)                                         feedback-smtp.eu-west-1.amazonses.com
+
+ Europe (London)                                          feedback-smtp.eu-west-2.amazonses.com
+
+ Europe (Milan)                                           feedback-smtp.eu-south-1.amazonses.com
+
+ Europe (Paris)                                           feedback-smtp.eu-west-3.amazonses.com
+
+ Europe (Stockholm)                                       feedback-smtp.eu-north-1.amazonses.com
+
+ Europe (Zurich)                                          feedback-smtp.eu-central-2.amazonses.com
+
+ Israel (Tel Aviv)                                        feedback-smtp.il-central-1.amazonses.com
+
+ Middle East (Bahrain)                                    feedback-smtp.me-south-1.amazonses.com
+
+ Middle East (UAE)                                        feedback-smtp.me-central-1.amazonses.com
+
+ South America (São Paulo)                                feedback-smtp.sa-east-1.amazonses.com
+
+ AWS GovCloud (US-West)                                   feedback-smtp.us-gov-west-1.amazonses.com
+
+ AWS GovCloud (US-East)                                   feedback-smtp.us-gov-east-1.amazonses.com
+
+
+IP ranges used by Mail Manager SMTP relays
+
+
+
+ Region                                                   IP range
+
+ us-east-1                                                206.55.129.0/24
+
+ us-east-2                                                206.55.134.0/24
+
+ us-west-1                                                206.55.142.0/24
+
+
+
+
+
+SMTP Relay IP Ranges                                                                                 Version 1.0 3368
+AWS General Reference                                                                                   Reference guide
+
+ Region                                                     IP range
+
+ us-west-2                                                  206.55.131.0/24
+
+ af-south-1                                                 216.221.183.0/24
+
+ ap-northeast-1                                             206.55.130.0/24
+
+ ap-northeast-2                                             206.55.139.0/24
+
+ ap-northeast-3                                             206.55.140.0/24
+
+ ap-south-1                                                 206.55.136.0/24
+
+ ap-south-2                                                 216.221.185.0/24
+
+ ap-southeast-1                                             206.55.143.0/24
+
+ ap-southeast-2                                             206.55.128.0/24
+
+ ap-southeast-3                                             216.221.180.0/24
+
+ ap-southeast-5                                             216.221.178.0/24
+
+ ca-central-1                                               216.221.176.0/24
+
+ ca-west-1                                                  216.221.186.0/24
+
+ il-central-1                                               216.221.181.0/24
+
+ eu-central-1                                               206.55.132.0/24
+
+ eu-central-2                                               216.221.184.0/24
+
+ eu-north-1                                                 206.55.135.0/24
+
+ eu-south-1                                                 216.221.182.0/24
+
+ eu-west-1                                                  206.55.133.0/24
+
+ eu-west-2                                                  206.55.141.0/24
+
+
+
+
+
+
+
+SMTP Relay IP Ranges                                                                                   Version 1.0 3369
+AWS General Reference                                                                                    Reference guide
+
+ Region                                                     IP range
+
+ eu-west-3                                                  206.55.137.0/24
+
+ me-central-1                                               216.221.177.0/24
+
+ me-south-1                                                 216.221.179.0/24
+
+ sa-east-1                                                  206.55.138.0/24
+
+ us-gov-east-1                                              216.221.188.0/24
+
+ us-gov-west-1                                              216.221.187.0/24
+
+
+Service quotas
+
+
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Configuration set count                             Each supported           Yes     The maximum number
+                                                    Region: 10,000                   of configuration sets
+                                                                                     that can exist within the
+                                                                                     current Region.
+
+ Sending quota                                      Each supported           Yes     The maximum number
+                                                    Region: 200 per                  of emails that you can
+                                                    24 hours                         send in a 24-hour period
+                                                                                     for this account in the
+                                                                                     current Region.
+
+ Sending rate                                       Each supported           Yes     The maximum number of
+                                                    Region: 1 per                    emails that Amazon SES
+                                                    second                           can accept each second
+                                                                                     for this account in the
+                                                                                     current Region.
+
+ Tenant count                                       Each supported           Yes     The maximum number
+                                                    Region: 10,000                   of tenants that can
+
+
+
+Service quotas                                                                                          Version 1.0 3370

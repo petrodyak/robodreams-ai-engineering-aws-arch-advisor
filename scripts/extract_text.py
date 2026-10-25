@@ -8,18 +8,22 @@ with plain letters: they are a font artifact, not data, and would break exact
 matching of endpoints ("dsql-ﬁps...") and keyword search later in RAG.
 Pages are separated by "\\n\\f" (form feed at the start of each new page), like pdftotext.
 
-Which files to process is defined by data/raw/manifest.csv (column `file`).
-Existing .txt files are overwritten.
+Which files to process is defined by the set's manifest.csv (column `file`): data/raw/
+for the Working Set, data/holdout/ for the Held-out Set (step 12). Existing .txt files
+are overwritten.
 
-Usage:  python scripts/extract_text.py
+Usage:  python scripts/extract_text.py [--set raw|holdout]   (default: raw)
 """
 
+import argparse
 import csv
 from pathlib import Path
 
 from pypdf import PdfReader
 
-RAW = Path("data/raw")
+parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+parser.add_argument("--set", choices=["raw", "holdout"], default="raw")
+RAW = Path("data") / parser.parse_args().set
 MANIFEST = RAW / "manifest.csv"
 LIGATURES = str.maketrans({"ﬀ": "ff", "ﬁ": "fi", "ﬂ": "fl", "ﬃ": "ffi", "ﬄ": "ffl"})
 

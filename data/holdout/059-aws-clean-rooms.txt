@@ -1,0 +1,819 @@
+AWS General Reference                                                                                  Reference guide
+AWS Clean Rooms endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+Service endpoints
+
+
+ Region         Region        Endpoint                                                  Protocol
+ Name
+
+ US East        us-east-2     cleanrooms.us-east-2.amazonaws.com                        HTTPS
+ (Ohio)
+                              cleanrooms-fips.us-east-2.api.aws                          HTTPS
+
+                              cleanrooms.us-east-2.api.aws                              HTTPS
+
+                              cleanrooms-fips.us-east-2.amazonaws.com                    HTTPS
+
+ US             us-east-1     cleanrooms.us-east-1.amazonaws.com                        HTTPS
+ East (N.
+ Virginia)                    cleanrooms-fips.us-east-1.api.aws                          HTTPS
+
+                              cleanrooms-fips.us-east-1.amazonaws.com                    HTTPS
+
+                              cleanrooms.us-east-1.api.aws                              HTTPS
+
+ US West        us-           cleanrooms.us-west-2.amazonaws.com                        HTTPS
+ (Oregon)       west-2
+                              cleanrooms-fips.us-west-2.api.aws                          HTTPS
+
+                              cleanrooms.us-west-2.api.aws                              HTTPS
+
+                              cleanrooms-fips.us-west-2.amazonaws.com                    HTTPS
+
+
+
+AWS Clean Rooms                                                                                        Version 1.0 801
+AWS General Reference                                                                                 Reference guide
+
+ Region        Region         Endpoint                                                 Protocol
+ Name
+
+ Asia          ap-            cleanrooms.ap-northeast-2.amazonaws.com                  HTTPS
+ Pacific        northe
+ (Seoul)       ast-2          cleanrooms.ap-northeast-2.api.aws                        HTTPS
+
+
+ Asia          ap-            cleanrooms.ap-southeast-1.amazonaws.com                  HTTPS
+ Pacific        southe
+ (Singapor     ast-1          cleanrooms.ap-southeast-1.api.aws                        HTTPS
+
+ e)
+
+ Asia          ap-            cleanrooms.ap-southeast-2.amazonaws.com                  HTTPS
+ Pacific        southe
+ (Sydney)      ast-2          cleanrooms.ap-southeast-2.api.aws                        HTTPS
+
+
+ Asia          ap-            cleanrooms.ap-northeast-1.amazonaws.com                  HTTPS
+ Pacific        northe
+ (Tokyo)       ast-1          cleanrooms.ap-northeast-1.api.aws                        HTTPS
+
+
+ Europe        eu-            cleanrooms.eu-central-1.amazonaws.com                    HTTPS
+ (Frankfur     central-1
+ t)                           cleanrooms.eu-central-1.api.aws                          HTTPS
+
+
+ Europe        eu-            cleanrooms.eu-west-1.amazonaws.com                       HTTPS
+ (Ireland)     west-1
+                              cleanrooms.eu-west-1.api.aws                             HTTPS
+
+ Europe        eu-            cleanrooms.eu-west-2.amazonaws.com                       HTTPS
+ (London)      west-2
+                              cleanrooms.eu-west-2.api.aws                             HTTPS
+
+ Europe        eu-            cleanrooms.eu-north-1.amazonaws.com                      HTTPS
+ (Stockhol     north-1
+ m)                           cleanrooms.eu-north-1.api.aws                            HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                     Version 1.0 802
+AWS General Reference                                                                                    Reference guide
+Service quotas
+
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Analysis rule size                                 Each supported           No      Maximum size of JSON
+                                                    Region: 100                      for an analysis rule
+                                                    Kilobytes
+
+ Analysis templates per membership                  Each supported           Yes     Maximum number of
+                                                    Region: 100                      analysis templates per
+                                                                                     membership
+
+ CR.1X workers per PySpark job                      Each supported           Yes     Maximum number
+                                                    Region: 128                      of CR.1X workers per
+                                                                                     PySpark job
+
+ CR.4X workers per PySpark job                      Each supported           Yes     Maximum number
+                                                    Region: 32                       of CR.4X workers per
+                                                                                     PySpark job
+
+ Collaborations created per account                 Each supported           Yes     Maximum number of
+                                                    Region: 500                      collaborations created
+                                                                                     per account
+
+ Columns per configured table allowlist              Each supported           Yes     Maximum number of
+                                                    Region: 100                      columns that can be
+                                                                                     allowlisted per configure
+                                                                                     d table
+
+ Concurrent PySpark job vCPU usage                  us-east-1: 1,024         Yes     Maximum total vCPU
+ per account                                                                         usage of all concurrently
+                                                    Each of the                      running PySpark jobs per
+                                                    other supported                  account
+                                                    Regions: 512
+
+ Concurrent PySpark jobs per account                us-east-1: 5             Yes     Maximum number of
+                                                                                     concurrently running
+                                                                                     PySpark jobs per account
+
+
+
+Service quotas                                                                                           Version 1.0 803
+AWS General Reference                                                                                   Reference guide
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+                                                   Each of the
+                                                   other supported
+                                                   Regions: 2
+
+ Concurrent SQL queries per account                us-east-1: 5             Yes      Maximum number of
+                                                                                     concurrently running
+                                                   Each of the                       SQL queries per account
+                                                   other supported
+                                                   Regions: 2
+
+ Concurrent SQL query vCPU usage per               Each supported           Yes      Maximum total vCPU
+ account                                           Region: 512                       usage of all concurrently
+                                                                                     running SQL queries per
+                                                                                     account
+
+ Concurrent ongoing job per membershi              Each supported           Yes      Maximum number of
+ p                                                 Region: 1                         concurrent ongoing jobs
+                                                                                     per membership
+
+ Concurrent ongoing log exports per                Each supported           Yes      Maximum number of
+ account                                           Region: 10                        concurrent ongoing log
+                                                                                     exports per account
+
+ Concurrent ongoing log exports per                Each supported           Yes      Maximum number of
+ membership                                        Region: 5                         concurrent ongoing log
+                                                                                     exports per membership
+
+ Concurrent ongoing queries per                    Each supported           No       Maximum number of
+ membership                                        Region: 5                         concurrent ongoing
+                                                                                     queries per membership
+
+ Configured audience model associati                Each supported           Yes      Maximum number of
+ ons per membership                                Region: 5                         configured audience
+                                                                                     model associations per
+                                                                                     membership
+
+
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 804
+AWS General Reference                                                                                   Reference guide
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Configured tables per account                      Each supported           Yes      Maximum number of
+                                                   Region: 250                       configured tables created
+                                                                                     per account
+
+ Configured tables per protected query              Each supported           Yes      Maximum number of
+                                                   Region: 15                        configured tables in a
+                                                                                     protected query
+
+ ID mapping tables per membership                  Each supported           Yes      Maximum number of
+                                                   Region: 5                         ID mapping tables per
+                                                                                     membership
+
+ ID namespace associations per                     Each supported           Yes      Maximum number of ID
+ membership                                        Region: 10                        namespace associations
+                                                                                     per membership
+
+ Intermediate tables per membership                Each supported           Yes      Maximum number of
+                                                   Region: 25                        intermediate tables per
+                                                                                     membership
+
+ Members invited per collaboration                 Each supported           Yes      Maximum number of
+                                                   Region: 5                         members invited per
+                                                                                     collaboration
+
+ Memberships per account                           Each supported           Yes      Maximum number
+                                                   Region: 500                       of memberships per
+                                                                                     account
+
+ Privacy budget templates for access               Each supported           Yes      Maximum number of
+ budgets per collaboration                         Region: 25                        privacy budget templates
+                                                                                     for access budgets per
+                                                                                     collaboration
+
+ Query text length (using differential              Each supported           No       Maximum text length for
+ privacy)                                          Region: 8                         a SQL query statement
+                                                   Kilobytes                         using differential privacy
+
+
+
+
+Service quotas                                                                                          Version 1.0 805
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Query text length on Clean Rooms SQL               Each supported           No       Maximum text length for
+ analytics engine                                   Region: 90                        a SQL query statement
+                                                    Kilobytes                         on Clean Rooms SQL
+                                                                                      analytics engine
+
+ Query text length on Spark analytics               Each supported           No       Maximum text length for
+ engine                                             Region: 500                       a SQL query statement
+                                                    Kilobytes                         on Spark analytics
+                                                                                      engine
+
+ Rate of BatchGetCollaborationAnalys                Each supported           Yes      Maximum number of
+ isTemplate requests                                Region: 5 per                     BatchGetCollaborat
+                                                    second                            ionAnalysisTemplate API
+                                                                                      calls per second
+
+ Rate of BatchGetSchema requests                    Each supported           Yes      Maximum number of
+                                                    Region: 5 per                     BatchGetSchema API
+                                                    second                            calls per second
+
+ Rate of BatchGetSchemaAnalysisRule                 Each supported           Yes      Maximum number of
+ requests                                           Region: 5 per                     BatchGetSchemaAnal
+                                                    second                            ysisRule API calls per
+                                                                                      second
+
+ Rate of CreateAnalysisTemplate                     Each supported           Yes      Maximum number of
+ requests                                           Region: 5 per                     CreateAnalysisTemplate
+                                                    second                            API calls per second
+
+ Rate of CreateCollaboration requests               Each supported           Yes      Maximum number of
+                                                    Region: 5 per                     CreateCollaboration API
+                                                    second                            calls per second
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 806
+AWS General Reference                                                                                   Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Rate of CreateCollaborationChangeRe                Each supported           Yes     Maximum number of
+ quest requests                                     Region: 5 per                    CreateCollaboratio
+                                                    second                           nChangeRequest API
+                                                                                     calls per second
+
+ Rate of CreateConfiguredAudienceMod                 Each supported           Yes     Maximum number of
+ elAssociation requests                             Region: 5 per                    CreateConfiguredAu
+                                                    second                           dienceModelAssociation
+                                                                                     API calls per second
+
+ Rate of CreateConfiguredTable                       Each supported           Yes     Maximum number of
+ requests                                           Region: 5 per                    CreateConfiguredTable
+                                                    second                           API calls per second
+
+ Rate of CreateConfiguredTableAnalys                 Each supported           Yes     Maximum number of
+ isRule requests                                    Region: 5 per                    CreateConfiguredTa
+                                                    second                           bleAnalysisRule API calls
+                                                                                     per second
+
+ Rate of CreateConfiguredTableAssoci                 Each supported           Yes     Maximum number of
+ ation requests                                     Region: 5 per                    CreateConfiguredTa
+                                                    second                           bleAssociation API calls
+                                                                                     per second
+
+ Rate of CreateConfiguredTableAssoci                 Each supported           Yes     Maximum number of
+ ationAnalysisRule requests                         Region: 5 per                    CreateConfiguredTa
+                                                    second                           bleAssociationAnal
+                                                                                     ysisRule API calls per
+                                                                                     second
+
+ Rate of CreateIdMappingTable requests              Each supported           Yes     Maximum number of
+                                                    Region: 5 per                    CreateIdMappingTable
+                                                    second                           API calls per second
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 807
+AWS General Reference                                                                                   Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Rate of CreateIdNamespaceAssociation               Each supported           Yes     Maximum number of
+ requests                                           Region: 5 per                    CreateIdNamespaceA
+                                                    second                           ssociation API calls per
+                                                                                     second
+
+ Rate of CreateMembership requests                  Each supported           Yes     Maximum number of
+                                                    Region: 5 per                    CreateMembership API
+                                                    second                           calls per second
+
+ Rate of CreatePrivacyBudgetTemplate                Each supported           Yes     Maximum number of
+ requests                                           Region: 5 per                    CreatePrivacyBudge
+                                                    second                           tTemplate API calls per
+                                                                                     second
+
+ Rate of DeleteAnalysisTemplate                     Each supported           Yes     Maximum number of
+ requests                                           Region: 5 per                    DeleteAnalysisTemplate
+                                                    second                           API calls per second
+
+ Rate of DeleteCollaboration requests               Each supported           Yes     Maximum number of
+                                                    Region: 5 per                    DeleteCollaboration API
+                                                    second                           calls per second
+
+ Rate of DeleteConfiguredAudienceMod                 Each supported           Yes     Maximum number of
+ elAssociation requests                             Region: 5 per                    DeleteConfiguredAu
+                                                    second                           dienceModelAssociation
+                                                                                     API calls per second
+
+ Rate of DeleteConfiguredTable                       Each supported           Yes     Maximum number of
+ requests                                           Region: 5 per                    DeleteConfiguredTable
+                                                    second                           API calls per second
+
+ Rate of DeleteConfiguredTableAnalys                 Each supported           Yes     Maximum number of
+ isRule requests                                    Region: 5 per                    DeleteConfiguredTa
+                                                    second                           bleAnalysisRule API calls
+                                                                                     per second
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 808
+AWS General Reference                                                                                   Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Rate of DeleteConfiguredTableAssoci                 Each supported           Yes     Maximum number of
+ ation requests                                     Region: 5 per                    DeleteConfiguredTa
+                                                    second                           bleAssociation API calls
+                                                                                     per second
+
+ Rate of DeleteConfiguredTableAssoci                 Each supported           Yes     Maximum number of
+ ationAnalysisRule requests                         Region: 5 per                    DeleteConfiguredTa
+                                                    second                           bleAssociationAnal
+                                                                                     ysisRule API calls per
+                                                                                     second
+
+ Rate of DeleteIdMappingTable requests              Each supported           Yes     Maximum number of
+                                                    Region: 5 per                    DeleteIdMappingTable
+                                                    second                           API calls per second
+
+ Rate of DeleteIdNamespaceAssociation               Each supported           Yes     Maximum number of
+ requests                                           Region: 5 per                    DeleteIdNamespaceA
+                                                    second                           ssociation API calls per
+                                                                                     second
+
+ Rate of DeleteMember requests                      Each supported           Yes     Maximum number of
+                                                    Region: 5 per                    DeleteMember API calls
+                                                    second                           per second
+
+ Rate of DeleteMembership requests                  Each supported           Yes     Maximum number of
+                                                    Region: 5 per                    DeleteMembership API
+                                                    second                           calls per second
+
+ Rate of DeletePrivacyBudgetTemplate                Each supported           Yes     Maximum number of
+ requests                                           Region: 5 per                    DeletePrivacyBudge
+                                                    second                           tTemplate API calls per
+                                                                                     second
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 809
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Rate of GetAnalysisLogExport requests              Each supported           Yes      Maximum number of
+                                                    Region: 5 per                     GetAnalysisLogExport
+                                                    second                            API calls per second
+
+ Rate of GetAnalysisTemplate requests               Each supported           Yes      Maximum number of
+                                                    Region: 5 per                     GetAnalysisTemplate API
+                                                    second                            calls per second
+
+ Rate of GetCollaboration requests                  Each supported           Yes      Maximum number of
+                                                    Region: 5 per                     GetCollaboration API
+                                                    second                            calls per second
+
+ Rate of GetCollaborationAnalysisTem                Each supported           Yes      Maximum number of
+ plate requests                                     Region: 5 per                     GetCollaborationAn
+                                                    second                            alysisTemplate API calls
+                                                                                      per second
+
+ Rate of GetCollaborationChangeReque                Each supported           Yes      Maximum number of
+ st requests                                        Region: 5 per                     GetCollaborationCh
+                                                    second                            angeRequest API calls
+                                                                                      per second
+
+ Rate of GetCollaborationConfiguredA                 Each supported           Yes      Maximum number of
+ udienceModelAssociation requests                   Region: 5 per                     GetCollaborationCo
+                                                    second                            nfiguredAudienceMo
+                                                                                      delAssociation API calls
+                                                                                      per second
+
+ Rate of GetCollaborationIdNamespace                Each supported           Yes      Maximum number of
+ Association requests                               Region: 5 per                     GetCollaborationId
+                                                    second                            NamespaceAssociation
+                                                                                      API calls per second
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 810
+AWS General Reference                                                                                   Reference guide
+
+ Name                                              Default                   Adjustabl Description
+                                                                             e
+
+ Rate of GetCollaborationPrivacyBudg               Each supported            Yes     Maximum number of
+ etTemplate requests                               Region: 5 per                     GetCollaborationPr
+                                                   second                            ivacyBudgetTemplate
+                                                                                     API calls per second
+
+ Rate of GetConfiguredAudienceModelA                Each supported            Yes     Maximum number of
+ ssociation requests                               Region: 5 per                     GetConfiguredAudie
+                                                   second                            nceModelAssociation API
+                                                                                     calls per second
+
+ Rate of GetConfiguredTable requests                Each supported            Yes     Maximum number of
+                                                   Region: 20 per                    GetConfiguredTable API
+                                                   second                            calls per second
+
+ Rate of GetConfiguredTableAnalysisR                Each supported            Yes     Maximum number of
+ ule requests                                      Region: 5 per                     GetConfiguredTable
+                                                   second                            AnalysisRule API calls per
+                                                                                     second
+
+ Rate of GetConfiguredTableAssociation              Each supported            Yes     Maximum number of
+ requests                                          Region: 5 per                     GetConfiguredTable
+                                                   second                            Association API calls per
+                                                                                     second
+
+ Rate of GetConfiguredTableAssociati                Each supported            Yes     Maximum number of
+ onAnalysisRule requests                           Region: 5 per                     GetConfiguredTable
+                                                   second                            AssociationAnalysisRule
+                                                                                     API calls per second
+
+ Rate of GetIdMappingTable requests                Each supported            Yes     Maximum number of
+                                                   Region: 5 per                     GetIdMappingTable API
+                                                   second                            calls per second
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 811
+AWS General Reference                                                                                   Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Rate of GetIdNamespaceAssociation                  Each supported           Yes     Maximum number of
+ requests                                           Region: 5 per                    GetIdNamespaceAsso
+                                                    second                           ciation API calls per
+                                                                                     second
+
+ Rate of GetMembership requests                     Each supported           Yes     Maximum number of
+                                                    Region: 5 per                    GetMembership API calls
+                                                    second                           per second
+
+ Rate of GetPrivacyBudgetTemplate                   Each supported           Yes     Maximum number of
+ requests                                           Region: 5 per                    GetPrivacyBudgetTe
+                                                    second                           mplate API calls per
+                                                                                     second
+
+ Rate of GetProtectedJob requests                   Each supported           Yes     Maximum number of
+                                                    Region: 5 per                    GetProtectedJob API
+                                                    second                           calls per second
+
+ Rate of GetProtectedQuery requests                 Each supported           Yes     Maximum number of
+                                                    Region: 20 per                   GetProtectedQuery API
+                                                    second                           calls per second
+
+ Rate of GetSchema requests                         Each supported           Yes     Maximum number of
+                                                    Region: 5 per                    GetSchema API calls per
+                                                    second                           second
+
+ Rate of GetSchemaAnalysisRule                      Each supported           Yes     Maximum number of
+ requests                                           Region: 5 per                    GetSchemaAnalysisRule
+                                                    second                           API calls per second
+
+ Rate of ListAnalysisLogExports                     Each supported           Yes     Maximum number of
+ requests                                           Region: 5 per                    ListAnalysisLogExports
+                                                    second                           API calls per second
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 812
+AWS General Reference                                                                                     Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+ Rate of ListAnalysisTemplates requests             Each supported            Yes      Maximum number of
+                                                    Region: 5 per                      ListAnalysisTemplates
+                                                    second                             API calls per second
+
+ Rate of ListCollaborationAnalysisTe                Each supported            Yes      Maximum number of
+ mplates requests                                   Region: 5 per                      ListCollaborationA
+                                                    second                             nalysisTemplates API
+                                                                                       calls per second
+
+ Rate of ListCollaborationChangeRequ                Each supported            Yes      Maximum number of
+ ests requests                                      Region: 5 per                      ListCollaborationC
+                                                    second                             hangeRequests API calls
+                                                                                       per second
+
+ Rate of ListCollaborationConfigured                 Each supported            Yes      Maximum number of
+ AudienceModelAssociations requests                 Region: 5 per                      ListCollaborationC
+                                                    second                             onfiguredAudienceM
+                                                                                       odelAssociations API
+                                                                                       calls per second
+
+ Rate of ListCollaborationIdNamespac                Each supported            Yes      Maximum number
+ eAssociations requests                             Region: 5 per                      of ListCollaborationI
+                                                    second                             dNamespaceAssociations
+                                                                                       API calls per second
+
+ Rate of ListCollaborationPrivacyBud                Each supported            Yes      Maximum number of
+ getTemplates requests                              Region: 5 per                      ListCollaborationP
+                                                    second                             rivacyBudgetTemplates
+                                                                                       API calls per second
+
+ Rate of ListCollaborationPrivacyBud                Each supported            Yes      Maximum number of
+ gets requests                                      Region: 5 per                      ListCollaborationP
+                                                    second                             rivacyBudgets API calls
+                                                                                       per second
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 813
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Rate of ListCollaborations requests                Each supported           Yes      Maximum number of
+                                                    Region: 5 per                     ListCollaborations API
+                                                    second                            calls per second
+
+ Rate of ListConfiguredAudienceModel                 Each supported           Yes      Maximum number of
+ Associations requests                              Region: 5 per                     ListConfiguredAudi
+                                                    second                            enceModelAssociations
+                                                                                      API calls per second
+
+ Rate of ListConfiguredTableAssociat                 Each supported           Yes      Maximum number of
+ ions requests                                      Region: 5 per                     ListConfiguredTabl
+                                                    second                            eAssociations API calls
+                                                                                      per second
+
+ Rate of ListConfiguredTables requests               Each supported           Yes      Maximum number of
+                                                    Region: 5 per                     ListConfiguredTables API
+                                                    second                            calls per second
+
+ Rate of ListIdMappingTables requests               Each supported           Yes      Maximum number of
+                                                    Region: 5 per                     ListIdMappingTables API
+                                                    second                            calls per second
+
+ Rate of ListIdNamespaceAssociations                Each supported           Yes      Maximum number of
+ requests                                           Region: 5 per                     ListIdNamespaceAss
+                                                    second                            ociations API calls per
+                                                                                      second
+
+ Rate of ListMembers requests                       Each supported           Yes      Maximum number of
+                                                    Region: 5 per                     ListMembers API calls
+                                                    second                            per second
+
+ Rate of ListMemberships requests                   Each supported           Yes      Maximum number of
+                                                    Region: 5 per                     ListMemberships API
+                                                    second                            calls per second
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 814
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                   Adjustabl Description
+                                                                              e
+
+ Rate of ListPrivacyBudgetTemplates                 Each supported            Yes     Maximum number of
+ requests                                           Region: 5 per                     ListPrivacyBudgetT
+                                                    second                            emplates API calls per
+                                                                                      second
+
+ Rate of ListPrivacyBudgets requests                Each supported            Yes     Maximum number of
+                                                    Region: 5 per                     ListPrivacyBudgets API
+                                                    second                            calls per second
+
+ Rate of ListProtectedJobs requests                 Each supported            Yes     Maximum number of
+                                                    Region: 5 per                     ListProtectedJobs API
+                                                    second                            calls per second
+
+ Rate of ListProtectedQueries requests              Each supported            Yes     Maximum number of
+                                                    Region: 5 per                     ListProtectedQueries API
+                                                    second                            calls per second
+
+ Rate of ListSchemas requests                       Each supported            Yes     Maximum number of
+                                                    Region: 5                         ListSchemas API calls per
+                                                                                      second
+
+ Rate of ListTagsForResource requests               Each supported            Yes     Maximum number of
+                                                    Region: 5 per                     ListTagsForResource API
+                                                    second                            calls per second
+
+ Rate of PopulateIdMappingTable                     Each supported            Yes     Maximum number of
+ requests                                           Region: 5 per                     PopulateIdMappingTable
+                                                    second                            API calls per second
+
+ Rate of PreviewPrivacyImpact requests              Each supported            Yes     Maximum number of
+                                                    Region: 5 per                     PreviewPrivacyImpact
+                                                    second                            API calls per second
+
+ Rate of StartAnalysisLogExport                     Each supported            Yes     Maximum number of
+ requests                                           Region: 5 per                     StartAnalysisLogExport
+                                                    second                            API calls per second
+
+
+
+
+Service quotas                                                                                            Version 1.0 815
+AWS General Reference                                                                                   Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Rate of StartProtectedJob requests                 Each supported           Yes     Maximum number of
+                                                    Region: 5 per                    StartProtectedJob API
+                                                    second                           calls per second
+
+ Rate of StartProtectedQuery requests               Each supported           Yes     Maximum number of
+                                                    Region: 5 per                    StartProtectedQuery API
+                                                    second                           calls per second
+
+ Rate of TagResource requests                       Each supported           Yes     Maximum number of
+                                                    Region: 5 per                    TagResource API calls per
+                                                    second                           second
+
+ Rate of UntagResource requests                     Each supported           Yes     Maximum number of
+                                                    Region: 5 per                    UntagResource API calls
+                                                    second                           per second
+
+ Rate of UpdateAnalysisTemplate                     Each supported           Yes     Maximum number of
+ requests                                           Region: 5 per                    UpdateAnalysisTemplate
+                                                    second                           API calls per second
+
+ Rate of UpdateCollaboration requests               Each supported           Yes     Maximum number of
+                                                    Region: 5 per                    UpdateCollaboration API
+                                                    second                           calls per second
+
+ Rate of UpdateCollaborationChangeRe                Each supported           Yes     Maximum number of
+ quest requests                                     Region: 5 per                    UpdateCollaboratio
+                                                    second                           nChangeRequest API
+                                                                                     calls per second
+
+ Rate of UpdateConfiguredAu                          Each supported           Yes     Maximum number of
+ dienceModelAssociation requests                    Region: 5 per                    UpdateConfiguredAu
+                                                    second                           dienceModelAssociation
+                                                                                     API calls per second
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                           Version 1.0 816
+AWS General Reference                                                                                   Reference guide
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ Rate of UpdateConfiguredTable                      Each supported           Yes      Maximum number of
+ requests                                          Region: 5 per                     UpdateConfiguredTable
+                                                   second                            API calls per second
+
+ Rate of UpdateConfiguredTableAnalys                Each supported           Yes      Maximum number of
+ isRule requests                                   Region: 5 per                     UpdateConfiguredTa
+                                                   second                            bleAnalysisRule API calls
+                                                                                     per second
+
+ Rate of UpdateConfiguredTableAssoci                Each supported           Yes      Maximum number of
+ ation requests                                    Region: 5 per                     UpdateConfiguredTa
+                                                   second                            bleAssociation API calls
+                                                                                     per second
+
+ Rate of UpdateConfiguredTableAssoci                Each supported           Yes      Maximum number of
+ ationAnalysisRule requests                        Region: 5 per                     UpdateConfiguredTa
+                                                   second                            bleAssociationAnal
+                                                                                     ysisRule API calls per
+                                                                                     second
+
+ Rate of UpdateIdMappingTable                      Each supported           Yes      Maximum number of
+ requests                                          Region: 5 per                     UpdateIdMappingTable
+                                                   second                            API calls per second
+
+ Rate of UpdateIdNamespaceAssociatio               Each supported           Yes      Maximum number of
+ n requests                                        Region: 5 per                     UpdateIdNamespaceA
+                                                   second                            ssociation API calls per
+                                                                                     second
+
+ Rate of UpdatePrivacyBudgetTemplate               Each supported           Yes      Maximum number of
+ requests                                          Region: 5 per                     UpdatePrivacyBudge
+                                                   second                            tTemplate API calls per
+                                                                                     second
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                          Version 1.0 817

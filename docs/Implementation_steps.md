@@ -22,7 +22,8 @@ Apply to every step and are not repeated in the steps:
 - **The contract is the source of truth.** Code is checked against `stage1-data-contract.md`; a decision
   that changes it is first a contract amendment (and an ADR if a principle changes), then code.
 - **Money before the run.** Before every Claude run — an estimate via `count_tokens`, stated
-  and agreed; actual spend goes into section 5 after the run. The limit is $5 for the whole of HW 1.
+  and agreed; actual spend goes into section 5 after the run. The limit is $10 for the whole of HW 1
+  ($5 until 25.10; raised for the held-out runs, see section 5).
 - **Keys only in `.env`**, only `.env.example` in Git.
 - **Nothing in `data/` is deleted** — only moved.
 - **One branch = one step = one PR**; before a PR, `make check` is green; commit/push only on
@@ -62,6 +63,7 @@ Apply to every step and are not repeated in the steps:
 | 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ✅ PR #19 (`0869fda`); Q&A feedback → `patch-9.1` |
 | 10 | Run provenance: `prompt_sha` / `schema_sha` in every record (Q&A feedback, remark 2) | `step-10-run-provenance` | review ~15 min | step 3: logging (2); repo quality | 25.10 | ✅ PR #21 (`095b560`); guard 🔄 branch `patch-10.1-provenance-guard` |
 | 11 | Source-grounded validation G1–G3, `validation_version`, gold `038` re-check (remark 1) | `step-11-grounded-validation` | review ~30 min + gold `038` ~30 min | step 3: validation (3); repo quality | 25.10 | 🔄 branch `step-11-grounded-validation` |
+| 12 | Held-out Set: 10 unseen documents, gold for 5, runs with the `__holdout` scope (remark 4) | `step-12-holdout` | review ~15 min + gold ×5 ~1.5 h | step 3 (3); repo quality | 26.10 | 🔄 branch `step-12-holdout` |
 
 ## 4. Steps
 
@@ -471,6 +473,33 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     file stays as the start of `claude__v2__t0__val2` (the full re-run resumes into it).
     217 tests.
 
+### Step 12 — Held-out Set (lecturer's remark 4 of 24.10)
+
+- **Remark:** "check prompt improvements on data you had not seen when writing them" — v2 was
+  written from the v1 errors on the same 30 documents it is measured on (REPORT, Limitations).
+- **Goal:** the v1 → v2 difference measured on documents the prompt author never saw.
+- **Files:** `data/holdout/` (manifest, 10 texts; PDFs ignored), `data/holdout/gold/` (5),
+  `scripts/select_docs.py` / `extract_text.py` (`--set`), `src/extract/pipeline.py`
+  (`DocumentSet`, `__holdout` in the run id), `main.py` (`--set`), `src/extract/metrics.py`
+  (set-aware), `scripts/make_gold_drafts.py` / `check_gold.py` (`--set`), `Makefile`
+  (`SET=`), `tests/test_holdout.py`, contract item 20, `data-notes.md`.
+- **Done when:** the set is disjoint from the Working Set and documented; the five gold files
+  are checked; v1 and v2 run on it for both models within the budget; REPORT has an
+  out-of-sample table.
+- **Open:** the runs, in this order: (1) `claude__v2__t0__holdout__gold__val2` (5 documents,
+  ≈ $0.2) — the gold draft, checked by Petro against the PDF; (2)
+  `claude__v1__t0__holdout__gold__val2` (≈ $0.2); (3) `qwen2.5-7b__v1__t0__holdout__val2` and
+  `qwen2.5-7b__v2__t0__holdout__val2` on all ten, $0, ≈ 45 min each. Budget decision 25.10
+  (variant B): both Claude prompt versions on the held-out gold, ≈ $0.4 → ≈ $5.13, over the
+  original $5; Petro raised the HW 1 limit to $10 for this.
+- **Done:**
+  - 25.10, selection and code: 10 documents by a fixed rule (seed 20261025) — the pool had no
+    `short` document left, so 6 `medium` + 4 `edge`; copied and extracted on the laptop,
+    word counts equal to the pool profile for all ten. `DocumentSet` names a folder, its
+    manifest, its gold folder and its run id scope; `WORKING_SET` and `HOLDOUT_SET`;
+    everything that read `data/raw` or `data/gold` takes the set (`main.py --set`,
+    metrics by the run id, the two gold scripts, `make … SET=holdout`). 223 tests.
+
 ## 5. Run matrix and budget
 
 | Run id | Step | Required | Cost estimate | Actual |
@@ -485,7 +514,8 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 | `qwen2.5-7b__v2__t05` | 8 | desirable | $0 | **$0**, 113 min — 21 `ok`, 1 `repaired`, 8 `failed` (24.10) |
 | `claude__v2__t05` | 8 | no (budget decision 21.10) | ≈$1.8 | — |
 
-**API budget:** $5 for the whole of HW 1. Spent before the full `claude__v1__t0` run: **$0.42** — three
+**API budget:** $5 for the whole of HW 1 until 25.10, **$10** since (raised by Petro for the
+held-out runs after the lecturer's feedback; the $5 plan below is the history). Spent before the full `claude__v1__t0` run: **$0.42** — three
 S3 calls: at 16384, cut off ($0.22, `results/trials/…max-tokens-16384`); at 32000 before the enum
 descriptions reached the model ($0.10, `results/trials/…before-enum-descriptions`); at 32000 with the
 fixed schema ($0.10, the record in `claude__v1__t0`).
@@ -498,7 +528,11 @@ fixed schema ($0.10, the record in `claude__v1__t0`).
 $3.20 against an estimate of ≈ $1.3.
 
 **Spent after `claude__v2__t0` (24.10): ≈ $3.13** — $1.80 + $1.28 + ≈ $0.05 (F16). ≈ $1.87 reserve; no
-further Claude run is planned (`claude__v2__t05` stays dropped).
+further Claude run was planned (`claude__v2__t05` stays dropped).
+
+**Spent after `claude__v2__t0__val2` (25.10): ≈ $4.73** — $3.13 + $0.08 (the `038` document) + $1.52
+(the re-run under validation "2": 35 calls, more output than `claude__v2__t0`). The held-out runs
+(step 12, ≈ $0.4) take it to ≈ $5.13: limit raised to $10 on 25.10 (variant B).
 
 **Budget decision (21.10, variant A).** Three full Claude runs would cost ≈ $5.2, over the limit. Per-field
 accuracy — the main comparison — is computed on the Golden Set only (contract item 17), so
@@ -564,3 +598,5 @@ and the PR that closed it.
 | 24.10 | Patch 9.2: README "Stage 1 results" with the five main runs and the conclusion, pointing to `REPORT.md`; F16 accepted as is |
 | 24.10 | Lecturer's feedback after the checkpoint, four remarks: (1) validation grounded in the source text, (2) run tied to the exact prompt and schema, (3) long documents in parts, (4) prompt changes checked on unseen data. Steps 10–13 planned in that order of cost: 10 provenance, 11 grounded validation, 12 held-out set, 13 chunking (13-lite before the deadline, full after) |
 | 24.10 | Step 11: run id gets `__val<N>` for a validation other than the first (contract item 11); `validation_version` in every record (item 12); contract item 7 — every Standard Quota Table of the chapter counts; F18 gold `038` |
+| 25.10 | Step 12: the Held-out Set (contract item 20) — 10 pool documents outside the Working Set, gold for 5, `__holdout` run id scope; no `short` document was left in the pool |
+| 25.10 | API budget raised from $5 to $10 (Petro) for the held-out runs — variant B: Claude v1 and v2 on the five held-out gold documents |

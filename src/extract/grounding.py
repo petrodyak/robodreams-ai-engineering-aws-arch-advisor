@@ -105,7 +105,9 @@ def printed_hostnames(chapter: str) -> list[str]:
 # "Adjustable" sits on the next line and is not needed to recognise the header. All four
 # columns are required (GLOSSARY, Standard Quota Table): `038` prints ten tables with
 # "Name | Default | Adjustable" or "… | Notes" — those are non_standard (ADR-0001).
-_QUOTA_HEADER_RE = re.compile(r"\bName\b.{2,}\bDefault\b.{2,}\bAdjustabl.*\bDescription\b")
+_QUOTA_HEADER_RE = re.compile(
+    r"\bName\b.{2,}\bDefault\b.{2,}\bAdjustabl.*\bDescription\b"
+)
 
 
 def printed_quota_names(chapter: str) -> list[str]:

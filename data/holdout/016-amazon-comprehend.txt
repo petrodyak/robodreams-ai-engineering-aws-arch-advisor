@@ -1,0 +1,928 @@
+AWS General Reference                                                                                    Reference guide
+Amazon Cognito Sync
+
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ Bulk publish wait time                             Each supported           No       The maximum wait time
+                                                    Region: 24                        for a bulk publish after
+                                                                                      a successful request in
+                                                                                      hours.
+
+ Dataset name size                                  Each supported           No       The maximum size of a
+                                                    Region: 128 Bytes                 dataset name in bytes.
+
+ Dataset size                                       Each supported           Yes      The maximum size of a
+                                                    Region: 1                         dataset in megabytes.
+                                                    Megabytes
+
+ Datasets per identity                              Each supported           Yes      The maximum number of
+                                                    Region: 20                        datasets per identity.
+
+ Records per dataset                                Each supported           Yes      The maximum number of
+                                                    Region: 1,024                     records per dataset.
+
+
+
+For more information, see Quotas in Amazon Cognito in the Amazon Cognito Developer Guide.
+
+Amazon Comprehend endpoints and quotas
+
+To connect programmatically to an AWS service, you use an endpoint. AWS services offer the
+following endpoint types in some or all of the AWS Regions that the service supports: IPv4
+endpoints, dual-stack endpoints, and FIPS endpoints. Some services provide global endpoints. For
+more information, see AWS service endpoints.
+
+Service quotas, also referred to as limits, are the maximum number of service resources or
+operations for your AWS account. For more information, see AWS service quotas.
+
+The following are the service endpoints and service quotas for this service.
+
+
+
+
+
+Amazon Comprehend                                                                                        Version 1.0 1146
+AWS General Reference                                                                              Reference guide
+Service endpoints
+
+
+
+ Region        Region        Endpoint                                                Protocol
+ Name
+
+ US East       us-east-2     comprehend.us-east-2.amazonaws.com                      HTTPS
+ (Ohio)
+                             comprehend.us-east-2.api.aws                            HTTPS
+
+                             comprehend-fips.us-east-2.amazonaws.com                  HTTPS
+
+                             comprehend-fips.us-east-2.api.aws                        HTTPS
+
+ US            us-east-1     comprehend.us-east-1.amazonaws.com                      HTTPS
+ East (N.
+ Virginia)                   comprehend-fips.us-east-1.amazonaws.com                  HTTPS
+
+                             comprehend-fips.us-east-1.api.aws                        HTTPS
+
+                             comprehend.us-east-1.api.aws                            HTTPS
+
+ US West       us-           comprehend.us-west-2.amazonaws.com                      HTTPS
+ (Oregon)      west-2
+                             comprehend-fips.us-west-2.amazonaws.com                  HTTPS
+
+                             comprehend.us-west-2.api.aws                            HTTPS
+
+                             comprehend-fips.us-west-2.api.aws                        HTTPS
+
+ Asia          ap-           comprehend.ap-south-1.amazonaws.com                     HTTPS
+ Pacific        south-1
+ (Mumbai)                    comprehend.ap-south-1.api.aws                           HTTPS
+
+
+ Asia          ap-           comprehend.ap-northeast-2.amazonaws.com                 HTTPS
+ Pacific        northe
+ (Seoul)       ast-2         comprehend.ap-northeast-2.api.aws                       HTTPS
+
+
+ Asia          ap-           comprehend.ap-southeast-1.amazonaws.com                 HTTPS
+ Pacific        southe
+               ast-1         comprehend.ap-southeast-1.api.aws                       HTTPS
+
+
+
+
+
+Service endpoints                                                                                 Version 1.0 1147
+AWS General Reference                                                                                Reference guide
+
+ Region        Region        Endpoint                                                 Protocol
+ Name
+
+ (Singapor
+ e)
+
+ Asia          ap-           comprehend.ap-southeast-2.amazonaws.com                  HTTPS
+ Pacific        southe
+ (Sydney)      ast-2         comprehend.ap-southeast-2.api.aws                        HTTPS
+
+
+ Asia          ap-           comprehend.ap-northeast-1.amazonaws.com                  HTTPS
+ Pacific        northe
+ (Tokyo)       ast-1         comprehend.ap-northeast-1.api.aws                        HTTPS
+
+
+ Canada        ca-centra     comprehend.ca-central-1.amazonaws.com                    HTTPS
+ (Central)     l-1
+                             comprehend.ca-central-1.api.aws                          HTTPS
+
+                             comprehend-fips.ca-central-1.amazonaws.com                HTTPS
+
+                             comprehend-fips.ca-central-1.api.aws                      HTTPS
+
+ Europe        eu-           comprehend.eu-central-1.amazonaws.com                    HTTPS
+ (Frankfur     central-1
+ t)                          comprehend.eu-central-1.api.aws                          HTTPS
+
+
+ Europe        eu-           comprehend.eu-west-1.amazonaws.com                       HTTPS
+ (Ireland)     west-1
+                             comprehend.eu-west-1.api.aws                             HTTPS
+
+ Europe        eu-           comprehend.eu-west-2.amazonaws.com                       HTTPS
+ (London)      west-2
+                             comprehend.eu-west-2.api.aws                             HTTPS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service endpoints                                                                                   Version 1.0 1148
+AWS General Reference                                                                                   Reference guide
+
+ Region         Region        Endpoint                                                   Protocol
+ Name
+
+ AWS            us-gov-       comprehend.us-gov-west-1.amazonaws.com                     HTTPS
+ GovCloud       west-1
+ (US-                         comprehend-fips.us-gov-west-1.api.aws                       HTTPS
+
+ West)                        comprehend-fips.us-gov-west-1.amazon                        HTTPS
+
+                              aws.com
+                                                                                         HTTPS
+                              comprehend.us-gov-west-1.api.aws
+
+
+Service quotas
+
+
+
+ Name                                              Default                  Adjustabl Description
+                                                                            e
+
+ BatchDetectDominantLanguage                       Each supported           Yes      The maximum number
+ throttle limit in transactions per second         Region: 25                        of BatchDetectDominan
+                                                                                     tLanguage requests
+                                                                                     allowed per account per
+                                                                                     second, in the current
+                                                                                     Region
+
+ BatchDetectEntities throttle limit in             Each supported           Yes      The maximum number
+ transactions per second                           Region: 25                        of BatchDetectEntitie
+                                                                                     s requests allowed per
+                                                                                     account per second, in
+                                                                                     the current Region
+
+ BatchDetectKeyPhrases throttle limit in           Each supported           Yes      The maximum number
+ transactions per second                           Region: 25                        of BatchDetectKeyPhra
+                                                                                     ses requests allowed per
+                                                                                     account per second, in
+                                                                                     the current Region
+
+
+
+
+
+
+
+
+Service quotas                                                                                         Version 1.0 1149
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ BatchDetectSentiment throttle limit in              Each supported            Yes      The maximum number
+ transactions per second                             Region: 25                         of BatchDetectSentime
+                                                                                        nt requests allowed per
+                                                                                        account per second, in
+                                                                                        the current Region
+
+ BatchDetectSyntax throttle limit in                 Each supported            Yes      The maximum number
+ transactions per second                             Region: 25                         of BatchDetectSyntax
+                                                                                        requests allowed per
+                                                                                        account per second, in
+                                                                                        the current Region
+
+ BatchDetectTargetedSentiment                        Each supported            Yes      The maximum number
+ throttle limit in transactions per second           Region: 25                         of BatchDetectTargete
+                                                                                        dSentiment requests
+                                                                                        allowed per account per
+                                                                                        second, in the current
+                                                                                        Region
+
+ ContainsPiiEntities throttle limit in               Each supported            Yes      The maximum number
+ transactions per second                             Region: 25                         of ContainsPiiEntities
+                                                                                        requests allowed per
+                                                                                        account per second, in
+                                                                                        the current Region
+
+ CreateDocumentClassifier max active                  Each supported            Yes      The maximum number
+ jobs                                                Region: 10                         of active jobs for API
+                                                                                        CreateDocumentClas
+                                                                                        sifier allowed per
+                                                                                        account, in the current
+                                                                                        Region
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1150
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ CreateDocumentClassifier throttle limit              Each supported            No      The maximum number
+ in transactions per second                          Region: 1                         of CreateDocumentClas
+                                                                                       sifier requests allowed
+                                                                                       per account per second,
+                                                                                       in the current Region
+
+ CreateEntityRecognizer max active jobs              Each supported            Yes     The maximum number
+                                                     Region: 10                        of active jobs for API
+                                                                                       CreateEntityRecognizer
+                                                                                       allowed per account, in
+                                                                                       the current Region
+
+ CreateEntityRecognizer throttle limit in            Each supported            No      The maximum number
+ transactions per second                             Region: 1                         of CreateEntityRecogn
+                                                                                       izer requests allowed per
+                                                                                       account per second, in
+                                                                                       the current Region
+
+ CreateFlywheel max active flywheels                  Each supported            Yes     The maximum number
+                                                     Region: 20                        of flywheels that can be
+                                                                                       active concurrently per
+                                                                                       account, in the current
+                                                                                       Region
+
+ CreateFlywheel max concurrent                       Each supported            Yes     The maximum number
+                                                     Region: 10                        of flywheels that can be
+                                                                                       created concurrently per
+                                                                                       account, in the current
+                                                                                       region
+
+ Datasets max concurrent creates                     Each supported            Yes     The maximum number
+                                                     Region: 10                        of datasets in creating
+                                                                                       state per account, in the
+                                                                                       current Region
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1151
+AWS General Reference                                                                                     Reference guide
+
+ Name                                                Default                  Adjustabl Description
+                                                                              e
+
+ DeleteDocumentClassifier throttle limit              Each supported           No       The maximum number
+ in transactions per second                          Region: 1                         of DeleteDocumentClas
+                                                                                       sifier requests allowed
+                                                                                       per account per second,
+                                                                                       in the current Region
+
+ DeleteEntityRecognizer throttle limit in            Each supported           No       The maximum number
+ transactions per second                             Region: 1                         of DeleteEntityRecogn
+                                                                                       izer requests allowed per
+                                                                                       account per second, in
+                                                                                       the current Region
+
+ DescribeDocumentClassificationJob                    Each supported           No       The maximum number
+ throttle limit in transactions per second           Region: 10                        of DescribeDocumentCl
+                                                                                       assificationJob requests
+                                                                                       allowed per account per
+                                                                                       second, in the current
+                                                                                       Region
+
+ DescribeDocumentClassifier throttle                  Each supported           No       The maximum number
+ limit in transactions per second                    Region: 10                        of DescribeDocumentCl
+                                                                                       assifier requests allowed
+                                                                                       per account per second,
+                                                                                       in the current Region
+
+ DescribeDominantLanguageDet                         Each supported           No       The maximum number
+ ectionJob throttle limit in transactions            Region: 10                        of DescribeDominantLa
+ per second                                                                            nguageDetectionJob
+                                                                                       requests allowed per
+                                                                                       account per second, in
+                                                                                       the current Region
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1152
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ DescribeEntitiesDetectionJob throttle               Each supported            No       The maximum number
+ limit in transactions per second                    Region: 10                         of DescribeEntitiesDe
+                                                                                        tectionJob requests
+                                                                                        allowed per account per
+                                                                                        second, in the current
+                                                                                        Region
+
+ DescribeEntityRecognizer throttle limit             Each supported            No       The maximum number
+ in transactions per second                          Region: 10                         of DescribeEntityReco
+                                                                                        gnizer requests allowed
+                                                                                        per account per second,
+                                                                                        in the current Region
+
+ DescribeEventsDetectionJob throttle                 Each supported            No       The maximum number
+ limit in transactions per second                    Region: 10                         of DescribeEventsDete
+                                                                                        ctionJob requests
+                                                                                        allowed per account per
+                                                                                        second, in the current
+                                                                                        Region
+
+ DescribeKeyPhrasesDetectionJob                      Each supported            No       The maximum number
+ throttle limit in transactions per second           Region: 10                         of DescribeKeyPhrases
+                                                                                        DetectionJob requests
+                                                                                        allowed per account per
+                                                                                        second, in the current
+                                                                                        Region
+
+ DescribePiiEntitiesDetectionJob                     Each supported            No       The maximum number
+ throttle limit in transactions per second           Region: 10                         of DescribePiiEntitie
+                                                                                        sDetectionJob requests
+                                                                                        allowed per account per
+                                                                                        second, in the current
+                                                                                        Region
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1153
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ DescribeSentimentDetectionJob                       Each supported            No      The maximum number
+ throttle limit in transactions per second           Region: 10                        of DescribeSentimentD
+                                                                                       etectionJob requests
+                                                                                       allowed per account per
+                                                                                       second, in the current
+                                                                                       Region
+
+ DescribeTargetedSentimentDe                         Each supported            No      The maximum number
+ tectionJob throttle limit in transactions           Region: 10                        of DescribeTargetedSe
+ per second                                                                            ntimentDetectionJob
+                                                                                       requests allowed per
+                                                                                       account per second, in
+                                                                                       the current Region
+
+ DescribeTopicsDetectionJob throttle                 Each supported            No      The maximum number
+ limit in transactions per second                    Region: 10                        of DescribeTopicsDete
+                                                                                       ctionJob requests
+                                                                                       allowed per account per
+                                                                                       second, in the current
+                                                                                       Region
+
+ DetectDominantLanguage throttle                     us-east-1: 200            Yes     The maximum number
+ limit in transactions per second                                                      of DetectDominantLang
+                                                     Each of the                       uage requests allowed
+                                                     other supported                   per account per second,
+                                                     Regions: 50                       in the current Region
+
+
+ DetectEntities throttle limit in transacti          us-east-1: 100            Yes     The maximum number of
+ ons per second                                                                        DetectEntities requests
+                                                     Each of the                       allowed per account per
+                                                     other supported                   second, in the current
+                                                     Regions: 25                       Region
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1154
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ DetectKeyPhrases throttle limit in                  us-east-1: 50             Yes      The maximum number
+ transactions per second                                                                of DetectKeyPhrases
+                                                     Each of the                        requests allowed per
+                                                     other supported                    account per second, in
+                                                     Regions: 25                        the current Region
+
+
+ DetectPiiEntities throttle limit in                 us-east-1: 200            Yes      The maximum number
+ transactions per second                                                                of DetectPiiEntities
+                                                     us-west-2: 100                     requests allowed per
+
+                                                     Each of the                        account per second, in
+                                                     other supported                    the current Region
+
+                                                     Regions: 50
+
+ DetectSentiment throttle limit in                   us-east-1: 200            Yes      The maximum number
+ transactions per second                                                                of DetectSentiment
+                                                     us-west-2: 100                     requests allowed per
+
+                                                     Each of the                        account per second, in
+                                                     other supported                    the current Region
+
+                                                     Regions: 50
+
+ DetectSyntax throttle limit in transacti            Each supported            Yes      The maximum number
+ ons per second                                      Region: 25                         of DetectSyntax requests
+                                                                                        allowed per account per
+                                                                                        second, in the current
+                                                                                        Region
+
+ DetectTargetedSentiment throttle limit              Each supported            Yes      The maximum number
+ in transactions per second                          Region: 25                         of DetectTargetedSent
+                                                                                        iment requests allowed
+                                                                                        per account per second,
+                                                                                        in the current Region
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1155
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ DetectToxicContent throttle limit in                Each supported            Yes     The maximum number
+ transactions per second                             Region: 25                        of DetectToxicContent
+                                                                                       requests allowed per
+                                                                                       account per second, in
+                                                                                       the current Region
+
+ Endpoints max active endpoints                      Each supported            Yes     The maximum number
+                                                     Region: 20                        of active endpoints
+                                                                                       allowed per account in
+                                                                                       the current Region
+
+ Endpoints max inference units per                   Each supported            Yes     The maximum number of
+ account                                             Region: 200                       inference units allowed
+                                                                                       per account in the
+                                                                                       current Region
+
+ Endpoints max inference units per                   Each supported            Yes     The maximum number of
+ endpoint                                            Region: 50                        inference units allowed
+                                                                                       per endpoint in the
+                                                                                       current Region
+
+ ListDocumentClassificationJobs                       Each supported            No      The maximum number
+ throttle limit in transactions per second           Region: 10                        of ListDocumentClassi
+                                                                                       ficationJobs requests
+                                                                                       allowed per account per
+                                                                                       second, in the current
+                                                                                       Region
+
+ ListDocumentClassifiers throttle limit in            Each supported            No      The maximum number
+ transactions per second                             Region: 10                        of ListDocumentClassi
+                                                                                       fiers requests allowed
+                                                                                       per account per second,
+                                                                                       in the current Region
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1156
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ ListDominantLanguageDetectionJobs                   Each supported            No       The maximum number
+ throttle limit in transactions per second           Region: 10                         of ListDominantLangua
+                                                                                        geDetectionJobs
+                                                                                        requests allowed per
+                                                                                        account per second, in
+                                                                                        the current Region
+
+ ListEntitiesDetectionJobs throttle limit            Each supported            No       The maximum number of
+ in transactions per second                          Region: 10                         ListEntitiesDetectionJobs
+                                                                                        requests allowed per
+                                                                                        account per second, in
+                                                                                        the current Region
+
+ ListEntityRecognizers throttle limit in             Each supported            No       The maximum number
+ transactions per second                             Region: 10                         of ListEntityRecogniz
+                                                                                        ers requests allowed per
+                                                                                        account per second, in
+                                                                                        the current Region
+
+ ListEventsDetectionJobs throttle limit              Each supported            No       The maximum number
+ in transactions per second                          Region: 10                         of ListEventsDetectio
+                                                                                        nJobs requests allowed
+                                                                                        per account per second,
+                                                                                        in the current Region
+
+ ListKeyPhrasesDetectionJobs throttle                Each supported            No       The maximum number
+ limit in transactions per second                    Region: 10                         of ListKeyPhrasesDete
+                                                                                        ctionJobs requests
+                                                                                        allowed per account per
+                                                                                        second, in the current
+                                                                                        Region
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1157
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ ListPiiEntitiesDetectionJobs throttle               Each supported            No       The maximum number
+ limit in transactions per second                    Region: 10                         of ListPiiEntitiesDet
+                                                                                        ectionJobs requests
+                                                                                        allowed per account per
+                                                                                        second, in the current
+                                                                                        Region
+
+ ListSentimentDetectionJobs throttle                 Each supported            No       The maximum number
+ limit in transactions per second                    Region: 10                         of ListSentimentDetec
+                                                                                        tionJobs requests
+                                                                                        allowed per account per
+                                                                                        second, in the current
+                                                                                        Region
+
+ ListTagsForResource throttle limit in               Each supported            No       The maximum number
+ transactions per second                             Region: 10                         of ListTagsForResourc
+                                                                                        e requests allowed per
+                                                                                        account per second, in
+                                                                                        the current Region
+
+ ListTargetedSentimentDetectionJobs                  Each supported            No       The maximum number
+ throttle limit in transactions per second           Region: 10                         of ListTargetedSentim
+                                                                                        entDetectionJobs
+                                                                                        requests allowed per
+                                                                                        account per second, in
+                                                                                        the current Region
+
+ ListTopicsDetectionJobs throttle limit              Each supported            No       The maximum number
+ in transactions per second                          Region: 10                         of ListTopicsDetectio
+                                                                                        nJobs requests allowed
+                                                                                        per account per second,
+                                                                                        in the current Region
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1158
+AWS General Reference                                                                                    Reference guide
+
+ Name                                               Default                  Adjustabl Description
+                                                                             e
+
+ MaxTestDatasets per flywheel                        Each supported           Yes      The maximum number
+                                                    Region: 50                        of test datasets per
+                                                                                      flywheel
+
+ MaxTrainDatasets per flywheel                       Each supported           Yes      The maximum number
+                                                    Region: 50                        of training datasets per
+                                                                                      flywheel
+
+ StartDocumentClassificationJob max                  Each supported           Yes      The maximum number
+ active jobs                                        Region: 10                        of active jobs for API
+                                                                                      StartDocumentClass
+                                                                                      ificationJob allowed per
+                                                                                      account, in the current
+                                                                                      Region
+
+ StartDocumentClassificationJob                      Each supported           No       The maximum number
+ throttle limit in transactions per second          Region: 1                         of StartDocumentClass
+                                                                                      ificationJob requests
+                                                                                      allowed per account per
+                                                                                      second, in the current
+                                                                                      Region
+
+ StartDominantLanguageDetectionJob                  Each supported           Yes      The maximum number
+ max active jobs                                    Region: 10                        of active jobs for API
+                                                                                      StartDominantLangu
+                                                                                      ageDetectionJob allowed
+                                                                                      per account, in the
+                                                                                      current Region
+
+ StartDominantLanguageDetectionJob                  Each supported           No       The maximum number
+ throttle limit in transactions per second          Region: 1                         of StartDominantLangu
+                                                                                      ageDetectionJob
+                                                                                      requests allowed per
+                                                                                      account per second, in
+                                                                                      the current Region
+
+
+
+
+Service quotas                                                                                           Version 1.0 1159
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ StartEntitiesDetectionJob max active                Each supported            Yes      The maximum number
+ jobs                                                Region: 10                         of active jobs for API
+                                                                                        StartEntitiesDetec
+                                                                                        tionJob allowed per
+                                                                                        account, in the current
+                                                                                        Region
+
+ StartEntitiesDetectionJob throttle limit            Each supported            No       The maximum number
+ in transactions per second                          Region: 1                          of StartEntitiesDetec
+                                                                                        tionJob requests allowed
+                                                                                        per account per second,
+                                                                                        in the current Region
+
+ StartEventsDetectionJob max active                  Each supported            Yes      The maximum number
+ jobs                                                Region: 10                         of active jobs for API
+                                                                                        StartEventsDetectionJob
+                                                                                        allowed per account, in
+                                                                                        the current Region
+
+ StartEventsDetectionJob throttle limit              Each supported            No       The maximum number
+ in transactions per second                          Region: 1                          of StartEventsDetecti
+                                                                                        onJob requests allowed
+                                                                                        per account per second,
+                                                                                        in the current Region
+
+ StartFlywheelIteration max concurrent               Each supported            Yes      The maximum number of
+ flywheel iterations                                  Region: 10                         flywheel iterations that
+                                                                                        you can run concurren
+                                                                                        tly per account, in the
+                                                                                        current Region
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1160
+AWS General Reference                                                                                       Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ StartKeyPhrasesDetectionJob max                     Each supported            Yes      The maximum number
+ active jobs                                         Region: 10                         of active jobs for API
+                                                                                        StartKeyPhrasesDet
+                                                                                        ectionJob allowed per
+                                                                                        account, in the current
+                                                                                        Region
+
+ StartKeyPhrasesDetectionJob throttle                Each supported            No       The maximum number
+ limit in transactions per second                    Region: 1                          of StartKeyPhrasesDet
+                                                                                        ectionJob requests
+                                                                                        allowed per account per
+                                                                                        second, in the current
+                                                                                        Region
+
+ StartPiiEntitiesDetectionJob max active             Each supported            Yes      The maximum number
+ jobs                                                Region: 10                         of active jobs for API
+                                                                                        StartPiiEntitiesDe
+                                                                                        tectionJob allowed per
+                                                                                        account, in the current
+                                                                                        Region
+
+ StartPiiEntitiesDetectionJob throttle               Each supported            No       The maximum number
+ limit in transactions per second                    Region: 1                          of StartPiiEntitiesDe
+                                                                                        tectionJob requests
+                                                                                        allowed per account per
+                                                                                        second, in the current
+                                                                                        Region
+
+ StartSentimentDetectionJob max                      Each supported            Yes      The maximum number
+ active jobs                                         Region: 10                         of active jobs for API
+                                                                                        StartSentimentDete
+                                                                                        ctionJob allowed per
+                                                                                        account, in the current
+                                                                                        Region
+
+
+
+
+
+Service quotas                                                                                             Version 1.0 1161
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ StartSentimentDetectionJob throttle                 Each supported            No      The maximum number
+ limit in transactions per second                    Region: 1                         of StartSentimentDete
+                                                                                       ctionJob requests
+                                                                                       allowed per account per
+                                                                                       second, in the current
+                                                                                       Region
+
+ StartTargetedSentimentDetectionJob                  Each supported            Yes     The maximum number
+ max active jobs                                     Region: 10                        of active jobs for API
+                                                                                       StartTargetedSenti
+                                                                                       mentDetectionJob
+                                                                                       allowed per account, in
+                                                                                       the current Region
+
+ StartTargetedSentimentDetectionJob                  Each supported            No      The maximum number
+ throttle limit in transactions per second           Region: 1                         of StartTargetedSenti
+                                                                                       mentDetectionJob
+                                                                                       requests allowed per
+                                                                                       account per second, in
+                                                                                       the current Region
+
+ StartTopicsDetectionJob max active                  Each supported            Yes     The maximum number
+ jobs                                                Region: 10                        of active jobs for API
+                                                                                       StartTopicsDetectionJob
+                                                                                       allowed per account, in
+                                                                                       the current Region
+
+ StartTopicsDetectionJob throttle limit              Each supported            No      The maximum number
+ in transactions per second                          Region: 1                         of StartTopicsDetecti
+                                                                                       onJob requests allowed
+                                                                                       per account per second,
+                                                                                       in the current Region
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1162
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ StopDominantLanguageDetectionJob                    Each supported            No      The maximum number
+ throttle limit in transactions per second           Region: 1                         of StopDominantLangua
+                                                                                       geDetectionJob requests
+                                                                                       allowed per account per
+                                                                                       second, in the current
+                                                                                       Region
+
+ StopEntitiesDetectionJob throttle limit             Each supported            No      The maximum number
+ in transactions per second                          Region: 1                         of StopEntitiesDetect
+                                                                                       ionJob requests allowed
+                                                                                       per account per second,
+                                                                                       in the current Region
+
+ StopEventsDetectionJob throttle limit               Each supported            No      The maximum number
+ in transactions per second                          Region: 1                         of StopEventsDetectio
+                                                                                       nJob requests allowed
+                                                                                       per account per second,
+                                                                                       in the current Region
+
+ StopKeyPhrasesDetectionJob throttle                 Each supported            No      The maximum number
+ limit in transactions per second                    Region: 1                         of StopKeyPhrasesDete
+                                                                                       ctionJob requests
+                                                                                       allowed per account per
+                                                                                       second, in the current
+                                                                                       Region
+
+ StopPiiEntitiesDetectionJob throttle                Each supported            No      The maximum number
+ limit in transactions per second                    Region: 1                         of StopPiiEntitiesDet
+                                                                                       ectionJob requests
+                                                                                       allowed per account per
+                                                                                       second, in the current
+                                                                                       Region
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1163
+AWS General Reference                                                                                      Reference guide
+
+ Name                                                Default                   Adjustabl Description
+                                                                               e
+
+ StopSentimentDetectionJob throttle                  Each supported            No      The maximum number
+ limit in transactions per second                    Region: 1                         of StopSentimentDetec
+                                                                                       tionJob requests allowed
+                                                                                       per account per second,
+                                                                                       in the current Region
+
+ StopTargetedSentimentDetectionJob                   Each supported            No      The maximum number
+ throttle limit in transactions per second           Region: 1                         of StopTargetedSentim
+                                                                                       entDetectionJob
+                                                                                       requests allowed per
+                                                                                       account per second, in
+                                                                                       the current Region
+
+ StopTrainingDocumentClassifier                      Each supported            No      The maximum number
+ throttle limit in transactions per second           Region: 1                         of StopTrainingDocume
+                                                                                       ntClassifier requests
+                                                                                       allowed per account per
+                                                                                       second, in the current
+                                                                                       Region
+
+ StopTrainingEntityRecognizer throttle               Each supported            No      The maximum number
+ limit in transactions per second                    Region: 1                         of StopTrainingEntity
+                                                                                       Recognizer requests
+                                                                                       allowed per account per
+                                                                                       second, in the current
+                                                                                       Region
+
+ TagResource throttle limit in transacti             Each supported            No      The maximum number
+ ons per second                                      Region: 1                         of TagResource requests
+                                                                                       allowed per account per
+                                                                                       second, in the current
+                                                                                       Region
+
+
+
+
+
+
+
+
+
+
+Service quotas                                                                                            Version 1.0 1164
