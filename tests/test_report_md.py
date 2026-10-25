@@ -15,6 +15,7 @@ def record(file, status, output, error, **usage):
             "prompt_version": "v1",
             "prompt_sha": "8a0da697aa92",
             "schema_sha": "d4010de95c65",
+            "validation_version": "2",
             "sampling": T0,
             "attempts": 2 if status == Status.REPAIRED else 1,
             "latency_ms": 1234,

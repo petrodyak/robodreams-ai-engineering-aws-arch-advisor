@@ -4,10 +4,12 @@ Decisions reached in the design interview of 2026-10-15, amended on 2026-10-16 (
 14, 16; review of the earlier schema grill against this contract) and on 2026-10-21 (items 14,
 15, 16, 18; the S3 trial call and the reviews of step 4; item 6, the Golden Set check of
 step 5; on 2026-10-22 items 11, 14, 18 for the Ollama provider and the Golden-Set-only run of
-step 6; on 2026-10-24 item 12 for run provenance). Terms are defined in
+step 6; on 2026-10-24 item 12 for run provenance, items 7, 9, 11, 12, 16 for grounded
+validation). Terms are defined in
 [`GLOSSARY.md`](../GLOSSARY.md); the decisions that are hard to reverse have ADRs
 ([0001](adr/0001-standard-quota-tables-only.md), [0002](adr/0002-model-extracts-code-derives.md),
-[0003](adr/0003-format-checks-are-validation-failures.md)).
+[0003](adr/0003-format-checks-are-validation-failures.md),
+[0005](adr/0005-validation-grounded-in-the-source.md)).
 This file is the single list to check code against; it is not a spec of the implementation.
 
 ## Unit of extraction
@@ -37,8 +39,10 @@ This file is the single list to check code against; it is not a spec of the impl
    `region_code`; dual-stack when the domain is `api.aws` / `on.aws` or a label is `dualstack`;
    FIPS when the hostname contains `fips`; both → `fips_dual_stack`; otherwise `ipv4`.
 7. `quotas: list[QuotaRow]` — `name`, `default: str`, `adjustable: bool`, `description`. Only
-   rows of a Standard Quota Table (ADR-0001). `adjustable` is required: the column is always
-   printed as Yes/No.
+   rows of a Standard Quota Table (ADR-0001); the rows of every Standard Quota Table of the
+   Target Service's chapter (24.10: `038` prints eleven of them under sub-headings, one per
+   product line — all of them count, as every endpoints table does in item 6). `adjustable`
+   is required: the column is always printed as Yes/No.
 8. `default` is the printed text, not a parsed number (ADR-0002). Multi-region cells are
    serialised as `"us-east-1: 20,000; us-east-2: 6,000"` — separator `; `, table order;
    `"Each supported Region: 10,000"` stays verbatim. The convention lives in the field's
@@ -49,7 +53,13 @@ This file is the single list to check code against; it is not a spec of the impl
    validation failures (ADR-0003): `region_code` must match an AWS Region code
    (`^[a-z]{2}(-gov)?-[a-z]+-\d+$`), `endpoint` must be a hostname without spaces on an AWS
    domain (`amazonaws.com`, `amazonaws.com.cn`, `api.aws`, `on.aws`), and `quotas` must be
-   empty unless `quota_table_format` is `standard`.
+   empty unless `quota_table_format` is `standard`. On top of those, since 24.10 every answer
+   is grounded in the chapter it was extracted from (ADR-0005, `src/extract/grounding.py`):
+   every `endpoint` must be printed in the Endpoint column of an endpoints table of the
+   chapter, every quota `name` must be the Name cell of a Standard Quota Table row (whitespace
+   collapsed, or with all whitespace removed for a name the PDF wrapped mid-word), and
+   `quota_table_format` is `standard` if and only if the chapter prints a Standard Quota
+   Table header. A grounding violation is a validation failure like the three above.
 
 ## Golden Set
 
@@ -66,15 +76,21 @@ This file is the single list to check code against; it is not a spec of the impl
     `qwen2.5-7b__v2__t05`. A run over the Golden Set only adds the scope suffix `__gold`
     (`claude__v1__t05__gold`, budget decision of 21.10): the scope is part of the name, so a
     later full run with the same model, prompt and sampling never resumes into its file.
+    A run judged by a validation other than the first adds `__val<N>` after the scope
+    (`claude__v2__t0__val2`, 24.10): the runs of validation "1" keep their names, and a
+    re-run under grounding never shares a file with them.
 12. `results/runs/jsonl/<run_id>.jsonl`, one Run Record per document:
-    `file, group, model, prompt_version, prompt_sha, schema_sha, sampling, attempts,
+    `file, group, model, prompt_version, prompt_sha, schema_sha, validation_version, sampling, attempts,
     latency_ms, usage{input_tokens, output_tokens}, status (ok | repaired | failed), output
     (Service Document | null), error`. `prompt_sha` and `schema_sha` (24.10) are the first 12
     hex chars of sha256 of the prompt file and of the JSON Schema text sent to the model: the
-    run id names a configuration, the two shas pin the exact bytes the model saw. A prompt
-    version name and the shared `schema.py` can drift under a run (finding F17), so a resume
-    into a run file whose records carry another (prompt_sha, schema_sha) pair is refused
-    before any call, and metrics refuse a file that already mixes two pairs.
+    run id names a configuration, the two shas pin the exact bytes the model saw.
+    `validation_version` (24.10) names the validation that judged the answer: "1" = schema and
+    the checks of ADR-0003, "2" = "1" plus grounding (ADR-0005); the same answer can be `ok`
+    under "1" and `repaired` or `failed` under "2". A prompt version name and the shared
+    `schema.py` can drift under a run (finding F17), so a resume into a run file whose
+    records carry another (prompt_sha, schema_sha, validation_version) triple is refused
+    before any call, and metrics refuse a file that already mixes two.
     This file is the source of truth and the only one code reads. `results/runs/md/<run_id>.md`
     is its mirror for a person (summary table, then the endpoint and quota tables and the error
     text per document), rewritten from the whole JSONL after every record; its layout is free
@@ -110,8 +126,8 @@ This file is the single list to check code against; it is not a spec of the impl
     document): the document stays without a record, and item 18 counts it as failed. Tokens
     paid before such a failure (the first call when the repair call has no answer) are
     added to the run's cost summary.
-16. Repair: a response that fails schema validation, a format/consistency check (item 9) or
-    the `service` check gets exactly one
+16. Repair: a response that fails schema validation, a format/consistency check (item 9), a
+    grounding check (item 9, ADR-0005) or the `service` check gets exactly one
     corrective call carrying the previous answer and the validation error text. A second
     failure → `status: failed`. No blind re-sends with the same prompt. Exception: an answer
     cut off at `max_tokens` (`stop_reason: max_tokens`) is `failed` at once, without a repair

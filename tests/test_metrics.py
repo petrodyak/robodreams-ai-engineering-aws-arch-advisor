@@ -73,6 +73,7 @@ def record(
     model="claude-haiku-4-5",
     prompt_sha="8a0da697aa92",
     schema_sha="d4010de95c65",
+    validation_version="1",
 ):
     status = status or (Status.OK if output is not None else Status.FAILED)
     return RunRecord.model_validate(
@@ -83,6 +84,7 @@ def record(
             "prompt_version": "v1",
             "prompt_sha": prompt_sha,
             "schema_sha": schema_sha,
+            "validation_version": validation_version,
             "sampling": T0,
             "attempts": 1 if status == Status.OK else 2,
             "latency_ms": latency_ms,
@@ -125,6 +127,8 @@ def gold_dir(tmp_path):
         ("claude__v1__t0", "claude", "v1", "t0", False),
         ("qwen2.5-7b__v2__t05", "qwen2.5-7b", "v2", "t05", False),
         ("claude__v1__t05__gold", "claude", "v1", "t05", True),
+        ("claude__v2__t0__val2", "claude", "v2", "t0", False),
+        ("qwen2.5-7b__v2__t05__gold__val2", "qwen2.5-7b", "v2", "t05", True),
     ],
 )
 def test_parse_run_id(run_id, model, prompt, sampling, gold):
@@ -136,6 +140,7 @@ def test_parse_run_id(run_id, model, prompt, sampling, gold):
         gold,
     )
     assert run.scope == ("gold" if gold else "full")
+    assert run.validation == ("2" if run_id.endswith("__val2") else "1")
 
 
 def test_parse_run_id_rejects_other_names():
@@ -430,6 +435,15 @@ def test_provenance_is_one_pair_per_run_and_reported(gold_dir):
         "8a0da697aa92",
         "d4010de95c65",
     )
+
+
+def test_run_id_and_records_must_agree_on_the_validation(gold_dir):
+    v2 = {"validation_version": "2"}
+    records = [record(DOCS[0], GOLD_A, **v2), record(DOCS[2], GOLD_C, **v2)]
+    with pytest.raises(ValueError, match="validation"):
+        metrics.run_metrics("claude__v1__t05__gold", records, DOCS, gold_dir)
+    rows = metrics.run_metrics("claude__v1__t05__gold__val2", records, DOCS, gold_dir)
+    assert rows[-1].row()["validation_version"] == "2"
 
 
 def test_mixed_provenance_in_one_run_file_is_an_error(gold_dir):

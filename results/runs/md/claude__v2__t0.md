@@ -4,7 +4,7 @@ Generated from the JSONL run file by `src/extract/report_md.py`; do not edit.
 
 - Model: `claude-haiku-4-5`
 - Prompt version: `v2` (file sha `a3adf0379524`)
-- Schema sha: `d4010de95c65`
+- Schema sha: `d4010de95c65`; validation version `1`
 - Sampling: `t0` (temperature 0.0, top_p None)
 - Documents: 30
 
