@@ -12,14 +12,19 @@ validation (`claude__v2__t0__val2`, `qwen2.5-7b__v2__t0__val2`) and the four Hel
 file for `038` was corrected on 25.10 (finding F18), so the 24.10 runs' accuracy was
 recomputed against the corrected reference. Later code changes do not edit this report.
 
-**What changed since the first edition (lecturer's four remarks of 24.10).** (1) Validation
-is grounded in the source text — every endpoint and quota name must be printed in the
-chapter, and `quota_table_format` must follow the printed header (ADR-0005); the re-runs
-under it are the `__val2` rows and the old rows are kept as the before/after (§3.3). (2)
-Every record pins the exact prompt and schema it was made with (`prompt_sha`, `schema_sha`,
-`validation_version`). (3) A Held-out Set of 10 documents never seen while writing prompt v2
-gives the out-of-sample v1 → v2 numbers (§3.4). (4) Long documents in parts — not done:
-the output-cap failures stay as they are (error 4) and chunking is the planned next step.
+### The lecturer's remarks of 24.10 — how each was closed
+
+The first edition was reviewed with four remarks. One row per remark: the decision taken,
+the steps and PRs that carried it, and where in this report or the repository the evidence
+is. The detailed logs (goal, files, what was tried, what was rejected and why) are the
+step entries in `docs/Implementation_steps.md` §4.
+
+| # | Remark | Decision | Steps / PRs | Evidence |
+|---|---|---|---|---|
+| 1 | Validation should check the data against the **source**, not what the model copied from the prompt | A grounding layer after the schema, by code and the same for both models: G1 every `endpoint` is printed in the Endpoint column of an endpoints table of the Target Service's chapter; G2 every quota `name` is a Name cell of a Standard Quota Table of the chapter; G3 `quota_table_format` follows the printed header. A violation is a validation failure like a schema error and goes into the one repair call. Readers calibrated on the real data: every gold file passes, every flagged Claude row confirmed by hand; three reader faults fixed on the way, and one gold file found wrong (F18). `validation_version` in every record, `__val2` in the run id, so old and new judgements never mix | Step 11 — PR #23, PR #24 (gold `038`); re-runs PR #27 | ADR-0005; contract items 7, 9, 11, 12, 16; `src/extract/grounding.py`, `tests/test_grounding.py`; §3.3 of this report (validation 1 vs 2 on the same documents), error 2, F19 |
+| 2 | Tie every run to the **exact prompt and schema version** | Two fields in every Run Record: `prompt_sha` (sha256 of the prompt file bytes) and `schema_sha` (sha256 of the JSON Schema sent to the model), 12 hex chars, required. The eight earlier runs backfilled from git at the commit each was made. Two guards: `run()` refuses to resume a run file made with another prompt or schema (`ProvenanceMismatch`), and `make metrics` refuses a file whose records mix two pairs. A schema file per prompt version was rejected on purpose: the remark asks for a binding, not an isolation (one schema for all runs is contract item 1). Result in the data: F17 (`qwen2.5-7b__v1__t0` = v1 text + enum schema) is visible in `metrics.csv` and tested | Step 10 — PR #21, PR #22 (guard + property test) | Contract item 12; `prompts/CHANGELOG.md` version → sha table; `scripts/backfill_provenance.py`; `tests/test_provenance.py`; `prompt_sha` / `schema_sha` columns of `results/metrics.csv` and of §3 |
+| 3 | Process **long documents in parts** | **Not done.** Decision: not before the deadline — chunking changes what the model returns and what the code merges (ADR-0002 would need a new clause), and a day-old pipeline change would have had no time to be measured. The output-cap failures stay as error 4 (3 qwen documents, 0 Claude with the raised `max_tokens`); a design (split the chapter by its tables, one call per part, merge by code, validate the whole) is written and is the first step after HW 1 | — | §4 error 4, §6; `docs/Implementation_steps.md` deferred findings |
+| 4 | Test prompt improvements on **unseen data** | A Held-out Set: 10 pool documents outside the Working Set, selected by a fixed rule (seed 20261025), 6 `medium` + 4 `edge` (the pool had no `short` document left), gold for 5 drafted by a grounded Claude v2 run and checked against the PDF; `DocumentSet` in the code, `__holdout` scope in the run id, every reader of `data/raw` / `data/gold` takes the set. v1 and v2 run on it for both models — Claude on the five gold documents (budget raised $5 → $10 for this), qwen on all ten | Step 12 — PR #25, PR #26 (gold); runs PR #27 | Contract item 20; `data/holdout/`, `data/holdout/gold/README.md`; `tests/test_holdout.py`; §3.4 of this report (out of sample v1 → v2), §6 |
 
 ## 1. Summary
 
