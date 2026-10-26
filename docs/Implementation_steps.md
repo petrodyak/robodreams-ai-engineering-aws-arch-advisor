@@ -58,12 +58,12 @@ Apply to every step and are not repeated in the steps:
 | 4.1 | Status rows for steps 4 and 3.2 | `patch-4.1-step-4-status-row` | — | — | 21.10 | ✅ PR #11 (`462e69c`) |
 | 5 | Golden set: drafts → manual check against the PDF | `step-5-golden-set` | **~2–3 h** | step 2: correct measurements (part of 3) | 22.10 | ✅ PR #12 (`7d0d50a`) |
 | 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | ✅ PR #13 (`a7df1d4`) |
-| 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | 🔄 branch `step-7-metrics` |
-| 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ✅ PR #16 (`df1a8cd`); Claude v2 run PR #17 (`ea70c6e`); qwen runs 🔄 branch `patch-8.2-qwen-runs` |
-| 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ✅ PR #19 (`0869fda`); Q&A feedback → `patch-9.1` |
-| 10 | Run provenance: `prompt_sha` / `schema_sha` in every record (Q&A feedback, remark 2) | `step-10-run-provenance` | review ~15 min | step 3: logging (2); repo quality | 25.10 | ✅ PR #21 (`095b560`); guard 🔄 branch `patch-10.1-provenance-guard` |
-| 11 | Source-grounded validation G1–G3, `validation_version`, gold `038` re-check (remark 1) | `step-11-grounded-validation` | review ~30 min + gold `038` ~30 min | step 3: validation (3); repo quality | 25.10 | 🔄 branch `step-11-grounded-validation` |
-| 12 | Held-out Set: 10 unseen documents, gold for 5, runs with the `__holdout` scope (remark 4) | `step-12-holdout` | review ~15 min + gold ×5 ~1.5 h | step 3 (3); repo quality | 26.10 | ✅ PR #25 (`57a1a11`); gold 🔄 branch `patch-12.1-holdout-gold` |
+| 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | ✅ PR #14 (`1744709`); gold v1 runs PR #15 (`7c9342d`) |
+| 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ✅ PR #16 (`df1a8cd`); Claude v2 run PR #17 (`ea70c6e`); qwen runs PR #18 (`8dd84e7`) |
+| 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ✅ PR #19 (`0869fda`); README results PR #20 (`c4b6139`); second edition after the lecturer's remarks 🔄 branch `patch-12.2-val2-and-holdout-runs` (PR #27) |
+| 10 | Run provenance: `prompt_sha` / `schema_sha` in every record (Q&A feedback, remark 2) | `step-10-run-provenance` | review ~15 min | step 3: logging (2); repo quality | 25.10 | ✅ PR #21 (`095b560`); guard PR #22 (`721ab6b`) |
+| 11 | Source-grounded validation G1–G3, `validation_version`, gold `038` re-check (remark 1) | `step-11-grounded-validation` | review ~30 min + gold `038` ~30 min | step 3: validation (3); repo quality | 25.10 | ✅ PR #23 (`f51ebce`); gold `038` PR #24 (`7675345`); `__val2` re-runs 🔄 branch `patch-12.2-val2-and-holdout-runs` (PR #27) |
+| 12 | Held-out Set: 10 unseen documents, gold for 5, runs with the `__holdout` scope (remark 4) | `step-12-holdout` | review ~15 min + gold ×5 ~1.5 h | step 3 (3); repo quality | 26.10 | ✅ PR #25 (`57a1a11`); gold PR #26 (`900b1d9`); runs 🔄 branch `patch-12.2-val2-and-holdout-runs` (PR #27) |
 
 ## 4. Steps
 
@@ -434,9 +434,7 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 - **Done when:** every Golden Set file passes grounding (except `038` until re-checked);
   every row grounding flags in `claude__v2__t0` is a real error confirmed against the raw
   text; the v2 runs re-done under validation "2" and the report updated.
-- **Open:** (1) ✅ `patch-11.1-gold-038` — gold `038` → `standard` with the five rows of
-  its one Standard Quota Table (F18, below); (2) the re-runs `claude__v2__t0__val2` (≈ $1.3) and `qwen2.5-7b__v2__t0__val2` (≈ 100
-  min, more repair calls now); (3) REPORT §§3–5 with both validations side by side.
+- **Open:** nothing — F19 (the typographic apostrophe, below) is deferred.
 - **Done:**
   - 24.10, code: `Grounding.of(text, service)` reads the chapter once per document —
     hostnames of the Endpoint column of every endpoints table (wraps rejoined), Name cells
@@ -472,6 +470,19 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     every gold file passes grounding with zero errors; `make gold-check` clean. The run
     file stays as the start of `claude__v2__t0__val2` (the full re-run resumes into it).
     217 tests.
+  - 25–26.10, `patch-12.2-val2-and-holdout-runs`: the two re-runs under validation "2".
+    `claude__v2__t0__val2` — 25 `ok`, 4 `repaired`, 1 `failed`, 35 calls, $1.52, 27 min:
+    the four repairs are exactly the four true flags of the calibration (`038`, `091` G3;
+    `044` G1; `025` G2), each fixed by the repair call carrying the grounding error; gold
+    accuracy quotas P/R 98.1 / 100, format 10/10. The `failed` one is `010`: the repair fixed
+    the prose row (error 5) but wrote `doesn't` in a quota name where the PDF prints `doesn’t`
+    — G2 compares characters, so a correct answer was rejected (**F19**, deferred).
+    `qwen2.5-7b__v2__t0__val2` — 15 `ok`, 2 `repaired`, 13 `failed`, 143 min: 15 first
+    answers rejected (7 G1, 3 G2, 1 G3, 3 cut off, 1 malformed hostname), the repair fixed
+    the two Resource / Quota tables (`066`, `047` → no rows); precision on the finished
+    documents 99.5 / 96.4, recall 54.5 / 50.5 because a `failed` document counts as empty.
+    REPORT second edition: §3.3 validation 1 vs 2 on the same documents, §3.4 held-out,
+    error 2 and error 5 rewritten for `038` and `010`, §5 and §6 updated. 224 tests.
 
 ### Step 12 — Held-out Set (lecturer's remark 4 of 24.10)
 
@@ -486,12 +497,7 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 - **Done when:** the set is disjoint from the Working Set and documented; the five gold files
   are checked; v1 and v2 run on it for both models within the budget; REPORT has an
   out-of-sample table.
-- **Open:** the runs, in this order: (1) `claude__v2__t0__holdout__gold__val2` (5 documents,
-  ≈ $0.2) — the gold draft, checked by Petro against the PDF; (2)
-  `claude__v1__t0__holdout__gold__val2` (≈ $0.2); (3) `qwen2.5-7b__v1__t0__holdout__val2` and
-  `qwen2.5-7b__v2__t0__holdout__val2` on all ten, $0, ≈ 45 min each. Budget decision 25.10
-  (variant B): both Claude prompt versions on the held-out gold, ≈ $0.4 → ≈ $5.13, over the
-  original $5; Petro raised the HW 1 limit to $10 for this.
+- **Open:** nothing.
 - **Done:**
   - 25.10, selection and code: 10 documents by a fixed rule (seed 20261025) — the pool had no
     `short` document left, so 6 `medium` + 4 `edge`; copied and extracted on the laptop,
@@ -505,6 +511,17 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     exact-match comparison, now the same squash comparison as G2); checked by Petro against
     the PDF with no corrections. `data/holdout/gold/README.md`; a test that the five files
     load, match the manifest and are grounded. 224 tests.
+  - 25–26.10, `patch-12.2-val2-and-holdout-runs`: the four held-out runs, chained on the
+    laptop overnight (`claude__v1` then the two qwen runs, after the Working Set qwen
+    re-run). Budget decision 25.10 (variant B): both Claude prompt versions on the held-out
+    gold, ≈ $0.4; Petro raised the HW 1 limit to $10 for this. Results on the five gold
+    documents (390 endpoint rows, 105 quota rows): `claude__v1` 5/5 `ok`, endpoints P/R
+    100 / 91.8 — `068` Elastic Beanstalk 76 of 108 rows, the second endpoints table missed,
+    the same mechanism as `048` in the Working Set — quotas 100 / 100, $0.16;
+    `claude__v2` 5/5 `ok`, 100 / 100 on both, $0.17: the v2 gain is out of sample. qwen on
+    all ten: v1 3 `ok` / 2 `repaired` / 5 `failed`, endpoints 100 / 42.1, quotas 100 / 16.2,
+    format 2/5, 46 min; v2 5 `ok` / 5 `failed`, 100 / 55.4, 100 / 42.9, format 3/5, 42 min;
+    four documents fail under both prompts (`016`, `051`, `059`, `073`). REPORT §3.4.
 
 ## 5. Run matrix and budget
 
@@ -519,6 +536,12 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 | `qwen2.5-7b__v2__t0` | 8 | yes | $0 | **$0**, 99 min — 26 `ok`, 4 `failed`, no repair call (24.10) |
 | `qwen2.5-7b__v2__t05` | 8 | desirable | $0 | **$0**, 113 min — 21 `ok`, 1 `repaired`, 8 `failed` (24.10) |
 | `claude__v2__t05` | 8 | no (budget decision 21.10) | ≈$1.8 | — |
+| `claude__v2__t0__val2` | 11 | yes (remark 1: v2 under grounded validation) | ≈$1.3 + repairs | **$1.52** — 35 calls; 25 `ok`, 4 `repaired`, 1 `failed` (F19), 27 min (25.10) |
+| `qwen2.5-7b__v2__t0__val2` | 11 | yes | $0, ≈100 min | **$0**, 143 min — 15 `ok`, 2 `repaired`, 13 `failed` (25.10) |
+| `claude__v2__t0__holdout__gold__val2` | 12 | yes (also the held-out gold draft) | ≈$0.2 | **$0.17** — 5/5 `ok`, 5 calls (25.10) |
+| `claude__v1__t0__holdout__gold__val2` | 12 | yes (variant B, budget raised to $10) | ≈$0.2 | **$0.16** — 5/5 `ok`, 5 calls (25.10) |
+| `qwen2.5-7b__v1__t0__holdout__val2` | 12 | yes | $0, ≈45 min | **$0**, 46 min — 3 `ok`, 2 `repaired`, 5 `failed` (26.10) |
+| `qwen2.5-7b__v2__t0__holdout__val2` | 12 | yes | $0, ≈45 min | **$0**, 42 min — 5 `ok`, 5 `failed` (26.10) |
 
 **API budget:** $5 for the whole of HW 1 until 25.10, **$10** since (raised by Petro for the
 held-out runs after the lecturer's feedback; the $5 plan below is the history). Spent before the full `claude__v1__t0` run: **$0.42** — three
@@ -539,6 +562,9 @@ further Claude run was planned (`claude__v2__t05` stays dropped).
 **Spent after `claude__v2__t0__val2` (25.10): ≈ $4.73** — $3.13 + $0.08 (the `038` document) + $1.52
 (the re-run under validation "2": 35 calls, more output than `claude__v2__t0`). The held-out runs
 (step 12, ≈ $0.4) take it to ≈ $5.13: limit raised to $10 on 25.10 (variant B).
+
+**Spent after the held-out runs (26.10): ≈ $5.06** — $4.73 + $0.17 (`claude__v2` held-out) + $0.16
+(`claude__v1` held-out). ≈ $4.9 of the $10 limit left; no further Claude run is planned for HW 1.
 
 **Budget decision (21.10, variant A).** Three full Claude runs would cost ≈ $5.2, over the limit. Per-field
 accuracy — the main comparison — is computed on the Golden Set only (contract item 17), so
@@ -576,6 +602,7 @@ and the PR that closed it.
 | F16 | Nothing stops two `make run` processes from appending to the same run file: both skip the documents already done and then extract the same next ones (`claude__v2__t0`: `092`, `023` twice, two paid calls each). Cheap fix: a lock file next to the JSONL, or `main.py` refusing when one exists | step 8 (v2 run) | Petro's call | ⬜ accepted, not fixed (24.10): one user, one terminal; a lock file is the fix if stage 2–4 runs hit it again |
 | F17 | The schema is part of a prompt version (`prompts/CHANGELOG.md`), but `schema.py` is not versioned per prompt: once PR #16 merged, every later run — v1 included — used the `SchemaVersion` enum. `qwen2.5-7b__v1__t0` (30) is therefore "v1 text + fixed schema" and differs from the `__gold` v1 runs on exactly F15. Not a bug to fix now (one schema for all runs is the contract, item 1); the report states which runs saw which schema | step 8 (overnight runs) | step 9 (stated in REPORT; a `schema_version`-per-prompt mechanism is out of scope) | ✅ step 10 (`step-10-run-provenance`): `prompt_sha` / `schema_sha` in every record, backfilled from git; metrics refuse mixed provenance |
 | F18 | **Gold `038` was wrong on `quota_table_format`.** The chapter prints one Standard Quota Table (domain and instance quotas, `Name / Default / Adjustable / Description`, 5 rows) and ten other quota tables with `Notes` instead of `Description` or three columns — `non_standard` by definition. The Claude v1 draft saw the ten and called the document `non_standard`; the hand check confirmed the draft. Found by G3 on the gold file. First read as "eleven standard tables" (PR #23): the G3 header regex did not require the `Description` column; it does now, and the recount gives one. qwen's 28 rows on `038` (REPORT error 2): 5 printed in the standard table, 23 from the non-standard ones — the error stands, the gold format did not | step 11 (calibration) | ✅ `patch-11.1-gold-038`: gold re-drafted from `claude__v2__t0__val2` (its repair call returned exactly the five printed rows, 0 grounding errors), checked by Petro against the PDF; header regex requires `Description`; contract item 7 says so |
+| F19 | **G2 compares characters, so a typographic apostrophe in a printed quota name (`doesn’t`, `010`) rejects a model answer that writes it straight (`doesn't`).** The one `failed` Claude record under validation "2" is this false flag: the repaired answer was correct on content. Fix: normalise `’ ‘ “ ”` to their ASCII forms on both sides before G2 (and in `check_gold.py`); a reader change inside validation "2", not a new validation version, since it can only turn a rejection into a pass. Needs the `010` document re-run afterwards | step 11 re-run (`patch-12.2`) | — | ⬜ deferred: after the deadline, together with D-lite (chunking); REPORT §3.3 and §6 state it |
 
 ## 7. Risks
 
@@ -606,3 +633,4 @@ and the PR that closed it.
 | 24.10 | Step 11: run id gets `__val<N>` for a validation other than the first (contract item 11); `validation_version` in every record (item 12); contract item 7 — every Standard Quota Table of the chapter counts; F18 gold `038` |
 | 25.10 | Step 12: the Held-out Set (contract item 20) — 10 pool documents outside the Working Set, gold for 5, `__holdout` run id scope; no `short` document was left in the pool |
 | 25.10 | API budget raised from $5 to $10 (Petro) for the held-out runs — variant B: Claude v1 and v2 on the five held-out gold documents |
+| 26.10 | Steps 11 and 12 closed by the six overnight runs (`patch-12.2`); REPORT second edition; F19 (typographic apostrophe in G2) deferred with D-lite chunking to after the deadline |
