@@ -293,8 +293,17 @@ def test_merge_takes_each_kind_from_its_part_and_ignores_spill():
     assert [e.endpoint for e in merged.endpoints] == ["example.us-east-2.amazonaws.com"]
     assert [x.name for x in merged.quotas] == ["Topics per account"]
     assert merged.quota_table_format.value == "standard"
-    assert parts.spill("endpoints", ep) == 1 and parts.spill("quotas", q) == 1
     assert parts.part_rows("endpoints", ep) == 1 and parts.part_rows("quotas", q) == 1
+
+
+def test_strip_other_kind_drops_the_fields_before_the_schema_and_counts_them():
+    data = json.loads(answer(["https://not-a-hostname"], ["Topics per account"]))
+    assert parts.strip_other_kind("quotas", data) == 1
+    assert data["endpoints"] == [] and len(data["quotas"]) == 1
+    data = json.loads(answer(["example.us-east-2.amazonaws.com"], ["a", "b"]))
+    assert parts.strip_other_kind("endpoints", data) == 2
+    assert data["quotas"] == [] and data["quota_table_format"] == "none"
+    assert parts.strip_other_kind("quotas", ["not", "an", "object"]) == 0
 
 
 def test_merge_without_a_quotas_part_says_none():
@@ -422,6 +431,42 @@ def test_spill_is_counted_and_ignored():
     assert rec.status == Status.OK
     assert [p.spill for p in rec.parts] == [1, 1]
     assert len(rec.output.endpoints) == 2 and len(rec.output.quotas) == 1
+
+
+def test_invented_rows_of_the_other_kind_cannot_fail_a_part():
+    """Finding F20: qwen fills the endpoints table the schema asks for even when the
+    quotas part prints none — with a scheme, a placeholder, a quota value as a hostname.
+    Those rows are dropped before the schema sees them; the part is judged on its own."""
+    quotas_part = json.dumps(
+        {
+            "schema_version": "1",
+            "service": SERVICE,
+            "quota_table_format": "standard",
+            "endpoints": [
+                {
+                    "region_name": "US East (Ohio)",
+                    "region_code": "Each supported Region",
+                    "endpoint": "https://kinesis.<Region>.amazonaws.com",
+                    "protocol": "HTTPS",
+                }
+            ]
+            * 3,
+            "quotas": [
+                {
+                    "name": "Topics per account",
+                    "default": "1",
+                    "adjustable": True,
+                    "description": "d",
+                }
+            ],
+        }
+    )
+    rec, llm = extract(reply(answer([EP, CA], ["invented quota"])), reply(quotas_part))
+    assert len(llm.requests) == 2 and rec.status == Status.OK
+    assert [p.spill for p in rec.parts] == [1, 3]
+    assert len(rec.output.endpoints) == 2 and len(rec.output.quotas) == 1
+    # the endpoints part answered `standard` with an invented quota: dropped too, no
+    # G3 error for a part that is not responsible for the format
 
 
 def test_whole_document_path_is_unchanged():

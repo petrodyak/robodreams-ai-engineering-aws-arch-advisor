@@ -59,6 +59,14 @@ word for exactly that.
   cut-offs go away), recall (was anything lost at the seam — by construction nothing is,
   the test says so), cost and latency (one more copy of the instructions per document, two
   sequential calls).
+- A part is judged on its own fields by the schema as well as by the grounding: the other
+  kind's fields are dropped from the raw answer first. The first run showed why (F20): on a
+  quotas part, which prints no endpoints table, `qwen2.5:7b` invents one — up to 80 rows,
+  with schemes, placeholders and quota values as hostnames — and on three documents kept
+  inventing until the output cap. Dropping the rows keeps the judgement fair; the tokens
+  and the time the model spends on them are measured as they are, and a note inside the
+  part ("this part prints no endpoints table") is the next experiment, kept apart because
+  it changes what the model is told.
 - The parts see the chapter only, never the Neighbour Tails; the whole-document runs saw
   them. The report names this as a second difference between the two configurations.
 - Prompt caching is not used in this version: the system prompt is ≈ 800 tokens, so the

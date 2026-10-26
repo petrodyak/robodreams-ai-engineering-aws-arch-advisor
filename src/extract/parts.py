@@ -15,7 +15,8 @@ prompt rule 1 ("use only the chapter titled …") still has a title to find. Not
 the document goes into a call — not the Neighbour Tails — so the input tokens of the two
 calls add up to about one whole-document call plus one extra copy of the instructions. The
 model is never told it sees a part: the fields of the other kind in its answer (quotas in
-the endpoints part, endpoints in the quotas part) are ignored and only counted as `spill`.
+the endpoints part, endpoints in the quotas part) are dropped before the schema sees the
+answer and only counted as `spill`.
 
 Merging is code and derives nothing (ADR-0002): the endpoints of one answer, the format
 and quotas of the other, re-validated as one Service Document. A chapter with no quotas
@@ -33,6 +34,7 @@ part the reverse.
 
 import re
 from dataclasses import dataclass
+from typing import Any
 
 from src.extract.grounding import is_page_furniture, target_chapter
 from src.extract.schema import (
@@ -127,9 +129,29 @@ def merge(
     )
 
 
-def spill(name: str, answer: ServiceDocument) -> int:
-    """Rows of the other kind the model returned for a part — ignored by `merge`."""
-    return len(answer.quotas) if name == "endpoints" else len(answer.endpoints)
+OTHER_KIND = {"endpoints": "quotas", "quotas": "endpoints"}
+
+
+def strip_other_kind(name: str, data: Any) -> int:
+    """Drop the fields of the other kind from a part's raw answer, in place, and return
+    how many rows were dropped (the part's `spill`).
+
+    The part is judged on its own fields only (contract item 21): what the model wrote
+    into the other kind is ignored before the schema sees it, so that an invented
+    `endpoints` list in the quotas part — a 7B model fills the table the schema asks for
+    even when the text prints none (finding F20) — cannot fail the part on format
+    checks of rows the merge never reads. A non-object answer is left to the schema.
+    """
+    if not isinstance(data, dict):
+        return 0
+    other = OTHER_KIND[name]
+    rows = data.get(other)
+    dropped = len(rows) if isinstance(rows, list) else 0
+    data[other] = []
+    if name == "endpoints":
+        # the format belongs to the quotas part; `none` is consistent with no rows
+        data["quota_table_format"] = QuotaTableFormat.NONE.value
+    return dropped
 
 
 def part_rows(name: str, answer: ServiceDocument) -> int:

@@ -187,7 +187,9 @@ This file is the single list to check code against; it is not a spec of the impl
     plus one more copy of the instructions. Each part goes through the ask → validate → one
     repair of item 16, judged on the rows it is responsible for: G1 for the endpoints part,
     G2 and G3 for the quotas part (ADR-0005); the fields of the other kind in a part's answer
-    are ignored and counted as `spill`. Code merges the two answers — `endpoints` from one,
+    are dropped from the raw answer before the schema sees it and counted as `spill` — a
+    part is never rejected for rows the merge does not read (finding F20: the local model
+    fills the endpoints table the schema asks for even when its part prints none). Code merges the two answers — `endpoints` from one,
     `quota_table_format` and `quotas` from the other — into one Service Document, validated
     once more as a whole (G1–G3, no call), and derives nothing (ADR-0002); a chapter with no
     quotas block (`007`, `085`) has no quotas part and the merged document says `none`. The

@@ -571,6 +571,30 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     document is re-validated G1–G3 against the whole chapter by code (a violation there
     would be a bug in the splitter, so it raises). `ask()` carries the tokens already
     spent on the first part into a `NoAnswer` of the second (F10 accounting). 262 tests.
+  - 26.10, `claude__v2__t0__parts__val2` (30, $1.43, 22 min): 25 `ok`, 5 `repaired`, 0
+    `failed` — against the whole-document `__val2` run's 25 / 4 / 1 on the same documents.
+    Rows identical on 28 of 30; `044` needs no repair any more (the pattern-completed
+    hostname does not appear on the endpoints part), `010` goes from `failed` to
+    `repaired` (the repaired quotas part wrote the typographic apostrophe this time — F19
+    stands), `023` the other way (the quotas part first said `non_standard`). Input +4 %
+    (the second copy of the instructions), output −9 % (fewer repairs), $1.52 → $1.43,
+    latency sum 1,632 → 1,348 s. Spill 0 on all 30: Claude never writes the other kind.
+    `005` Aurora: 72 endpoint rows, every hostname twice — the chapter prints two
+    identical tables (MySQL- and PostgreSQL-Compatible Edition) and the parts answer is
+    literal where the whole-document answer had merged them; the metrics match by
+    hostname set, so recall is the same; a de-duplication in `merge` is the open item.
+  - 26.10, **F20 found and fixed** on the first `qwen2.5-7b__v2__t0__parts__val2` (18 of 30
+    before Petro stopped it; kept as `results/trials/qwen2.5-7b__v2__t0__parts__val2--before-F20.jsonl`):
+    on a quotas part qwen invents an endpoints table (`047` 80 rows, `018` 20, `091` 16)
+    and on `037`, `005`, `044` keeps inventing until the output cap; the invented rows
+    carry schemes, `<Region>` placeholders and quota values as hostnames, and the schema's
+    format checks rejected the part on them — fields the merge never reads, against item
+    21 as written. Fix: `validate_answer(part=)` drops the other kind's fields from the raw
+    answer before the schema (`parts.strip_other_kind`), counting them as `spill`. The
+    Claude run is unaffected (spill 0, no part rejected on other-kind fields — checked);
+    the qwen run is re-done from scratch under the fixed code, same run id (prompt, schema
+    and validation unchanged, so the provenance guard cannot tell — this line is the
+    record). 264 tests.
 
 ## 5. Run matrix and budget
 
@@ -655,6 +679,7 @@ and the PR that closed it.
 | F17 | The schema is part of a prompt version (`prompts/CHANGELOG.md`), but `schema.py` is not versioned per prompt: once PR #16 merged, every later run — v1 included — used the `SchemaVersion` enum. `qwen2.5-7b__v1__t0` (30) is therefore "v1 text + fixed schema" and differs from the `__gold` v1 runs on exactly F15. Not a bug to fix now (one schema for all runs is the contract, item 1); the report states which runs saw which schema | step 8 (overnight runs) | step 9 (stated in REPORT; a `schema_version`-per-prompt mechanism is out of scope) | ✅ step 10 (`step-10-run-provenance`): `prompt_sha` / `schema_sha` in every record, backfilled from git; metrics refuse mixed provenance |
 | F18 | **Gold `038` was wrong on `quota_table_format`.** The chapter prints one Standard Quota Table (domain and instance quotas, `Name / Default / Adjustable / Description`, 5 rows) and ten other quota tables with `Notes` instead of `Description` or three columns — `non_standard` by definition. The Claude v1 draft saw the ten and called the document `non_standard`; the hand check confirmed the draft. Found by G3 on the gold file. First read as "eleven standard tables" (PR #23): the G3 header regex did not require the `Description` column; it does now, and the recount gives one. qwen's 28 rows on `038` (REPORT error 2): 5 printed in the standard table, 23 from the non-standard ones — the error stands, the gold format did not | step 11 (calibration) | ✅ `patch-11.1-gold-038`: gold re-drafted from `claude__v2__t0__val2` (its repair call returned exactly the five printed rows, 0 grounding errors), checked by Petro against the PDF; header regex requires `Description`; contract item 7 says so |
 | F19 | **G2 compares characters, so a typographic apostrophe in a printed quota name (`doesn’t`, `010`) rejects a model answer that writes it straight (`doesn't`).** The one `failed` Claude record under validation "2" is this false flag: the repaired answer was correct on content. Fix: normalise `’ ‘ “ ”` to their ASCII forms on both sides before G2 (and in `check_gold.py`); a reader change inside validation "2", not a new validation version, since it can only turn a rejection into a pass. Needs the `010` document re-run afterwards | step 11 re-run (`patch-12.2`) | — | ⬜ deferred: after the deadline, together with D-lite (chunking); REPORT §3.3 and §6 state it |
+| F20 | **On a part that prints no endpoints table, the local model invents one.** `qwen2.5-7b__v2__t0__parts__val2`, quotas parts: up to 80 invented endpoint rows (`047`), with schemes, `<Region>` placeholders and quota values as hostnames; on `037` (a 42-word part), `005` and `044` it kept generating until the output cap — a new kind of cut-off that whole documents never had. Claude: spill 0 on all 30. Two consequences: (1) the part was rejected by the schema's format checks on rows the merge never reads — fixed, the other kind's fields are dropped before the schema (`strip_other_kind`, contract item 21); (2) the tokens and time spent on the invented rows are real and stay in the measurements. Next experiment: a note inside the part that it prints no endpoints table — kept apart, it changes what the model is told | step 13, first qwen run | ✅ (1) `step-13-parts`, 26.10; (2) measured, REPORT §3.5 |
 
 ## 7. Risks
 
@@ -688,3 +713,4 @@ and the PR that closed it.
 | 26.10 | Steps 11 and 12 closed by the six overnight runs (`patch-12.2`); REPORT second edition; F19 (typographic apostrophe in G2) deferred with D-lite chunking to after the deadline |
 | 26.10 | REPORT gets a four-row table "the lecturer's remarks of 24.10 — how each was closed" (remark → decision → steps / PRs → evidence), replacing the paragraph of the second edition (`patch-12.3`) |
 | 26.10 | Step 13 added — long documents in parts, after the lecturer's answer at the Q&A: two parts by section kind (option A), same prompt, merged by code, `__parts` run id (contract item 21, ADR-0006); pages only if a part is still cut off |
+| 26.10 | F20: a part is judged on its own fields by the schema too — the other kind's fields are dropped before validation (item 21 as written); the first qwen parts run (18 documents) is kept in `results/trials/` and re-done |

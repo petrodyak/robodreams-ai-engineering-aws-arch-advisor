@@ -36,7 +36,13 @@ from src.extract.llm import (
     llm_schema_sha,
     short_sha,
 )
-from src.extract.parts import PARTS_SCOPE, merge, part_rows, spill, split_chapter
+from src.extract.parts import (
+    PARTS_SCOPE,
+    merge,
+    part_rows,
+    split_chapter,
+    strip_other_kind,
+)
 from src.extract.report_md import write_markdown
 from src.extract.schema import (
     Group,
@@ -241,17 +247,38 @@ def validate_answer(
     service: str,
     grounding: Grounding | None = None,
     checks: frozenset[str] = ALL_CHECKS,
-) -> tuple[ServiceDocument | None, str | None]:
-    """The answer as a Service Document, or the error text the repair call carries.
+    part: str | None = None,
+) -> tuple[ServiceDocument | None, str | None, int]:
+    """The answer as a Service Document, or the error text the repair call carries, and
+    the part's spill (0 for a whole document).
 
     Two layers, in order: the schema with the format checks (ADR-0003) — does the answer
     look right — and, with a `grounding`, the chapter itself (ADR-0005) — is every row
     printed in it. A grounding error is reported in the schema's `- path: message` form.
+    For a `part` (step 13, contract item 21) the fields of the other kind are dropped
+    from the raw answer before either layer and counted as spill: a part is judged on
+    its own rows only, by the schema as by the grounding.
     """
+    spill = 0
     try:
-        doc = ServiceDocument.model_validate_json(
-            reply.text, context=answer_context(service)
-        )
+        if part is None:
+            doc = ServiceDocument.model_validate_json(
+                reply.text, context=answer_context(service)
+            )
+        else:
+            try:
+                data = json.loads(reply.text)
+            except ValueError:
+                data = None  # not JSON: let the schema report it the usual way
+            if data is None:
+                doc = ServiceDocument.model_validate_json(
+                    reply.text, context=answer_context(service)
+                )
+            else:
+                spill = strip_other_kind(part, data)
+                doc = ServiceDocument.model_validate(
+                    data, context=answer_context(service)
+                )
     except ValidationError as error:
         problems = "\n".join(
             f"- {'.'.join(map(str, e['loc'])) or '(document)'}: {e['msg']}"
@@ -260,10 +287,10 @@ def validate_answer(
         if reply.stop_reason == "max_tokens":
             # The JSON is cut off; say so, a bare "EOF while parsing" does not explain it.
             problems = "- the answer was cut off at the max_tokens limit\n" + problems
-        return None, problems
+        return None, problems, spill
     if grounding is not None and (errors := grounding.errors(doc, checks)):
-        return None, "\n".join(f"- {e}" for e in errors)
-    return doc, None
+        return None, "\n".join(f"- {e}" for e in errors), spill
+    return doc, None, spill
 
 
 @dataclass
@@ -273,9 +300,10 @@ class Attempt:
     calls: list[LLMReply]
     output: ServiceDocument | None
     first_error: str | None  # why the first answer was rejected; None when it passed
-    error: (
-        str | None
-    )  # the record's error text: None (ok), first (repaired), both (failed)
+    # the record's error text: None (ok), the first error (repaired), both (failed)
+    error: str | None
+    # rows of the other kind dropped from the accepted answer (a part only, item 21)
+    spill: int = 0
 
     @property
     def status(self) -> Status:
@@ -308,9 +336,10 @@ def ask(
     grounding: Grounding,
     checks: frozenset[str] = ALL_CHECKS,
     spent_before: Usage | None = None,
+    part: str | None = None,
 ) -> Attempt:
     """Ask for `text`, validate, repair at most once; the same loop for a whole document
-    and for one part of it (step 13), which differ only in `text` and `checks`."""
+    and for one part of it (step 13), which differ only in `text`, `checks` and `part`."""
     messages = [{"role": "user", "content": prompt.user_message(service, text)}]
     calls: list[LLMReply] = []
 
@@ -327,9 +356,11 @@ def ask(
     except LLMCallError as error:
         raise NoAnswer(f"no answer: {error}", spent()) from error
 
-    output, first_error = validate_answer(calls[0], service, grounding, checks)
+    output, first_error, spill = validate_answer(
+        calls[0], service, grounding, checks, part
+    )
     if output is not None:
-        return Attempt(calls, output, None, None)
+        return Attempt(calls, output, None, None, spill)
     if calls[0].stop_reason == "max_tokens":
         # Contract item 16, exception: the corrected answer would be as long as the cut one
         # and be cut again, so a repair call only costs money (S3 trial, 21.10).
@@ -344,10 +375,12 @@ def ask(
     except LLMCallError as error:
         raise NoAnswer(f"repair call: no answer: {error}", spent()) from error
 
-    output, second_error = validate_answer(calls[1], service, grounding, checks)
+    output, second_error, spill = validate_answer(
+        calls[1], service, grounding, checks, part
+    )
     if output is not None:
         # error keeps the first failure: material for the error analysis in REPORT.md
-        return Attempt(calls, output, first_error, first_error)
+        return Attempt(calls, output, first_error, first_error, spill)
     return Attempt(
         calls, None, first_error, f"{first_error}\n--- after repair:\n{second_error}"
     )
@@ -399,7 +432,15 @@ def extract_document(
         if not part_text:
             continue  # no quotas block printed: the merge says `none` (parts.py)
         a = ask(
-            client, prompt, sampling, doc.service, part_text, grounding, checks, spent
+            client,
+            prompt,
+            sampling,
+            doc.service,
+            part_text,
+            grounding,
+            checks,
+            spent,
+            part=name,
         )
         attempts[name] = a
         spent = Usage(
@@ -415,7 +456,7 @@ def extract_document(
                 usage=a.usage,
                 status=a.status,
                 rows=None if a.output is None else part_rows(name, a.output),
-                spill=None if a.output is None else spill(name, a.output),
+                spill=None if a.output is None else a.spill,
                 error=a.error,
             )
         )
