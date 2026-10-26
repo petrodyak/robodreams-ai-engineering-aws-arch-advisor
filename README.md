@@ -87,12 +87,13 @@ make estimate                                  # input tokens and their cost, no
 make run                                       # Claude, prompt v1, temperature 0 -> results/runs/
 make run MODEL=qwen2.5-7b SAMPLING=t05 GOLD=1  # local model, t05, the 10 Golden Set documents
 make run PROMPT=v2 SET=holdout GOLD=1          # the 5 held-out gold documents (out of sample)
+make run PROMPT=v2 PARTS=1                     # each chapter in two calls, merged by code (step 13)
 make metrics                                   # every run -> results/metrics.csv
 make check                                     # ruff + pytest, the pre-commit gate
 ```
 
 One run = model × prompt version × sampling configuration, named
-`<model>__<prompt>__<sampling>[__holdout][__gold][__val<N>]`; its records go to `results/runs/jsonl/<run_id>.jsonl`
+`<model>__<prompt>__<sampling>[__parts][__holdout][__gold][__val<N>]`; its records go to `results/runs/jsonl/<run_id>.jsonl`
 (resumable: rerun the same command after an interruption) with a readable mirror in
 `results/runs/md/`. Prompts are versioned files in `prompts/` with a `CHANGELOG.md`; sampling
 configurations live in `config/sampling.yaml`; the metrics definitions are in
@@ -153,8 +154,10 @@ the report.
   against the PDF, so a Claude error the check did not catch counts as correct for Claude
   (`data/gold/README.md`); grounding found one such error after the fact (`038`). The held-out
   gold was drafted by a grounded Claude v2 run and checked the same way.
-- **Long documents are not processed in parts.** An answer that does not fit the output cap
-  is `failed`; chunking is the next step after HW 1.
+- **Long documents in parts, first version.** `make run … PARTS=1` extracts each chapter as
+  its endpoints part and its quotas part, two calls merged by code
+  ([ADR-0006](docs/adr/0006-long-documents-in-parts.md)); a part can still be longer than
+  the local model's output cap, and a whole-document answer that does not fit it is `failed`.
 - **Local model limits.** `qwen2.5:7b` runs with `num_ctx` 32768 and an output cap of 18432
   tokens; the largest documents fill them, and an answer cut off at the cap is `failed`
   without a repair call.

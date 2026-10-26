@@ -79,7 +79,11 @@ This file is the single list to check code against; it is not a spec of the impl
     later full run with the same model, prompt and sampling never resumes into its file.
     A run judged by a validation other than the first adds `__val<N>` after the scope
     (`claude__v2__t0__val2`, 24.10): the runs of validation "1" keep their names, and a
-    re-run under grounding never shares a file with them.
+    re-run under grounding never shares a file with them. A run in parts (item 21, 26.10)
+    adds `__parts` right after the sampling name and before any scope
+    (`claude__v2__t0__parts__val2`, `qwen2.5-7b__v2__t0__parts__holdout__val2`): it is a
+    configuration, like the prompt version, not a scope. In full:
+    `<model>__<prompt>__<sampling>[__parts][__holdout][__gold][__val<N>]`.
 12. `results/runs/jsonl/<run_id>.jsonl`, one Run Record per document:
     `file, group, model, prompt_version, prompt_sha, schema_sha, validation_version, sampling, attempts,
     latency_ms, usage{input_tokens, output_tokens}, status (ok | repaired | failed), output
@@ -92,6 +96,11 @@ This file is the single list to check code against; it is not a spec of the impl
     `schema.py` can drift under a run (finding F17), so a resume into a run file whose
     records carry another (prompt_sha, schema_sha, validation_version) triple is refused
     before any call, and metrics refuse a file that already mixes two.
+    A record of a run in parts (item 21) also carries `parts`: one entry per part called,
+    `{name (endpoints | quotas), words, attempts, latency_ms, usage, status, rows, spill,
+    error}`; the record's `attempts`, `latency_ms` and `usage` are their sums and its
+    `status` the worst of theirs. The field is absent in a whole-document record, and
+    metrics refuse a run file whose records disagree with the run id about it.
     This file is the source of truth and the only one code reads. `results/runs/md/<run_id>.md`
     is its mirror for a person (summary table, then the endpoint and quota tables and the error
     text per document), rewritten from the whole JSONL after every record; its layout is free
@@ -166,3 +175,24 @@ This file is the single list to check code against; it is not a spec of the impl
     with its own denominators. Prompt v2 was written from the v1 errors on the Working Set
     only, so its v1 → v2 difference on the Held-out Set is the out-of-sample number the
     report quotes; the Working Set numbers are in-sample for v2 and the report says so.
+
+## Long documents in parts (26.10, lecturer's remark 3)
+
+21. A chapter can be extracted in two parts instead of one answer, with the same prompt and
+    the same schema (`src/extract/parts.py`, ADR-0006). Code splits the Target Service's
+    chapter at its headings: the "Service quotas…" blocks are the **quotas part**, everything
+    else — the endpoints tables under whatever heading, and the prose between them — is the
+    **endpoints part**; each part is sent as a chapter of its own (title line first), and
+    nothing else of the document, so the two inputs add up to about one whole-document call
+    plus one more copy of the instructions. Each part goes through the ask → validate → one
+    repair of item 16, judged on the rows it is responsible for: G1 for the endpoints part,
+    G2 and G3 for the quotas part (ADR-0005); the fields of the other kind in a part's answer
+    are ignored and counted as `spill`. Code merges the two answers — `endpoints` from one,
+    `quota_table_format` and `quotas` from the other — into one Service Document, validated
+    once more as a whole (G1–G3, no call), and derives nothing (ADR-0002); a chapter with no
+    quotas block (`007`, `085`) has no quotas part and the merged document says `none`. The
+    document's status is the worst of its parts' (`failed` if any failed, else `repaired` if
+    any repaired); a `failed` document has no output, as in item 16. The run id carries
+    `__parts` (item 11) and the record `parts` (item 12). Items 17–19 apply unchanged:
+    latency is the sum of the parts' (they are called one after the other), cost the sum of
+    every call.

@@ -28,6 +28,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from src.extract.llm.claude import cost_usd
+from src.extract.parts import PARTS_SCOPE
 from src.extract.pipeline import (
     GOLD_SCOPE,
     HOLDOUT_SET,
@@ -54,10 +55,10 @@ METRICS_FILE = ROOT / "results" / "metrics.csv"
 TOTAL = "total"  # the `group` value of a run's total row (item 13)
 CLAUDE_MODEL = "claude"  # the only paid model (short name in run ids)
 
-# <model>__<prompt_version>__<sampling_name>[__gold] (contract item 11)
+# <model>__<prompt>__<sampling>[__parts][__holdout][__gold][__val<N>] (contract item 11)
 RUN_ID_RE = re.compile(
     r"^(?P<model>[^_]+(?:_[^_]+)*)__(?P<prompt>v\d+)__(?P<sampling>\w+?)"
-    r"(?P<holdout>__holdout)?(?P<gold>__gold)?(?:__val(?P<val>\d+))?$"
+    r"(?P<parts>__parts)?(?P<holdout>__holdout)?(?P<gold>__gold)?(?:__val(?P<val>\d+))?$"
 )
 
 # Endpoint and quota fields scored on matched rows (item 17). `endpoint_type` is computed
@@ -88,6 +89,7 @@ class RunId:
     gold: bool  # the __gold scope suffix: only the Golden Set documents were run
     validation: str = "1"  # the __val<N> suffix; "1" when absent (contract item 11)
     doc_set: DocumentSet = WORKING_SET  # the __holdout suffix (contract item 20)
+    parts: bool = False  # the __parts suffix: each chapter in two calls (step 13)
 
     @property
     def scope(self) -> str:
@@ -108,6 +110,7 @@ def parse_run_id(run_id: str) -> RunId:
         m["gold"] == GOLD_SCOPE,
         m["val"] or "1",
         HOLDOUT_SET if m["holdout"] else WORKING_SET,
+        m["parts"] == PARTS_SCOPE,
     )
 
 
@@ -354,6 +357,11 @@ def run_metrics(
     run = parse_run_id(run_id)
     scope = run_scope(run, docs)
     provenance = run_provenance(run_id, records)
+    if records and any((r.parts is not None) != run.parts for r in records):
+        raise ValueError(
+            f"{run_id}: the run id says {'parts' if run.parts else 'whole documents'}, "
+            "but some records say otherwise"
+        )
     if records and provenance[2] != run.validation:
         raise ValueError(
             f"{run_id}: the run id says validation {run.validation!r}, the records say "

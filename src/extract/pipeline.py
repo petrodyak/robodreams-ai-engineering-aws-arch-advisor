@@ -22,7 +22,13 @@ from pathlib import Path
 import yaml
 from pydantic import ValidationError
 
-from src.extract.grounding import VALIDATION_VERSION, Grounding
+from src.extract.grounding import (
+    ALL_CHECKS,
+    ENDPOINT_CHECKS,
+    QUOTA_CHECKS,
+    VALIDATION_VERSION,
+    Grounding,
+)
 from src.extract.llm import (
     LLMCallError,
     LLMClient,
@@ -30,15 +36,18 @@ from src.extract.llm import (
     llm_schema_sha,
     short_sha,
 )
+from src.extract.parts import PARTS_SCOPE, merge, part_rows, spill, split_chapter
 from src.extract.report_md import write_markdown
 from src.extract.schema import (
     Group,
+    PartRecord,
     RunRecord,
     Sampling,
     ServiceDocument,
     Status,
     Usage,
     answer_context,
+    worst_status,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -202,6 +211,7 @@ def make_run_id(
     gold: bool = False,
     doc_set: DocumentSet = WORKING_SET,
     validation_version: str = VALIDATION_VERSION,
+    parts: bool = False,
 ) -> str:
     """Contract item 11, e.g. claude__v1__t0, or claude__v1__t05__gold for a run over the
     Golden Set only: the scope is in the name, so a full run never resumes into its file.
@@ -209,8 +219,13 @@ def make_run_id(
     (claude__v2__t0__holdout__gold). A validation other than the first adds `__val<N>`
     last (claude__v2__t0__val2): the runs judged by validation "1" keep their names, and
     a re-run under a stricter validation never resumes into them (the provenance guard
-    would refuse it anyway)."""
-    run_id = f"{model}__{prompt_version}__{sampling_name}" + doc_set.scope
+    would refuse it anyway). A run in parts (step 13) adds `__parts` right after the
+    sampling (claude__v2__t0__parts__val2): it is a configuration, like the prompt, and
+    comes before the scopes."""
+    run_id = f"{model}__{prompt_version}__{sampling_name}"
+    if parts:
+        run_id += PARTS_SCOPE
+    run_id += doc_set.scope
     if gold:
         run_id += GOLD_SCOPE
     if validation_version != "1":
@@ -222,7 +237,10 @@ def make_run_id(
 
 
 def validate_answer(
-    reply: LLMReply, service: str, grounding: Grounding | None = None
+    reply: LLMReply,
+    service: str,
+    grounding: Grounding | None = None,
+    checks: frozenset[str] = ALL_CHECKS,
 ) -> tuple[ServiceDocument | None, str | None]:
     """The answer as a Service Document, or the error text the repair call carries.
 
@@ -243,51 +261,65 @@ def validate_answer(
             # The JSON is cut off; say so, a bare "EOF while parsing" does not explain it.
             problems = "- the answer was cut off at the max_tokens limit\n" + problems
         return None, problems
-    if grounding is not None and (errors := grounding.errors(doc)):
+    if grounding is not None and (errors := grounding.errors(doc, checks)):
         return None, "\n".join(f"- {e}" for e in errors)
     return doc, None
 
 
-def extract_document(
-    client: LLMClient,
-    doc: Document,
-    text: str,
-    prompt: Prompt,
-    sampling: Sampling,
-) -> RunRecord:
-    """Ask, validate, repair at most once (contract item 16), and record what happened."""
-    messages = [{"role": "user", "content": prompt.user_message(doc.service, text)}]
-    calls: list[LLMReply] = []
-    grounding = Grounding.of(text, doc.service)  # what the chapter prints (ADR-0005)
+@dataclass
+class Attempt:
+    """One ask → validate → at most one repair (contract item 16) over one text."""
 
-    def spent() -> Usage:
+    calls: list[LLMReply]
+    output: ServiceDocument | None
+    first_error: str | None  # why the first answer was rejected; None when it passed
+    error: (
+        str | None
+    )  # the record's error text: None (ok), first (repaired), both (failed)
+
+    @property
+    def status(self) -> Status:
+        if self.output is None:
+            return Status.FAILED
+        return Status.OK if self.first_error is None else Status.REPAIRED
+
+    @property
+    def usage(self) -> Usage:
         return Usage(
-            input_tokens=sum(c.usage.input_tokens for c in calls),
-            output_tokens=sum(c.usage.output_tokens for c in calls),
+            input_tokens=sum(c.usage.input_tokens for c in self.calls),
+            output_tokens=sum(c.usage.output_tokens for c in self.calls),
         )
 
-    def record(
-        status: Status, output: ServiceDocument | None, error: str | None
-    ) -> RunRecord:
-        # Sums over every call for the document, the repair included (items 12, 19).
-        return RunRecord.model_validate(
-            {
-                "file": doc.file,
-                "group": doc.group,
-                "model": client.model,
-                "prompt_version": prompt.version,
-                "prompt_sha": prompt.sha,
-                "schema_sha": llm_schema_sha(),
-                "validation_version": VALIDATION_VERSION,
-                "sampling": sampling,
-                "attempts": sum(c.attempts for c in calls),
-                "latency_ms": sum(c.latency_ms for c in calls),
-                "usage": spent(),
-                "status": status,
-                "output": output,
-                "error": error,
-            },
-            context=answer_context(doc.service),
+    @property
+    def attempts(self) -> int:
+        return sum(c.attempts for c in self.calls)
+
+    @property
+    def latency_ms(self) -> int:
+        return round(sum(c.latency_ms for c in self.calls))
+
+
+def ask(
+    client: LLMClient,
+    prompt: Prompt,
+    sampling: Sampling,
+    service: str,
+    text: str,
+    grounding: Grounding,
+    checks: frozenset[str] = ALL_CHECKS,
+    spent_before: Usage | None = None,
+) -> Attempt:
+    """Ask for `text`, validate, repair at most once; the same loop for a whole document
+    and for one part of it (step 13), which differ only in `text` and `checks`."""
+    messages = [{"role": "user", "content": prompt.user_message(service, text)}]
+    calls: list[LLMReply] = []
+
+    def spent() -> Usage:
+        before = spent_before or Usage(input_tokens=0, output_tokens=0)
+        return Usage(
+            input_tokens=before.input_tokens + sum(c.usage.input_tokens for c in calls),
+            output_tokens=before.output_tokens
+            + sum(c.usage.output_tokens for c in calls),
         )
 
     try:
@@ -295,13 +327,13 @@ def extract_document(
     except LLMCallError as error:
         raise NoAnswer(f"no answer: {error}", spent()) from error
 
-    output, first_error = validate_answer(calls[0], doc.service, grounding)
+    output, first_error = validate_answer(calls[0], service, grounding, checks)
     if output is not None:
-        return record(Status.OK, output, None)
+        return Attempt(calls, output, None, None)
     if calls[0].stop_reason == "max_tokens":
         # Contract item 16, exception: the corrected answer would be as long as the cut one
         # and be cut again, so a repair call only costs money (S3 trial, 21.10).
-        return record(Status.FAILED, None, f"{first_error}\n--- no repair call")
+        return Attempt(calls, None, first_error, f"{first_error}\n--- no repair call")
 
     repair = messages + [
         {"role": "assistant", "content": calls[0].text.strip() or EMPTY_ANSWER},
@@ -312,12 +344,105 @@ def extract_document(
     except LLMCallError as error:
         raise NoAnswer(f"repair call: no answer: {error}", spent()) from error
 
-    output, second_error = validate_answer(calls[1], doc.service, grounding)
+    output, second_error = validate_answer(calls[1], service, grounding, checks)
     if output is not None:
         # error keeps the first failure: material for the error analysis in REPORT.md
-        return record(Status.REPAIRED, output, first_error)
-    return record(
-        Status.FAILED, None, f"{first_error}\n--- after repair:\n{second_error}"
+        return Attempt(calls, output, first_error, first_error)
+    return Attempt(
+        calls, None, first_error, f"{first_error}\n--- after repair:\n{second_error}"
+    )
+
+
+def extract_document(
+    client: LLMClient,
+    doc: Document,
+    text: str,
+    prompt: Prompt,
+    sampling: Sampling,
+    *,
+    parts: bool = False,
+) -> RunRecord:
+    """One Run Record for `doc`: the whole text in one ask, or (step 13) its endpoints
+    part and its quotas part in one ask each, merged by code."""
+    grounding = Grounding.of(text, doc.service)  # what the chapter prints (ADR-0005)
+    base = {
+        "file": doc.file,
+        "group": doc.group,
+        "model": client.model,
+        "prompt_version": prompt.version,
+        "prompt_sha": prompt.sha,
+        "schema_sha": llm_schema_sha(),
+        "validation_version": VALIDATION_VERSION,
+        "sampling": sampling,
+    }
+    if not parts:
+        a = ask(client, prompt, sampling, doc.service, text, grounding)
+        return RunRecord.model_validate(
+            {
+                **base,
+                "attempts": a.attempts,
+                "latency_ms": a.latency_ms,
+                "usage": a.usage,
+                "status": a.status,
+                "output": a.output,
+                "error": a.error,
+            },
+            context=answer_context(doc.service),
+        )
+
+    split = split_chapter(text, doc.service)
+    attempts: dict[str, Attempt] = {}
+    records: list[PartRecord] = []
+    spent = Usage(input_tokens=0, output_tokens=0)
+    for name, checks in (("endpoints", ENDPOINT_CHECKS), ("quotas", QUOTA_CHECKS)):
+        part_text = split.text(name)
+        if not part_text:
+            continue  # no quotas block printed: the merge says `none` (parts.py)
+        a = ask(
+            client, prompt, sampling, doc.service, part_text, grounding, checks, spent
+        )
+        attempts[name] = a
+        spent = Usage(
+            input_tokens=spent.input_tokens + a.usage.input_tokens,
+            output_tokens=spent.output_tokens + a.usage.output_tokens,
+        )
+        records.append(
+            PartRecord(
+                name=name,
+                words=len(part_text.split()),
+                attempts=a.attempts,
+                latency_ms=a.latency_ms,
+                usage=a.usage,
+                status=a.status,
+                rows=None if a.output is None else part_rows(name, a.output),
+                spill=None if a.output is None else spill(name, a.output),
+                error=a.error,
+            )
+        )
+    status = worst_status(r.status for r in records)
+    output = None
+    if status != Status.FAILED:
+        output = merge(
+            doc.service,
+            attempts["endpoints"].output,
+            attempts["quotas"].output if "quotas" in attempts else None,
+        )
+        # the merged document against the whole chapter, G1–G3: code only, no call
+        if leftovers := grounding.errors(output):
+            raise ValueError(f"{doc.file}: merged document not grounded: {leftovers}")
+    errors = [f"[{r.name}]\n{r.error}" for r in records if r.error is not None]
+    return RunRecord.model_validate(
+        {
+            **base,
+            "attempts": sum(r.attempts for r in records),
+            "latency_ms": sum(r.latency_ms for r in records),
+            "usage": spent,
+            "status": status,
+            "output": output,
+            "error": "\n".join(errors) if errors else None,
+            "parts": records,
+        },
+        context=answer_context(doc.service),
     )
 
 
@@ -410,6 +535,7 @@ def run(
     *,
     md_path: Path | None = None,
     raw_dir: Path = RAW_DIR,
+    parts: bool = False,
     log: Callable[[str], None] = print,
 ) -> RunResult:
     """Extract every document not yet in `out_path`; return what this call added.
@@ -432,7 +558,9 @@ def run(
                 log(f"{prefix}: already in {out_path.name}, skipped")
                 continue
             try:
-                rec = extract_document(client, doc, doc.text(raw_dir), prompt, sampling)
+                rec = extract_document(
+                    client, doc, doc.text(raw_dir), prompt, sampling, parts=parts
+                )
             except NoAnswer as error:
                 log(
                     f"{prefix}: {error}; not recorded, the next run retries it "

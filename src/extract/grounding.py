@@ -33,6 +33,9 @@ from src.extract.schema import AWS_DOMAINS, ServiceDocument, collapse_whitespace
 VALIDATION_VERSION = (
     "2"  # "1": schema + ADR-0003 only (runs before step 11); "2": + G1–G3
 )
+ALL_CHECKS = frozenset({"G1", "G2", "G3"})
+ENDPOINT_CHECKS = frozenset({"G1"})  # what the endpoints part of a chapter answers for
+QUOTA_CHECKS = frozenset({"G2", "G3"})  # … and the quotas part (step 13)
 
 # ---------------------------------------------------------------- the chapter
 
@@ -44,6 +47,11 @@ _PROSE_RE = re.compile(r"\S+(?: \S+){5,}")
 # a run of words separated by single spaces: one table cell (cells are 2+ spaces apart)
 _CELL_RE = re.compile(r"\S+(?: \S+)*")
 SLACK = 4  # columns: layout-mode text shifts a cell by a few characters between lines
+
+
+def is_page_furniture(line: str) -> bool:
+    """A page header or footer line, printed inside tables and between sections."""
+    return _FURNITURE_RE.search(line) is not None
 
 
 def target_chapter(text: str, service: str) -> str:
@@ -192,16 +200,23 @@ class Grounding:
     def of(cls, text: str, service: str) -> "Grounding":
         return cls(target_chapter(text, service))
 
-    def errors(self, doc: ServiceDocument) -> list[str]:
-        """Violations of G1–G3 as `path: message` lines, like the schema's errors."""
+    def errors(
+        self, doc: ServiceDocument, checks: frozenset[str] = ALL_CHECKS
+    ) -> list[str]:
+        """Violations of G1–G3 as `path: message` lines, like the schema's errors.
+
+        `checks` narrows the judgement to some of G1, G2, G3: a part of a chapter (step
+        13) is judged only on the rows it is responsible for — G1 for the endpoints part,
+        G2 and G3 for the quotas part — and the merged document on all three.
+        """
         out: list[str] = []
-        for i, e in enumerate(doc.endpoints):
+        for i, e in enumerate(doc.endpoints if "G1" in checks else []):
             if e.endpoint not in self.hostnames:
                 out.append(
                     f"endpoints.{i}.endpoint: not printed in an endpoints table of the "
                     f"{doc.service!r} chapter: {e.endpoint!r}"
                 )
-        for i, q in enumerate(doc.quotas):
+        for i, q in enumerate(doc.quotas if "G2" in checks else []):
             if (
                 q.name.lower() not in self.quota_names
                 and squash(q.name) not in self.quota_names_squashed
@@ -210,6 +225,8 @@ class Grounding:
                     f"quotas.{i}.name: not printed in a Standard Quota Table of the "
                     f"chapter: {q.name!r}"
                 )
+        if "G3" not in checks:
+            return out
         is_standard = doc.quota_table_format.value == "standard"
         if is_standard and not self.standard_table:
             out.append(

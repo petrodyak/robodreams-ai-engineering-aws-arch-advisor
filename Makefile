@@ -3,13 +3,15 @@
 
 # One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`,
 # `make run MODEL=qwen2.5-7b`, `make run SAMPLING=t05 GOLD=1` (Golden Set only), or
-# `make run PROMPT=v2 SET=holdout` (the Held-out Set, step 12).
+# `make run PROMPT=v2 SET=holdout` (the Held-out Set, step 12), or `make run PROMPT=v2 PARTS=1`
+# (each chapter in two calls, step 13).
 MODEL ?= claude
 PROMPT ?= v1
 SAMPLING ?= t0
 GOLD ?=
 SET ?= raw
-RUN_ARGS = --model $(MODEL) --prompt $(PROMPT) --sampling $(SAMPLING) --set $(SET) $(if $(GOLD),--gold)
+PARTS ?=
+RUN_ARGS = --model $(MODEL) --prompt $(PROMPT) --sampling $(SAMPLING) --set $(SET) $(if $(GOLD),--gold) $(if $(PARTS),--parts)
 
 # create .venv and install the locked dependencies from uv.lock
 install:

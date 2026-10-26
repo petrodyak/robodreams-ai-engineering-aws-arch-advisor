@@ -19,6 +19,7 @@ instance: Pydantic re-runs ServiceDocument's after-validator on it.
 """
 
 import re
+from collections.abc import Iterable
 from enum import StrEnum
 from typing import Annotated, Any, Literal, Self
 
@@ -295,6 +296,40 @@ _STATUS_RULES = {
 }
 
 
+class PartRecord(BaseModel):
+    """What one part of a chapter did in a `__parts` run (step 13, contract item 21).
+
+    A part goes through the same ask → validate → one repair as a whole document, so it
+    has the same status, call and token fields; `rows` are the rows of its own kind in the
+    accepted answer, `spill` the rows of the other kind the model returned anyway (ignored
+    by the merge). A chapter with no quotas block has no quotas part: only the endpoints
+    part is listed and the merged document says `none`.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: Literal["endpoints", "quotas"]
+    words: int = Field(ge=1)  # size of the part's text, whitespace-separated
+    attempts: int = Field(ge=1)
+    latency_ms: Annotated[int, BeforeValidator(_round_ms)] = Field(ge=0)
+    usage: Usage
+    status: Status
+    rows: int | None = Field(ge=0)  # None when the part failed
+    spill: int | None = Field(ge=0)
+    error: str | None
+
+    @model_validator(mode="after")
+    def _status_matches_rows_and_error(self) -> Self:
+        want_rows, want_error = _STATUS_RULES[self.status]
+        if (self.rows is not None, self.error is not None) != (want_rows, want_error):
+            raise ValueError(
+                f"part {self.name}: status {self.status.value!r} needs rows "
+                f"{'set' if want_rows else 'null'} and error "
+                f"{'set' if want_error else 'null'}"
+            )
+        return self
+
+
 class RunRecord(BaseModel):
     """One line of results/runs/jsonl/<run_id>.jsonl (contract item 12)."""
 
@@ -322,6 +357,10 @@ class RunRecord(BaseModel):
     status: Status
     output: ServiceDocument | None
     error: str | None
+    # Step 13 (contract item 21): the parts of a `__parts` run, in call order; absent in
+    # a whole-document run. attempts, latency_ms and usage above are their sums, and the
+    # status is the worst of theirs: failed if any failed, else repaired if any repaired.
+    parts: list[PartRecord] | None = None
 
     @model_validator(mode="after")
     def _status_matches_output_and_error(self) -> Self:
@@ -335,4 +374,29 @@ class RunRecord(BaseModel):
                 f"{'set' if want_output else 'null'} and error "
                 f"{'set' if want_error else 'null'}"
             )
+        if self.parts is not None:
+            names = [p.name for p in self.parts]
+            if (
+                not names
+                or names != sorted(set(names), key=names.index)
+                or (names[0] != "endpoints")
+            ):
+                raise ValueError(
+                    f"parts must be [endpoints] or [endpoints, quotas]: {names}"
+                )
+            if self.status != worst_status(p.status for p in self.parts):
+                raise ValueError(
+                    f"status {self.status.value!r} is not the worst of the parts' "
+                    f"{[p.status.value for p in self.parts]}"
+                )
         return self
+
+
+def worst_status(statuses: Iterable[Status]) -> Status:
+    """failed if any failed, else repaired if any repaired, else ok (step 13)."""
+    seen = set(statuses)
+    if Status.FAILED in seen:
+        return Status.FAILED
+    if Status.REPAIRED in seen:
+        return Status.REPAIRED
+    return Status.OK
