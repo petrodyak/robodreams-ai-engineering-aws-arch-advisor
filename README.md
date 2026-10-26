@@ -86,12 +86,13 @@ make install                                   # .venv from uv.lock
 make estimate                                  # input tokens and their cost, no paid call
 make run                                       # Claude, prompt v1, temperature 0 -> results/runs/
 make run MODEL=qwen2.5-7b SAMPLING=t05 GOLD=1  # local model, t05, the 10 Golden Set documents
+make run PROMPT=v2 SET=holdout GOLD=1          # the 5 held-out gold documents (out of sample)
 make metrics                                   # every run -> results/metrics.csv
 make check                                     # ruff + pytest, the pre-commit gate
 ```
 
 One run = model × prompt version × sampling configuration, named
-`<model>__<prompt>__<sampling>[__gold]`; its records go to `results/runs/jsonl/<run_id>.jsonl`
+`<model>__<prompt>__<sampling>[__holdout][__gold][__val<N>]`; its records go to `results/runs/jsonl/<run_id>.jsonl`
 (resumable: rerun the same command after an interruption) with a readable mirror in
 `results/runs/md/`. Prompts are versioned files in `prompts/` with a `CHANGELOG.md`; sampling
 configurations live in `config/sampling.yaml`; the metrics definitions are in
@@ -100,22 +101,33 @@ itself is `REPORT.md`.
 
 ## Stage 1 results (HW 1)
 
-Every document of the run for validity, latency and cost; the 10 Golden Set documents for
-recall. Full tables, definitions and the error analysis: [`REPORT.md`](REPORT.md); the
-numbers come from `results/metrics.csv` (`make metrics`).
+Every document of the run for validity, latency and cost; the Golden Set documents for
+recall (10 in the Working Set, 5 in the Held-out Set). Runs without `__val2` were judged by
+the schema and the format checks only; `__val2` runs also require every row to be printed in
+the chapter ([ADR-0005](docs/adr/0005-validation-grounded-in-the-source.md)). Full tables,
+definitions and the error analysis: [`REPORT.md`](REPORT.md); the numbers come from
+`results/metrics.csv` (`make metrics`).
 
 | Run | n | ok + repaired % | latency p50 | $ per 1,000 docs | endpoints recall | quotas recall |
 |---|---|---|---|---|---|---|
-| `claude__v1__t0` | 30 | 100 | 36 s | 40.2 | 97.3 | 100 |
-| `claude__v2__t0` | 30 | 100 | 44 s | 42.7 | **100** | 100 |
-| `qwen2.5-7b__v1__t0` | 30 | 83.3 | 148 s | 0 | 78.6 | 76.0 |
-| `qwen2.5-7b__v2__t0` | 30 | **86.7** | 136 s | 0 | **91.0** | **93.0** |
-| `qwen2.5-7b__v2__t05` | 30 | 73.3 | 154 s | 0 | 79.8 | 76.0 |
+| `claude__v1__t0` | 30 | 100 | 36 s | 40.2 | 97.3 | 95.2 |
+| `claude__v2__t0` | 30 | 100 | 44 s | 42.7 | **100** | 95.2 |
+| `claude__v2__t0__val2` | 30 | 96.7 | 45 s | 50.6 | **100** | **100** |
+| `qwen2.5-7b__v1__t0` | 30 | 83.3 | 148 s | 0 | 78.6 | 77.1 |
+| `qwen2.5-7b__v2__t0` | 30 | **86.7** | 136 s | 0 | **91.0** | **93.3** |
+| `qwen2.5-7b__v2__t0__val2` | 30 | 56.7 | 221 s | 0 | 54.5 | 50.5 |
+| `claude__v1__t0__holdout__gold__val2` | 5 | 100 | 35 s | 31.3 | 91.8 | 100 |
+| `claude__v2__t0__holdout__gold__val2` | 5 | 100 | 37 s | 33.2 | **100** | 100 |
+| `qwen2.5-7b__v1__t0__holdout__val2` | 10 | 50.0 | 275 s | 0 | 42.1 | 16.2 |
+| `qwen2.5-7b__v2__t0__holdout__val2` | 10 | 50.0 | 194 s | 0 | **55.4** | **42.9** |
 
-Claude Haiku 4.5 with prompt v2 is valid on every document and recovers every Golden Set
-row at ≈ $43 per 1,000 documents; the local qwen2.5:7b is free but valid on 87 % of the
-documents, recovers 91 % of the rows, takes 3× longer and misreads `region_name` on 30 % of
-the rows it finds. Prompt v2 helped both models (a second endpoints table, placeholder
+Claude Haiku 4.5 with prompt v2 recovers every Golden Set row in and out of sample and,
+under grounded validation, is valid on 29 of 30 documents with nothing invented (the one
+failure is a typographic apostrophe the judge did not normalise) at ≈ $51 per 1,000
+documents. The local qwen2.5:7b is free; its 87 % validity under the first validation falls
+to 57 % once every row must be printed in the chapter, it takes 5× longer and misreads
+`region_name` on 10–30 % of the rows it finds. Prompt v2 helped both models on the documents
+it was written from and on the held-out ones (a second endpoints table, placeholder
 hostnames, tables across page breaks); temperature 0.5 changed nothing for Claude and only
 hurt qwen. The production choice is Claude; the conditions under which it would flip are in
 the report.
@@ -139,7 +151,10 @@ the report.
   input on purpose; the model is expected to rejoin them. Only ligatures are normalised.
 - **Golden Set bias.** The reference was drafted by `claude__v1__t0` and corrected by hand
   against the PDF, so a Claude error the check did not catch counts as correct for Claude
-  (`data/gold/README.md`).
+  (`data/gold/README.md`); grounding found one such error after the fact (`038`). The held-out
+  gold was drafted by a grounded Claude v2 run and checked the same way.
+- **Long documents are not processed in parts.** An answer that does not fit the output cap
+  is `failed`; chunking is the next step after HW 1.
 - **Local model limits.** `qwen2.5:7b` runs with `num_ctx` 32768 and an output cap of 18432
   tokens; the largest documents fill them, and an answer cut off at the cap is `failed`
   without a repair call.

@@ -1,24 +1,45 @@
 # HW 1 — Structured extraction: Claude Haiku 4.5 vs qwen2.5:7b
 
-**Snapshot of 2026-10-24.** Numbers taken at commit `55892ec` (`patch-8.2-qwen-runs`) from
-`results/metrics.csv`, which `make metrics` rebuilds from the eight run files in
-`results/runs/jsonl/`: `claude__v1__t0`, `claude__v2__t0`, `claude__v1__t05__gold`,
-`qwen2.5-7b__v1__t0`, `qwen2.5-7b__v2__t0`, `qwen2.5-7b__v2__t05`, `qwen2.5-7b__v1__t0__gold`,
-`qwen2.5-7b__v1__t05__gold`. Later code changes do not edit this report.
+**Snapshot of 2026-10-26** (second edition; the first, of 24.10, preceded the lecturer's
+feedback). Numbers taken from `results/metrics.csv`, which `make metrics` rebuilds from the
+fourteen run files in `results/runs/jsonl/` of `patch-12.2-val2-and-holdout-runs` (code as
+merged in PR #26, `900b1d9`): the eight runs of 24.10 (`claude__v1__t0`, `claude__v2__t0`,
+`claude__v1__t05__gold`, `qwen2.5-7b__v1__t0`, `qwen2.5-7b__v2__t0`, `qwen2.5-7b__v2__t05`,
+`qwen2.5-7b__v1__t0__gold`, `qwen2.5-7b__v1__t05__gold`), the two re-runs under grounded
+validation (`claude__v2__t0__val2`, `qwen2.5-7b__v2__t0__val2`) and the four Held-out Set runs
+(`claude__v1__t0__holdout__gold__val2`, `claude__v2__t0__holdout__gold__val2`,
+`qwen2.5-7b__v1__t0__holdout__val2`, `qwen2.5-7b__v2__t0__holdout__val2`). The Golden Set
+file for `038` was corrected on 25.10 (finding F18), so the 24.10 runs' accuracy was
+recomputed against the corrected reference. Later code changes do not edit this report.
+
+**What changed since the first edition (lecturer's four remarks of 24.10).** (1) Validation
+is grounded in the source text — every endpoint and quota name must be printed in the
+chapter, and `quota_table_format` must follow the printed header (ADR-0005); the re-runs
+under it are the `__val2` rows and the old rows are kept as the before/after (§3.3). (2)
+Every record pins the exact prompt and schema it was made with (`prompt_sha`, `schema_sha`,
+`validation_version`). (3) A Held-out Set of 10 documents never seen while writing prompt v2
+gives the out-of-sample v1 → v2 numbers (§3.4). (4) Long documents in parts — not done:
+the output-cap failures stay as they are (error 4) and chunking is the planned next step.
 
 ## 1. Summary
 
-Both models turn the layout-mode text of an AWS General Reference chapter into a valid
-Service Document most of the time, but only the paid model does it reliably: **Claude Haiku
-4.5 with prompt v2 is valid on 30/30 documents (29 first try, 1 after the repair call) and
-recovers 100 % of the Golden Set endpoint rows and 100 % of the quota rows at $42.7 per 1,000
-documents and 44 s per document.** The local **qwen2.5:7b with prompt v2 is valid on 26/30**,
-recovers 91 % of the endpoint rows and 93 % of the quota rows, costs nothing in API fees but
-takes 136 s per document on an M4 Pro, and gets `region_name` wrong on 30 % of the rows it
-does find. Prompt v2 was worth it for both — Claude's endpoint recall went from 97.3 to 100 %,
-qwen's validity from 70 to 87 % — while temperature 0.5 changed nothing for Claude and only
-hurt qwen. **For production, Claude**; qwen is the choice only when the data cannot leave the
-machine or the volume is small enough that a day of laptop time per 600 documents is fine.
+Both models turn the layout-mode text of an AWS General Reference chapter into a Service
+Document that passes the schema most of the time; once validation asks whether every row is
+actually printed in the chapter, only the paid model stays reliable. **Under grounded
+validation, Claude Haiku 4.5 with prompt v2 is valid on 29/30 documents (25 first try, 4 after
+the repair call, 1 failed) and recovers 100 % of the Golden Set endpoint rows and 100 % of the
+quota rows with nothing invented, at $50.6 per 1,000 documents and 45 s per document.** The
+local **qwen2.5:7b with prompt v2 is valid on 17/30**: 13 documents fail because a hostname,
+a quota name or the table format is not what the chapter prints (7), the answer does not fit
+the output cap (3) or a hostname is malformed (3); on the documents it does finish, precision
+is 99.5 %. The same validation that passed 26/30 of its answers before now passes 17/30 — the
+other nine were plausible, not true. **Prompt v2 generalises:** on five held-out documents
+never seen while writing it, Claude's endpoint recall goes from 91.8 % (v1, a second table
+missed in `068`) to 100 % (v2), the same mechanism as on the Working Set; qwen's validity on
+the ten held-out documents goes from 30 to 50 % first try and its endpoint recall from 42 to
+55 %. Temperature 0.5 changed nothing for Claude and only hurt qwen. **For production,
+Claude**; qwen is the choice only when the data cannot leave the machine, and then with a
+review of the invalid half.
 
 ## 2. What was compared
 
@@ -62,9 +83,11 @@ machine or the volume is small enough that a day of laptop time per 600 document
 
 ## 3. Results
 
-Full table with per-group rows and per-field accuracy: `results/metrics.csv`.
+Full table with per-group rows and per-field accuracy: `results/metrics.csv`. Tables 3.1 and
+3.2 are the 24.10 runs under the first validation (schema + format checks); 3.3 shows what
+grounded validation changed on the same documents; 3.4 is the Held-out Set.
 
-#### 3.1 Validity, latency and cost — every document of the run (`n`)
+#### 3.1 Validity, latency and cost — every document of the run (`n`), validation "1"
 
 Columns:
 
@@ -94,7 +117,7 @@ Columns:
 | `qwen2.5-7b__v1__t0__gold` † | 10 | 0 | 90.0 | 1 | 198 / 543 s | 0 | 40 min |
 | `qwen2.5-7b__v1__t05__gold` † | 10 | 0 | 70.0 | 3 | 195 / 438 s | 0 | 37 min |
 
-#### 3.2 Accuracy — the 10 Golden Set documents only (752 endpoint rows, 100 quota rows)
+#### 3.2 Accuracy — the 10 Golden Set documents only (752 endpoint rows, 105 quota rows), validation "1"
 
 Columns:
 
@@ -111,14 +134,19 @@ Columns:
 
 | Run | endpoints precision / recall | quotas precision / recall | `quota_table_format` | `region_name` | `default` |
 |---|---|---|---|---|---|
-| `claude__v1__t0` | 99.6 / 97.3 | 98.0 / 100 | 10/10 | 100 | 100 |
-| `claude__v2__t0` | 99.6 / **100** | 98.0 / 100 | 10/10 | 100 | 99.0 |
-| `claude__v1__t05__gold` | 99.6 / 97.3 | 98.0 / 100 | 10/10 | 100 | 100 |
-| `qwen2.5-7b__v1__t0` | 97.2 / 78.6 | 74.5 / 76.0 | 7/10 | 63.1 | 94.7 |
-| `qwen2.5-7b__v2__t0` | 97.7 / **91.0** | 69.9 / **93.0** | **8/10** | 70.3 | 93.5 |
-| `qwen2.5-7b__v2__t05` | 97.2 / 79.8 | 66.1 / 76.0 | 7/10 | 66.0 | 93.4 |
-| `qwen2.5-7b__v1__t0__gold` † | 96.8 / 75.8 | 60.8 / 76.0 | 7/10 | 65.4 | 94.7 |
-| `qwen2.5-7b__v1__t05__gold` † | 93.0 / 46.3 | 87.8 / 36.0 | 6/10 | 86.5 | 88.9 |
+| `claude__v1__t0` | 99.6 / 97.3 | 98.0 / 95.2 | 9/10 | 100 | 100 |
+| `claude__v2__t0` | 99.6 / **100** | 98.0 / 95.2 | 9/10 | 100 | 99.0 |
+| `claude__v1__t05__gold` | 99.6 / 97.3 | 98.0 / 95.2 | 9/10 | 100 | 100 |
+| `qwen2.5-7b__v1__t0` | 97.2 / 78.6 | 79.4 / 77.1 | 8/10 | 63.1 | 94.7 |
+| `qwen2.5-7b__v2__t0` | 97.7 / **91.0** | 73.7 / **93.3** | **9/10** | 70.3 | 93.5 |
+| `qwen2.5-7b__v2__t05` | 97.2 / 79.8 | 70.4 / 77.1 | 8/10 | 66.0 | 93.4 |
+| `qwen2.5-7b__v1__t0__gold` † | 96.8 / 75.8 | 64.8 / 77.1 | 8/10 | 65.4 | 94.7 |
+| `qwen2.5-7b__v1__t05__gold` † | 93.0 / 46.3 | 87.8 / 34.3 | 6/10 | 86.5 | 88.9 |
+
+Recomputed against the Golden Set as corrected on 25.10 (F18: `038` is `standard` with the
+five rows of its one Standard Quota Table): Claude's quota recall is 95.2, not 100, because
+every Claude run called `038` `non_standard` and returned no quotas; qwen's quota precision
+rose a little because five of its `038` rows are now in the reference.
 
 The three `__gold` runs cover the same 10 documents as the accuracy table, so for them the
 validity and accuracy denominators coincide.
@@ -128,7 +156,84 @@ validity and accuracy denominators coincide.
 The other scored fields, `claude__v2__t0` vs `qwen2.5-7b__v2__t0`: `region_code` 100 / 98.1,
 `protocol` 100 / 95.6, `adjustable` 100 / 100, `description` 100 / 96.8.
 
-What the table says:
+#### 3.3 The same runs under grounded validation — Working Set, validation "2"
+
+The re-runs `claude__v2__t0__val2` and `qwen2.5-7b__v2__t0__val2` repeat the v2 / t0
+configuration with validation "2" (ADR-0005): after the schema, every endpoint must be
+printed in an endpoints table of the chapter, every quota name in a Standard Quota Table,
+and `quota_table_format` must follow the printed header; a violation goes into the one repair
+call like a schema error. Same prompt bytes, same schema bytes (the `prompt_sha` /
+`schema_sha` columns of the CSV), only the judge changed.
+
+| Run | n | ok % | ok + repaired % | failed | first-answer failures by cause | p50 / p95 | $ per 1,000 |
+|---|---|---|---|---|---|---|---|
+| `claude__v2__t0` (val. 1) | 30 | 96.7 | 100 | 0 | 1 format | 44 / 89 s | 42.7 |
+| `claude__v2__t0__val2` | 30 | 83.3 | 96.7 | 1 | 2 format (G3), 1 endpoint (G1), 1 quota name (G2), 1 schema (error 5) | 45 / 123 s | 50.6 |
+| `qwen2.5-7b__v2__t0` (val. 1) | 30 | 86.7 | 86.7 | 4 | 3 cut off, 1 format | 136 / 565 s | 0 |
+| `qwen2.5-7b__v2__t0__val2` | 30 | 50.0 | 56.7 | 13 | 7 endpoint (G1), 3 quota name (G2), 1 format (G3), 3 cut off, 1 malformed hostname | 221 / 763 s | 0 |
+
+| Run | endpoints precision / recall | quotas precision / recall | `quota_table_format` |
+|---|---|---|---|
+| `claude__v2__t0` (val. 1) | 99.6 / 100 | 98.0 / 95.2 | 9/10 |
+| `claude__v2__t0__val2` | 99.6 / 100 | 98.1 / **100** | **10/10** |
+| `qwen2.5-7b__v2__t0` (val. 1) | 97.7 / 91.0 | 73.7 / 93.3 | 9/10 |
+| `qwen2.5-7b__v2__t0__val2` | **99.5** / 54.5 | **96.4** / 50.5 | 6/10 |
+
+What grounding changed:
+
+- **Claude: four answers that validation "1" passed were not true to the chapter.** `044` a
+  dual-stack hostname completed by pattern, `025` a quota name paraphrased from the
+  neighbouring rows, `091` and `038` a Standard Quota Table called `non_standard`. All four
+  were fixed by the repair call that now carries the grounding error (`038`: the repair
+  returned exactly the five printed rows — quota recall 95.2 → 100, format 9/10 → 10/10).
+  The fifth repair, `010` (the prose-line row of error 5), fixed that row but is the first
+  `failed` Claude record of the HW — and a false one: the repaired answer wrote `doesn't` in
+  a quota name where the PDF prints a typographic apostrophe (`doesn’t`), and G2 compares
+  characters (finding F19, deferred). On content Claude is 30/30. The price of the judge:
+  `% ok` 96.7 → 83.3, p95 89 → 123 s, +$8 per 1,000 for the repair calls.
+- **qwen: the validity it had was half plausibility.** 15 of 30 first answers fail under
+  validation "2": seven on hostnames the chapter does not print (FIPS and dual-stack twins,
+  `us-gov` rows, `osis.*` in `038`), three on quota names (the Resource / Quota tables of
+  `066` and `047` reported as `standard`; names shortened or stripped of their trailing
+  period in `075`), one on the format (`037`: `none` with a Standard Quota Table printed),
+  three cut off at the output cap (error 4), one malformed hostname (`074`). The repair call
+  fixed two — the two Resource / Quota tables, which came back with no rows — so 13 end
+  `failed`. Precision on the documents it does finish rises to 99.5 / 96.4 — what grounding
+  is for — while recall over the gold rows halves, because a failed document counts as an
+  empty extraction.
+- **Latency and cost move for the same reason.** A repair call doubles a document's calls;
+  qwen's p50 goes from 136 to 221 s.
+
+#### 3.4 Out of sample — the Held-out Set, validation "2"
+
+Prompt v2 was written from the v1 errors on the 30 Working Set documents (§4), so its
+Working Set numbers are in-sample. The Held-out Set is 10 documents of the pool never looked
+at while writing v2 (contract item 20): 6 `medium`, 4 `edge` — the pool had no `short`
+document left — with a hand-checked gold for 5 of the 10. Claude ran on the five gold
+documents only (budget); qwen on all ten. Accuracy on the five gold documents (390 endpoint
+rows, 105 quota rows); validity on the run's documents.
+
+| Run | n | ok % | ok + repaired % | endpoints precision / recall | quotas precision / recall | `quota_table_format` |
+|---|---|---|---|---|---|---|
+| `claude__v1__t0__holdout__gold__val2` | 5 | 100 | 100 | 100 / 91.8 | 100 / 100 | 5/5 |
+| `claude__v2__t0__holdout__gold__val2` | 5 | 100 | 100 | 100 / **100** | 100 / 100 | 5/5 |
+| `qwen2.5-7b__v1__t0__holdout__val2` | 10 | 30.0 | 50.0 | 100 / 42.1 | 100 / 16.2 | 2/5 |
+| `qwen2.5-7b__v2__t0__holdout__val2` | 10 | 50.0 | 50.0 | 100 / **55.4** | 100 / **42.9** | 3/5 |
+
+- **v2's gain is out of sample, and it is the same gain.** Claude v1 returned 76 of the 108
+  endpoint rows of `068` Elastic Beanstalk — it stopped after the first endpoints table, as
+  it had on `048` in the Working Set; v2 returned all 108. The other four documents were
+  complete under both prompts. Nothing in v2 was written with `068` in view.
+- **qwen improves out of sample too, from a lower base.** First-answer validity 30 → 50 %,
+  endpoint recall 42 → 55 %, quota recall 16 → 43 %, format 2/5 → 3/5; four documents fail
+  under both prompts (`016`, `051`, `059`, `073`) and one under each (`028` v1, `046` v2),
+  on the same causes as in the Working Set — FIPS hostnames the tables do not print,
+  malformed hostnames, quota names of non-standard tables, one cut-off.
+- **The held-out numbers are harder than the Working Set's**, not easier: no `short`
+  document, 1,275–2,929 words. Claude's absolute numbers hold (100 % valid, 100 % recall
+  with v2); qwen's are lower than on the Working Set for that reason.
+
+What the tables say:
 
 - **Prompt v2 helped both models, for different reasons.** Claude: the wider rule 2 ("every
   endpoints table, across page breaks") recovered the rows v1 missed — gold recall 97.3 → 100,
@@ -144,8 +249,8 @@ What the table says:
   (error 2), the Region code written as `region_name` (error 3), and the largest documents,
   which it cannot finish within the output cap (error 4). None of these is a schema or
   validity problem a repair call can fix.
-- **The paid model is ≈ 3× faster and ≈ 100 % valid; the local model is free and 87 % valid.**
-  Per document: 44 s vs 136 s at p50; $0.043 vs $0.
+- **The paid model is ≈ 3–5× faster and ≈ 97 % valid under grounded validation; the local
+  model is free and 57 % valid.** Per document: 45 s vs 221 s at p50; $0.051 vs $0.
 
 ## 4. Error analysis
 
@@ -163,23 +268,34 @@ legacy or control-plane endpoints") and tells the model to continue across page 
 *Effect:* `048` 84 → 104 rows; gold endpoint recall 97.3 → 100 %; `078` / `017` / `044` as
 above. The only cost is error 5.
 
-**Error 2 — A non-standard quota table is reported as `standard` with invented rows (qwen,
-both prompts).**
-*How often:* 2 of 10 gold documents (`066` DataSync, `038` OpenSearch) in every qwen run;
-0 of 10 for Claude. This is the whole of qwen's `quota_table_format` gap (8/10) and most of
-its quota precision gap (69.9 %).
+**Error 2 — Rows of a non-standard quota table are reported as Standard Quota Table rows
+(qwen, both prompts) — and the reference was wrong on one of the two documents.**
+*How often:* 2 of 10 gold documents (`066` DataSync, `038` OpenSearch) in every qwen run.
+On `066`, Claude is right in every run. On `038`, the first edition of this report counted
+qwen's 28 rows as invented and Claude's `non_standard` as correct; grounding the gold file
+itself in its chapter (step 11, finding F18) showed the chapter prints **one** Standard
+Quota Table (domain and instance quotas, 5 rows) and ten other tables with `Notes` instead
+of `Description` or three columns. So the correct answer is `standard` with five rows:
+qwen's 28 rows are 5 printed ones plus 23 from the non-standard tables, and every Claude run
+had the format wrong (`non_standard`, no rows). The gold was re-drafted and re-checked on
+25.10; §3.2 is recomputed against it.
 *Example:* `066` prints a table with the columns *Resource / Quota / Adjustable* — no
 Default, no Description. Expected `non_standard`, `quotas: []`; qwen returned `standard` and
 four rows, with the Resource text as `name` and the Quota text as `default`.
 *Why:* a 7B model maps the table it sees onto the four fields it is asked for; "exactly the
 columns Name, Default, Adjustable, Description" does not stop it when three of the four look
-close enough.
+close enough. Claude's `038` error is the mirror image: ten non-standard tables outweighed
+the one standard table.
 *v2:* rule 3 decides by the header row and names the Resource / Quota layout explicitly as
-`non_standard`.
-*Effect:* none on qwen — `066` still 4 rows, `038` went from 15 to 28 invented rows. The
-rule works for Claude (which was already right) and not for the model it was written for.
-A code-side check (the printed header row must contain "Default" and "Description") would
-close this; it is a contract change, deferred.
+`non_standard`. Effect on the model: none — `066` still 4 rows, `038` 15 → 28 rows.
+*Grounded validation (step 11):* G3 compares the format with the printed header and G2 every
+quota name with the printed Name cells, by code. Under it, Claude's `038` answer is repaired
+into exactly the five printed rows (quota recall 95.2 → 100). qwen's `066` is rejected and
+repaired into an answer with no rows (format `none` — still not the gold's `non_standard`,
+but nothing invented); its `038` is rejected with 23 of the 28 rows flagged — exactly the
+rows of the non-standard tables — plus two `osis.*` hostnames the tables do not print, and
+the repair returns the same answer: `failed`. The validation now catches what the prompt
+could not; the model still cannot read the layout.
 
 **Error 3 — The Region code is written as `region_name` (qwen).**
 *How often:* 205 of 686 matched gold rows in `qwen2.5-7b__v2__t0` (`region_name` accuracy
@@ -228,34 +344,41 @@ beyond the last table.
 *Caught by:* the format checks of ADR-0003 (`region_code` pattern, hostname pattern), so
 the row never reached the output; the repair call removed it and the record is `repaired`.
 *Effect:* `% ok` 100 → 96.7 for Claude v2 while `% ok + repaired` stays 100 — the validation
-layer did exactly what it was designed for.
+layer did exactly what it was designed for. Under grounded validation the repair fixes the
+row, and the same document is nevertheless Claude's one `failed` record — a straight
+apostrophe in a quota name where the PDF prints a typographic one (§3.3, F19).
 
 ## 5. Choice for production, and when it would change
 
-**Claude Haiku 4.5, prompt v2, temperature 0.** 100 % valid after one repair, 100 % gold
-recall on endpoints and quotas, every scored field ≥ 99 %, and nothing in the error analysis
-is a Claude-side limit except the S3-sized output, which the raised `max_tokens` covers.
+**Claude Haiku 4.5, prompt v2, temperature 0, grounded validation.** 97 % valid after one
+repair with nothing invented (the one failure is a prose line it keeps returning as a row),
+100 % gold recall on endpoints and quotas in and out of sample, every scored field ≥ 99 %,
+and nothing in the error analysis is a Claude-side limit except the S3-sized output, which
+the raised `max_tokens` covers.
 
-The scale arithmetic, from the measured numbers: **100,000 documents cost ≈ $4,300 with
-Claude** and, with parallel requests, finish in hours. The same corpus on **qwen2.5:7b costs
-$0 in fees and ≈ 157 days of one M4 Pro laptop at the measured p50 of 136 s per document**
-(≈ 230 days at the mean, because the `edge` documents take 8–10 min each) — and 13 % of the
-documents come back invalid, with two systematic errors (2, 3) no prompt fixed.
+The scale arithmetic, from the measured numbers under grounded validation: **100,000
+documents cost ≈ $5,100 with Claude** and, with parallel requests, finish in hours. The same
+corpus on **qwen2.5:7b costs $0 in fees and ≈ 256 days of one M4 Pro laptop at the measured
+p50 of 221 s per document** — and 43 % of the documents come back invalid, with hostnames
+the chapter does not print as the first cause.
 
 The decision would change if: (a) the documents cannot leave the machine — then qwen is the
 only option, and the output needs a post-check of `quota_table_format` against the printed
 header row and a `region_name` lookup from `region_code`; (b) a GPU server replaces the
-laptop — at ≈ 20× the throughput the corpus takes a week, and the 87 % validity may be
-acceptable for a draft-then-review workflow; (c) the corpus is a few hundred documents — a
-night of laptop time, no budget line, and the invalid 13 % reviewed by hand; (d) a larger
-local model (14B–32B) closes errors 2–4 — to be measured, not assumed.
+laptop — at ≈ 20× the throughput the corpus takes two weeks, and 57 % validity with 99 %
+precision on the valid half may be acceptable for a draft-then-review workflow; (c) the
+corpus is a few hundred documents — nights of laptop time, no budget line, and the invalid
+half reviewed by hand; (d) a larger local model (14B–32B) closes errors 2–4 — to be measured,
+not assumed.
 
 ## 6. Limitations
 
 - **The Golden Set was drafted by `claude__v1__t0`** and corrected by hand against the PDF.
   A Claude error the check did not catch is counted as correct for Claude and as an error for
-  qwen. The step 5 check did find and fix one such error (the `048` legacy table), which is
-  the reason Claude v1 recall is 97.3 and not 100.
+  qwen. The step 5 check found one such error (the `048` legacy table); grounding found a
+  second one three days later (`038`, F18), which the hand check had confirmed because the
+  draft was empty. The held-out gold was drafted by a grounded run and checked the same way,
+  with the same advantage for Claude.
 - **10 gold documents, one run per configuration.** Recall is computed over 752 endpoint rows
   and 100 quota rows, so a single document moves it by several points; `edge` is represented
   by one gold document (`038`). Differences under ≈ 2 pp are noise.
@@ -266,9 +389,17 @@ local model (14B–32B) closes errors 2–4 — to be measured, not assumed.
 - **The local model's caps are a laptop's caps.** `num_ctx` 32,768 and `num_predict` 18,432
   were set for a 48 GB machine; the six documents that hit the cap would need a larger
   context or chunking, not a better prompt.
-- **No held-out test set.** Prompt v2 was written from the v1 errors on the same 30
-  documents it is then measured on; the Golden Set recall of v2 is therefore an in-sample
-  number.
+- **The Held-out Set is small and skewed.** 10 documents, gold for 5, no `short` document
+  (the Working Set took all of them), one run per configuration; Claude ran on the five gold
+  documents only. It shows that v2's gain is not an artefact of the documents it was written
+  on; it does not give precise out-of-sample rates.
+- **Grounding is a reader of layout text.** G1–G3 were calibrated so that every gold file
+  passes and every flagged Claude row was confirmed by hand; `region_name`, `default` and
+  `description` are not grounded and are checked by the Golden Set only. A reader fault shows
+  as a false repair, never as a silent pass — the one case found, the typographic apostrophe
+  of `010` (F19), cost Claude one `failed` record out of 30.
+- **Long documents are not processed in parts** (lecturer's remark 3): the output-cap
+  failures of error 4 stand; chunking is the planned next step.
 
 ## 7. Reproduce
 
