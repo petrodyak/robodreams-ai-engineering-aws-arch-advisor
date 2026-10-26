@@ -7,6 +7,7 @@ Usage:
     uv run python main.py --model qwen2.5-7b --sampling t05
     uv run python main.py --sampling t05 --gold   # the 10 Golden Set documents only
     uv run python main.py --prompt v2 --set holdout --gold   # the Held-out Set's 5 gold documents
+    uv run python main.py --prompt v2 --parts   # each chapter in two calls (step 13)
 
 Writes results/runs/jsonl/<run_id>.jsonl (contract items 11-12) and its readable mirror
 results/runs/md/<run_id>.md. Documents already in the JSONL are skipped, so a run
@@ -51,6 +52,12 @@ def main() -> None:
         help="the Golden Set documents only; the run id gets the __gold suffix",
     )
     parser.add_argument(
+        "--parts",
+        action="store_true",
+        help="the endpoints part and the quotas part of each chapter in one call each, "
+        "merged by code; the run id gets the __parts suffix (step 13)",
+    )
+    parser.add_argument(
         "--estimate", action="store_true", help="count input tokens only (Claude)"
     )
     args = parser.parse_args()
@@ -71,7 +78,12 @@ def main() -> None:
         parser.error("--estimate counts Claude tokens; a local model costs $0")
     client = MODELS[args.model]()
     run_id = pipeline.make_run_id(
-        args.model, prompt.version, sampling.name, gold=args.gold, doc_set=doc_set
+        args.model,
+        prompt.version,
+        sampling.name,
+        gold=args.gold,
+        doc_set=doc_set,
+        parts=args.parts,
     )
 
     if args.estimate:
@@ -90,12 +102,18 @@ def main() -> None:
             out_path,
             md_path=md_path,
             raw_dir=doc_set.dir,
+            parts=args.parts,
         )
     except pipeline.ProvenanceMismatch as error:
         raise SystemExit(f"refusing to resume: {error}") from error
     records, lost = result.records, result.lost
 
     statuses = Counter(r.status.value for r in records)
+    if args.parts:
+        part_statuses = Counter(
+            f"{p.name}:{p.status.value}" for r in records for p in r.parts or []
+        )
+        print(f"Parts: {dict(part_statuses)}")
     # paid tokens include those of documents that ended without a record (finding F10)
     tokens_in = sum(r.usage.input_tokens for r in records) + lost.input_tokens
     tokens_out = sum(r.usage.output_tokens for r in records) + lost.output_tokens

@@ -106,5 +106,6 @@ The contract is the source of truth for stage 1 code — write code against it, 
     └── adr/                     # 0001 standard quota tables only, 0002 model extracts / code derives,
                                  # 0003 format checks are validation failures,
                                  # 0004 OpenRouter is a course-exercise client, not an HW 1 provider,
-                                 # 0005 validation is grounded in the source text
+                                 # 0005 validation is grounded in the source text,
+                                 # 0006 long documents in parts: code splits, code merges
 ```

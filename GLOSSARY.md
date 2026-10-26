@@ -75,6 +75,13 @@ What a Run produced for one document: the Service Document (or none), its valida
 (`ok`, `repaired`, `failed`), latency and token usage.
 _Avoid_: result, row, output line
 
+**Part**:
+One of the two pieces a chapter is cut into for a run in parts (contract item 21): the
+quotas part (its "Service quotas…" blocks) and the endpoints part (everything else). Each
+is asked for with the same prompt, as a chapter of its own, and judged on its own rows; code
+merges the two answers into one Service Document.
+_Avoid_: chunk, segment, page
+
 **Repaired**:
 A Run Record whose first answer failed validation and whose single corrective call succeeded.
 Counted separately from `ok` because "valid on first try" and "valid after repair" are

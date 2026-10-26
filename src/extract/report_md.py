@@ -55,6 +55,13 @@ def render_markdown(run_id: str, records: list[RunRecord]) -> str:
         f"- Prompt version: `{first.prompt_version}` (file sha `{first.prompt_sha}`)",
         f"- Schema sha: `{first.schema_sha}`; validation version `{first.validation_version}`",
         f"- Sampling: `{sampling.name}` (temperature {sampling.temperature}, top_p {sampling.top_p})",
+    ]
+    if first.parts is not None:
+        lines.append(
+            "- In parts: the endpoints part and the quotas part of each chapter in one "
+            "call each, merged by code (step 13)"
+        )
+    lines += [
         f"- Documents: {len(records)}",
         "",
         "## Summary",
@@ -109,6 +116,15 @@ def _document_section(rec: RunRecord) -> list[str]:
         f"in {rec.usage.input_tokens:,} / out {rec.usage.output_tokens:,} tokens"
     )
     lines = [f"### {rec.file}", "", status]
+    for part in rec.parts or []:
+        rows = "—" if part.rows is None else f"{part.rows} rows"
+        spill = f", {part.spill} ignored of the other kind" if part.spill else ""
+        lines.append(
+            f"- Part `{part.name}` ({part.words:,} words): **{part.status.value}**, "
+            f"{part.attempts} call(s), {part.latency_ms / 1000:.1f} s, "
+            f"in {part.usage.input_tokens:,} / out {part.usage.output_tokens:,} tokens, "
+            f"{rows}{spill}"
+        )
     out = rec.output
     if out is not None:
         lines += [
