@@ -1,16 +1,19 @@
 # HW 1 — Structured extraction: Claude Haiku 4.5 vs qwen2.5:7b
 
-**Snapshot of 2026-10-26** (second edition; the first, of 24.10, preceded the lecturer's
-feedback). Numbers taken from `results/metrics.csv`, which `make metrics` rebuilds from the
-fourteen run files in `results/runs/jsonl/` of `patch-12.2-val2-and-holdout-runs` (code as
-merged in PR #26, `900b1d9`): the eight runs of 24.10 (`claude__v1__t0`, `claude__v2__t0`,
+**Snapshot of 2026-10-27** (third edition; the first, of 24.10, preceded the lecturer's
+feedback, the second, of 26.10, added grounded validation and the Held-out Set). Numbers
+taken from `results/metrics.csv`, which `make metrics` rebuilds from the seventeen run files
+in `results/runs/jsonl/` of `patch-13.1-parts-runs-and-report` (code as in PR #29): the
+eight runs of 24.10 (`claude__v1__t0`, `claude__v2__t0`,
 `claude__v1__t05__gold`, `qwen2.5-7b__v1__t0`, `qwen2.5-7b__v2__t0`, `qwen2.5-7b__v2__t05`,
 `qwen2.5-7b__v1__t0__gold`, `qwen2.5-7b__v1__t05__gold`), the two re-runs under grounded
 validation (`claude__v2__t0__val2`, `qwen2.5-7b__v2__t0__val2`) and the four Held-out Set runs
 (`claude__v1__t0__holdout__gold__val2`, `claude__v2__t0__holdout__gold__val2`,
-`qwen2.5-7b__v1__t0__holdout__val2`, `qwen2.5-7b__v2__t0__holdout__val2`). The Golden Set
-file for `038` was corrected on 25.10 (finding F18), so the 24.10 runs' accuracy was
-recomputed against the corrected reference. Later code changes do not edit this report.
+`qwen2.5-7b__v1__t0__holdout__val2`, `qwen2.5-7b__v2__t0__holdout__val2`) and the three
+runs in parts of 26–27.10 (`claude__v2__t0__parts__val2`, `qwen2.5-7b__v2__t0__parts__val2`,
+`qwen2.5-7b__v2__t0__parts__holdout__val2`, §3.5). The Golden Set file for `038` was
+corrected on 25.10 (finding F18), so the 24.10 runs' accuracy was recomputed against the
+corrected reference. Later code changes do not edit this report.
 
 ### The lecturer's remarks of 24.10 — how each was closed
 
@@ -23,7 +26,7 @@ step entries in `docs/Implementation_steps.md` §4.
 |---|---|---|---|---|
 | 1 | Validation should check the data against the **source**, not what the model copied from the prompt | A grounding layer after the schema, by code and the same for both models: G1 every `endpoint` is printed in the Endpoint column of an endpoints table of the Target Service's chapter; G2 every quota `name` is a Name cell of a Standard Quota Table of the chapter; G3 `quota_table_format` follows the printed header. A violation is a validation failure like a schema error and goes into the one repair call. Readers calibrated on the real data: every gold file passes, every flagged Claude row confirmed by hand; three reader faults fixed on the way, and one gold file found wrong (F18). `validation_version` in every record, `__val2` in the run id, so old and new judgements never mix | Step 11 — PR #23, PR #24 (gold `038`); re-runs PR #27 | ADR-0005; contract items 7, 9, 11, 12, 16; `src/extract/grounding.py`, `tests/test_grounding.py`; §3.3 of this report (validation 1 vs 2 on the same documents), error 2, F19 |
 | 2 | Tie every run to the **exact prompt and schema version** | Two fields in every Run Record: `prompt_sha` (sha256 of the prompt file bytes) and `schema_sha` (sha256 of the JSON Schema sent to the model), 12 hex chars, required. The eight earlier runs backfilled from git at the commit each was made. Two guards: `run()` refuses to resume a run file made with another prompt or schema (`ProvenanceMismatch`), and `make metrics` refuses a file whose records mix two pairs. A schema file per prompt version was rejected on purpose: the remark asks for a binding, not an isolation (one schema for all runs is contract item 1). Result in the data: F17 (`qwen2.5-7b__v1__t0` = v1 text + enum schema) is visible in `metrics.csv` and tested | Step 10 — PR #21, PR #22 (guard + property test) | Contract item 12; `prompts/CHANGELOG.md` version → sha table; `scripts/backfill_provenance.py`; `tests/test_provenance.py`; `prompt_sha` / `schema_sha` columns of `results/metrics.csv` and of §3 |
-| 3 | Process **long documents in parts** | **Not done.** Decision: not before the deadline — chunking changes what the model returns and what the code merges (ADR-0002 would need a new clause), and a day-old pipeline change would have had no time to be measured. The output-cap failures stay as error 4 (3 qwen documents, 0 Claude with the raised `max_tokens`); a design (split the chapter by its tables, one call per part, merge by code, validate the whole) is written and is the first step after HW 1 | — | §4 error 4, §6; `docs/Implementation_steps.md` deferred findings |
+| 3 | Process **long documents in parts** | Done the way the lecturer described it at the Q&A of 26.10: the prompt stays the same, code splits the chapter and calls once per part with only that part's text, code merges and validates. Two parts by section kind (option A of three): the quotas part — the "Service quotas…" blocks — and the endpoints part — everything else; each sent as a chapter of its own, judged on its own rows (G1 / G2 + G3, the other kind's fields dropped before the schema and counted as `spill`), merged into one Service Document and re-validated G1–G3 by code. Checked on all 40 chapters that nothing is lost at the cut. Measured against the whole-document runs on the same documents: Claude 0 `failed` (was 1), −6 % cost, −17 % latency; qwen **worse** — a 7B model given a part invents the table it does not see and runs to the output cap, cut-offs 3 → 7 (finding F20). Pages, a per-part note or a per-part schema are the next experiments; the measurement says which | Step 13 — PR #29; runs and this edition PR #30 | ADR-0006; contract item 21; `src/extract/parts.py`, `tests/test_parts.py`; §3.5 of this report, error 4, F20 |
 | 4 | Test prompt improvements on **unseen data** | A Held-out Set: 10 pool documents outside the Working Set, selected by a fixed rule (seed 20261025), 6 `medium` + 4 `edge` (the pool had no `short` document left), gold for 5 drafted by a grounded Claude v2 run and checked against the PDF; `DocumentSet` in the code, `__holdout` scope in the run id, every reader of `data/raw` / `data/gold` takes the set. v1 and v2 run on it for both models — Claude on the five gold documents (budget raised $5 → $10 for this), qwen on all ten | Step 12 — PR #25, PR #26 (gold); runs PR #27 | Contract item 20; `data/holdout/`, `data/holdout/gold/README.md`; `tests/test_holdout.py`; §3.4 of this report (out of sample v1 → v2), §6 |
 
 ## 1. Summary
@@ -238,6 +241,68 @@ rows, 105 quota rows); validity on the run's documents.
   document, 1,275–2,929 words. Claude's absolute numbers hold (100 % valid, 100 % recall
   with v2); qwen's are lower than on the Working Set for that reason.
 
+#### 3.5 In parts — the same documents, two calls per chapter (step 13)
+
+A `__parts` run extracts each chapter as its endpoints part and its quotas part with the
+same prompt and the same schema (ADR-0006, contract item 21); the whole-document `__val2`
+run of the same model, prompt and sampling is its control. Two differences between the
+configurations besides the cut: the parts see the chapter only, never the Neighbour Tails,
+and each document pays one more copy of the instructions.
+
+| Run | n | ok / rep / failed | ok + rep % | cut-offs | p50 / p95 | $ per 1,000 | wall clock | in / out tokens |
+|---|---|---|---|---|---|---|---|---|
+| `claude__v2__t0__val2` (whole) | 30 | 25 / 4 / 1 | 96.7 | 0 | 45 / 122 s | 50.6 | 27 min | 362k / 231k |
+| `claude__v2__t0__parts__val2` | 30 | 25 / 5 / **0** | **100** | 0 | **36 / 89 s** | **47.8** | **22 min** | 376k / 211k |
+| `qwen2.5-7b__v2__t0__val2` (whole) | 30 | 15 / 2 / 13 | 56.7 | 3 | 221 / 763 s | 0 | 143 min | 331k / 301k |
+| `qwen2.5-7b__v2__t0__parts__val2` | 30 | 13 / 5 / 12 | 60.0 | **7** | 307 / 875 s | 0 | 174 min | 316k / 396k |
+| `qwen2.5-7b__v2__t0__holdout__val2` (whole) | 10 | 5 / 0 / 5 | 50.0 | 1 | 194 / 487 s | 0 | 42 min | 122k / 88k |
+| `qwen2.5-7b__v2__t0__parts__holdout__val2` | 10 | 3 / 0 / 7 | 30.0 | 1 | 233 / 505 s | 0 | 49 min | 125k / 113k |
+
+| Run | endpoints P / R | quotas P / R | `quota_table_format` | `region_name` acc |
+|---|---|---|---|---|
+| `claude__v2__t0__val2` (whole) | 99.6 / 100 | 98.1 / 100 | 10/10 | 100 |
+| `claude__v2__t0__parts__val2` | 99.6 / 100 | 98.1 / 100 | 10/10 | 100 |
+| `qwen2.5-7b__v2__t0__val2` (whole) | 99.5 / 54.5 | 96.4 / 50.5 | 6/10 | 79.3 |
+| `qwen2.5-7b__v2__t0__parts__val2` | 99.1 / 43.2 | 96.6 / 26.7 | 6/10 | **95.4** |
+
+- **Claude: parts are a small, clean win.** Rows identical on 28 of 30 documents, the same
+  gold recall, and every number of the first table better: the one `failed` of the
+  whole-document run (`010`, F19) is `repaired` — the repaired quotas part wrote the
+  typographic apostrophe this time, so F19 stands as a limitation, not as a failure here;
+  `044` needs no repair, because the pattern-completed hostname of the whole-document run
+  does not appear when the model sees the endpoints part alone; `023` goes the other way
+  (the quotas part first says `non_standard`). Input +4 % (the second copy of the
+  instructions), output −9 % (fewer repairs), so −6 % cost and −17 % latency. Spill 0 on
+  all 30: Claude never writes rows of the other kind. The one visible difference in the
+  rows: `005` Aurora prints two identical endpoints tables (MySQL- and PostgreSQL-Compatible
+  Edition) and the parts answer returns both, 72 rows, where the whole-document answer had
+  merged them into 36 — the parts answer is the literal one; the metrics match by hostname
+  set, so recall does not move, and a de-duplication in the merge is the open item.
+- **qwen: parts make it worse, and the mechanism is new.** Validity moves from 15 / 2 / 13
+  to 13 / 5 / 12 — a wash — but cut-offs go from 3 to 7 and output tokens +32 %. The three
+  original cut-offs stay (`017`, `049`: the endpoints part alone is still 248 and 290 rows;
+  `025`: 78 rows, and yet 18,432 tokens — a runaway), and four new ones appear on parts that
+  are small: `037`'s quotas part is 42 words, one quota, and the model wrote 18,432 tokens
+  of invented endpoints before the cap; `005`, `038` (quotas) and `044` (endpoints) the
+  same. **Finding F20:** a 7B model given a text with no endpoints table fills the
+  `endpoints` field the schema asks for anyway — 1 to 80 invented rows on every one of the
+  21 accepted quotas parts (`spill`; 7 more never finished), with schemes, `<Region>`
+  placeholders and quota values as hostnames —
+  and sometimes does not stop. The validation drops those rows before judging the part
+  (contract item 21), so they cost nothing in validity; they cost the tokens, the time
+  and, past the cap, the document. The held-out run says the same: 5 / 0 / 5 → 3 / 0 / 7,
+  `079`'s quotas part runs to the cap, `028`'s endpoints part invents a `ca-west-1` pair
+  the whole document did not. Three documents did improve (`007`, `095` from G1 failures to `ok`,
+  `074` to `repaired`) and `region_name` accuracy on matched rows rose from 79 to 95 % —
+  on a shorter text the model pairs the columns better — but recall over the gold rows
+  fell with the failed documents.
+- **What the measurement says to do next** (ADR-0006 listed the options; now the data picks):
+  not pages — the new cut-offs are runaways on *small* parts, so a smaller part does not
+  help; a per-part note inside the part ("this part prints no endpoints table") or a
+  per-part schema, which tell the model not to fill the other kind, are the experiments
+  that address F20, and both change what the model is told, so each gets its own run id
+  and its own measurement.
+
 What the tables say:
 
 - **Prompt v2 helped both models, for different reasons.** Claude: the wider rule 2 ("every
@@ -332,8 +397,13 @@ repair call by design (contract item 16: the corrected answer would be as long).
 *v2:* no change in the prompt; v2 at `t0` reduced the cut-offs from 5 to 3 (`042`, `086`,
 `048` finished), `t05` brought them back to 6.
 *Effect:* this is where the local model's validity ceiling is — the 10 % of the corpus that
-is `edge`-sized. Options outside this HW: a larger context, a chunked extraction per table,
-or a loop detector that stops after a repeated row.
+is `edge`-sized.
+*In parts (step 13, §3.5):* the cut was expected to remove (a) and did not: `017` and `049`
+are cut off on the endpoints part alone, and `025`, whose endpoints part is 78 rows, is cut
+off too — cause (b), the loop, moves to the parts, and on four more documents a *small*
+part (one quota, 42 words) is where the model runs away, inventing the endpoints table it
+does not see (F20). Cut-offs 3 → 7. Pages would not help (the runaways are on small
+parts); a loop detector, a per-part note or a per-part schema are the options left.
 
 **Error 5 — A prose line is taken as an endpoint row (Claude v2, side effect of error 1's
 fix).**
@@ -355,14 +425,15 @@ apostrophe in a quota name where the PDF prints a typographic one (§3.3, F19).
 
 ## 5. Choice for production, and when it would change
 
-**Claude Haiku 4.5, prompt v2, temperature 0, grounded validation.** 97 % valid after one
-repair with nothing invented (the one failure is a prose line it keeps returning as a row),
-100 % gold recall on endpoints and quotas in and out of sample, every scored field ≥ 99 %,
-and nothing in the error analysis is a Claude-side limit except the S3-sized output, which
-the raised `max_tokens` covers.
+**Claude Haiku 4.5, prompt v2, temperature 0, grounded validation, in parts.** 100 % valid
+after one repair with nothing invented, 100 % gold recall on endpoints and quotas in and
+out of sample, every scored field ≥ 99 %, and nothing in the error analysis is a
+Claude-side limit. The parts configuration (§3.5) is the one to ship: same rows, no
+`failed`, 6 % cheaper and 17 % faster than the whole document, and it also removes the
+one dependence on a raised `max_tokens` for S3-sized chapters.
 
-The scale arithmetic, from the measured numbers under grounded validation: **100,000
-documents cost ≈ $5,100 with Claude** and, with parallel requests, finish in hours. The same
+The scale arithmetic, from the measured numbers under grounded validation, in parts:
+**100,000 documents cost ≈ $4,800 with Claude** and, with parallel requests, finish in hours. The same
 corpus on **qwen2.5:7b costs $0 in fees and ≈ 256 days of one M4 Pro laptop at the measured
 p50 of 221 s per document** — and 43 % of the documents come back invalid, with hostnames
 the chapter does not print as the first cause.
@@ -403,8 +474,11 @@ not assumed.
   `description` are not grounded and are checked by the Golden Set only. A reader fault shows
   as a false repair, never as a silent pass — the one case found, the typographic apostrophe
   of `010` (F19), cost Claude one `failed` record out of 30.
-- **Long documents are not processed in parts** (lecturer's remark 3): the output-cap
-  failures of error 4 stand; chunking is the planned next step.
+- **Parts are one cut, measured once.** The section-kind cut is lossless on all 40 chapters
+  by test, but it is the only cut tried; for the local model it made the cut-offs worse
+  (F20), and the experiments that address that — a per-part note, a per-part schema, a
+  loop detector — are designed, not run. The whole-document rows remain the local model's
+  numbers of record.
 
 ## 7. Reproduce
 
