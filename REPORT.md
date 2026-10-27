@@ -486,9 +486,12 @@ not assumed.
 make install                      # .venv from uv.lock
 make metrics                      # results/runs/jsonl/*.jsonl -> results/metrics.csv
 make run PROMPT=v2                # Claude, all 30 documents (needs ANTHROPIC_API_KEY, ≈ $1.3)
-make run MODEL=qwen2.5-7b PROMPT=v2   # local model (needs Ollama with qwen2.5:7b, ≈ 100 min)
+make run PROMPT=v2 PARTS=1        # the same in parts, the production configuration (≈ $1.4)
+make run MODEL=qwen2.5-7b PROMPT=v2   # local model (needs Ollama with qwen2.5:7b, ≈ 140 min)
 ```
 
+Reproducing the required matrix (`claude__v1__t0`, `claude__v1__t05__gold`, `claude__v2__t0`)
+costs ≈ $2.8; everything spent on HW 1, the remediation runs included, ≈ $6.5 of a $10 limit.
 The README section "Stage 1: run the extraction" has the rest; the metric definitions are
-contract items 17–19 in `docs/stage1-data-contract.md`; every finding (F1–F17) is in
+contract items 17–19 and 21 in `docs/stage1-data-contract.md`; every finding (F1–F20) is in
 `docs/Implementation_steps.md`, section 6.

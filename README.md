@@ -47,6 +47,11 @@ the output of layout-mode text extraction, and that text is where the difficulty
   "Not supported", "—" or "N/A". The model keeps the printed text verbatim; derived values are
   computed by code ([ADR-0002](docs/adr/0002-model-extracts-code-derives.md)).
 
+There are no typos and no mixed languages in this data — the source is an official reference
+— so the "dirty" of the assignment is extraction noise, irregular layouts and missing
+sections rather than human noise; it is the kind of noise the later stages of this project
+(RAG over the same family of PDFs) will meet.
+
 A regex or a PDF table extractor handles the clean cases and silently fails on the rest. These
 failure modes are the substance of the error analysis in `REPORT.md`. The structured nature of
 the source is also what makes the comparison measurable: the golden set has an objective answer
@@ -91,6 +96,12 @@ make run PROMPT=v2 PARTS=1                     # each chapter in two calls, merg
 make metrics                                   # every run -> results/metrics.csv
 make check                                     # ruff + pytest, the pre-commit gate
 ```
+
+**Cost to reproduce.** The required matrix — `claude__v1__t0`, `claude__v1__t05__gold`,
+`claude__v2__t0` — costs ≈ $2.8 in API fees (measured: $1.21 + $0.27 + $1.28); the local
+model costs nothing. Everything spent on HW 1, including the runs added after the lecturer's
+feedback (grounded validation, the Held-out Set, parts), is ≈ $6.5 of a $10 limit; the
+per-run figures are in `docs/Implementation_steps.md`, section 5.
 
 One run = model × prompt version × sampling configuration, named
 `<model>__<prompt>__<sampling>[__parts][__holdout][__gold][__val<N>]`; its records go to `results/runs/jsonl/<run_id>.jsonl`

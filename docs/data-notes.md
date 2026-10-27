@@ -71,7 +71,7 @@ touching `data/`, the prompts, or the golden set. The schema the data is extract
 
 Varying length; missing fields (no quotas, "Not supported", "—"); PDF-extraction noise (broken
 columns, wrapped lines, merged cells, footnotes, running headers/footers). There are no typos and no
-mixed languages — the README says exactly that.
+mixed languages — the README ("Why this is not just table parsing") says exactly that.
 
 ## Known quirks (decisions made)
 

@@ -60,11 +60,11 @@ Apply to every step and are not repeated in the steps:
 | 6 | Ollama implementation + v1 runs | `step-6-llm-ollama` | review ~20 min | step 2: shared interface (3), ≥2 configurations (2) | 22.10 | ✅ PR #13 (`a7df1d4`) |
 | 7 | Metrics → `results/metrics.csv` | `step-7-metrics` | review ~20 min | step 2: correct measurements (3) | **24.10 checkpoint** | ✅ PR #14 (`1744709`); gold v1 runs PR #15 (`7c9342d`) |
 | 8 | Prompt v2 + CHANGELOG, v2 runs, README | `step-8-prompt-v2` | choosing changes ~30 min | step 3: ≥2 versions + changelog (3); repo quality (2) | 26.10 | ✅ PR #16 (`df1a8cd`); Claude v2 run PR #17 (`ea70c6e`); qwen runs PR #18 (`8dd84e7`) |
-| 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ✅ PR #19 (`0869fda`); README results PR #20 (`c4b6139`); second edition after the lecturer's remarks PR #27 (`f27ef5c`); remarks table 🔄 branch `patch-12.3-remarks-table` |
+| 9 | `REPORT.md` (after the Q&A on 26.10) | `step-9-report` | ~1 h together | step 4 (6) | **27.10** | ✅ PR #19 (`0869fda`); README results PR #20 (`c4b6139`); second edition after the lecturer's remarks PR #27 (`f27ef5c`); remarks table PR #28 (`2cc86f0`) |
 | 10 | Run provenance: `prompt_sha` / `schema_sha` in every record (Q&A feedback, remark 2) | `step-10-run-provenance` | review ~15 min | step 3: logging (2); repo quality | 25.10 | ✅ PR #21 (`095b560`); guard PR #22 (`721ab6b`) |
 | 11 | Source-grounded validation G1–G3, `validation_version`, gold `038` re-check (remark 1) | `step-11-grounded-validation` | review ~30 min + gold `038` ~30 min | step 3: validation (3); repo quality | 25.10 | ✅ PR #23 (`f51ebce`); gold `038` PR #24 (`7675345`); `__val2` re-runs PR #27 (`f27ef5c`) |
 | 12 | Held-out Set: 10 unseen documents, gold for 5, runs with the `__holdout` scope (remark 4) | `step-12-holdout` | review ~15 min + gold ×5 ~1.5 h | step 3 (3); repo quality | 26.10 | ✅ PR #25 (`57a1a11`); gold PR #26 (`900b1d9`); runs PR #27 (`f27ef5c`) |
-| 13 | Long documents in parts: endpoints part + quotas part, same prompt, merged by code; `__parts` runs (remark 3) | `step-13-parts` | review ~30 min; "ok" on ≈ $1.6 | step 3 (3); repo quality | 27.10 | ✅ PR #29 (code); runs + REPORT third edition 🔄 branch `patch-13.1-parts-runs-and-report` (PR #30) |
+| 13 | Long documents in parts: endpoints part + quotas part, same prompt, merged by code; `__parts` runs (remark 3) | `step-13-parts` | review ~30 min; "ok" on ≈ $1.6 | step 3 (3); repo quality | 27.10 | ✅ PR #29 (`702643a`, code + F20 fix); runs + REPORT third edition PR #30 (`06f21de`) |
 
 ## 4. Steps
 
@@ -732,4 +732,5 @@ and the PR that closed it.
 | 26.10 | REPORT gets a four-row table "the lecturer's remarks of 24.10 — how each was closed" (remark → decision → steps / PRs → evidence), replacing the paragraph of the second edition (`patch-12.3`) |
 | 26.10 | Step 13 added — long documents in parts, after the lecturer's answer at the Q&A: two parts by section kind (option A), same prompt, merged by code, `__parts` run id (contract item 21, ADR-0006); pages only if a part is still cut off |
 | 26.10 | F20: a part is judged on its own fields by the schema too — the other kind's fields are dropped before validation (item 21 as written); the first qwen parts run (18 documents) is kept in `results/trials/` and re-done |
+| 27.10 | Pre-submission check against the brief (`patch-13.2`): status rows of steps 9 and 13 closed; README and REPORT §7 state the cost to reproduce the required matrix (≈ $2.8) against the HW 1 total (≈ $6.5); README says plainly that the data has no typos or mixed languages; REPORT §7 names F1–F20 and the parts command |
 | 27.10 | Step 13 measured: parts are the production configuration for Claude (0 failed, −6 % cost, −17 % latency) and a loss for qwen (F20); the qwen held-out parts run added at $0. Next experiments listed in step 13, none before the deadline |
