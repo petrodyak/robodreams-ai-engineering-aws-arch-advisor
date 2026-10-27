@@ -114,18 +114,23 @@ definitions and the error analysis: [`REPORT.md`](REPORT.md); the numbers come f
 | `claude__v1__t0` | 30 | 100 | 36 s | 40.2 | 97.3 | 95.2 |
 | `claude__v2__t0` | 30 | 100 | 44 s | 42.7 | **100** | 95.2 |
 | `claude__v2__t0__val2` | 30 | 96.7 | 45 s | 50.6 | **100** | **100** |
+| `claude__v2__t0__parts__val2` | 30 | **100** | **36 s** | **47.8** | **100** | **100** |
 | `qwen2.5-7b__v1__t0` | 30 | 83.3 | 148 s | 0 | 78.6 | 77.1 |
 | `qwen2.5-7b__v2__t0` | 30 | **86.7** | 136 s | 0 | **91.0** | **93.3** |
 | `qwen2.5-7b__v2__t0__val2` | 30 | 56.7 | 221 s | 0 | 54.5 | 50.5 |
+| `qwen2.5-7b__v2__t0__parts__val2` | 30 | 60.0 | 307 s | 0 | 43.2 | 26.7 |
 | `claude__v1__t0__holdout__gold__val2` | 5 | 100 | 35 s | 31.3 | 91.8 | 100 |
 | `claude__v2__t0__holdout__gold__val2` | 5 | 100 | 37 s | 33.2 | **100** | 100 |
 | `qwen2.5-7b__v1__t0__holdout__val2` | 10 | 50.0 | 275 s | 0 | 42.1 | 16.2 |
 | `qwen2.5-7b__v2__t0__holdout__val2` | 10 | 50.0 | 194 s | 0 | **55.4** | **42.9** |
+| `qwen2.5-7b__v2__t0__parts__holdout__val2` | 10 | 30.0 | 233 s | 0 | 42.1 | 16.2 |
 
 Claude Haiku 4.5 with prompt v2 recovers every Golden Set row in and out of sample and,
 under grounded validation, is valid on 29 of 30 documents with nothing invented (the one
 failure is a typographic apostrophe the judge did not normalise) at ≈ $51 per 1,000
-documents. The local qwen2.5:7b is free; its 87 % validity under the first validation falls
+documents — and on 30 of 30, 6 % cheaper and 17 % faster, when each chapter is extracted
+in two parts (`__parts`, ADR-0006). The same cut makes the local model worse: given a part
+without an endpoints table it invents one and runs to its output cap (finding F20). The local qwen2.5:7b is free; its 87 % validity under the first validation falls
 to 57 % once every row must be printed in the chapter, it takes 5× longer and misreads
 `region_name` on 10–30 % of the rows it finds. Prompt v2 helped both models on the documents
 it was written from and on the held-out ones (a second endpoints table, placeholder
@@ -154,10 +159,12 @@ the report.
   against the PDF, so a Claude error the check did not catch counts as correct for Claude
   (`data/gold/README.md`); grounding found one such error after the fact (`038`). The held-out
   gold was drafted by a grounded Claude v2 run and checked the same way.
-- **Long documents in parts, first version.** `make run … PARTS=1` extracts each chapter as
+- **Long documents in parts, one cut tried.** `make run … PARTS=1` extracts each chapter as
   its endpoints part and its quotas part, two calls merged by code
-  ([ADR-0006](docs/adr/0006-long-documents-in-parts.md)); a part can still be longer than
-  the local model's output cap, and a whole-document answer that does not fit it is `failed`.
+  ([ADR-0006](docs/adr/0006-long-documents-in-parts.md)). Measured once: a win for Claude,
+  a loss for the local model, which fills the field it does not see and runs to the cap
+  (F20); the follow-ups (a per-part note, a per-part schema, a loop detector) are designed,
+  not run.
 - **Local model limits.** `qwen2.5:7b` runs with `num_ctx` 32768 and an output cap of 18432
   tokens; the largest documents fill them, and an answer cut off at the cap is `failed`
   without a repair call.

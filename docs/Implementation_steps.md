@@ -64,7 +64,7 @@ Apply to every step and are not repeated in the steps:
 | 10 | Run provenance: `prompt_sha` / `schema_sha` in every record (Q&A feedback, remark 2) | `step-10-run-provenance` | review ~15 min | step 3: logging (2); repo quality | 25.10 | ✅ PR #21 (`095b560`); guard PR #22 (`721ab6b`) |
 | 11 | Source-grounded validation G1–G3, `validation_version`, gold `038` re-check (remark 1) | `step-11-grounded-validation` | review ~30 min + gold `038` ~30 min | step 3: validation (3); repo quality | 25.10 | ✅ PR #23 (`f51ebce`); gold `038` PR #24 (`7675345`); `__val2` re-runs PR #27 (`f27ef5c`) |
 | 12 | Held-out Set: 10 unseen documents, gold for 5, runs with the `__holdout` scope (remark 4) | `step-12-holdout` | review ~15 min + gold ×5 ~1.5 h | step 3 (3); repo quality | 26.10 | ✅ PR #25 (`57a1a11`); gold PR #26 (`900b1d9`); runs PR #27 (`f27ef5c`) |
-| 13 | Long documents in parts: endpoints part + quotas part, same prompt, merged by code; `__parts` runs (remark 3) | `step-13-parts` | review ~30 min; "ok" on ≈ $1.6 | step 3 (3); repo quality | 27.10 | 🔄 branch `step-13-parts` |
+| 13 | Long documents in parts: endpoints part + quotas part, same prompt, merged by code; `__parts` runs (remark 3) | `step-13-parts` | review ~30 min; "ok" on ≈ $1.6 | step 3 (3); repo quality | 27.10 | ✅ PR #29 (code); runs + REPORT third edition 🔄 branch `patch-13.1-parts-runs-and-report` (PR #30) |
 
 ## 4. Steps
 
@@ -559,7 +559,10 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
   pipeline tests pin two calls, per-part repair, merge, status rules, spill; `make check`
   green; `claude__v2__t0__parts__val2` and `qwen2.5-7b__v2__t0__parts__val2` run on the
   Working Set; REPORT §3.5 compares them with the `__val2` whole-document rows.
-- **Open:** the two runs (≈ $1.6 Claude, ≈ 2.5 h qwen), REPORT §3.5.
+- **Open:** nothing for HW 1. Next experiments, each with its own run id, in the order the
+  data suggests: a de-duplication of identical endpoint rows in `merge` (`005`); a note
+  inside a part that it prints no table of the other kind, or a per-part schema (F20); a
+  loop detector for the local model. Pages are not next: the new cut-offs are on small parts.
 - **Done:**
   - 26.10, code: `split_chapter` checked on all 40 chapters before any pipeline code — the
     first version cut at the exact headings "Service endpoints" / "Service quotas" and
@@ -595,6 +598,18 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
     the qwen run is re-done from scratch under the fixed code, same run id (prompt, schema
     and validation unchanged, so the provenance guard cannot tell — this line is the
     record). 264 tests.
+  - 27.10, `patch-13.1-parts-runs-and-report`: `qwen2.5-7b__v2__t0__parts__val2` (30, 174
+    min) — 13 `ok`, 5 `repaired`, 12 `failed`; the whole-document run had 15 / 2 / 13. A
+    wash on validity, worse underneath: cut-offs 3 → 7 (`017`, `049`, `025` stay — `025`'s
+    endpoints part is 78 rows and still 18,432 tokens, a runaway; `037`, `005`, `038` on
+    quotas parts, `044` on the endpoints part — new), output tokens +32 %, spill on every
+    accepted quotas part (1–80 rows). `qwen2.5-7b__v2__t0__parts__holdout__val2` (10, 49
+    min): 3 / 0 / 7 against 5 / 0 / 5 — `079` runs to the cap on its quotas part, `028`
+    invents a `ca-west-1` pair. Gains: `007`, `095` `ok` (G1 failures as whole documents),
+    `074` `repaired`; `region_name` accuracy on matched rows 79 → 95 %. REPORT third
+    edition: §3.5 with both tables, remarks row 3 closed, error 4 and §§5–6 updated —
+    production choice is now Claude in parts; qwen's numbers of record stay the
+    whole-document ones. README results table. Budget ≈ $6.5 of $10.
 
 ## 5. Run matrix and budget
 
@@ -615,8 +630,9 @@ merge). "Done when" is what we check before the PR, plus `make check` green and 
 | `claude__v1__t0__holdout__gold__val2` | 12 | yes (variant B, budget raised to $10) | ≈$0.2 | **$0.16** — 5/5 `ok`, 5 calls (25.10) |
 | `qwen2.5-7b__v1__t0__holdout__val2` | 12 | yes | $0, ≈45 min | **$0**, 46 min — 3 `ok`, 2 `repaired`, 5 `failed` (26.10) |
 | `qwen2.5-7b__v2__t0__holdout__val2` | 12 | yes | $0, ≈45 min | **$0**, 42 min — 5 `ok`, 5 `failed` (26.10) |
-| `claude__v2__t0__parts__val2` | 13 | yes (remark 3) | ≈$1.6 — the same input plus one more copy of the prompt per document, repairs | — |
-| `qwen2.5-7b__v2__t0__parts__val2` | 13 | yes | $0, ≈2.5 h | — |
+| `claude__v2__t0__parts__val2` | 13 | yes (remark 3) | ≈$1.6 — the same input plus one more copy of the prompt per document, repairs | **$1.43** — in 376,314 / out 211,348; 25 `ok`, 5 `repaired`, 0 `failed`, 65 calls, 22 min (26.10) |
+| `qwen2.5-7b__v2__t0__parts__val2` | 13 | yes | $0, ≈2.5 h | **$0**, 174 min — 13 `ok`, 5 `repaired`, 12 `failed`, 7 cut-offs (26–27.10, after the F20 fix; the first 18 records before it in `results/trials/`) |
+| `qwen2.5-7b__v2__t0__parts__holdout__val2` | 13 | desirable ($0) | $0, ≈1 h | **$0**, 49 min — 3 `ok`, 7 `failed` (27.10) |
 
 **API budget:** $5 for the whole of HW 1 until 25.10, **$10** since (raised by Petro for the
 held-out runs after the lecturer's feedback; the $5 plan below is the history). Spent before the full `claude__v1__t0` run: **$0.42** — three
@@ -639,8 +655,10 @@ further Claude run was planned (`claude__v2__t05` stays dropped).
 (step 12, ≈ $0.4) take it to ≈ $5.13: limit raised to $10 on 25.10 (variant B).
 
 **Spent after the held-out runs (26.10): ≈ $5.06** — $4.73 + $0.17 (`claude__v2` held-out) + $0.16
-(`claude__v1` held-out). ≈ $4.9 of the $10 limit left; the step 13 Claude run (≈ $1.6) takes
-it to ≈ $6.7.
+(`claude__v1` held-out). ≈ $4.9 of the $10 limit left.
+
+**Spent after the step 13 Claude run (26.10): ≈ $6.49** — $5.06 + $1.43. ≈ $3.5 of the $10
+limit left; no further Claude run is planned for HW 1.
 
 **Budget decision (21.10, variant A).** Three full Claude runs would cost ≈ $5.2, over the limit. Per-field
 accuracy — the main comparison — is computed on the Golden Set only (contract item 17), so
@@ -679,7 +697,7 @@ and the PR that closed it.
 | F17 | The schema is part of a prompt version (`prompts/CHANGELOG.md`), but `schema.py` is not versioned per prompt: once PR #16 merged, every later run — v1 included — used the `SchemaVersion` enum. `qwen2.5-7b__v1__t0` (30) is therefore "v1 text + fixed schema" and differs from the `__gold` v1 runs on exactly F15. Not a bug to fix now (one schema for all runs is the contract, item 1); the report states which runs saw which schema | step 8 (overnight runs) | step 9 (stated in REPORT; a `schema_version`-per-prompt mechanism is out of scope) | ✅ step 10 (`step-10-run-provenance`): `prompt_sha` / `schema_sha` in every record, backfilled from git; metrics refuse mixed provenance |
 | F18 | **Gold `038` was wrong on `quota_table_format`.** The chapter prints one Standard Quota Table (domain and instance quotas, `Name / Default / Adjustable / Description`, 5 rows) and ten other quota tables with `Notes` instead of `Description` or three columns — `non_standard` by definition. The Claude v1 draft saw the ten and called the document `non_standard`; the hand check confirmed the draft. Found by G3 on the gold file. First read as "eleven standard tables" (PR #23): the G3 header regex did not require the `Description` column; it does now, and the recount gives one. qwen's 28 rows on `038` (REPORT error 2): 5 printed in the standard table, 23 from the non-standard ones — the error stands, the gold format did not | step 11 (calibration) | ✅ `patch-11.1-gold-038`: gold re-drafted from `claude__v2__t0__val2` (its repair call returned exactly the five printed rows, 0 grounding errors), checked by Petro against the PDF; header regex requires `Description`; contract item 7 says so |
 | F19 | **G2 compares characters, so a typographic apostrophe in a printed quota name (`doesn’t`, `010`) rejects a model answer that writes it straight (`doesn't`).** The one `failed` Claude record under validation "2" is this false flag: the repaired answer was correct on content. Fix: normalise `’ ‘ “ ”` to their ASCII forms on both sides before G2 (and in `check_gold.py`); a reader change inside validation "2", not a new validation version, since it can only turn a rejection into a pass. Needs the `010` document re-run afterwards | step 11 re-run (`patch-12.2`) | — | ⬜ deferred: after the deadline, together with D-lite (chunking); REPORT §3.3 and §6 state it |
-| F20 | **On a part that prints no endpoints table, the local model invents one.** `qwen2.5-7b__v2__t0__parts__val2`, quotas parts: up to 80 invented endpoint rows (`047`), with schemes, `<Region>` placeholders and quota values as hostnames; on `037` (a 42-word part), `005` and `044` it kept generating until the output cap — a new kind of cut-off that whole documents never had. Claude: spill 0 on all 30. Two consequences: (1) the part was rejected by the schema's format checks on rows the merge never reads — fixed, the other kind's fields are dropped before the schema (`strip_other_kind`, contract item 21); (2) the tokens and time spent on the invented rows are real and stay in the measurements. Next experiment: a note inside the part that it prints no endpoints table — kept apart, it changes what the model is told | step 13, first qwen run | ✅ (1) `step-13-parts`, 26.10; (2) measured, REPORT §3.5 |
+| F20 | **On a part that prints no endpoints table, the local model invents one.** `qwen2.5-7b__v2__t0__parts__val2`, quotas parts: up to 80 invented endpoint rows (`047`), with schemes, `<Region>` placeholders and quota values as hostnames; on `037` (a 42-word part), `005` and `044` it kept generating until the output cap — a new kind of cut-off that whole documents never had. Claude: spill 0 on all 30. Two consequences: (1) the part was rejected by the schema's format checks on rows the merge never reads — fixed, the other kind's fields are dropped before the schema (`strip_other_kind`, contract item 21); (2) the tokens and time spent on the invented rows are real and stay in the measurements. Next experiment: a note inside the part that it prints no endpoints table — kept apart, it changes what the model is told | step 13, first qwen run | ✅ (1) `step-13-parts`, 26.10; (2) measured on the full re-run, 27.10: cut-offs 3 → 7, spill on every accepted quotas part — REPORT §3.5, error 4 |
 
 ## 7. Risks
 
@@ -714,3 +732,4 @@ and the PR that closed it.
 | 26.10 | REPORT gets a four-row table "the lecturer's remarks of 24.10 — how each was closed" (remark → decision → steps / PRs → evidence), replacing the paragraph of the second edition (`patch-12.3`) |
 | 26.10 | Step 13 added — long documents in parts, after the lecturer's answer at the Q&A: two parts by section kind (option A), same prompt, merged by code, `__parts` run id (contract item 21, ADR-0006); pages only if a part is still cut off |
 | 26.10 | F20: a part is judged on its own fields by the schema too — the other kind's fields are dropped before validation (item 21 as written); the first qwen parts run (18 documents) is kept in `results/trials/` and re-done |
+| 27.10 | Step 13 measured: parts are the production configuration for Claude (0 failed, −6 % cost, −17 % latency) and a loss for qwen (F20); the qwen held-out parts run added at $0. Next experiments listed in step 13, none before the deadline |
