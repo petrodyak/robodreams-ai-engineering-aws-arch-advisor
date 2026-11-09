@@ -5,6 +5,12 @@ data/source/
 data/pool/*.pdf
 data/raw/*.pdf
 data/holdout/*.pdf
+# HW 2 corpus originals: reproducible via scripts/download_rag_corpus.py
+data/rag/raw/
+# fastembed models and the embedding cache (restored by actions/cache in CI)
+.cache/
+# superpowers plan-execution workspace (local ledger, not project history)
+.superpowers/
 # python
 .venv/
 __pycache__/
