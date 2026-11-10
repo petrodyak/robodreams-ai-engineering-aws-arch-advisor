@@ -10,8 +10,8 @@ I am taking the AI Engineering course (RobotDreams, cohort 2). This repository i
 
 ## Course project (4 stages, one system)
 
-1. **Structured extraction** — extracting endpoint and service quota tables from the AWS General Reference PDFs (one per service). Comparison of a paid and a local model. ← **current stage (HW 1, deadline 27.10 23:59)**
-2. **RAG** — search over AWS Prescriptive Guidance / Well-Architected PDFs with answers that cite their sources, plus quality tests.
+1. **Structured extraction** — extracting endpoint and service quota tables from the AWS General Reference PDFs (one per service). Comparison of a paid and a local model. Done (HW 1, submitted 27.10).
+2. **RAG** — search over AWS Prescriptive Guidance / Well-Architected PDFs with answers that cite their sources, plus quality tests. ← **current stage (HW 2, deadline 13.11 23:59)**
 3. **Agent** — multi-step tasks with tools (AWS architecture review).
 4. **Service** — API, security, monitoring, cost tracking.
 
@@ -24,7 +24,8 @@ If a decision at the current stage affects later stages (data structure, file na
 - **Stack:** Python 3.12, `uv` (not poetry, not a hand-made pip venv), Anthropic (Claude) as the only paid model, Ollama with `qwen2.5:7b` as the local one. Do not suggest OpenAI or other providers. The `openai` SDK is a dependency only as the client for OpenRouter in course lectures and exercises; it is not a second paid provider for the HW 1 comparison (ADR-0004).
 - New dependencies only via `uv add`, never by editing `pyproject.toml` by hand.
 - No private data — public data only.
-- API budget — up to $10 for the whole of HW 1 (raised from $5 on 25.10 for the held-out runs after the lecturer's feedback). Before bulk runs, estimate the cost and state it.
+- API budget — up to $10 for the whole of HW 1 (raised from $5 on 25.10 for the held-out runs after the lecturer's feedback); up to $5 for HW 2 (spec D3). Before bulk runs, estimate the cost and state it.
+- HW 2 models (spec D4): answers on `claude-haiku-5-5`, judge on `claude-sonnet-5-5`; no `temperature` / `top_p` / `top_k` is sent. HW 1 code stays on `claude-haiku-4-5`.
 - Keys — only in `.env`; only `.env.example` goes into Git.
 
 ## How to work with me
@@ -52,14 +53,16 @@ The full rules are in `docs/GIT_RULES.md`. **Read it before any branch, commit, 
 
 | When you… | Read first |
 |---|---|
-| start any step, or need the current status / next step | `docs/Implementation_steps.md` |
-| write or change schema, validation, prompts or metrics code | `docs/stage1-data-contract.md` + `docs/adr/` |
+| start any HW 2 step, or need the current status / next step | `docs/hw2-implementation-steps.md` (HW 1 record, frozen: `docs/Implementation_steps.md`) |
+| write or change RAG code: ingest, search, answer, evals, CI | `docs/superpowers/specs/2026-11-08-hw2-rag-design.md` + `docs/superpowers/plans/2026-11-09-hw2-rag.md` + ADR-0007/0008 |
+| need the HW 2 grading criteria, dates or required deliverables | `docs/hw2-brief.md` |
+| write or change stage-1 schema, validation, prompts or metrics code | `docs/stage1-data-contract.md` + `docs/adr/` |
 | touch `data/`, the prompts or the golden set | `docs/data-notes.md` |
 | need the HW 1 grading criteria, dates or required deliverables | `docs/hw1-brief.md` |
 | meet a project term (Service Document, Quota Row, Neighbour Tail …) | `GLOSSARY.md` |
 | do anything with git | `docs/GIT_RULES.md` |
 
-The contract is the source of truth for stage 1 code — write code against it, do not reinvent it.
+The contract is the source of truth for stage 1 code, the HW 2 spec for stage 2 code — write code against them, do not reinvent them.
 
 ## Repository structure (target)
 
@@ -71,6 +74,7 @@ The contract is the source of truth for stage 1 code — write code against it, 
 ├── .gitignore                   # .env, .venv, data/source/, data/pool/*.pdf, data/raw/*.pdf
 ├── README.md                    # problem, user, 4 stages, how to run, how to reproduce the data
 ├── REPORT.md                    # HW 1 comparison report
+├── REPORT-hw2.md                # HW 2 RAG report (step 20)
 ├── Makefile                     # make run — one-command launch
 ├── pyproject.toml               # uv
 ├── main.py                      # HW 1 entry point
@@ -79,27 +83,35 @@ The contract is the source of truth for stage 1 code — write code against it, 
 │   ├── extract_v1.txt
 │   └── extract_v2.txt
 ├── config/
-│   └── sampling.yaml            # temperature/top_p configurations
+│   ├── sampling.yaml            # temperature/top_p configurations (HW 1)
+│   ├── rag.yaml                 # HW 2: models, effort, k, budget, search settings
+│   └── eval_thresholds.yaml     # HW 2: CI thresholds
 ├── data/
 │   ├── source/                  # aws-general-endpoints-and-quotas.pdf (25 MB, not in Git)
 │   ├── pool/                    # ALL 100 PDFs (not in Git) + manifest.csv, profile.csv (in Git)
 │   ├── raw/                     # 30 selected: *.pdf (not in Git) + *.txt + manifest.csv (in Git)
-│   └── gold/                    # 10 golden set JSON files (in Git)
+│   ├── gold/                    # 10 golden set JSON files (in Git)
+│   └── rag/                     # HW 2: manifest.csv, chunks.jsonl, ingest_manifest.json (in Git); raw/ (not in Git)
 ├── results/                     # model outputs: JSONL per run + metrics (in Git)
 ├── scripts/
 │   ├── split_pdf.py             # source → pool by PDF bookmarks
 │   ├── select_docs.py           # pool → raw by data/raw/manifest.csv
-│   └── extract_text.py          # raw/*.pdf → raw/*.txt
+│   ├── extract_text.py          # raw/*.pdf → raw/*.txt
+│   └── download_rag_corpus.py   # HW 2: data/rag/manifest.csv → data/rag/raw/ (sha256-checked)
 ├── src/
 │   ├── extract/                 # stage 1: schema.py, llm/ (shared interface), pipeline.py, metrics.py
-│   ├── rag/                     # stage 2
+│   ├── rag/                     # stage 2: ingest/, index.py, search.py, answer.py, llm.py
 │   ├── agent/                   # stage 3
 │   └── api/                     # stage 4
-├── evals/
+├── evals/                       # HW 2: testset, scorers, judge, cache/, results/, labels/
+├── .github/workflows/evals.yml  # HW 2: evals on every push / PR
 ├── tests/
 └── docs/
     ├── GIT_RULES.md             # branches, commits, PRs, gates (make check)
     ├── Implementation_steps.md  # HW 1 plan + execution log: status, next step, deferred findings
+    ├── hw2-implementation-steps.md  # HW 2 plan + execution log: status, next step, findings from F21
+    ├── hw2-brief.md             # HW 2 assignment: HW steps, criteria, dates, deliverables
+    ├── superpowers/             # HW 2 spec (specs/) and task-level plan (plans/)
     ├── stage1-data-contract.md  # stage 1 data contract — check code against it
     ├── data-notes.md            # dataset, text extraction, known data quirks
     ├── hw1-brief.md             # HW 1 assignment: HW steps, criteria, dates, deliverables
@@ -107,5 +119,6 @@ The contract is the source of truth for stage 1 code — write code against it, 
                                  # 0003 format checks are validation failures,
                                  # 0004 OpenRouter is a course-exercise client, not an HW 1 provider,
                                  # 0005 validation is grounded in the source text,
-                                 # 0006 long documents in parts: code splits, code merges
+                                 # 0006 long documents in parts: code splits, code merges,
+                                 # 0007 structure-aware chunking, 0008 cached live evals in CI
 ```

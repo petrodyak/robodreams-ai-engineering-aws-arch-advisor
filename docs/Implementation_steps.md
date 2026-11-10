@@ -1,5 +1,7 @@
 # Implementation steps — HW 1 (Structured Extraction Service)
 
+> **Frozen as the HW 1 record on 09.11; HW 2 is tracked in [`hw2-implementation-steps.md`](hw2-implementation-steps.md).**
+
 Working plan and execution log for stage 1 up to the deadline **27.10 23:59**. What we build is in
 [`stage1-data-contract.md`](stage1-data-contract.md) and the ADRs ([0001](adr/0001-standard-quota-tables-only.md),
 [0002](adr/0002-model-extracts-code-derives.md), [0003](adr/0003-format-checks-are-validation-failures.md),
