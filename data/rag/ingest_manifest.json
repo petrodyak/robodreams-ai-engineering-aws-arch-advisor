@@ -1,0 +1,300 @@
+{
+  "dataset_version": "0bca4c13bfc12cdd82f9d94753dd3b301857c3dfb7bb5675c3a24f4b17d6acda",
+  "pipeline_version": "ingest-v1",
+  "documents": [
+    {
+      "doc_id": "wa-framework",
+      "sections": 1320,
+      "chunks_structure": 245,
+      "chunks_fixed": 1008,
+      "tokens": 342155,
+      "duplicate_chunks_dropped": 1045
+    },
+    {
+      "doc_id": "wa-framework-old",
+      "sections": 81,
+      "chunks_structure": 113,
+      "chunks_fixed": 111,
+      "tokens": 37598,
+      "duplicate_chunks_dropped": 3
+    },
+    {
+      "doc_id": "wa-operational-excellence",
+      "sections": 279,
+      "chunks_structure": 251,
+      "chunks_fixed": 207,
+      "tokens": 70117,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "wa-security",
+      "sections": 277,
+      "chunks_structure": 310,
+      "chunks_fixed": 248,
+      "tokens": 83966,
+      "duplicate_chunks_dropped": 1
+    },
+    {
+      "doc_id": "wa-reliability",
+      "sections": 268,
+      "chunks_structure": 313,
+      "chunks_fixed": 273,
+      "tokens": 92648,
+      "duplicate_chunks_dropped": 1
+    },
+    {
+      "doc_id": "wa-performance-efficiency",
+      "sections": 142,
+      "chunks_structure": 116,
+      "chunks_fixed": 98,
+      "tokens": 33108,
+      "duplicate_chunks_dropped": 1
+    },
+    {
+      "doc_id": "wa-cost-optimization",
+      "sections": 201,
+      "chunks_structure": 219,
+      "chunks_fixed": 151,
+      "tokens": 51235,
+      "duplicate_chunks_dropped": 2
+    },
+    {
+      "doc_id": "wa-sustainability",
+      "sections": 148,
+      "chunks_structure": 103,
+      "chunks_fixed": 80,
+      "tokens": 26878,
+      "duplicate_chunks_dropped": 1
+    },
+    {
+      "doc_id": "wa-analytics-lens",
+      "sections": 298,
+      "chunks_structure": 181,
+      "chunks_fixed": 148,
+      "tokens": 50131,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "wa-ml-lens",
+      "sections": 523,
+      "chunks_structure": 515,
+      "chunks_fixed": 373,
+      "tokens": 126412,
+      "duplicate_chunks_dropped": 2
+    },
+    {
+      "doc_id": "wa-genai-lens",
+      "sections": 385,
+      "chunks_structure": 313,
+      "chunks_fixed": 241,
+      "tokens": 81473,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "wa-serverless-lens",
+      "sections": 122,
+      "chunks_structure": 90,
+      "chunks_fixed": 78,
+      "tokens": 26192,
+      "duplicate_chunks_dropped": 1
+    },
+    {
+      "doc_id": "pg-data-mesh-framework",
+      "sections": 6,
+      "chunks_structure": 4,
+      "chunks_fixed": 4,
+      "tokens": 1090,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "pg-data-mesh-aws-offerings",
+      "sections": 4,
+      "chunks_structure": 3,
+      "chunks_fixed": 3,
+      "tokens": 936,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "pg-data-strategy-assessment",
+      "sections": 1,
+      "chunks_structure": 4,
+      "chunks_fixed": 3,
+      "tokens": 1013,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "pg-data-engineering-principles",
+      "sections": 1,
+      "chunks_structure": 1,
+      "chunks_fixed": 1,
+      "tokens": 221,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "pg-data-quality-checks",
+      "sections": 1,
+      "chunks_structure": 1,
+      "chunks_fixed": 1,
+      "tokens": 281,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "pg-data-centric-best-practices",
+      "sections": 3,
+      "chunks_structure": 5,
+      "chunks_fixed": 3,
+      "tokens": 818,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "pg-glue-reduce-data-scan",
+      "sections": 6,
+      "chunks_structure": 10,
+      "chunks_fixed": 9,
+      "tokens": 2817,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "pg-glue-parallelize-tasks",
+      "sections": 11,
+      "chunks_structure": 10,
+      "chunks_fixed": 8,
+      "tokens": 2511,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "pg-glue-optimize-shuffles",
+      "sections": 12,
+      "chunks_structure": 9,
+      "chunks_fixed": 8,
+      "tokens": 2756,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "pg-redshift-tables",
+      "sections": 6,
+      "chunks_structure": 3,
+      "chunks_fixed": 3,
+      "tokens": 945,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "pg-redshift-queries",
+      "sections": 15,
+      "chunks_structure": 5,
+      "chunks_fixed": 5,
+      "tokens": 1426,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "pg-redshift-spectrum",
+      "sections": 3,
+      "chunks_structure": 3,
+      "chunks_fixed": 3,
+      "tokens": 902,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "pg-data-lake-scaling-challenges",
+      "sections": 4,
+      "chunks_structure": 2,
+      "chunks_fixed": 2,
+      "tokens": 604,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "pg-data-lake-reference-architecture",
+      "sections": 1,
+      "chunks_structure": 1,
+      "chunks_fixed": 1,
+      "tokens": 256,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "pg-data-lake-architecture-components",
+      "sections": 6,
+      "chunks_structure": 7,
+      "chunks_fixed": 7,
+      "tokens": 2123,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "athena-iceberg-query",
+      "sections": 2,
+      "chunks_structure": 4,
+      "chunks_fixed": 3,
+      "tokens": 1012,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "athena-iceberg-optimize",
+      "sections": 7,
+      "chunks_structure": 3,
+      "chunks_fixed": 2,
+      "tokens": 660,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "athena-iceberg-table-data",
+      "sections": 5,
+      "chunks_structure": 3,
+      "chunks_fixed": 2,
+      "tokens": 557,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "s3-tables",
+      "sections": 3,
+      "chunks_structure": 5,
+      "chunks_fixed": 4,
+      "tokens": 1237,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "s3-tables-maintenance",
+      "sections": 7,
+      "chunks_structure": 8,
+      "chunks_fixed": 6,
+      "tokens": 1896,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "glue-iceberg",
+      "sections": 8,
+      "chunks_structure": 8,
+      "chunks_fixed": 7,
+      "tokens": 2416,
+      "duplicate_chunks_dropped": 0
+    },
+    {
+      "doc_id": "glue-catalog-best-practices",
+      "sections": 1,
+      "chunks_structure": 1,
+      "chunks_fixed": 1,
+      "tokens": 399,
+      "duplicate_chunks_dropped": 0
+    }
+  ],
+  "exact_duplicates_dropped": {
+    "documents": 0,
+    "chunks": 1057
+  },
+  "near_duplicates": [],
+  "empty_documents": [],
+  "stats": {
+    "structure": {
+      "chunks": 2869,
+      "starts_mid_sentence": 24,
+      "cut_tables": 29,
+      "avg_tokens": 270,
+      "max_tokens": 480
+    },
+    "fixed": {
+      "chunks": 3102,
+      "starts_mid_sentence": 137,
+      "cut_tables": 72,
+      "avg_tokens": 398,
+      "max_tokens": 400
+    }
+  }
+}

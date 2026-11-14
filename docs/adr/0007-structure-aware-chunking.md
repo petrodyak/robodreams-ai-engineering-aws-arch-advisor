@@ -44,7 +44,8 @@ section, and a section is what the retriever should return whole.
 ## Consequences
 
 - `data/rag/chunks.jsonl` field names (spec §4) are fixed by this decision. Stage 3 (the agent) reads
-  them and calls the search API on top of them, so a rename later is a breaking change.
+  them and calls the search API on top of them, so a rename later is a breaking change. The fixed
+  baseline is written to a separate `chunks_fixed.jsonl`, so stage 3 never reads it by mistake.
 - A chunk can be larger than a short question needs; the context budget (3,000 tokens) holds about
   6–8 chunks, which is why k is measured at 3 / 5 / 8.
 - Token counts are an approximation of the embedding tokenizer; the 480 maximum leaves a margin for

@@ -53,8 +53,8 @@ Apply to every step and are not repeated in the steps:
 | # | Step | Branch | Who / Petro's time | Points (HW criterion) | By | Status |
 |---|---|---|---|---|---|---|
 | 14 | Housekeeping: brief, this file, CLAUDE.md, GLOSSARY, ADR-0007/0008, spec + plan in Git | `step-14-hw2-setup` | review 15 min | — | 09.11 | ✅ PR #32 (c3b5034) |
-| 15 | Corpus list, download script, manifest | `step-15-corpus` | pick and "ok" the list, 30 min | 1: ingestion ≥ 2 formats (part of 3) | 14.11 | 🔄 PR #33 |
-| 16 | Ingestion → `chunks.jsonl` (both strategies) + ingest manifest | `step-16-ingest` | review | 1: ingestion (3), cleaning + dedup (3), chunking + metadata (4) | 15.11 | ⬜ |
+| 15 | Corpus list, download script, manifest | `step-15-corpus` | pick and "ok" the list, 30 min | 1: ingestion ≥ 2 formats (part of 3) | 14.11 | ✅ PR #33 (99c73ee) |
+| 16 | Ingestion → `chunks.jsonl` + `chunks_fixed.jsonl` + ingest manifest | `step-16-ingest` | review | 1: ingestion (3), cleaning + dedup (3), chunking + metadata (4) | 15.11 | 🔄 branch `step-16-ingest` |
 | 17 | Index, hybrid, rerank, filters, retrieval eval | `step-17-search` | **label relevant chunks, ~1 h** | 2: embeddings + DB (3), hybrid (3), rerank + filters (2), retrieval measured (2) | 16.11 | ⬜ |
 | 18 | RAG answering, prompt v1, eval cache, first run | `step-18-answer` | "ok" on the estimate | 3: citations (4), context control (4) | 17.11 | ⬜ |
 | 19 | Testset, scorers, judge, calibration, prompt v2 | `step-19-evals` | **check the testset ~1 h, label ≥ 12 answers ~1 h** | 4: testset (3), scoring (4) | 18.11 | ⬜ |
@@ -95,11 +95,19 @@ merge). The task-level detail (interfaces, tests) is in the plan file.
 
 ### Step 16 — Ingestion
 
-- **Goal:** `data/rag/chunks.jsonl` with structure and fixed chunks and the §4 metadata; an ingest
-  manifest with duplicates and chunk statistics.
+- **Goal:** `data/rag/chunks.jsonl` (structure) and `chunks_fixed.jsonl` (baseline) with the §4
+  metadata; an ingest manifest with duplicates and chunk statistics.
 - **Files:** `src/rag/models.py`, `src/rag/ingest/*`, tests `test_rag_{clean,dedup,extract,chunk,pipeline}.py`.
 - **Done when:** every structure chunk ≤ 480 tokens; deterministic re-run; two "cut in half" fixed
   examples chosen for the report.
+- **Done:** `src/rag/{models,ingest/*}.py`, `make ingest` → `chunks.jsonl` (2,869 structure chunks,
+  6.4 MB; max 480, avg 270 tokens, 41 % under 250: merging stops at a best-practice boundary or 450),
+  `chunks_fixed.jsonl` (3,102 baseline windows, kept apart so stage 3 never reads them) and
+  `ingest_manifest.json`. PDF titles are searched in the text (deep outline entries point to wrong
+  pages); cover and contents dropped, the archived edition keeps "This paper has been archived".
+  1,057 duplicate chunks stay in the most specific document (the Framework repeats the pillars).
+  Byte-identical after a re-download. Cut-in-half: `wa-reliability#f0034`, `#f0146`. F21 closed: the
+  manifest hash is the text hash (= `doc_hash`). `make check`: 301 passed (+34).
 
 ### Step 17 — Index, search, retrieval eval
 
@@ -151,7 +159,7 @@ Numbering continues from HW 1 (F1–F20 are in `Implementation_steps.md`).
 
 | # | Finding | Found in | Closed in | Status |
 |---|---|---|---|---|
-| F21 | AWS regenerates its documentation PDFs every few days (`CreationDate` of the downloads is the download day), so a later `make rag-data` may report a sha256 mismatch although the content did not change. The committed `chunks.jsonl` records the version used | 15 | 16 (re-run `make rag-data` first; decide strict vs. content hash if it fails) | open |
+| F21 | AWS regenerates its documentation PDFs every few days (`CreationDate` of the downloads is the download day), so a later `make rag-data` may report a sha256 mismatch although the content did not change. The committed `chunks.jsonl` records the version used | 15 | 16: the manifest `sha256` is now the hash of the cleaned text (the `doc_hash` of `chunks.jsonl`); 18 of 34 files had new bytes and the same text a day later | closed (step 16) |
 
 ## 7. Risks
 
@@ -173,3 +181,4 @@ From spec §11:
 | 09.11 | First version: steps 14–20 from the approved spec and plan; D1–D9 decided (D4: answers on Haiku 5.5); `REPORT-hw2.md` instead of `REPORT.md`, which holds HW 1 |
 | 13.11 | Deadline moved to 20.11 23:59 (Petro). Nothing is cut from scope; steps 15–20 re-dated 14.11–19.11, 20.11 is the buffer |
 | 13.11 | Corpus list approved (34 documents); Iceberg pages taken from the Athena, S3 and Glue guides because the Prescriptive Guidance Iceberg guide was withdrawn |
+| 14.11 | F21 decided as option A (Petro): the manifest records the text hash, not the byte hash; duplicate chunks are kept in the most specific document; the fixed baseline moves to `chunks_fixed.jsonl` (Petro), so `chunks.jsonl` holds only what stage 3 reads |
