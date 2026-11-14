@@ -11,7 +11,7 @@ I am taking the AI Engineering course (RobotDreams, cohort 2). This repository i
 ## Course project (4 stages, one system)
 
 1. **Structured extraction** — extracting endpoint and service quota tables from the AWS General Reference PDFs (one per service). Comparison of a paid and a local model. Done (HW 1, submitted 27.10).
-2. **RAG** — search over AWS Prescriptive Guidance / Well-Architected PDFs with answers that cite their sources, plus quality tests. ← **current stage (HW 2, deadline 13.11 23:59)**
+2. **RAG** — search over AWS Prescriptive Guidance / Well-Architected PDFs with answers that cite their sources, plus quality tests. ← **current stage (HW 2, deadline 20.11 23:59)**
 3. **Agent** — multi-step tasks with tools (AWS architecture review).
 4. **Service** — API, security, monitoring, cost tracking.
 
