@@ -1,6 +1,7 @@
 # HW 2 brief — "RAG with sources and evals in CI"
 
-40 points, deadline **13.11 23:59**. The course assignment as given (translated from Ukrainian,
+40 points, deadline **20.11 23:59** (moved from 13.11 by Petro on 13.11; the dates table below is the
+course's original). The course assignment as given (translated from Ukrainian,
 carried over almost verbatim), kept here so that `CLAUDE.md` holds only what every session needs.
 The design that implements it is
 [`superpowers/specs/2026-11-08-hw2-rag-design.md`](superpowers/specs/2026-11-08-hw2-rag-design.md);
@@ -78,7 +79,7 @@ contextual chunk headers; incremental ingestion; embedding caching.
 |---|---|
 | after lesson 8 | Checkpoint: HW steps 1–2 in the repo, link in the cohort chat (no points) |
 | lesson 10 (Q&A) | Feedback on the checkpoint |
-| 13.11 23:59 (the day after the Q&A) | Deadline: HW steps 1–4 |
+| 13.11 23:59 (the day after the Q&A) | Deadline: HW steps 1–4 (for this project moved to **20.11 23:59**) |
 
 ## Criteria (40 points)
 

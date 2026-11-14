@@ -1,6 +1,6 @@
 # HW 2 — RAG with sources and evals in CI: design
 
-Status: **approved by Petro (09.11)**: decisions D1–D9 and the whole spec. Deadline: **13.11 23:59**. Stage 2 of the course project
+Status: **approved by Petro (09.11)**: decisions D1–D9 and the whole spec. Deadline: **20.11 23:59** (moved from 13.11 on 13.11; scope unchanged). Stage 2 of the course project
 (`CLAUDE.md`, "Course project"). The assignment text is in the chat of 08.11; step 14 saves it as
 `docs/hw2-brief.md`, the same way `docs/hw1-brief.md` holds HW 1.
 
@@ -358,19 +358,19 @@ README and REPORT say what was adapted and what is new.
 map-reduce and summary (out of scope), L6 DOCX / OCR / access rules. L3 and L4 code is not reused: their
 patterns (retry, usage and cost, versioned prompts, golden set) are already in HW 1.
 **No lesson code exists** for the LLM judge, calibration or CI (L8 points to lesson 9, not published
-yet): steps 19–20 are new code and are checked against lesson 9 if it appears before 13.11.
+yet): steps 19–20 are new code and are checked against lesson 9 if it appears before 20.11.
 
 ## 10. Steps, dates, Petro's time
 
 | # | Step | By | Petro |
 |---|---|---|---|
 | 14 | Housekeeping: CLAUDE.md → stage 2 (and its "Read before you work on…" rows point to the HW 2 files), `docs/hw2-brief.md` (D8), `docs/hw2-implementation-steps.md` (D9, with the status-row rule among its Standing rules), GLOSSARY terms, ADR-0007 (structure-aware chunking), ADR-0008 (cached live evals in CI) | 09.11 | review 15 min |
-| 15 | Corpus list, download script, manifest | 10.11 | pick and "ok" the list, 30 min |
-| 16 | Ingestion → `chunks.jsonl` (both strategies) + ingest manifest | 10.11 | review |
-| 17 | Index, hybrid, rerank, filters, retrieval eval (drafts the 20 answerable questions early) | 11.11 | **label relevant chunks, ~1 h** |
-| 18 | RAG answering, prompt v1, first run | 11.11 | "ok" on the estimate |
-| 19 | Testset, scorers, judge, calibration, prompt v2 | 12.11 | **check the testset ~1 h, label ≥ 12 answers ~1 h** |
-| 20 | CI workflow + thresholds, REPORT, README | 13.11 | review, add the secret |
+| 15 | Corpus list, download script, manifest | 14.11 | pick and "ok" the list, 30 min |
+| 16 | Ingestion → `chunks.jsonl` (both strategies) + ingest manifest | 15.11 | review |
+| 17 | Index, hybrid, rerank, filters, retrieval eval (drafts the 20 answerable questions early) | 16.11 | **label relevant chunks, ~1 h** |
+| 18 | RAG answering, prompt v1, first run | 17.11 | "ok" on the estimate |
+| 19 | Testset, scorers, judge, calibration, prompt v2 | 18.11 | **check the testset ~1 h, label ≥ 12 answers ~1 h** |
+| 20 | CI workflow + thresholds, REPORT, README | 19.11 | review, add the secret |
 
 Petro's time this week is about 4–5 h, above the usual 3–4 h. The hand labelling of steps 17 and 19 is what
 the brief grades hardest.

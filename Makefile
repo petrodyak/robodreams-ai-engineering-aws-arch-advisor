@@ -1,5 +1,5 @@
 # Every target runs inside the uv-managed .venv (`uv run` syncs it first if needed).
-.PHONY: install data text run estimate runs-md metrics schema gold-drafts gold-check check
+.PHONY: install data text rag-data run estimate runs-md metrics schema gold-drafts gold-check check
 
 # One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`,
 # `make run MODEL=qwen2.5-7b`, `make run SAMPLING=t05 GOLD=1` (Golden Set only), or
@@ -25,6 +25,10 @@ data:
 # data/raw/*.pdf -> data/raw/*.txt (text "as is", only ligatures normalized)
 text:
 	uv run python scripts/extract_text.py
+
+# HW 2 corpus: data/rag/manifest.csv -> data/rag/raw/ (34 public AWS documents, sha256-checked)
+rag-data:
+	uv run python scripts/download_rag_corpus.py
 
 # extract all 30 documents -> results/runs/jsonl/<run_id>.jsonl (resumable)
 # + a readable mirror results/runs/md/<run_id>.md, rewritten after every record

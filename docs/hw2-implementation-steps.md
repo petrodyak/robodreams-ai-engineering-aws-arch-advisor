@@ -1,6 +1,6 @@
 # Implementation steps — HW 2 (RAG with sources and evals in CI)
 
-Working plan and execution log for stage 2 up to the deadline **13.11 23:59**. What we build is in the
+Working plan and execution log for stage 2 up to the deadline **20.11 23:59** (moved from 13.11 on 13.11). What we build is in the
 spec [`superpowers/specs/2026-11-08-hw2-rag-design.md`](superpowers/specs/2026-11-08-hw2-rag-design.md)
 and the ADRs ([0007](adr/0007-structure-aware-chunking.md), [0008](adr/0008-cached-live-evals-in-ci.md));
 the task-level plan is [`superpowers/plans/2026-11-09-hw2-rag.md`](superpowers/plans/2026-11-09-hw2-rag.md);
@@ -43,7 +43,7 @@ Apply to every step and are not repeated in the steps:
 | What | Who | Needed before step | Status |
 |---|---|---|---|
 | `.env` with `ANTHROPIC_API_KEY` (same key as HW 1) | Petro | 18 | ✅ (HW 1) |
-| "ok" on the corpus list | Petro | 15 | ⬜ |
+| "ok" on the corpus list | Petro | 15 | ✅ 13.11 (34 documents) |
 | Relevant-chunk labels for the 20 answerable questions (~1 h) | Petro | 17 | ⬜ |
 | Testset check + ≥ 12 hand-labelled answers (~2 h) | Petro | 19 | ⬜ |
 | `ANTHROPIC_API_KEY` repository secret in GitHub | Petro | 20 | ⬜ |
@@ -52,13 +52,13 @@ Apply to every step and are not repeated in the steps:
 
 | # | Step | Branch | Who / Petro's time | Points (HW criterion) | By | Status |
 |---|---|---|---|---|---|---|
-| 14 | Housekeeping: brief, this file, CLAUDE.md, GLOSSARY, ADR-0007/0008, spec + plan in Git | `step-14-hw2-setup` | review 15 min | — | 09.11 | 🔄 PR #32 |
-| 15 | Corpus list, download script, manifest | `step-15-corpus` | pick and "ok" the list, 30 min | 1: ingestion ≥ 2 formats (part of 3) | 10.11 | ⬜ |
-| 16 | Ingestion → `chunks.jsonl` (both strategies) + ingest manifest | `step-16-ingest` | review | 1: ingestion (3), cleaning + dedup (3), chunking + metadata (4) | 10.11 | ⬜ |
-| 17 | Index, hybrid, rerank, filters, retrieval eval | `step-17-search` | **label relevant chunks, ~1 h** | 2: embeddings + DB (3), hybrid (3), rerank + filters (2), retrieval measured (2) | 11.11 | ⬜ |
-| 18 | RAG answering, prompt v1, eval cache, first run | `step-18-answer` | "ok" on the estimate | 3: citations (4), context control (4) | 11.11 | ⬜ |
-| 19 | Testset, scorers, judge, calibration, prompt v2 | `step-19-evals` | **check the testset ~1 h, label ≥ 12 answers ~1 h** | 4: testset (3), scoring (4) | 12.11 | ⬜ |
-| 20 | CI workflow + thresholds, `REPORT-hw2.md`, README, pre-submission check | `step-20-ci-report` | review, add the secret | 4: evals in CI (3); repository (2) | 13.11 | ⬜ |
+| 14 | Housekeeping: brief, this file, CLAUDE.md, GLOSSARY, ADR-0007/0008, spec + plan in Git | `step-14-hw2-setup` | review 15 min | — | 09.11 | ✅ PR #32 (c3b5034) |
+| 15 | Corpus list, download script, manifest | `step-15-corpus` | pick and "ok" the list, 30 min | 1: ingestion ≥ 2 formats (part of 3) | 14.11 | 🔄 PR #33 |
+| 16 | Ingestion → `chunks.jsonl` (both strategies) + ingest manifest | `step-16-ingest` | review | 1: ingestion (3), cleaning + dedup (3), chunking + metadata (4) | 15.11 | ⬜ |
+| 17 | Index, hybrid, rerank, filters, retrieval eval | `step-17-search` | **label relevant chunks, ~1 h** | 2: embeddings + DB (3), hybrid (3), rerank + filters (2), retrieval measured (2) | 16.11 | ⬜ |
+| 18 | RAG answering, prompt v1, eval cache, first run | `step-18-answer` | "ok" on the estimate | 3: citations (4), context control (4) | 17.11 | ⬜ |
+| 19 | Testset, scorers, judge, calibration, prompt v2 | `step-19-evals` | **check the testset ~1 h, label ≥ 12 answers ~1 h** | 4: testset (3), scoring (4) | 18.11 | ⬜ |
+| 20 | CI workflow + thresholds, `REPORT-hw2.md`, README, pre-submission check | `step-20-ci-report` | review, add the secret | 4: evals in CI (3); repository (2) | 19.11 | ⬜ |
 
 ## 4. Steps
 
@@ -84,6 +84,14 @@ merge). The task-level detail (interfaces, tests) is in the plan file.
 - **Files:** `data/rag/manifest.csv`, `scripts/download_rag_corpus.py`, `tests/test_rag_manifest.py`.
 - **Done when:** the manifest tests pass; `make rag-data` downloads and hash-checks every document.
 - **Open:** is an older Well-Architected edition still downloadable (the outdated-version trap)?
+- **Done:** `data/rag/manifest.csv`, 34 documents: 12 PDF (Framework, 6 pillars, 4 lenses, and the
+  archived July 2020 Framework edition for the outdated-version trap, still on `d1.awsstatic.com`)
+  and 22 HTML (15 Prescriptive Guidance pages, 7 Athena / S3 Tables / Glue pages on Iceberg and the
+  Data Catalog, `doc_type` `guide`: the Prescriptive Guidance Iceberg guide now returns 404).
+  `published` = the PDF's printed "Publication date", or the guide's latest "Document history" entry
+  for HTML (`Last-Modified` is the site build date). `scripts/download_rag_corpus.py` (stdlib
+  `urllib`, sha256 check, `--record`) and `make rag-data`: 34/34 match on a second download, 56.6 MB.
+  `make check`: 267 passed (+3 in `test_rag_manifest.py`).
 
 ### Step 16 — Ingestion
 
@@ -143,7 +151,7 @@ Numbering continues from HW 1 (F1–F20 are in `Implementation_steps.md`).
 
 | # | Finding | Found in | Closed in | Status |
 |---|---|---|---|---|
-| — | none yet | | | |
+| F21 | AWS regenerates its documentation PDFs every few days (`CreationDate` of the downloads is the download day), so a later `make rag-data` may report a sha256 mismatch although the content did not change. The committed `chunks.jsonl` records the version used | 15 | 16 (re-run `make rag-data` first; decide strict vs. content hash if it fails) | open |
 
 ## 7. Risks
 
@@ -163,3 +171,5 @@ From spec §11:
 | Date | What changed |
 |---|---|
 | 09.11 | First version: steps 14–20 from the approved spec and plan; D1–D9 decided (D4: answers on Haiku 5.5); `REPORT-hw2.md` instead of `REPORT.md`, which holds HW 1 |
+| 13.11 | Deadline moved to 20.11 23:59 (Petro). Nothing is cut from scope; steps 15–20 re-dated 14.11–19.11, 20.11 is the buffer |
+| 13.11 | Corpus list approved (34 documents); Iceberg pages taken from the Athena, S3 and Glue guides because the Prescriptive Guidance Iceberg guide was withdrawn |
