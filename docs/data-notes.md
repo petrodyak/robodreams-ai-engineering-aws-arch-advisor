@@ -84,3 +84,27 @@ mixed languages — the README ("Why this is not just table parsing") says exact
   services with 3 endpoint rows (`010`, `074`).
 - Broken words (`ap-\nsoutheast-4`) and running headers/footers "AWS General Reference … Version 1.0
   NNN". Ligatures are already normalised in the `.txt` files.
+
+## HW 2 corpus (data/rag/, step 15–16)
+
+What the 34 documents of `data/rag/manifest.csv` look like to the ingestion code, and what was decided:
+
+- **AWS rebuilds the files.** Every PDF gets a new `CreationDate` every few days and the HTML pages new
+  markup around the same text (18 of 34 changed bytes within a day). The manifest therefore records the
+  hash of the cleaned text, not of the bytes (F21).
+- **PDF outlines are partly wrong.** Deep entries ("Implementation guidance", "Resources") point to the
+  same early page for every best practice. Titles are searched as text lines instead; an entry whose
+  title is not found nearby is skipped and its text stays with the parent.
+- **Running header and footer.** Every page starts with "<Pillar> AWS Well-Architected Framework" and
+  ends with "<section title> <page number>". The first is dropped as a line on > 50 % of pages, the
+  second when its number fits the page numbering (so a year or a quota at the page end is kept).
+- **Front matter.** The cover (copyright) and the table of contents are dropped. The archived July 2020
+  Framework edition keeps its first page, which says "This paper has been archived" with a link to
+  the latest version: the evidence for the outdated-version trap.
+- **The Framework repeats the pillars.** The current Framework PDF (1,003 pages) contains every pillar's
+  best practices in its appendix. 1,057 chunks are exact duplicates; each stays in the pillar.
+- **PDF tables come out as narrow columns.** pypdf extracts table cells as short wrapped lines, which is
+  most of the 24 structure chunks that "start mid-sentence". Not fixed: it is extraction noise.
+- **HTML.** The article is `#main-col-body`; `<awsdocs-view>` wraps the whole page, so `awsdocs-*`
+  tags are dropped only inside the article (language banner, copyright, "Did this page help you?").
+

@@ -91,7 +91,7 @@ The contract is the source of truth for stage 1 code, the HW 2 spec for stage 2 
 │   ├── pool/                    # ALL 100 PDFs (not in Git) + manifest.csv, profile.csv (in Git)
 │   ├── raw/                     # 30 selected: *.pdf (not in Git) + *.txt + manifest.csv (in Git)
 │   ├── gold/                    # 10 golden set JSON files (in Git)
-│   └── rag/                     # HW 2: manifest.csv, chunks.jsonl, ingest_manifest.json (in Git); raw/ (not in Git)
+│   └── rag/                     # HW 2: manifest.csv, chunks.jsonl, chunks_fixed.jsonl, ingest_manifest.json (in Git); raw/ (not in Git)
 ├── results/                     # model outputs: JSONL per run + metrics (in Git)
 ├── scripts/
 │   ├── split_pdf.py             # source → pool by PDF bookmarks

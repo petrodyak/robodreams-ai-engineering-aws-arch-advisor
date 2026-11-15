@@ -95,12 +95,15 @@ The final list is a step-15 deliverable with Petro's "ok"; the URLs above are no
 data/rag/
 ├── manifest.csv        # doc_id, title, format, url, doc_type, published, sha256 (in Git)
 ├── raw/                # downloaded *.pdf / *.html (not in Git, .gitignore)
-├── chunks.jsonl        # every chunk + metadata (in Git; stage 3 reads it)
+├── chunks.jsonl        # structure-aware chunks + metadata (in Git; stage 3 reads it)
+├── chunks_fixed.jsonl  # the fixed-size baseline, same record format (in Git; retrieval eval only)
 └── ingest_manifest.json  # dataset version, per-document stats, duplicates found (in Git)
 ```
 
 `scripts/download_rag_corpus.py` downloads every URL from `manifest.csv` and checks its sha256. That
-makes the corpus reproducible without committing third-party files.
+makes the corpus reproducible without committing third-party files. The sha256 is that of the
+document's cleaned text, the same value as `doc_hash` in `chunks.jsonl`, not of the file's bytes: AWS
+rebuilds its PDFs and pages every few days around the same text (amended 14.11, finding F21).
 
 **Affects stage 3:** the agent reads `data/rag/chunks.jsonl` and the search API in section 5. Their field
 names are fixed by this spec.
@@ -128,7 +131,9 @@ which NFC does not) so hashing sees one canonical text.
 **Dedup:**
 
 - *exact:* `sha256` of the normalized text, per document and per chunk. A duplicate document or chunk
-  is dropped, and the drop is counted in the ingest manifest.
+  is dropped, and the drop is counted in the ingest manifest. The copy that stays is the one in the
+  most specific document (pillar, then lens, then guide, then framework): the current Framework PDF
+  repeats every pillar's best practices, and a citation should name the pillar (amended 14.11).
 - *near:* Jaccard similarity over word 5-shingles between documents above 0.8 is reported in
   `ingest_manifest.json`. An HTML guide that repeats a PDF chapter is the expected case.
 
@@ -153,7 +158,9 @@ which NFC does not) so hashing sees one canonical text.
 - Tokens are counted with `tiktoken` `cl100k_base` as an approximation of the embedding tokenizer. The
   limit leaves a margin for the difference.
 
-**Chunk record** (`data/rag/chunks.jsonl`, one JSON object per line):
+**Chunk record** (`data/rag/chunks.jsonl`, one JSON object per line; `chunks_fixed.jsonl` uses the same
+record with `strategy: "fixed"` and ids `<doc_id>#f0000`. The two files are separate so that stage 3
+reads only the structure-aware chunks; amended 14.11):
 
 ```json
 {
@@ -187,7 +194,7 @@ Adapts the lesson-7 `search.py` and lesson-8 `retrieval.py`.
   cache keyed by `sha256(model + text)` means a re-run embeds only new chunks. It is a local file
   (`.cache/`, not in Git) and is restored by `actions/cache` in CI.
 - **Vector DB:** Qdrant in-process (`QdrantClient(":memory:")`), cosine, the chunk record as payload. It
-  is rebuilt from `chunks.jsonl` on every run, which takes about a minute for an estimated 2–3 k chunks.
+  is rebuilt from `chunks.jsonl` (and `chunks_fixed.jsonl` for the baseline) on every run, which takes about a minute for an estimated 2–3 k chunks.
 - **Lexical:** `rank-bm25` over the same texts (header included).
 - **Hybrid:** Reciprocal Rank Fusion (k = 60) of the top 20 from each.
 - **Reranker:** `fastembed` cross-encoder `Xenova/ms-marco-MiniLM-L-6-v2` (English) re-orders the 20
@@ -366,7 +373,7 @@ yet): steps 19–20 are new code and are checked against lesson 9 if it appears 
 |---|---|---|---|
 | 14 | Housekeeping: CLAUDE.md → stage 2 (and its "Read before you work on…" rows point to the HW 2 files), `docs/hw2-brief.md` (D8), `docs/hw2-implementation-steps.md` (D9, with the status-row rule among its Standing rules), GLOSSARY terms, ADR-0007 (structure-aware chunking), ADR-0008 (cached live evals in CI) | 09.11 | review 15 min |
 | 15 | Corpus list, download script, manifest | 14.11 | pick and "ok" the list, 30 min |
-| 16 | Ingestion → `chunks.jsonl` (both strategies) + ingest manifest | 15.11 | review |
+| 16 | Ingestion → `chunks.jsonl` + `chunks_fixed.jsonl` + ingest manifest | 15.11 | review |
 | 17 | Index, hybrid, rerank, filters, retrieval eval (drafts the 20 answerable questions early) | 16.11 | **label relevant chunks, ~1 h** |
 | 18 | RAG answering, prompt v1, first run | 17.11 | "ok" on the estimate |
 | 19 | Testset, scorers, judge, calibration, prompt v2 | 18.11 | **check the testset ~1 h, label ≥ 12 answers ~1 h** |

@@ -123,7 +123,8 @@ names besides the document.
 _Avoid_: breadcrumb, heading, chapter
 
 **Chunk**:
-One retrievable piece of a Corpus Document with its metadata (a line of `data/rag/chunks.jsonl`).
+One retrievable piece of a Corpus Document with its metadata (a line of `data/rag/chunks.jsonl`, or of
+`chunks_fixed.jsonl` for the fixed-size baseline).
 Not a stage-1 Part, which is a piece of a chapter sent to the extraction model.
 _Avoid_: passage, segment, Part
 
