@@ -81,3 +81,29 @@ although qwen spends ≈3k output tokens repeating an answer that only needed on
 a patch-style repair would change the pipeline for both providers (contract item 16) and would
 not be comparable with the v1 runs. With change 1 the repair call is no longer needed for F15,
 so the cost of a full repair only arises on real extraction errors.
+
+---
+
+# RAG prompts (HW 2)
+
+Every RAG prompt version is one file, `prompts/rag_<version>.txt`, with two sections that
+`src/rag/answer.py` loads: `=== system ===` (the rules) and `=== user ===` (placeholders
+`{sources}` and `{question}`). The JSON Schema of `ModelAnswer` (`found`, `claims` with
+`citations`) is sent as the structured-output format and is part of the version, as in HW 1.
+A run id is `<model>__<prompt_version>__<effort>__k<k>`; every answer record also stores
+`prompt_sha`.
+
+## rag v1 — 2026-11-16
+
+Baseline, adapted from the lesson 8 v2 rules (spec §6, §9):
+
+1. answer only from the sources between `<sources>` tags, no outside knowledge;
+2. one fact per claim, each with the labels of the sources that support it;
+3. combine several sources when the answer is spread over them, and cite each;
+4. when sources disagree, the later publication date wins (the archived 2020 Framework and the
+   Serverless Lens's older area lists are the known cases in this corpus);
+5. `found = false` only when no source answers the question; a partial answer is an answer;
+6. claims in the language of the question.
+
+Lesson 8's "a status instead of a value is an answer" rule is not carried over: this corpus has
+no such case yet. The code, not the prompt, removes a claim whose labels are all unknown.
