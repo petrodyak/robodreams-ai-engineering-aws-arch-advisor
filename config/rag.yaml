@@ -1,0 +1,17 @@
+# HW 2 RAG settings (spec §5, §6, D4). Read by src/rag/config.py; every field is required.
+
+# retrieval (spec §5): models run locally through fastembed, files under .cache/models
+embed_model: BAAI/bge-small-en-v1.5        # 384 dims, English, reads at most 512 tokens
+rerank_model: Xenova/ms-marco-MiniLM-L-6-v2 # cross-encoder over (query, chunk) pairs
+candidates: 20      # how many hits each search gives to RRF, and how many RRF gives to the reranker
+rrf_k: 60           # Reciprocal Rank Fusion: score = sum of 1 / (rrf_k + rank)
+k: 5                # chunks passed to the answer step
+
+# answering (spec §6, D4): no temperature / top_p / top_k is sent
+context_budget: 3000    # tokens of chunk text in the prompt
+answer_model: claude-haiku-5-5
+answer_effort: medium
+answer_max_tokens: 4000
+judge_model: claude-sonnet-5-5
+judge_effort: medium
+prompt_version: v1

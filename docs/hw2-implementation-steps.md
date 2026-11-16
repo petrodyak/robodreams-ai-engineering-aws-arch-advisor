@@ -44,7 +44,7 @@ Apply to every step and are not repeated in the steps:
 |---|---|---|---|
 | `.env` with `ANTHROPIC_API_KEY` (same key as HW 1) | Petro | 18 | ✅ (HW 1) |
 | "ok" on the corpus list | Petro | 15 | ✅ 13.11 (34 documents) |
-| Relevant-chunk labels for the 20 answerable questions (~1 h) | Petro | 17 | ⬜ |
+| Relevant-chunk labels for the 20 answerable questions (~1 h) | Petro | 17 | ✅ 16.11 (55 chunk ids) |
 | Testset check + ≥ 12 hand-labelled answers (~2 h) | Petro | 19 | ⬜ |
 | `ANTHROPIC_API_KEY` repository secret in GitHub | Petro | 20 | ⬜ |
 
@@ -54,8 +54,8 @@ Apply to every step and are not repeated in the steps:
 |---|---|---|---|---|---|---|
 | 14 | Housekeeping: brief, this file, CLAUDE.md, GLOSSARY, ADR-0007/0008, spec + plan in Git | `step-14-hw2-setup` | review 15 min | — | 09.11 | ✅ PR #32 (c3b5034) |
 | 15 | Corpus list, download script, manifest | `step-15-corpus` | pick and "ok" the list, 30 min | 1: ingestion ≥ 2 formats (part of 3) | 14.11 | ✅ PR #33 (99c73ee) |
-| 16 | Ingestion → `chunks.jsonl` + `chunks_fixed.jsonl` + ingest manifest | `step-16-ingest` | review | 1: ingestion (3), cleaning + dedup (3), chunking + metadata (4) | 15.11 | 🔄 PR #34 |
-| 17 | Index, hybrid, rerank, filters, retrieval eval | `step-17-search` | **label relevant chunks, ~1 h** | 2: embeddings + DB (3), hybrid (3), rerank + filters (2), retrieval measured (2) | 16.11 | ⬜ |
+| 16 | Ingestion → `chunks.jsonl` + `chunks_fixed.jsonl` + ingest manifest | `step-16-ingest` | review | 1: ingestion (3), cleaning + dedup (3), chunking + metadata (4) | 15.11 | ✅ PR #34 (0e33962) |
+| 17 | Index, hybrid, rerank, filters, retrieval eval | `step-17-search` | **label relevant chunks, ~1 h** | 2: embeddings + DB (3), hybrid (3), rerank + filters (2), retrieval measured (2) | 16.11 | 🔄 PR #36 |
 | 18 | RAG answering, prompt v1, eval cache, first run | `step-18-answer` | "ok" on the estimate | 3: citations (4), context control (4) | 17.11 | ⬜ |
 | 19 | Testset, scorers, judge, calibration, prompt v2 | `step-19-evals` | **check the testset ~1 h, label ≥ 12 answers ~1 h** | 4: testset (3), scoring (4) | 18.11 | ⬜ |
 | 20 | CI workflow + thresholds, `REPORT-hw2.md`, README, pre-submission check | `step-20-ci-report` | review, add the secret | 4: evals in CI (3); repository (2) | 19.11 | ⬜ |
@@ -116,7 +116,30 @@ merge). The task-level detail (interfaces, tests) is in the plan file.
   `evals/testset.jsonl`, `scripts/retrieval_candidates.py`.
 - **Done when:** the retrieval table is in `evals/results/retrieval.json` and here; the RAG mode is chosen
   from the numbers.
-- **Open:** fastembed `TextCrossEncoder` API and both model names, checked against the docs.
+- **Done:** `src/rag/{config,index,search}.py`: Qdrant `:memory:` (cosine) + BM25 over the same
+  "Contextual Header + text", RRF (k = 60) over the top 20 of each, cross-encoder rerank of the RRF
+  top 20, filters by `doc_type` and `published`. Embeddings `BAAI/bge-small-en-v1.5`, reranker
+  `Xenova/ms-marco-MiniLM-L-6-v2`, both local through fastembed 0.9.1 (`TextCrossEncoder.rerank`
+  checked against the installed package); vectors cached on disk. `evals/testset.jsonl` holds the 20
+  answerable items (ids `one`/`many`/`sim`/`old`, legend in `REPORT-hw2.md`); the relevant chunks were
+  proposed by Claude from `make retrieval-candidates` plus a full-text search, and each one was checked
+  by Petro in `evals/labels/retrieval_candidates.md` (55 ids, none from the archived edition). Fixed
+  windows count as relevant by ≥ 50 % shingle overlap with a relevant chunk. `make retrieval-eval`,
+  20 items, $0:
+
+  | Configuration | recall@5 | recall@10 | MRR | ms/query | Misses (top 10) |
+  |---|---|---|---|---|---|
+  | vector, fixed chunks | 0.85 | 0.95 | 0.66 | 129 | sim01 |
+  | vector | 0.85 | 0.95 | 0.76 | 130 | sim01 |
+  | BM25 | 0.90 | 0.90 | 0.82 | 6 | one09, old02 |
+  | hybrid (RRF) | 0.95 | 1.00 | 0.80 | 137 | — |
+  | **hybrid + rerank** | **1.00** | **1.00** | **0.87** | 466 | — |
+
+  `hybrid_rerank` stays the default: the only configuration with every item in the top 5, and the
+  best MRR. Structure chunks beat the fixed windows on MRR (0.76 vs 0.66). The reranker puts a wrong
+  chunk first on 5 items; on old02 it is `wa-serverless-lens#0039`, a current document that still
+  lists the five security areas of an older Framework edition, so a date filter cannot catch it.
+  `make check`: 327 passed (+26).
 
 ### Step 18 — Answering with sources
 
@@ -182,3 +205,5 @@ From spec §11:
 | 13.11 | Deadline moved to 20.11 23:59 (Petro). Nothing is cut from scope; steps 15–20 re-dated 14.11–19.11, 20.11 is the buffer |
 | 13.11 | Corpus list approved (34 documents); Iceberg pages taken from the Athena, S3 and Glue guides because the Prescriptive Guidance Iceberg guide was withdrawn |
 | 14.11 | F21 decided as option A (Petro): the manifest records the text hash, not the byte hash; duplicate chunks are kept in the most specific document; the fixed baseline moves to `chunks_fixed.jsonl` (Petro), so `chunks.jsonl` holds only what stage 3 reads |
+| 15.11 | Fixed-window relevance counts overlap with a relevant chunk of any document, not only the same one (Petro, option B; plan Task 17 amended) |
+| 16.11 | Relevant chunks proposed by Claude and checked one by one by Petro; the archived Framework edition never counts as relevant. Testset ids renamed to `one` / `many` / `sim` / `old` (`none` in step 19). many04 `expected_sources`: the "Parallelize tasks" section did not exist, now `""` |

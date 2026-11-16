@@ -1,0 +1,58 @@
+{
+  "items": 20,
+  "chunks": 2869,
+  "chunks_fixed": 3102,
+  "embed_model": "BAAI/bge-small-en-v1.5",
+  "rerank_model": "Xenova/ms-marco-MiniLM-L-6-v2",
+  "candidates": 20,
+  "rrf_k": 60,
+  "configs": {
+    "vector (fixed chunks)": {
+      "questions": 20,
+      "recall@5": 0.85,
+      "recall@10": 0.95,
+      "mrr": 0.6592261904761905,
+      "misses": [
+        "sim01"
+      ],
+      "ms": 128.9
+    },
+    "vector": {
+      "questions": 20,
+      "recall@5": 0.85,
+      "recall@10": 0.95,
+      "mrr": 0.7620833333333333,
+      "misses": [
+        "sim01"
+      ],
+      "ms": 129.9
+    },
+    "bm25": {
+      "questions": 20,
+      "recall@5": 0.9,
+      "recall@10": 0.9,
+      "mrr": 0.825,
+      "misses": [
+        "one09",
+        "old02"
+      ],
+      "ms": 6.1
+    },
+    "hybrid": {
+      "questions": 20,
+      "recall@5": 0.95,
+      "recall@10": 1.0,
+      "mrr": 0.7966666666666666,
+      "misses": [],
+      "ms": 137.2
+    },
+    "hybrid_rerank": {
+      "questions": 20,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 0.8666666666666666,
+      "misses": [],
+      "ms": 465.5
+    }
+  }
+}
