@@ -1,5 +1,5 @@
 # Every target runs inside the uv-managed .venv (`uv run` syncs it first if needed).
-.PHONY: install data text rag-data ingest run estimate runs-md metrics schema gold-drafts gold-check check
+.PHONY: install data text rag-data ingest index retrieval-candidates retrieval-eval run estimate runs-md metrics schema gold-drafts gold-check check
 
 # One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`,
 # `make run MODEL=qwen2.5-7b`, `make run SAMPLING=t05 GOLD=1` (Golden Set only), or
@@ -34,6 +34,19 @@ rag-data:
 # chunks_fixed.jsonl (fixed-size baseline) and ingest_manifest.json; deterministic, committed
 ingest:
 	uv run python -m src.rag.ingest.pipeline
+
+# HW 2 index: embeds both chunk files (cached in .cache/embeddings.json, models in .cache/models)
+# and builds Qdrant :memory: + BM25; prints the counts
+index:
+	uv run python -m src.rag.index
+
+# HW 2 labelling sheet: vector top 10 + BM25 top 10 per answerable item -> evals/labels/
+retrieval-candidates:
+	uv run python -m scripts.retrieval_candidates
+
+# HW 2 retrieval eval: 5 configurations of spec §5 -> evals/results/retrieval.json (local, no API)
+retrieval-eval:
+	uv run python -m evals.run retrieval
 
 # extract all 30 documents -> results/runs/jsonl/<run_id>.jsonl (resumable)
 # + a readable mirror results/runs/md/<run_id>.md, rewritten after every record
