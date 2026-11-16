@@ -55,7 +55,7 @@ Apply to every step and are not repeated in the steps:
 | 14 | Housekeeping: brief, this file, CLAUDE.md, GLOSSARY, ADR-0007/0008, spec + plan in Git | `step-14-hw2-setup` | review 15 min | — | 09.11 | ✅ PR #32 (c3b5034) |
 | 15 | Corpus list, download script, manifest | `step-15-corpus` | pick and "ok" the list, 30 min | 1: ingestion ≥ 2 formats (part of 3) | 14.11 | ✅ PR #33 (99c73ee) |
 | 16 | Ingestion → `chunks.jsonl` + `chunks_fixed.jsonl` + ingest manifest | `step-16-ingest` | review | 1: ingestion (3), cleaning + dedup (3), chunking + metadata (4) | 15.11 | ✅ PR #34 (0e33962) |
-| 17 | Index, hybrid, rerank, filters, retrieval eval | `step-17-search` | **label relevant chunks, ~1 h** | 2: embeddings + DB (3), hybrid (3), rerank + filters (2), retrieval measured (2) | 16.11 | 🔄 PR #36 |
+| 17 | Index, hybrid, rerank, filters, retrieval eval | `step-17-search` | **label relevant chunks, ~1 h** | 2: embeddings + DB (3), hybrid (3), rerank + filters (2), retrieval measured (2) | 16.11 | ✅ PR #36 (9e06453) |
 | 18 | RAG answering, prompt v1, eval cache, first run | `step-18-answer` | "ok" on the estimate | 3: citations (4), context control (4) | 17.11 | ⬜ |
 | 19 | Testset, scorers, judge, calibration, prompt v2 | `step-19-evals` | **check the testset ~1 h, label ≥ 12 answers ~1 h** | 4: testset (3), scoring (4) | 18.11 | ⬜ |
 | 20 | CI workflow + thresholds, `REPORT-hw2.md`, README, pre-submission check | `step-20-ci-report` | review, add the secret | 4: evals in CI (3); repository (2) | 19.11 | ⬜ |
@@ -147,6 +147,28 @@ merge). The task-level detail (interfaces, tests) is in the plan file.
   questions.
 - **Files:** `src/rag/{llm,answer}.py`, `prompts/rag_v1.txt`, `evals/cache.py`, `evals/cache/`.
 - **Done when:** the first live run and the k = 3 / 5 / 8 sweep are recorded in section 5.
+- **Done:** `src/rag/llm.py` (`ClaudeJSON`: structured outputs, effort `medium`, no sampling
+  parameters, no `thinking`, HW 1 retry imported), `src/rag/answer.py` (context of the top k in rank
+  order, a block that does not fit is skipped, never cut; labels checked, unknown ones dropped, a
+  claim with no valid label removed; no sources → not-found with no call), `prompts/rag_v1.txt`,
+  `evals/cache.py` (key = model + effort + sha256 of system, user and schema; append-only JSONL;
+  `live=False` raises the stale message; guard at 30 new calls), `evals/answers.py`,
+  `make ask` / `eval-estimate` / `eval` / `eval-sweep`. The 20 answerable items (the `none` items
+  come in step 19), $0.041 for the sweep, estimate $0.053:
+
+  | k | context budget | found | context recall | citation recall | avg in / out tokens | $ per 1,000 questions |
+  |---|---|---|---|---|---|---|
+  | 3 | 3,000 | 20 / 20 | 1.00 | 1.00 | 2,513 / 561 | 0.53 |
+  | **5** | 3,000 | 20 / 20 | 1.00 | 1.00 | 3,568 / 591 | **0.65** |
+  | 8 | 3,840 | 20 / 20 | 1.00 | 1.00 | 5,293 / 668 | 0.86 |
+
+  No label was dropped and no claim removed. k = 5 stays: k = 3 already has every relevant chunk in
+  the context on this testset, so the sweep cannot show a quality gain yet; the judge (step 19)
+  decides between 3 and 5. The outdated traps held: old02 had the Serverless Lens's five-area list
+  first in the context and answered "seven" from the newer Framework; old01 and old03 had the 2020
+  edition in the context and answered "six" and "five". A rerun of `make eval` made 0 new calls.
+  Two questions outside the corpus by `make ask`: the Aurora ACU price gave the not-found text; the
+  GKE autoscaler question gave `found = true` with EKS advice (F22). `make check`: 350 passed (+23).
 
 ### Step 19 — Testset, scorers, judge, calibration, prompt v2
 
@@ -168,13 +190,14 @@ merge). The task-level detail (interfaces, tests) is in the plan file.
 
 | Run id | Step | Required | Cost estimate | Actual |
 |---|---|---|---|---|
-| `claude-haiku-5-5__v1__medium__k5` | 18 | yes | ≈ $0.03 (24 questions) | — |
-| k sweep 3 / 5 / 8 | 18 | yes | ≈ $0.1 | — |
+| `claude-haiku-5-5__v1__medium__k5` | 18 | yes | ≈ $0.03 (24 questions) | $0.0130 (20 questions; in the sweep) |
+| k sweep 3 / 5 / 8 | 18 | yes | ≈ $0.1 (count_tokens: $0.053) | $0.0409 |
 | judges on the v1 run | 19 | yes | ≈ $0.5–1 | — |
 | `claude-haiku-5-5__v2__medium__k5` + judges | 19 | yes | ≈ $0.5–1 | — |
+| two `make ask` checks outside the corpus | 18 | no | ≈ $0.002 | $0.0017 |
 | CI cache misses | 20 | as needed | ≤ 30 misses per run (guard) | — |
 
-**API budget:** $5 for the whole of HW 2 (D3); the spec estimates under $3 in total. Spent so far: $0.
+**API budget:** $5 for the whole of HW 2 (D3); the spec estimates under $3 in total. Spent so far: $0.043 (step 18).
 
 ## 6. Deferred findings
 
@@ -183,6 +206,7 @@ Numbering continues from HW 1 (F1–F20 are in `Implementation_steps.md`).
 | # | Finding | Found in | Closed in | Status |
 |---|---|---|---|---|
 | F21 | AWS regenerates its documentation PDFs every few days (`CreationDate` of the downloads is the download day), so a later `make rag-data` may report a sha256 mismatch although the content did not change. The committed `chunks.jsonl` records the version used | 15 | 16: the manifest `sha256` is now the hash of the cleaned text (the `doc_hash` of `chunks.jsonl`); 18 of 34 files had new bytes and the same text a day later | closed (step 16) |
+| F22 | Rule 5 of `rag_v1` ("a partial answer is an answer") lets a question outside the corpus pass: "How do I configure the Horizontal Pod Autoscaler in Google Kubernetes Engine?" got `found = true`, EKS advice from REL07-BP03, and a last claim saying the sources do not cover GKE, with citations | 18 | | open (step 19: the `none` items measure it; prompt v2 candidate) |
 
 ## 7. Risks
 

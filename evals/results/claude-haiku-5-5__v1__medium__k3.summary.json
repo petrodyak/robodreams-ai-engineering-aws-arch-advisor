@@ -1,0 +1,19 @@
+{
+  "run_id": "claude-haiku-5-5__v1__medium__k3",
+  "k": 3,
+  "new_calls": 20,
+  "items": 20,
+  "found": 20,
+  "context_recall": 1.0,
+  "citation_recall": 1.0,
+  "dropped_labels": 0,
+  "uncited_claims": 0,
+  "stop_reasons": [
+    "end_turn"
+  ],
+  "avg_input_tokens": 2513.15,
+  "avg_output_tokens": 560.85,
+  "cost_usd": 0.0106348,
+  "usd_per_1000": 0.53174,
+  "not_found_ids": []
+}
