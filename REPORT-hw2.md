@@ -270,7 +270,7 @@ Mac, so the run made 0 new calls.
 
 **The cost of a cold run** is time, not money. GitHub caches are per branch: a branch reads its own
 caches and those of `main`. So the first run on a new branch embeds the chunks again (~27 min) until
-`main` holds a cache after the merge. A warm run takes a few minutes.
+`main` holds a cache after the merge. A warm run takes about 3 minutes in all: [44149747967](https://github.com/petrodyak/robodreams-ai-engineering-aws-arch-advisor/actions/runs/44149747967), green, 0 new calls.
 
 ## 8. Error analysis
 
