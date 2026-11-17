@@ -46,7 +46,7 @@ Apply to every step and are not repeated in the steps:
 | "ok" on the corpus list | Petro | 15 | ✅ 13.11 (34 documents) |
 | Relevant-chunk labels for the 20 answerable questions (~1 h) | Petro | 17 | ✅ 16.11 (55 chunk ids) |
 | Testset check + ≥ 12 hand-labelled answers (~2 h) | Petro | 19 | ✅ 17.11 (24 items, 17 answers) |
-| `ANTHROPIC_API_KEY` repository secret in GitHub | Petro | 20 | ⬜ |
+| `ANTHROPIC_API_KEY` repository secret in GitHub | Petro | 20 | ✅ 17.11 |
 
 ## 3. Steps overview
 
@@ -58,7 +58,7 @@ Apply to every step and are not repeated in the steps:
 | 17 | Index, hybrid, rerank, filters, retrieval eval | `step-17-search` | **label relevant chunks, ~1 h** | 2: embeddings + DB (3), hybrid (3), rerank + filters (2), retrieval measured (2) | 16.11 | ✅ PR #36 (9e06453) |
 | 18 | RAG answering, prompt v1, eval cache, first run | `step-18-answer` | "ok" on the estimate | 3: citations (4), context control (4) | 17.11 | ✅ PR #37 (6636c8d) |
 | 19 | Testset, scorers, judge, calibration, prompt v2 | `step-19-evals` | **check the testset ~1 h, label ≥ 12 answers ~1 h** | 4: testset (3), scoring (4) | 18.11 | ✅ PR #38 (9ddc66f) |
-| 20 | CI workflow + thresholds, `REPORT-hw2.md`, README, pre-submission check | `step-20-ci-report` | review, add the secret | 4: evals in CI (3); repository (2) | 19.11 | 🔄 PR #40 |
+| 20 | CI workflow + thresholds, `REPORT-hw2.md`, README, pre-submission check | `step-20-ci-report` | review, add the secret | 4: evals in CI (3); repository (2) | 19.11 | ✅ PR #40 (359ccf1) |
 
 ## 4. Steps
 
@@ -266,6 +266,7 @@ From spec §11:
 | 17.11 | Row 19 flipped by its own patch PR, not by step 20 (Petro): the status commit `dedeaf8` was pushed after PR #38 merged, so it never reached `main` |
 | 17.11 | Step 20: thresholds set from the v2 baseline (Petro "ok" on the plan); the cost guard of 30 counts answers and verdicts of a CI run together; Petro added the `ANTHROPIC_API_KEY` repository secret and allowed commit + push of this branch while away (PR and merge stay his) |
 | 17.11 | CI triggers: `push` on `main` + `pull_request` instead of `push` on every branch + `pull_request` (Petro, option B). Spec §8 says "push and pull_request"; the brief's "on every push or pull request" still holds. Each PR commit now runs once, on the merge into `main`, and the run on `main` after a merge saves the `.cache/` that every PR can restore (a branch's own cache is not visible to its PR) |
+| 17.11 | Row 20 and the secret prerequisite closed by their own patch PR (Petro): step 20 is the last step, so no later step PR would flip them as D9 expects |
 
 ## 9. Pre-submission check (step 20)
 
