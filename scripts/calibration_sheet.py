@@ -17,6 +17,7 @@ import json
 import sys
 from pathlib import Path
 
+from evals.answers import load_run
 from evals.calibration import CalibrationRow, load_calibration
 from evals.scorers import key_facts, passed
 from evals.testset import TestItem, load_testset
@@ -112,17 +113,16 @@ def main() -> None:
     existing = load_calibration(LABELS)
     if not args.append and any(r.human_pass is not None for r in existing):
         sys.exit(f"{LABELS} already holds labels: move it aside first, or use --append")
+    if args.append and not SHEET.exists():
+        sys.exit(f"{SHEET}: no sheet to append to; run without --append first")
 
     testset = load_testset(TESTSET)
     chunks = {
-        json.loads(line)["chunk_id"]: json.loads(line)
-        for line in CHUNKS.read_text(encoding="utf-8").splitlines()
+        c["chunk_id"]: c
+        for c in map(json.loads, CHUNKS.read_text(encoding="utf-8").splitlines())
     }
     run_file = Path(f"evals/results/{args.run}.jsonl")
-    rows = {
-        json.loads(line)["id"]: json.loads(line)
-        for line in run_file.read_text(encoding="utf-8").splitlines()
-    }
+    rows = {r["id"]: r for r in load_run(run_file, testset)}
     recs = [
         AnswerRecord.model_validate({k: v for k, v in rows[it.id].items() if k != "id"})
         for it in testset

@@ -23,3 +23,18 @@ def test_pick_failures_first_and_skips_labelled_answers():
 
     chosen = pick(items, recs, n=2, skip={"one03"})
     assert [it.id for _, _, it, _ in chosen] == ["one02", "one01"]
+
+
+def test_append_without_a_sheet_exits_with_a_message(tmp_path, monkeypatch):
+    import sys
+
+    import pytest
+
+    import scripts.calibration_sheet as sheet
+
+    monkeypatch.setattr(sheet, "SHEET", tmp_path / "calibration_sheet.md")
+    monkeypatch.setattr(sheet, "LABELS", tmp_path / "calibration.jsonl")
+    monkeypatch.setattr(sys, "argv", ["calibration_sheet", "--append"])
+
+    with pytest.raises(SystemExit, match="no sheet to append to"):
+        sheet.main()

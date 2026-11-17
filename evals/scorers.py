@@ -4,7 +4,8 @@ Each scorer looks at one stage, so the error analysis can say where an item brok
 - `retrieved` / `in_context`: a relevant chunk is among the hits / in the budgeted prompt
   (search vs context budget);
 - `abstain_correct`: the answer says "not found" exactly when the item has no answer;
-- `key_facts`: the share of key facts present in the answer text (literal: the judge covers wording);
+- `key_facts`: the share of key facts present in the answer text as whole words (literal: the judge
+  covers wording);
 - `source_hit`: a validated citation names an expected document and section;
 - `citations_valid`: no claim lost its labels and none was removed.
 
@@ -12,6 +13,7 @@ None means "does not apply" (e.g. `source_hit` on a no-answer item) and is left 
 Text is compared after NFKC, casefold and collapsed whitespace.
 """
 
+import re
 import unicodedata
 
 from evals.testset import TestItem
@@ -30,7 +32,14 @@ def key_facts(item: TestItem, rec: AnswerRecord) -> float | None:
     if not item.answerable or not item.key_facts:
         return None
     answer = normalize(rec.answer)
-    return sum(normalize(f) in answer for f in item.key_facts) / len(item.key_facts)
+    return sum(_has_phrase(answer, normalize(f)) for f in item.key_facts) / len(
+        item.key_facts
+    )
+
+
+def _has_phrase(text: str, phrase: str) -> bool:
+    """`phrase` as whole words: "all" is not found in "small", nor "six" in "sixty"."""
+    return re.search(rf"(?<!\w){re.escape(phrase)}(?!\w)", text) is not None
 
 
 def source_hit(item: TestItem, rec: AnswerRecord) -> bool | None:
@@ -68,6 +77,15 @@ def in_context(item: TestItem, rec: AnswerRecord) -> bool | None:
     return bool(set(item.relevant_chunk_ids) & set(rec.in_context))
 
 
+def context_share(item: TestItem, rec: AnswerRecord) -> float | None:
+    """The share of the labelled chunks that reached the context. A diagnostic, not gated: a
+    question in two parts can pass `in_context` with the chunk of one part only (F23)."""
+    if not item.answerable or not item.relevant_chunk_ids:
+        return None
+    relevant = set(item.relevant_chunk_ids)
+    return len(relevant & set(rec.in_context)) / len(relevant)
+
+
 def _mean(values: list) -> float | None:
     present = [float(v) for v in values if v is not None]
     return sum(present) / len(present) if present else None
@@ -102,5 +120,6 @@ def aggregate(items: list[TestItem], recs: list[AnswerRecord]) -> dict:
         "citations_valid": _mean([citations_valid(r) for r in recs]),
         "retrieved": _mean([retrieved(it, r) for it, r in answerable]),
         "in_context": _mean([in_context(it, r) for it, r in answerable]),
+        "context_share": _mean([context_share(it, r) for it, r in answerable]),
         "failed": [it.id for it, r in zip(items, recs) if not passed(it, r)],
     }

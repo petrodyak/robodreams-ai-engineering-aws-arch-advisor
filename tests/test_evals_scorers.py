@@ -6,6 +6,7 @@ from evals.scorers import (
     abstain_correct,
     aggregate,
     citations_valid,
+    context_share,
     in_context,
     key_facts,
     retrieved,
@@ -99,6 +100,26 @@ def test_key_facts_normalized():
     assert key_facts(item(facts=("RPO", "8 hours")), record()) == 0.5
 
 
+def test_key_facts_match_whole_words_only():
+    """ "ALL" (the distribution style) is not found inside "small"; "six" not inside "sixty"."""
+    it = item(facts=("ALL", "six"))
+
+    assert (
+        key_facts(it, record(text="Use it for small tables, sixty of them. [S1]"))
+        == 0.0
+    )
+    assert (
+        key_facts(it, record(text="Use ALL for small tables; six pillars. [S1]")) == 1.0
+    )
+    assert (
+        key_facts(
+            item(facts=("push_down_predicate",)),
+            record(text="Set push_down_predicate. [S1]"),
+        )
+        == 1.0
+    )
+
+
 def test_source_hit_needs_doc_and_section():
     assert source_hit(item(), record()) is True
     assert source_hit(item(), record(refs=[ref(doc_id="wa-framework")])) is False
@@ -143,3 +164,16 @@ def test_aggregate():
 def test_aggregate_rejects_misaligned_records():
     with pytest.raises(ValueError, match="one01"):
         aggregate([item("one01")], [record("another question")])
+
+
+def test_context_share_counts_every_relevant_chunk():
+    """`in_context` is true with one relevant chunk; `context_share` shows the part that is missing
+    (a two-part question that loses its second chunk, F23)."""
+    it = item("many03", kind="multi")
+    it.relevant_chunk_ids = ["a#0001", "b#0002", "c#0003", "d#0004"]
+    rec = record("question many03", context_ids=("a#0001", "x#0009", "c#0003"))
+
+    assert in_context(it, rec) is True
+    assert context_share(it, rec) == pytest.approx(0.5)
+    assert context_share(item("none01", kind="no_answer"), rec) is None
+    assert aggregate([it], [rec])["context_share"] == pytest.approx(0.5)

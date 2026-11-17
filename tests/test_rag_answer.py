@@ -166,7 +166,8 @@ def test_answer_text_cites_each_claim():
     assert record.answer == "c1 [S1] c2 [S1][S2]"
     assert set(record.sources) >= {"S1", "S2"}
     assert record.in_context == [record.sources[s] for s in sorted(record.sources)]
-    assert record.model == "claude-haiku-5-5" and record.prompt_version == "v1"
+    assert record.model == "claude-haiku-5-5"
+    assert record.prompt_version == CFG.prompt_version  # the version the config names
 
 
 def test_prompt_carries_question_and_sources():

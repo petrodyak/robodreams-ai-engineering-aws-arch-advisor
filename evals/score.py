@@ -19,7 +19,12 @@ from src.rag.llm import LLMResult
 
 
 class CostMeter:
-    """Wraps a judge LLM and adds up what its calls cost (cache hits report their original cost)."""
+    """Wraps a judge LLM and adds up what its calls cost.
+
+    `cost_usd` is what every verdict cost when it was made (a cache hit reports its original
+    cost): the price of scoring a run from scratch. `new_cost_usd` counts only calls that missed
+    the cache: what this run spent.
+    """
 
     def __init__(self, llm):
         self.llm = llm
@@ -27,11 +32,16 @@ class CostMeter:
         self.effort = llm.effort
         self.calls = 0
         self.cost_usd = 0.0
+        self.new_cost_usd = 0.0
 
     def complete_json(self, system: str, user: str, schema: dict) -> LLMResult:
+        cache = getattr(self.llm, "cache", None)
+        misses = cache.misses if cache else 0
         result = self.llm.complete_json(system, user, schema)
         self.calls += 1
         self.cost_usd += result.cost_usd
+        if cache is None or cache.misses > misses:
+            self.new_cost_usd += result.cost_usd
         return result
 
 
@@ -73,7 +83,8 @@ def score_run(
         "items": per_item,
         "cost": {
             "answers_usd": answers_usd,
-            "judge_usd": judge_llm.cost_usd if hasattr(judge_llm, "cost_usd") else None,
+            "judge_usd": getattr(judge_llm, "new_cost_usd", None),
+            "judge_usd_all_verdicts": getattr(judge_llm, "cost_usd", None),
             "answers_usd_per_1000": answers_usd / len(ordered) * 1000
             if ordered
             else 0.0,
@@ -98,12 +109,19 @@ def calibrate(
         it, rec = by_id[row.item_id], recs[row.run_id][row.item_id]
         name = f"{row.item_id}@{row.run_id}"
         verdict = judge_correctness(it, rec, judge_llm)
-        if row.human_pass is not None and verdict is not None:
-            pairs["correctness"].append((row.human_pass, verdict.passed))
-            if row.human_pass != verdict.passed:
+        # a not-found answer to an answerable item fails without a judge call, as in score_run
+        judge_pass = verdict.passed if verdict else (False if it.answerable else None)
+        if row.human_pass is not None and judge_pass is not None:
+            pairs["correctness"].append((row.human_pass, judge_pass))
+            if row.human_pass != judge_pass:
                 differ["correctness"].append(name)
         fv = judge_faithfulness(rec, chunk_text, judge_llm)
-        if row.human_unsupported is not None and fv is not None and fv.supported:
+        # a verdict of the wrong length (score None) is not a verdict, as in score_run
+        if (
+            row.human_unsupported is not None
+            and fv is not None
+            and fv.score is not None
+        ):
             judge_unsupported = not all(fv.supported)
             pairs["faithfulness"].append((row.human_unsupported, judge_unsupported))
             if row.human_unsupported != judge_unsupported:

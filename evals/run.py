@@ -17,7 +17,7 @@ import json
 import sys
 from pathlib import Path
 
-from evals.answers import run_id, run_items, summarize, sweep_budget
+from evals.answers import load_run, run_id, run_items, summarize, sweep_budget
 from evals.cache import CachedLLM, EvalCache
 from evals.calibration import load_calibration
 from evals.judge import JUDGE_MAX_TOKENS
@@ -46,6 +46,13 @@ JUDGE_OUTPUT_GUESS = 600
 # 24 items), above the CI guard of 30 (spec §8), which applies to `make eval-ci` in step 20.
 LOCAL_JUDGE_MAX_MISSES = 100
 DEPTH = 10  # recall@10 and MRR read the top 10
+
+# The config of this run: config/rag.yaml, with `--prompt` applied (set by main()).
+_CFG = None
+
+
+def _config():
+    return _CFG if _CFG is not None else load_config()
 
 
 def labelled(items: list[TestItem]) -> list[TestItem]:
@@ -134,7 +141,7 @@ def _answer_setup():
     from src.rag.llm import ClaudeJSON
 
     load_dotenv()  # ANTHROPIC_API_KEY
-    cfg = load_config()
+    cfg = _config()
     items = load_testset(TESTSET)
     index = Index(
         load_chunks(CHUNKS),
@@ -226,24 +233,25 @@ def sweep() -> None:
     )
 
 
-def _judge_setup():
+def _judge_env():
+    """The testset, the chunk texts and the judge; no answer run is read here."""
     from dotenv import load_dotenv
 
     from src.rag.llm import ClaudeJSON
 
     load_dotenv()  # ANTHROPIC_API_KEY
-    cfg = load_config()
+    cfg = _config()
     items = load_testset(TESTSET)
-    rid = run_id(cfg.answer_model, cfg.prompt_version, cfg.answer_effort, cfg.k)
-    run_file = RESULTS_DIR / f"{rid}.jsonl"
-    rows = [
-        json.loads(line) for line in run_file.read_text(encoding="utf-8").splitlines()
-    ]
-    missing = {it.id for it in items} - {r["id"] for r in rows}
-    if missing:
-        sys.exit(f"{run_file} has no answer for {sorted(missing)}: run make eval first")
     texts = {c.chunk_id: c.text for c in load_chunks(CHUNKS)}
     judge = ClaudeJSON(cfg.judge_model, cfg.judge_effort, JUDGE_MAX_TOKENS)
+    return cfg, items, texts, judge
+
+
+def _judge_setup():
+    """The judge environment plus the config's answer run (`score`, `judge-estimate`)."""
+    cfg, items, texts, judge = _judge_env()
+    rid = run_id(cfg.answer_model, cfg.prompt_version, cfg.answer_effort, cfg.k)
+    rows = load_run(RESULTS_DIR / f"{rid}.jsonl", items)
     return cfg, items, rid, rows, texts, judge
 
 
@@ -304,6 +312,7 @@ def score() -> None:
         "citations_valid",
         "retrieved",
         "in_context",
+        "context_share",
         "judge_pass_rate",
         "faithfulness",
     ):
@@ -314,24 +323,21 @@ def score() -> None:
     c = result["cost"]
     print(
         f"  cost: answers ${c['answers_usd']:.4f} (${c['answers_usd_per_1000']:.2f} per 1,000), "
-        f"judges ${c['judge_usd']:.4f}"
+        f"judges ${c['judge_usd']:.4f} new (${c['judge_usd_all_verdicts']:.4f} for all verdicts)"
     )
 
 
 def calibrate_judges() -> None:
-    _, items, rid, rows, texts, judge = _judge_setup()
+    """The judges on the hand-labelled answers; each label is read from its own run, so the
+    config's run is not needed (it may be a newer prompt version)."""
+    _, items, texts, judge = _judge_env()
     labels = [r for r in load_calibration(CALIBRATION) if r.human_pass is not None]
     if not labels:
         sys.exit(f"no hand labels in {CALIBRATION}")
-    runs = {rid: rows}
-    for other in sorted({r.run_id for r in labels} - {rid}):
-        run_file = RESULTS_DIR / f"{other}.jsonl"
-        if not run_file.exists():
-            sys.exit(f"labels name the run {other}, but {run_file} does not exist")
-        runs[other] = [
-            json.loads(line)
-            for line in run_file.read_text(encoding="utf-8").splitlines()
-        ]
+    runs = {
+        rid: load_run(RESULTS_DIR / f"{rid}.jsonl", items)
+        for rid in sorted({r.run_id for r in labels})
+    }
     cache = EvalCache(JUDGE_CACHE, live=True, max_misses=LOCAL_JUDGE_MAX_MISSES)
     out = calibrate(labels, items, runs, CachedLLM(judge, cache), texts.__getitem__)
     out["runs"] = sorted({r.run_id for r in labels})
@@ -347,7 +353,34 @@ def calibrate_judges() -> None:
         )
 
 
+COMMANDS = (
+    "retrieval",
+    "estimate",
+    "answers",
+    "sweep",
+    "judge-estimate",
+    "score",
+    "calibrate",
+)
+
+
+def parse_args(argv: list[str] | None = None):
+    """The command and its config. `--prompt v2` measures a prompt version without editing
+    config/rag.yaml, which switches only when the version is not worse (plan Task 19.4)."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("what", choices=COMMANDS)
+    parser.add_argument(
+        "--prompt", help="prompt version, e.g. v2 (default: the config's)"
+    )
+    args = parser.parse_args(argv)
+    cfg = load_config()
+    if args.prompt:
+        cfg = cfg.model_copy(update={"prompt_version": args.prompt})
+    return args.what, cfg
+
+
 def main() -> None:
+    global _CFG
     commands = {
         "retrieval": retrieval,
         "estimate": estimate,
@@ -357,9 +390,8 @@ def main() -> None:
         "score": score,
         "calibrate": calibrate_judges,
     }
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("what", choices=list(commands))
-    commands[parser.parse_args().what]()
+    what, _CFG = parse_args()
+    commands[what]()
 
 
 if __name__ == "__main__":

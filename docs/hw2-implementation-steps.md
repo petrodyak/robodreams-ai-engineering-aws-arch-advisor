@@ -177,14 +177,17 @@ merge). The task-level detail (interfaces, tests) is in the plan file.
 - **Files:** `evals/{scorers,judge,calibration}.py`, judge prompts, `evals/labels/`, `prompts/rag_v2.txt`.
 - **Done when:** every testset item has `verified_by`; judge agreement ≥ 80 % (or v2 judge prompt);
   CHANGELOG v2 row with measured effect.
-- **Progress (17.11, before prompt v2):** 24 items checked by Petro (4 `none` added; the six traps in
-  his own words; many01 and many04 got a missing chunk, many01 sections `""`); the reworded traps cut
-  recall@5 of vector to 0.70 and hybrid to 0.85, hybrid_rerank stays 1.00 (MRR 0.81). Calibration on
-  17 hand labels (12 of k = 5, 5 of k = 3 for ≥ 3 failures): correctness 82 % / κ 0.65 raw, 88 % /
-  κ 0.77 after Petro re-checked 4 disagreements (2 labels changed, notes in the sheet); faithfulness
-  94 % → 100 %. The two left (old02, old03) are judge errors: true facts of older editions that the
-  reference answer does not hold. v1 at k = 5: judge pass 0.75, faithfulness 0.97, source hit 1.00,
-  key facts 0.93, abstain 0.50 (none02 and none04 answered, F22).
+- **Done:** 24 items checked by Petro (4 `none` added, the six traps in his words, many01 and many04
+  get the chunk of a missing fact); `evals/{scorers,judge,calibration,score}.py`, two Sonnet judges,
+  `scripts/calibration_sheet.py` (`--append`), `make score` / `calibrate`, `RAG_PROMPT=v2` to measure
+  a version before the config switches. The reworded traps cut recall@5 of vector to 0.70, hybrid to
+  0.85; hybrid_rerank stays 1.00. Calibration, 17 hand labels (5 from k = 3 for ≥ 3 failures):
+  correctness 82 % / κ 0.65 raw, 88 % / 0.77 after Petro re-checked (2 labels changed); faithfulness
+  94 % → 100 %. Prompt v2 changes rule 5 only (F22): abstain 0.50 → 1.00, false abstain 0.00, judge
+  pass 0.75 → 0.80, faithfulness 0.97 → 0.99, $0.65 per 1,000; the config is v2 (CHANGELOG table).
+  The four left are not prompt failures: retrieval (F23), judge (F24), one02 beyond the question.
+  Review fixes: key facts match whole words, calibration skips a malformed verdict and fails a
+  false abstain, `judge_usd` is new spend only, runs load with a check. `make check`: 381 passed (+31).
 
 ### Step 20 — CI, REPORT, README
 
@@ -202,11 +205,11 @@ merge). The task-level detail (interfaces, tests) is in the plan file.
 | k sweep 3 / 5 / 8 | 18 | yes | ≈ $0.1 (count_tokens: $0.053) | $0.0409 |
 | answers for the 4 `none` items and the reworded traps (k = 3 / 5 / 8) | 19 | yes | < $0.03 | $0.0218 |
 | judges on the v1 run (calibration + `make score`) | 19 | yes | ≈ $0.5–1 (count_tokens: $0.48) | $0.3164 |
-| `claude-haiku-5-5__v2__medium__k5` + judges | 19 | yes | ≈ $0.5–1 | — |
+| `claude-haiku-5-5__v2__medium__k5` + judges | 19 | yes | ≈ $0.45 (count_tokens: $0.021 + $0.432) | $0.2258 |
 | two `make ask` checks outside the corpus | 18 | no | ≈ $0.002 | $0.0017 |
 | CI cache misses | 20 | as needed | ≤ 30 misses per run (guard) | — |
 
-**API budget:** $5 for the whole of HW 2 (D3); the spec estimates under $3 in total. Spent so far: $0.381 (step 18: $0.043; step 19 so far: $0.338).
+**API budget:** $5 for the whole of HW 2 (D3); the spec estimates under $3 in total. Spent so far: $0.607 (step 18: $0.043; step 19: $0.564).
 
 ## 6. Deferred findings
 
@@ -215,7 +218,9 @@ Numbering continues from HW 1 (F1–F20 are in `Implementation_steps.md`).
 | # | Finding | Found in | Closed in | Status |
 |---|---|---|---|---|
 | F21 | AWS regenerates its documentation PDFs every few days (`CreationDate` of the downloads is the download day), so a later `make rag-data` may report a sha256 mismatch although the content did not change. The committed `chunks.jsonl` records the version used | 15 | 16: the manifest `sha256` is now the hash of the cleaned text (the `doc_hash` of `chunks.jsonl`); 18 of 34 files had new bytes and the same text a day later | closed (step 16) |
-| F22 | Rule 5 of `rag_v1` ("a partial answer is an answer") lets a question outside the corpus pass: "How do I configure the Horizontal Pod Autoscaler in Google Kubernetes Engine?" got `found = true`, EKS advice from REL07-BP03, and a last claim saying the sources do not cover GKE, with citations | 18 | | open (step 19: the `none` items measure it; prompt v2 candidate) |
+| F22 | Rule 5 of `rag_v1` ("a partial answer is an answer") lets a question outside the corpus pass: "How do I configure the Horizontal Pod Autoscaler in Google Kubernetes Engine?" got `found = true`, EKS advice from REL07-BP03, and a last claim saying the sources do not cover GKE, with citations | 18 | 19: prompt v2 rule 5 names the two cases (a value no source states, a product no source covers); abstain 0.50 → 1.00, false abstain stays 0.00 | closed (step 19) |
+| F23 | A question in two parts can lose the chunk of its second part at retrieval: many03 (Redshift tables) has it at k = 8 but not at k = 5, many04 (Glue: Parquet, `push_down_predicate`) not even at k = 8. `retrieved` / `in_context` count one relevant chunk and stay 1.00; the new diagnostic `context_share` is 0.78 | 19 | | open (stage 3: the agent can split a question into its parts; REPORT names it) |
+| F24 | The correctness judge sees the reference answer, not the sources, so a true detail the reference does not hold reads as a contradiction: old02 (v1, the 2020 Security area) and old03 ("down from eight", the October 2023 revision). Agreement 88 % is above the 80 % bar, so no judge v2 | 19 | | open (REPORT names it; a judge v2 could pass the cited sources too) |
 
 ## 7. Risks
 
@@ -241,3 +246,4 @@ From spec §11:
 | 15.11 | Fixed-window relevance counts overlap with a relevant chunk of any document, not only the same one (Petro, option B; plan Task 17 amended) |
 | 16.11 | Relevant chunks proposed by Claude and checked one by one by Petro; the archived Framework edition never counts as relevant. Testset ids renamed to `one` / `many` / `sim` / `old` (`none` in step 19). many04 `expected_sources`: the "Parallelize tasks" section did not exist, now `""` |
 | 17.11 | Calibration set extended with 5 answers of the k = 3 run, so ≥ 3 of the hand labels are failures (plan Task 19.3 gate); calibration reads each label from its own run. Sheet question "Unsupported claim?" renamed "Claim not in its source?" (same yes / no meaning). Raw and re-checked calibration both kept for the REPORT |
+| 17.11 | Prompt v2 measured with `RAG_PROMPT=v2` before the config switched to it (Makefile variable `PROMPT` belongs to HW 1); config `prompt_version: v2`. F22 closed; F23 and F24 recorded |

@@ -1,0 +1,366 @@
+{
+  "run_id": "claude-haiku-5-5__v2__medium__k5",
+  "new_judge_calls": 0,
+  "metrics": {
+    "abstain_accuracy": 1.0,
+    "false_abstain_rate": 0.0,
+    "source_hit": 1.0,
+    "key_facts": 0.9625,
+    "citations_valid": 1.0,
+    "retrieved": 1.0,
+    "in_context": 1.0,
+    "context_share": 0.7816666666666666,
+    "failed": [
+      "many03",
+      "many04"
+    ],
+    "judge_pass_rate": 0.8,
+    "faithfulness": 0.9928571428571429,
+    "judge_failed": [
+      "one02",
+      "many03",
+      "many04",
+      "old03"
+    ]
+  },
+  "items": {
+    "one01": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer covers identifying data sources, classifying by criticality (RPO/RTO), creating backups with AWS Backup, third-party or native services, and notes that reproducible data need not be backed up (via a reproduction mechanism); AWS Elastic Disaster Recovery is not named but the answer's AWS/third-party/native coverage and extras do not contradict the reference."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "one02": {
+      "judge": {
+        "passed": false,
+        "reason": "The answer gives MinimumSnapshots=1 and MaximumSnapshotAge=120 hours, but omits the reference's fact that expired snapshots are removed and their exclusively referenced objects become noncurrent and are deleted after the unreferenced file removal policy's NoncurrentDays."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "one03": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer states Athena supports Apache Iceberg version 1.4.2, which matches the reference answer exactly."
+      },
+      "faithfulness": {
+        "supported": [
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "one04": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer states the reference fact that ALL distribution suits small tables used in join conditions, under 1 GB, and the extra details about minimizing redistribution and AUTO do not contradict it."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "one05": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer states the reference facts: partition pruning via push_down_predicate or catalogPartitionPredicate on create_dynamic_frame.from_catalog, with the year='2023' and month='03' example. The extra detail about exclusions does not contradict the reference."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "one06": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer states both facts from the reference: AQE is enabled by default in Glue 4.0, and in Glue 3.0 it is turned on with spark.sql.adaptive.enabled=true, with no contradiction."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "one07": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer covers both reference facts: the Event Timeline on the Stage tab shows uneven or slow tasks, and Summary Metrics shows values very biased across percentiles, with the max far above the 75th percentile."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "one08": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer states the desired outcome (default encryption of private data at rest, inventory of unencrypted data and controls) and names all three reference anti-patterns; the extra anti-patterns are additional detail and do not contradict the reference."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "one09": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer states all reference facts: a function such as a Cloud Business Office, Cloud Center of Excellence or FinOps team, an individual or team with finance, technology and business people, responsible for establishing and maintaining cost awareness; the extra detail does not contradict the reference."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "one10": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer states prompt caching on supported foundation models, caching of frequently used prompt portions, reduced-rate billing for cached tokens, and no recomputation (which implies lower latency); the extra details on cache writes and minimum token requirements do not contradict the reference."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "many01": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer covers all reference facts: Athena OPTIMIZE REWRITE DATA compacts data files and merges delete files, VACUUM expires snapshots and removes orphan files, and S3 Tables runs automatic maintenance (compaction with 512 MB default, snapshot management, unreferenced file removal) enabled by default, with no contradictions."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "many02": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer names all three design goals (data as a product, federated governance, common access) and all three AWS options (DataZone, open-source frameworks such as data.all, Lake Formation), with no contradiction of the reference."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "many03": {
+      "judge": {
+        "passed": false,
+        "reason": "The Redshift table part misses the reference's key fact of collocating joined rows via distribution style (DISTKEY on common join columns, no skew, ALL for small tables under 1 GB); the answer only vaguely says a distribution key improves joins and focuses on sort keys instead."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "many04": {
+      "judge": {
+        "passed": false,
+        "reason": "The answer covers the parallelism diagnosis well, but for reading less data it omits the reference's columnar formats (Parquet/ORC) and partition pruning with push_down_predicate, discussing file size and grouping instead."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "sim01": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer explains that matching supply to demand and scaling down reduces waste, and names DynamoDB read/write capacity units and Kinesis Data Streams shards as non-compute services to scale; it does not contradict the reference, and omitting the specific compute tools (EC2 Auto Scaling etc.) is not a required fact."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "score": 0.8571428571428571
+      }
+    },
+    "sim02": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer covers all reference facts: skip easily recreated and non-critical data, exclude ephemeral storage that does not help recovery, and back up only data with business value or compliance need; the extra details do not contradict the reference."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "sim03": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer states that throttling applies when clients can retry and buffering (queue/stream) applies when they cannot, and that both flatten demand peaks and reduce provisioned capacity; extra details do not contradict the reference."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "old01": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer states six pillars and lists all six correctly, and its note that the older edition had five pillars without sustainability agrees with the reference."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "old02": {
+      "judge": {
+        "passed": true,
+        "reason": "The answer lists all seven areas matching the reference (security foundations, IAM, detection, infrastructure protection, data protection, incident response, application security) and adds extra detail that does not contradict it; omitting the archived 2020 six-area note is not a required fact."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "old03": {
+      "judge": {
+        "passed": false,
+        "reason": "The answer gives the five areas correctly but omits the archived July 2020 four-area breakdown (selection, review, monitoring, tradeoffs) from the reference, and adds a claim of 'down from eight' that conflicts with the reference's four-area earlier edition."
+      },
+      "faithfulness": {
+        "supported": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "score": 1.0
+      }
+    },
+    "none01": {
+      "judge": null,
+      "faithfulness": null
+    },
+    "none02": {
+      "judge": null,
+      "faithfulness": null
+    },
+    "none03": {
+      "judge": null,
+      "faithfulness": null
+    },
+    "none04": {
+      "judge": null,
+      "faithfulness": null
+    }
+  },
+  "cost": {
+    "answers_usd": 0.0156008,
+    "judge_usd": 0.0,
+    "judge_usd_all_verdicts": 0.21444999999999992,
+    "answers_usd_per_1000": 0.6500333333333334
+  }
+}

@@ -1,6 +1,6 @@
 {
   "run_id": "claude-haiku-5-5__v1__medium__k5",
-  "new_judge_calls": 18,
+  "new_judge_calls": 0,
   "metrics": {
     "abstain_accuracy": 0.5,
     "false_abstain_rate": 0.0,
@@ -9,6 +9,7 @@
     "citations_valid": 1.0,
     "retrieved": 1.0,
     "in_context": 1.0,
+    "context_share": 0.7816666666666666,
     "failed": [
       "many03",
       "many04",
@@ -381,7 +382,8 @@
   },
   "cost": {
     "answers_usd": 0.016356600000000002,
-    "judge_usd": 0.24609999999999996,
+    "judge_usd": 0.0,
+    "judge_usd_all_verdicts": 0.24609999999999996,
     "answers_usd_per_1000": 0.681525
   }
 }

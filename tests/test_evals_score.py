@@ -110,6 +110,76 @@ def test_calibrate_reads_each_label_from_its_own_run():
 
     out = calibrate(labels, items, runs, ScriptJudge(), lambda c: "t")
 
-    # k5 has an answer: judged (pass vs human fail); k3 is not found: no correctness verdict
-    assert out["correctness"]["n"] == 1
+    # k5 has an answer: judged (pass vs human fail); k3 is not found: a fail without a call
+    assert out["correctness"]["n"] == 2
     assert out["disagreements"]["correctness"] == ["one01@k5"]
+
+
+class ShortFaithJudge(ScriptJudge):
+    """Faithfulness: one value whatever the number of claims."""
+
+    def complete_json(self, system, user, schema):
+        if "supported" in json.dumps(schema):
+            return LLMResult(
+                text=json.dumps({"supported": [True]}),
+                stop_reason="end_turn",
+                input_tokens=1,
+                output_tokens=1,
+                latency_ms=1,
+                attempts=1,
+                cost_usd=0.0,
+            )
+        return super().complete_json(system, user, schema)
+
+
+def label(item_id, human_pass, human_unsupported=False, run="r"):
+    return CalibrationRow(
+        item_id=item_id,
+        run_id=run,
+        human_pass=human_pass,
+        human_unsupported=human_unsupported,
+        labelled_on="2026-11-17",
+    )
+
+
+def test_calibrate_skips_a_faithfulness_verdict_of_the_wrong_length():
+    items = [item("one01")]
+    rec = record("question one01")
+    rec.claims = rec.claims * 3  # three claims, the judge returns one value
+
+    out = calibrate(
+        [label("one01", True)],
+        items,
+        {"r": rows_for(items, [rec])},
+        ShortFaithJudge(),
+        str,
+    )
+
+    assert out["faithfulness"]["n"] == 0
+    assert out["correctness"]["n"] == 1
+
+
+def test_calibrate_counts_a_not_found_answer_as_a_judge_fail():
+    """A false abstain fails without a judge call, as in score_run; the human fail is kept."""
+    items = [item("one01")]
+    rows = rows_for(items, [record("question one01", found=False)])
+
+    out = calibrate([label("one01", False)], items, {"r": rows}, ScriptJudge(), str)
+
+    assert out["correctness"]["n"] == 1
+    assert out["correctness"]["agreement"] == 1.0
+
+
+def test_cost_meter_separates_new_spend_from_cached_calls(tmp_path):
+    from evals.cache import CachedLLM, EvalCache
+
+    meter = CostMeter(
+        CachedLLM(ScriptJudge(), EvalCache(tmp_path / "j.jsonl", live=True))
+    )
+
+    meter.complete_json("s", "u", {"x": 1})
+    meter.complete_json("s", "u", {"x": 1})  # the same request: a cache hit
+
+    assert meter.calls == 2
+    assert meter.cost_usd == pytest.approx(0.006)  # what the 2 verdicts cost when made
+    assert meter.new_cost_usd == pytest.approx(0.003)  # what this run spent

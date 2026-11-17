@@ -14,4 +14,4 @@ answer_effort: medium
 answer_max_tokens: 4000
 judge_model: claude-sonnet-5-5
 judge_effort: medium
-prompt_version: v1
+prompt_version: v2
