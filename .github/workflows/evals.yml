@@ -5,8 +5,12 @@
 # CI never commits: the results of the run are uploaded as an artifact.
 name: evals
 
+# Every commit of a pull request runs once, on the merge of the branch into main (Petro, 17.11:
+# push on every branch ran each PR commit twice). The push on main runs after a merge and saves
+# .cache/ under main, the one scope every pull request can restore from.
 on:
   push:
+    branches: [main]
   pull_request:
 
 permissions:

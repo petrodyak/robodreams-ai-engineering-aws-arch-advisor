@@ -194,7 +194,7 @@ the fastembed models (~150 MB) into `.cache/`.
     documents, outdated editions, and questions not in the corpus.
   - Deterministic scorers.
   - Two Claude Sonnet 5.5 judges (correctness, faithfulness), calibrated on 17 hand-labelled answers.
-  - `.github/workflows/evals.yml` runs them on every push and pull request against
+  - `.github/workflows/evals.yml` runs them on every pull request and every push to `main` against
     `config/eval_thresholds.yaml`.
 - **Prompts.** Versioned in `prompts/rag_v*.txt` and `prompts/judge_*.txt` with
   `prompts/CHANGELOG.md`.

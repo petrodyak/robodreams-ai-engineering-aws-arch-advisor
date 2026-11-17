@@ -265,6 +265,7 @@ From spec §11:
 | 17.11 | Prompt v2 measured with `RAG_PROMPT=v2` before the config switched to it (Makefile variable `PROMPT` belongs to HW 1); config `prompt_version: v2`. F22 closed; F23 and F24 recorded |
 | 17.11 | Row 19 flipped by its own patch PR, not by step 20 (Petro): the status commit `dedeaf8` was pushed after PR #38 merged, so it never reached `main` |
 | 17.11 | Step 20: thresholds set from the v2 baseline (Petro "ok" on the plan); the cost guard of 30 counts answers and verdicts of a CI run together; Petro added the `ANTHROPIC_API_KEY` repository secret and allowed commit + push of this branch while away (PR and merge stay his) |
+| 17.11 | CI triggers: `push` on `main` + `pull_request` instead of `push` on every branch + `pull_request` (Petro, option B). Spec §8 says "push and pull_request"; the brief's "on every push or pull request" still holds. Each PR commit now runs once, on the merge into `main`, and the run on `main` after a merge saves the `.cache/` that every PR can restore (a branch's own cache is not visible to its PR) |
 
 ## 9. Pre-submission check (step 20)
 

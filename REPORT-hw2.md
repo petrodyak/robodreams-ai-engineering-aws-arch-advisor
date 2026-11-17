@@ -3,7 +3,7 @@
 Stage 2 of the course project: answers to AWS architecture questions, built only from public AWS
 Well-Architected and Prescriptive Guidance documents, with a citation for every claim, an
 "I don't know" answer when the documents do not cover the question, and evals that run in GitHub
-Actions on every push and pull request.
+Actions on every pull request and every push to `main`.
 
 ```
 data/rag/manifest.csv → make rag-data → data/rag/raw/ (PDF + HTML)
@@ -223,7 +223,8 @@ these calibrated judges.
 
 ## 7. Evals in CI
 
-`.github/workflows/evals.yml` runs on every push and pull request:
+`.github/workflows/evals.yml` runs on every pull request (on the merge of the branch into `main`) and
+on every push to `main`:
 
 1. `uv sync`;
 2. `actions/cache` restores the fastembed models and the embedding cache;
@@ -269,8 +270,9 @@ ranking. Vectors computed on the Linux runner gave the same top 5 for all 24 que
 Mac, so the run made 0 new calls.
 
 **The cost of a cold run** is time, not money. GitHub caches are per branch: a branch reads its own
-caches and those of `main`. So the first run on a new branch embeds the chunks again (~27 min) until
-`main` holds a cache after the merge. A warm run takes about 3 minutes in all: [44149747967](https://github.com/petrodyak/robodreams-ai-engineering-aws-arch-advisor/actions/runs/44149747967), green, 0 new calls.
+caches and those of `main`. That is why the workflow runs on pushes to `main` and on pull requests
+only: the run on `main` after a merge saves the cache that every later pull request restores. Until
+then a run embeds the chunks again (~27 min). A warm run takes about 3 minutes in all: [44149747967](https://github.com/petrodyak/robodreams-ai-engineering-aws-arch-advisor/actions/runs/44149747967), green, 0 new calls.
 
 ## 8. Error analysis
 
