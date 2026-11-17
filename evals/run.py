@@ -10,20 +10,32 @@
 - `judge-estimate` (step 19): the judges' input tokens over the latest run, from count_tokens.
 - `score` (step 19): scorers + judges over the latest run -> evals/results/<run_id>.json.
 - `calibrate` (step 19): the judges on Petro's hand labels -> evals/results/calibration.json.
+- `ci` (`make eval-ci`, step 20, spec §8): the retrieval eval, the answers and the verdicts behind
+  the caches, the score, and the thresholds of config/eval_thresholds.yaml -> evals/results/ci/
+  (not in Git: the workflow uploads it). Exit 1 on a broken threshold, a stale cache or the cost
+  guard. A miss calls Claude only when ANTHROPIC_API_KEY is set (the repository secret in CI).
 """
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
 from evals.answers import load_run, run_id, run_items, summarize, sweep_budget
-from evals.cache import CachedLLM, EvalCache
+from evals.cache import (
+    MAX_MISSES,
+    CachedLLM,
+    CostGuardError,
+    EvalCache,
+    StaleCacheError,
+)
 from evals.calibration import load_calibration
 from evals.judge import JUDGE_MAX_TOKENS
 from evals.retrieval import evaluate_retrieval, relevant_fixed_ids
 from evals.score import CostMeter, calibrate, score_run
 from evals.testset import TestItem, load_testset
+from evals.thresholds import check, load_thresholds
 from src.rag.config import load_config
 from src.rag.index import Index, default_embed_fn, default_rerank_fn, load_chunks
 from src.rag.search import search
@@ -46,6 +58,7 @@ JUDGE_OUTPUT_GUESS = 600
 # 24 items), above the CI guard of 30 (spec §8), which applies to `make eval-ci` in step 20.
 LOCAL_JUDGE_MAX_MISSES = 100
 DEPTH = 10  # recall@10 and MRR read the top 10
+CI_DIR = RESULTS_DIR / "ci"  # gitignored; uploaded as the workflow artifact
 
 # The config of this run: config/rag.yaml, with `--prompt` applied (set by main()).
 _CFG = None
@@ -59,7 +72,7 @@ def labelled(items: list[TestItem]) -> list[TestItem]:
     return [it for it in items if it.answerable and it.relevant_chunk_ids]
 
 
-def retrieval(config_path: Path = Path("config/rag.yaml")) -> dict:
+def retrieval(config_path: Path = Path("config/rag.yaml"), out: Path = RESULTS) -> dict:
     cfg = load_config(config_path)
     items = labelled(load_testset(TESTSET))
     if not items:
@@ -116,8 +129,8 @@ def retrieval(config_path: Path = Path("config/rag.yaml")) -> dict:
         "rrf_k": cfg.rrf_k,
         "configs": rows,
     }
-    RESULTS.parent.mkdir(parents=True, exist_ok=True)
-    RESULTS.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
 
     print(
         f"{len(items)} labelled items | {len(structure)} chunks | {len(fixed)} fixed chunks"
@@ -131,7 +144,7 @@ def retrieval(config_path: Path = Path("config/rag.yaml")) -> dict:
             f"{name:<24}{r['recall@5']:>10.2f}{r['recall@10']:>11.2f}"
             f"{r['mrr']:>7.2f}{r['ms']:>8.0f}   {misses}"
         )
-    print(f"\nwritten {RESULTS}")
+    print(f"\nwritten {out}")
     return result
 
 
@@ -353,6 +366,108 @@ def calibrate_judges() -> None:
         )
 
 
+def ci_run(
+    items: list[TestItem],
+    index: Index,
+    answer_llm,
+    judge_llm,
+    cfg,
+    chunk_text,
+    recall_at_5: float,
+    thresholds: dict[str, float],
+    *,
+    live: bool,
+    answer_cache: Path = ANSWER_CACHE,
+    judge_cache: Path = JUDGE_CACHE,
+    out: Path = CI_DIR / "ci.json",
+    max_misses: int = MAX_MISSES,
+) -> int:
+    """The CI gate after the retrieval eval: answers and verdicts behind the caches, the score and
+    the thresholds. Prints the reason and returns the exit code (0 pass, 1 fail).
+
+    The cost guard counts answers and verdicts together (spec §8: more than 30 misses in one CI
+    run), so the judges get what the answers left of `max_misses`.
+    """
+    answers = EvalCache(answer_cache, live=live, max_misses=max_misses)
+    verdicts = None
+    try:
+        rows = run_items(
+            items,
+            index,
+            CachedLLM(answer_llm, answers),
+            cfg,
+            k=cfg.k,
+            budget=sweep_budget(cfg.k, cfg.context_budget),
+        )
+        verdicts = EvalCache(
+            judge_cache, live=live, max_misses=max_misses - answers.misses
+        )
+        result = score_run(
+            items, rows, CostMeter(CachedLLM(judge_llm, verdicts)), chunk_text
+        )
+    except (StaleCacheError, CostGuardError) as e:
+        print(f"eval-ci FAILED: {e}")
+        return 1
+    new_calls = answers.misses + verdicts.misses
+    metrics = {**result["metrics"], "retrieval_recall_at_5": recall_at_5}
+    failures = check(metrics, thresholds)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(
+        json.dumps(
+            {
+                "run_id": run_id(
+                    answer_llm.model, cfg.prompt_version, answer_llm.effort, cfg.k
+                ),
+                "new_calls": new_calls,
+                "thresholds": thresholds,
+                "failures": failures,
+                "metrics": metrics,
+                "cost": result["cost"],
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    print(f"eval-ci: {len(items)} items, {new_calls} new calls (live={live})")
+    for key, limit in thresholds.items():
+        name = key[:-4]
+        value = metrics.get(name)
+        shown = "-" if value is None else f"{value:.2f}"
+        sign = ">=" if key.endswith("_min") else "<="
+        print(f"  {name:<24}{shown:>6}  {sign} {limit:.2f}")
+    if failures:
+        print("eval-ci FAILED: " + "; ".join(failures))
+        return 1
+    print("eval-ci passed")
+    return 0
+
+
+def ci() -> None:
+    from dotenv import load_dotenv
+
+    load_dotenv()  # a local .env key counts as the CI secret
+    live = bool(os.environ.get("ANTHROPIC_API_KEY"))
+    recall = retrieval(out=CI_DIR / "retrieval.json")["configs"]["hybrid_rerank"][
+        "recall@5"
+    ]
+    cfg, items, index, llm = _answer_setup()
+    _, _, texts, judge = _judge_env()
+    sys.exit(
+        ci_run(
+            items,
+            index,
+            llm,
+            judge,
+            cfg,
+            texts.__getitem__,
+            recall,
+            load_thresholds(),
+            live=live,
+        )
+    )
+
+
 COMMANDS = (
     "retrieval",
     "estimate",
@@ -361,6 +476,7 @@ COMMANDS = (
     "judge-estimate",
     "score",
     "calibrate",
+    "ci",
 )
 
 
@@ -389,6 +505,7 @@ def main() -> None:
         "judge-estimate": judge_estimate,
         "score": score,
         "calibrate": calibrate_judges,
+        "ci": ci,
     }
     what, _CFG = parse_args()
     commands[what]()

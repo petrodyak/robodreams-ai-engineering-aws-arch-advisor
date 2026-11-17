@@ -9,6 +9,8 @@ data/holdout/*.pdf
 data/rag/raw/
 # fastembed models and the embedding cache (restored by actions/cache in CI)
 .cache/
+# `make eval-ci` output: uploaded as the workflow artifact, never committed
+evals/results/ci/
 # superpowers plan-execution workspace (local ledger, not project history)
 .superpowers/
 # python
