@@ -57,7 +57,7 @@ Apply to every step and are not repeated in the steps:
 | 16 | Ingestion → `chunks.jsonl` + `chunks_fixed.jsonl` + ingest manifest | `step-16-ingest` | review | 1: ingestion (3), cleaning + dedup (3), chunking + metadata (4) | 15.11 | ✅ PR #34 (0e33962) |
 | 17 | Index, hybrid, rerank, filters, retrieval eval | `step-17-search` | **label relevant chunks, ~1 h** | 2: embeddings + DB (3), hybrid (3), rerank + filters (2), retrieval measured (2) | 16.11 | ✅ PR #36 (9e06453) |
 | 18 | RAG answering, prompt v1, eval cache, first run | `step-18-answer` | "ok" on the estimate | 3: citations (4), context control (4) | 17.11 | ✅ PR #37 (6636c8d) |
-| 19 | Testset, scorers, judge, calibration, prompt v2 | `step-19-evals` | **check the testset ~1 h, label ≥ 12 answers ~1 h** | 4: testset (3), scoring (4) | 18.11 | 🔄 `step-19-evals` |
+| 19 | Testset, scorers, judge, calibration, prompt v2 | `step-19-evals` | **check the testset ~1 h, label ≥ 12 answers ~1 h** | 4: testset (3), scoring (4) | 18.11 | ✅ PR #38 (9ddc66f) |
 | 20 | CI workflow + thresholds, `REPORT-hw2.md`, README, pre-submission check | `step-20-ci-report` | review, add the secret | 4: evals in CI (3); repository (2) | 19.11 | ⬜ |
 
 ## 4. Steps
@@ -247,3 +247,4 @@ From spec §11:
 | 16.11 | Relevant chunks proposed by Claude and checked one by one by Petro; the archived Framework edition never counts as relevant. Testset ids renamed to `one` / `many` / `sim` / `old` (`none` in step 19). many04 `expected_sources`: the "Parallelize tasks" section did not exist, now `""` |
 | 17.11 | Calibration set extended with 5 answers of the k = 3 run, so ≥ 3 of the hand labels are failures (plan Task 19.3 gate); calibration reads each label from its own run. Sheet question "Unsupported claim?" renamed "Claim not in its source?" (same yes / no meaning). Raw and re-checked calibration both kept for the REPORT |
 | 17.11 | Prompt v2 measured with `RAG_PROMPT=v2` before the config switched to it (Makefile variable `PROMPT` belongs to HW 1); config `prompt_version: v2`. F22 closed; F23 and F24 recorded |
+| 17.11 | Row 19 flipped by its own patch PR, not by step 20 (Petro): the status commit `dedeaf8` was pushed after PR #38 merged, so it never reached `main` |
