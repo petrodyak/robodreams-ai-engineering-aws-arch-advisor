@@ -19,7 +19,10 @@ concurrency:
 jobs:
   evals:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # a cold run embeds 2,869 chunks on the runner's CPU (no .cache/ yet); warm runs take minutes
+    timeout-minutes: 45
+    env:
+      PYTHONUNBUFFERED: "1"  # progress lines reach the log as they happen
     steps:
       - uses: actions/checkout@v7
 
@@ -29,11 +32,14 @@ jobs:
       - run: uv sync --locked
 
       # fastembed models (~150 MB) and the embedding cache: restored when the chunks and the
-      # retrieval config are unchanged; a partial match still restores the models
-      - uses: actions/cache@v6
+      # retrieval config are unchanged; a partial match still restores the models. Restore and
+      # save are separate steps, so a red run still saves what it embedded (the post step of
+      # actions/cache saves only after a green job).
+      - id: rag-cache
+        uses: actions/cache/restore@v6
         with:
           path: .cache/
-          key: rag-${{ runner.os }}-${{ hashFiles('config/rag.yaml', 'data/rag/chunks.jsonl', 'data/rag/chunks_fixed.jsonl') }}
+          key: rag-${{ runner.os }}-${{ hashFiles('config/rag.yaml', 'data/rag/chunks.jsonl') }}
           restore-keys: rag-${{ runner.os }}-
 
       - name: make check (ruff + pytest)
@@ -43,6 +49,12 @@ jobs:
         run: make eval-ci
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - uses: actions/cache/save@v6
+        if: always() && steps.rag-cache.outputs.cache-hit != 'true'
+        with:
+          path: .cache/
+          key: ${{ steps.rag-cache.outputs.cache-primary-key }}
 
       - uses: actions/upload-artifact@v7
         if: always()

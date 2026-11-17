@@ -10,8 +10,8 @@
 - `judge-estimate` (step 19): the judges' input tokens over the latest run, from count_tokens.
 - `score` (step 19): scorers + judges over the latest run -> evals/results/<run_id>.json.
 - `calibrate` (step 19): the judges on Petro's hand labels -> evals/results/calibration.json.
-- `ci` (`make eval-ci`, step 20, spec §8): the retrieval eval, the answers and the verdicts behind
-  the caches, the score, and the thresholds of config/eval_thresholds.yaml -> evals/results/ci/
+- `ci` (`make eval-ci`, step 20, spec §8): recall@5 of hybrid_rerank, the answers and the verdicts
+  behind the caches, the score, and the thresholds of config/eval_thresholds.yaml -> evals/results/ci/
   (not in Git: the workflow uploads it). Exit 1 on a broken threshold, a stale cache or the cost
   guard. A miss calls Claude only when ANTHROPIC_API_KEY is set (the repository secret in CI).
 """
@@ -72,7 +72,24 @@ def labelled(items: list[TestItem]) -> list[TestItem]:
     return [it for it in items if it.answerable and it.relevant_chunk_ids]
 
 
-def retrieval(config_path: Path = Path("config/rag.yaml"), out: Path = RESULTS) -> dict:
+def _search_fn(index: Index, mode: str, cfg):
+    """The chunk ids of the top DEPTH hits of one search configuration, for evaluate_retrieval."""
+
+    def fn(query: str) -> list[str]:
+        hits = search(
+            index,
+            query,
+            k=DEPTH,
+            mode=mode,
+            candidates=cfg.candidates,
+            rrf_k=cfg.rrf_k,
+        )
+        return [h.chunk.chunk_id for h in hits]
+
+    return fn
+
+
+def retrieval(config_path: Path = Path("config/rag.yaml")) -> dict:
     cfg = load_config(config_path)
     items = labelled(load_testset(TESTSET))
     if not items:
@@ -95,18 +112,7 @@ def retrieval(config_path: Path = Path("config/rag.yaml"), out: Path = RESULTS) 
     }
 
     def run(idx: Index, mode: str):
-        def fn(query: str) -> list[str]:
-            hits = search(
-                idx,
-                query,
-                k=DEPTH,
-                mode=mode,
-                candidates=cfg.candidates,
-                rrf_k=cfg.rrf_k,
-            )
-            return [h.chunk.chunk_id for h in hits]
-
-        return fn
+        return _search_fn(idx, mode, cfg)
 
     def structure_labels(it: TestItem) -> set[str]:
         return set(it.relevant_chunk_ids)
@@ -129,8 +135,8 @@ def retrieval(config_path: Path = Path("config/rag.yaml"), out: Path = RESULTS) 
         "rrf_k": cfg.rrf_k,
         "configs": rows,
     }
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    RESULTS.parent.mkdir(parents=True, exist_ok=True)
+    RESULTS.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
 
     print(
         f"{len(items)} labelled items | {len(structure)} chunks | {len(fixed)} fixed chunks"
@@ -144,7 +150,7 @@ def retrieval(config_path: Path = Path("config/rag.yaml"), out: Path = RESULTS) 
             f"{name:<24}{r['recall@5']:>10.2f}{r['recall@10']:>11.2f}"
             f"{r['mrr']:>7.2f}{r['ms']:>8.0f}   {misses}"
         )
-    print(f"\nwritten {out}")
+    print(f"\nwritten {RESULTS}")
     return result
 
 
@@ -406,6 +412,11 @@ def ci_run(
             items, rows, CostMeter(CachedLLM(judge_llm, verdicts)), chunk_text
         )
     except (StaleCacheError, CostGuardError) as e:
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(
+            json.dumps({"failures": [str(e)], "new_calls": None}, indent=2) + "\n",
+            encoding="utf-8",
+        )
         print(f"eval-ci FAILED: {e}")
         return 1
     new_calls = answers.misses + verdicts.misses
@@ -443,15 +454,28 @@ def ci_run(
     return 0
 
 
+def ci_recall(items: list[TestItem], index: Index, cfg) -> float:
+    """recall@5 of hybrid_rerank over the labelled items, on the index the answers use.
+
+    The gated retrieval metric only: the five-configuration table (with the fixed-chunk index)
+    is `make retrieval-eval`. Embedding the fixed chunks too doubled a cold CI run.
+    """
+    return evaluate_retrieval(
+        _search_fn(index, "hybrid_rerank", cfg),
+        labelled(items),
+        lambda it: set(it.relevant_chunk_ids),
+    )["recall@5"]
+
+
 def ci() -> None:
     from dotenv import load_dotenv
 
     load_dotenv()  # a local .env key counts as the CI secret
     live = bool(os.environ.get("ANTHROPIC_API_KEY"))
-    recall = retrieval(out=CI_DIR / "retrieval.json")["configs"]["hybrid_rerank"][
-        "recall@5"
-    ]
+    print("eval-ci: building the index (a cold .cache/ embeds every chunk first)")
     cfg, items, index, llm = _answer_setup()
+    recall = ci_recall(items, index, cfg)
+    print(f"eval-ci: retrieval recall@5 {recall:.2f}; answers and verdicts next")
     _, _, texts, judge = _judge_env()
     sys.exit(
         ci_run(
