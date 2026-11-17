@@ -9,19 +9,19 @@
   "configs": {
     "vector (fixed chunks)": {
       "questions": 20,
-      "recall@5": 0.85,
+      "recall@5": 0.8,
       "recall@10": 0.95,
-      "mrr": 0.6592261904761905,
+      "mrr": 0.5796428571428571,
       "misses": [
         "sim01"
       ],
-      "ms": 128.9
+      "ms": 215.0
     },
     "vector": {
       "questions": 20,
-      "recall@5": 0.85,
+      "recall@5": 0.7,
       "recall@10": 0.95,
-      "mrr": 0.7620833333333333,
+      "mrr": 0.6425595238095239,
       "misses": [
         "sim01"
       ],
@@ -29,30 +29,32 @@
     },
     "bm25": {
       "questions": 20,
-      "recall@5": 0.9,
+      "recall@5": 0.85,
       "recall@10": 0.9,
-      "mrr": 0.825,
+      "mrr": 0.8083333333333333,
       "misses": [
         "one09",
         "old02"
       ],
-      "ms": 6.1
+      "ms": 5.7
     },
     "hybrid": {
       "questions": 20,
-      "recall@5": 0.95,
-      "recall@10": 1.0,
-      "mrr": 0.7966666666666666,
-      "misses": [],
-      "ms": 137.2
+      "recall@5": 0.85,
+      "recall@10": 0.95,
+      "mrr": 0.7404166666666667,
+      "misses": [
+        "old02"
+      ],
+      "ms": 136.6
     },
     "hybrid_rerank": {
       "questions": 20,
       "recall@5": 1.0,
       "recall@10": 1.0,
-      "mrr": 0.8666666666666666,
+      "mrr": 0.8141666666666667,
       "misses": [],
-      "ms": 465.5
+      "ms": 449.7
     }
   }
 }

@@ -1,9 +1,9 @@
 {
   "run_id": "claude-haiku-5-5__v1__medium__k5",
   "k": 5,
-  "new_calls": 0,
-  "items": 20,
-  "found": 20,
+  "new_calls": 6,
+  "items": 24,
+  "found": 22,
   "context_recall": 1.0,
   "citation_recall": 1.0,
   "dropped_labels": 0,
@@ -11,9 +11,12 @@
   "stop_reasons": [
     "end_turn"
   ],
-  "avg_input_tokens": 3568.2,
-  "avg_output_tokens": 591.1,
-  "cost_usd": 0.0130474,
-  "usd_per_1000": 0.65237,
-  "not_found_ids": []
+  "avg_input_tokens": 3779.8333333333335,
+  "avg_output_tokens": 607.0833333333334,
+  "cost_usd": 0.016356600000000002,
+  "usd_per_1000": 0.681525,
+  "not_found_ids": [
+    "none01",
+    "none03"
+  ]
 }

@@ -7,6 +7,9 @@
 - `answers` (`make eval`, step 18): every testset item through `answer`, behind the eval cache
   (ADR-0008) -> evals/results/<run_id>.jsonl and <run_id>.summary.json.
 - `sweep` (step 18): the answer run for k = 3 / 5 / 8 -> evals/results/sweep.json.
+- `judge-estimate` (step 19): the judges' input tokens over the latest run, from count_tokens.
+- `score` (step 19): scorers + judges over the latest run -> evals/results/<run_id>.json.
+- `calibrate` (step 19): the judges on Petro's hand labels -> evals/results/calibration.json.
 """
 
 import argparse
@@ -16,7 +19,10 @@ from pathlib import Path
 
 from evals.answers import run_id, run_items, summarize, sweep_budget
 from evals.cache import CachedLLM, EvalCache
+from evals.calibration import load_calibration
+from evals.judge import JUDGE_MAX_TOKENS
 from evals.retrieval import evaluate_retrieval, relevant_fixed_ids
+from evals.score import CostMeter, calibrate, score_run
 from evals.testset import TestItem, load_testset
 from src.rag.config import load_config
 from src.rag.index import Index, default_embed_fn, default_rerank_fn, load_chunks
@@ -32,6 +38,13 @@ SWEEP_K = [3, 5, 8]
 # For `estimate` only: output tokens per answer (adaptive thinking at medium effort + the JSON).
 # The live run replaces this guess with `usage`.
 OUTPUT_TOKENS_GUESS = 1000
+JUDGE_CACHE = Path("evals/cache/judge.jsonl")
+CALIBRATION = Path("evals/labels/calibration.jsonl")
+# For `judge-estimate` only: output tokens per judge call (thinking at medium + a short JSON).
+JUDGE_OUTPUT_GUESS = 600
+# Local cost guard of `score` / `calibrate`: one scored run is 2 judge calls per answer (42 for
+# 24 items), above the CI guard of 30 (spec §8), which applies to `make eval-ci` in step 20.
+LOCAL_JUDGE_MAX_MISSES = 100
 DEPTH = 10  # recall@10 and MRR read the top 10
 
 
@@ -213,13 +226,140 @@ def sweep() -> None:
     )
 
 
+def _judge_setup():
+    from dotenv import load_dotenv
+
+    from src.rag.llm import ClaudeJSON
+
+    load_dotenv()  # ANTHROPIC_API_KEY
+    cfg = load_config()
+    items = load_testset(TESTSET)
+    rid = run_id(cfg.answer_model, cfg.prompt_version, cfg.answer_effort, cfg.k)
+    run_file = RESULTS_DIR / f"{rid}.jsonl"
+    rows = [
+        json.loads(line) for line in run_file.read_text(encoding="utf-8").splitlines()
+    ]
+    missing = {it.id for it in items} - {r["id"] for r in rows}
+    if missing:
+        sys.exit(f"{run_file} has no answer for {sorted(missing)}: run make eval first")
+    texts = {c.chunk_id: c.text for c in load_chunks(CHUNKS)}
+    judge = ClaudeJSON(cfg.judge_model, cfg.judge_effort, JUDGE_MAX_TOKENS)
+    return cfg, items, rid, rows, texts, judge
+
+
+class _CountOnly:
+    """Stands in for the judge in `judge-estimate`: counts each request's input tokens, sends nothing."""
+
+    def __init__(self, llm):
+        self.llm, self.model, self.effort = llm, llm.model, llm.effort
+        self.tokens, self.calls = 0, 0
+
+    def complete_json(self, system, user, schema):
+        from src.rag.llm import LLMResult
+
+        self.tokens += self.llm.count_input_tokens(system, user, schema)
+        self.calls += 1
+        return LLMResult(
+            text=None,
+            stop_reason="count_only",
+            input_tokens=0,
+            output_tokens=0,
+            latency_ms=0,
+            attempts=0,
+            cost_usd=0.0,
+        )
+
+
+def judge_estimate() -> None:
+    from src.rag.llm import cost_usd
+
+    _, items, rid, rows, texts, judge = _judge_setup()
+    counter = _CountOnly(judge)
+    score_run(items, rows, counter, texts.__getitem__)
+    usd = cost_usd(judge.model, counter.tokens, JUDGE_OUTPUT_GUESS * counter.calls)
+    print(
+        f"{rid}: {counter.calls} judge calls on {judge.model}, {counter.tokens} input tokens "
+        f"(avg {counter.tokens / max(counter.calls, 1):.0f}), output guess "
+        f"{JUDGE_OUTPUT_GUESS}/call: ${usd:.4f}"
+    )
+
+
+def score() -> None:
+    _, items, rid, rows, texts, judge = _judge_setup()
+    cache = EvalCache(JUDGE_CACHE, live=True, max_misses=LOCAL_JUDGE_MAX_MISSES)
+    meter = CostMeter(CachedLLM(judge, cache))
+    result = {"run_id": rid, "new_judge_calls": cache.misses}
+    result.update(score_run(items, rows, meter, texts.__getitem__))
+    result["new_judge_calls"] = cache.misses
+    (RESULTS_DIR / f"{rid}.json").write_text(
+        json.dumps(result, indent=2) + "\n", encoding="utf-8"
+    )
+    m = result["metrics"]
+    print(f"{rid}: {len(items)} items, {cache.misses} new judge calls")
+    for key in (
+        "abstain_accuracy",
+        "false_abstain_rate",
+        "source_hit",
+        "key_facts",
+        "citations_valid",
+        "retrieved",
+        "in_context",
+        "judge_pass_rate",
+        "faithfulness",
+    ):
+        value = m[key]
+        print(f"  {key:<20}{'-' if value is None else f'{value:.2f}'}")
+    print(f"  failed (scorers)    {' '.join(m['failed']) or '-'}")
+    print(f"  failed (judge)      {' '.join(m['judge_failed']) or '-'}")
+    c = result["cost"]
+    print(
+        f"  cost: answers ${c['answers_usd']:.4f} (${c['answers_usd_per_1000']:.2f} per 1,000), "
+        f"judges ${c['judge_usd']:.4f}"
+    )
+
+
+def calibrate_judges() -> None:
+    _, items, rid, rows, texts, judge = _judge_setup()
+    labels = [r for r in load_calibration(CALIBRATION) if r.human_pass is not None]
+    if not labels:
+        sys.exit(f"no hand labels in {CALIBRATION}")
+    runs = {rid: rows}
+    for other in sorted({r.run_id for r in labels} - {rid}):
+        run_file = RESULTS_DIR / f"{other}.jsonl"
+        if not run_file.exists():
+            sys.exit(f"labels name the run {other}, but {run_file} does not exist")
+        runs[other] = [
+            json.loads(line)
+            for line in run_file.read_text(encoding="utf-8").splitlines()
+        ]
+    cache = EvalCache(JUDGE_CACHE, live=True, max_misses=LOCAL_JUDGE_MAX_MISSES)
+    out = calibrate(labels, items, runs, CachedLLM(judge, cache), texts.__getitem__)
+    out["runs"] = sorted({r.run_id for r in labels})
+    out["new_judge_calls"] = cache.misses
+    (RESULTS_DIR / "calibration.json").write_text(
+        json.dumps(out, indent=2) + "\n", encoding="utf-8"
+    )
+    for name in ("correctness", "faithfulness"):
+        j = out[name]
+        print(
+            f"{name:<13} n={j['n']:<3} agreement {j['agreement']:.2f}  kappa {j['kappa']:.2f}  "
+            f"differ: {' '.join(out['disagreements'][name]) or '-'}"
+        )
+
+
 def main() -> None:
+    commands = {
+        "retrieval": retrieval,
+        "estimate": estimate,
+        "answers": answers,
+        "sweep": sweep,
+        "judge-estimate": judge_estimate,
+        "score": score,
+        "calibrate": calibrate_judges,
+    }
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("what", choices=["retrieval", "estimate", "answers", "sweep"])
-    args = parser.parse_args()
-    {"retrieval": retrieval, "estimate": estimate, "answers": answers, "sweep": sweep}[
-        args.what
-    ]()
+    parser.add_argument("what", choices=list(commands))
+    commands[parser.parse_args().what]()
 
 
 if __name__ == "__main__":

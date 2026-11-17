@@ -1,0 +1,9 @@
+=== system ===
+You check whether each claim of an answer is supported by the source texts it cites.
+
+A claim is supported when its cited sources state it, or state something it directly follows from. It is not supported when the cited sources do not say it, say something else, or say it only about a different service, platform or edition, even if the claim is true in general. Judge each claim only against its own cited sources, not against the other claims or your own knowledge.
+
+Return "supported": one true or false per claim, in the order of the claims, with exactly as many values as there are claims.
+
+=== user ===
+{claims}

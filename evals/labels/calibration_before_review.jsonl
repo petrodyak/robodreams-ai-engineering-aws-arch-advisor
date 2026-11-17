@@ -1,0 +1,17 @@
+{"item_id":"many04","run_id":"claude-haiku-5-5__v1__medium__k5","human_pass":false,"human_unsupported":false,"labelled_on":"2026-11-17"}
+{"item_id":"sim02","run_id":"claude-haiku-5-5__v1__medium__k5","human_pass":true,"human_unsupported":false,"labelled_on":"2026-11-17"}
+{"item_id":"many03","run_id":"claude-haiku-5-5__v1__medium__k5","human_pass":true,"human_unsupported":false,"labelled_on":"2026-11-17"}
+{"item_id":"many01","run_id":"claude-haiku-5-5__v1__medium__k5","human_pass":true,"human_unsupported":false,"labelled_on":"2026-11-17"}
+{"item_id":"many02","run_id":"claude-haiku-5-5__v1__medium__k5","human_pass":true,"human_unsupported":false,"labelled_on":"2026-11-17"}
+{"item_id":"old01","run_id":"claude-haiku-5-5__v1__medium__k5","human_pass":true,"human_unsupported":true,"labelled_on":"2026-11-17"}
+{"item_id":"old02","run_id":"claude-haiku-5-5__v1__medium__k5","human_pass":true,"human_unsupported":true,"labelled_on":"2026-11-17"}
+{"item_id":"old03","run_id":"claude-haiku-5-5__v1__medium__k5","human_pass":true,"human_unsupported":false,"labelled_on":"2026-11-17"}
+{"item_id":"one01","run_id":"claude-haiku-5-5__v1__medium__k5","human_pass":true,"human_unsupported":false,"labelled_on":"2026-11-17"}
+{"item_id":"one02","run_id":"claude-haiku-5-5__v1__medium__k5","human_pass":false,"human_unsupported":false,"labelled_on":"2026-11-17"}
+{"item_id":"one03","run_id":"claude-haiku-5-5__v1__medium__k5","human_pass":true,"human_unsupported":false,"labelled_on":"2026-11-17"}
+{"item_id":"one04","run_id":"claude-haiku-5-5__v1__medium__k5","human_pass":true,"human_unsupported":false,"labelled_on":"2026-11-17"}
+{"item_id":"sim01","run_id":"claude-haiku-5-5__v1__medium__k3","human_pass":false,"human_unsupported":false,"labelled_on":"2026-11-17"}
+{"item_id":"many04","run_id":"claude-haiku-5-5__v1__medium__k3","human_pass":false,"human_unsupported":false,"labelled_on":"2026-11-17"}
+{"item_id":"one01","run_id":"claude-haiku-5-5__v1__medium__k3","human_pass":false,"human_unsupported":false,"labelled_on":"2026-11-17"}
+{"item_id":"sim02","run_id":"claude-haiku-5-5__v1__medium__k3","human_pass":true,"human_unsupported":false,"labelled_on":"2026-11-17"}
+{"item_id":"sim03","run_id":"claude-haiku-5-5__v1__medium__k3","human_pass":false,"human_unsupported":false,"labelled_on":"2026-11-17"}

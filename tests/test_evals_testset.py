@@ -49,3 +49,23 @@ def test_answerable_must_match_kind():
     with pytest.raises(ValidationError):
         TestItem.model_validate({**row, "answerable": False, "extra": 1})
     assert TestItem.model_validate_json(json.dumps({**row, "answerable": False}))
+
+
+MIN_PER_KIND = {"single": 10, "multi": 4, "no_answer": 4, "similar": 3, "outdated": 3}
+
+
+def test_testset_composition():
+    """Spec §7: ≥ 24 items in the five kinds, every answerable item labelled and sourced,
+    every item checked by hand (verified_by / verified_on)."""
+    items = load_testset(TESTSET)
+    chunk_ids = {c.chunk_id for c in load_chunks(CHUNKS)}
+
+    assert len(items) >= 24
+    for kind, minimum in MIN_PER_KIND.items():
+        assert sum(it.kind == kind for it in items) >= minimum, kind
+    for it in items:
+        if it.answerable:
+            assert it.relevant_chunk_ids, it.id
+            assert set(it.relevant_chunk_ids) <= chunk_ids, it.id
+            assert it.expected_sources, it.id
+        assert it.verified_by and it.verified_on, it.id

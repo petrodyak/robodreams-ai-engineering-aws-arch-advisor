@@ -1,5 +1,5 @@
 # Every target runs inside the uv-managed .venv (`uv run` syncs it first if needed).
-.PHONY: install data text rag-data ingest index retrieval-candidates retrieval-eval ask eval-estimate eval eval-sweep run estimate runs-md metrics schema gold-drafts gold-check check
+.PHONY: install data text rag-data ingest index retrieval-candidates retrieval-eval ask eval-estimate eval eval-sweep judge-estimate score calibration-sheet calibrate run estimate runs-md metrics schema gold-drafts gold-check check
 
 # One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`,
 # `make run MODEL=qwen2.5-7b`, `make run SAMPLING=t05 GOLD=1` (Golden Set only), or
@@ -61,6 +61,20 @@ eval:
 
 eval-sweep:
 	uv run python -m evals.run sweep
+
+# HW 2 scoring: judge cost (free count), scorers + judges over the latest run, the hand-label sheet,
+# and the judges' agreement / kappa with the hand labels
+judge-estimate:
+	uv run python -m evals.run judge-estimate
+
+score:
+	uv run python -m evals.run score
+
+calibration-sheet:
+	uv run python -m scripts.calibration_sheet
+
+calibrate:
+	uv run python -m evals.run calibrate
 
 # extract all 30 documents -> results/runs/jsonl/<run_id>.jsonl (resumable)
 # + a readable mirror results/runs/md/<run_id>.md, rewritten after every record
