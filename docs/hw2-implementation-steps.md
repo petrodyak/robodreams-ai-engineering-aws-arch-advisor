@@ -58,7 +58,7 @@ Apply to every step and are not repeated in the steps:
 | 17 | Index, hybrid, rerank, filters, retrieval eval | `step-17-search` | **label relevant chunks, ~1 h** | 2: embeddings + DB (3), hybrid (3), rerank + filters (2), retrieval measured (2) | 16.11 | ✅ PR #36 (9e06453) |
 | 18 | RAG answering, prompt v1, eval cache, first run | `step-18-answer` | "ok" on the estimate | 3: citations (4), context control (4) | 17.11 | ✅ PR #37 (6636c8d) |
 | 19 | Testset, scorers, judge, calibration, prompt v2 | `step-19-evals` | **check the testset ~1 h, label ≥ 12 answers ~1 h** | 4: testset (3), scoring (4) | 18.11 | ✅ PR #38 (9ddc66f) |
-| 20 | CI workflow + thresholds, `REPORT-hw2.md`, README, pre-submission check | `step-20-ci-report` | review, add the secret | 4: evals in CI (3); repository (2) | 19.11 | ⬜ |
+| 20 | CI workflow + thresholds, `REPORT-hw2.md`, README, pre-submission check | `step-20-ci-report` | review, add the secret | 4: evals in CI (3); repository (2) | 19.11 | 🔄 PR #40 |
 
 ## 4. Steps
 
@@ -196,6 +196,22 @@ merge). The task-level detail (interfaces, tests) is in the plan file.
   `REPORT-hw2.md`, `README.md`.
 - **Done when:** CI green on the PR with 0 cache misses, a deliberate threshold break goes red; every
   line of the brief's "What must be in the repository" has an evidence path.
+- **Done:** `config/eval_thresholds.yaml` (the v2 baseline minus 0.05, rounded down to 0.05: recall@5
+  ≥ 0.95, abstain ≥ 0.95, false abstain ≤ 0.05, source hit ≥ 0.95, faithfulness ≥ 0.90, judge pass
+  ≥ 0.75), `evals/thresholds.py` (`check`: an equal value passes, a missing metric fails),
+  `python -m evals.run ci` / `make eval-ci` (recall@5 of hybrid_rerank on the answer index, cached
+  answers and verdicts, score, thresholds → `evals/results/ci/`, gitignored; exit 1 on a broken threshold, a stale cache or more
+  than 30 new calls, answers and verdicts counted together), `make rag` (D6),
+  `.github/workflows/evals.yml` (checkout v7, setup-uv pinned to the v10.3.3 commit because it
+  publishes no major tag, `actions/cache` v6 restore + save for `.cache/`, upload-artifact v7). The first CI run timed out at
+  30 min: a cold runner embedded both chunk sets (~6,000 texts, ~24 / s even on the Mac) and built
+  the index twice; the gate now embeds only the structure chunks once, and the timeout is 45 min. Locally `make
+  eval-ci`: 0 new calls, all six pass, with and without the key. CI on the branch: [44139898238](https://github.com/petrodyak/robodreams-ai-engineering-aws-arch-advisor/actions/runs/44139898238)
+  green (0 new calls, the runner's ranking matched the Mac's for all 24 questions), and the throwaway
+  branch `step-20-red-threshold-demo` (`judge_pass_rate_min` 0.85) went red as intended:
+  [44144978410](https://github.com/petrodyak/robodreams-ai-engineering-aws-arch-advisor/actions/runs/44144978410), `judge_pass_rate 0.80 < 0.85`.
+  `REPORT-hw2.md`, README "Stage 2: RAG (HW 2)" with the chunking justification, the pre-submission
+  check (section 9). `make check`: 389 passed (+8).
 
 ## 5. Run matrix and budget
 
@@ -207,7 +223,7 @@ merge). The task-level detail (interfaces, tests) is in the plan file.
 | judges on the v1 run (calibration + `make score`) | 19 | yes | ≈ $0.5–1 (count_tokens: $0.48) | $0.3164 |
 | `claude-haiku-5-5__v2__medium__k5` + judges | 19 | yes | ≈ $0.45 (count_tokens: $0.021 + $0.432) | $0.2258 |
 | two `make ask` checks outside the corpus | 18 | no | ≈ $0.002 | $0.0017 |
-| CI cache misses | 20 | as needed | ≤ 30 misses per run (guard) | — |
+| CI cache misses | 20 | as needed | ≤ 30 misses per run (guard) | $0 (0 misses in the 3 CI runs of 17.11) |
 
 **API budget:** $5 for the whole of HW 2 (D3); the spec estimates under $3 in total. Spent so far: $0.607 (step 18: $0.043; step 19: $0.564).
 
@@ -248,3 +264,40 @@ From spec §11:
 | 17.11 | Calibration set extended with 5 answers of the k = 3 run, so ≥ 3 of the hand labels are failures (plan Task 19.3 gate); calibration reads each label from its own run. Sheet question "Unsupported claim?" renamed "Claim not in its source?" (same yes / no meaning). Raw and re-checked calibration both kept for the REPORT |
 | 17.11 | Prompt v2 measured with `RAG_PROMPT=v2` before the config switched to it (Makefile variable `PROMPT` belongs to HW 1); config `prompt_version: v2`. F22 closed; F23 and F24 recorded |
 | 17.11 | Row 19 flipped by its own patch PR, not by step 20 (Petro): the status commit `dedeaf8` was pushed after PR #38 merged, so it never reached `main` |
+| 17.11 | Step 20: thresholds set from the v2 baseline (Petro "ok" on the plan); the cost guard of 30 counts answers and verdicts of a CI run together; Petro added the `ANTHROPIC_API_KEY` repository secret and allowed commit + push of this branch while away (PR and merge stay his) |
+| 17.11 | CI triggers: `push` on `main` + `pull_request` instead of `push` on every branch + `pull_request` (Petro, option B). Spec §8 says "push and pull_request"; the brief's "on every push or pull request" still holds. Each PR commit now runs once, on the merge into `main`, and the run on `main` after a merge saves the `.cache/` that every PR can restore (a branch's own cache is not visible to its PR) |
+
+## 9. Pre-submission check (step 20)
+
+`docs/hw2-brief.md`, line by line. The evidence is a path in this repository.
+
+### Criteria (40 points)
+
+| HW step | Item | Points | Evidence |
+|---|---|---|---|
+| 1 | Ingestion of ≥ 2 formats | 3 | `data/rag/manifest.csv` (12 PDF + 22 HTML), `src/rag/ingest/extract_pdf.py`, `extract_html.py`; REPORT-hw2 §2 |
+| 1 | Cleaning + deduplication | 3 | `src/rag/ingest/clean.py`, `dedup.py`; `ingest_manifest.json` `exact_duplicates_dropped` (1,057 chunks), `near_duplicates`; REPORT-hw2 §2 |
+| 1 | Justified chunking + metadata | 4 | README "Why this chunking", ADR-0007, REPORT-hw2 §3 (fixed vs structure, two cut examples); chunk fields in `src/rag/models.py` `ChunkRecord` |
+| 2 | Embeddings + vector DB | 3 | `src/rag/index.py` (fastembed `bge-small-en-v1.5`, Qdrant `:memory:`, embedding cache) |
+| 2 | Hybrid search | 3 | `src/rag/search.py` modes `bm25`, `hybrid` (RRF k = 60) |
+| 2 | Reranking + metadata filters | 2 | `src/rag/search.py` `hybrid_rerank` (cross-encoder), `Filters` (`doc_types`, `exclude_doc_types`, `published_from`) |
+| 2 | Retrieval quality measured | 2 | `evals/results/retrieval.json`: 5 configurations, recall@5 / recall@10 / MRR; REPORT-hw2 §4 |
+| 3 | Answers cite their sources | 4 | `src/rag/answer.py` (claims with `[S#]`, labels checked), `prompts/rag_v2.txt`; source hit 1.00, faithfulness 0.99 |
+| 3 | Token budget, "I don't know" | 4 | `config/rag.yaml` `context_budget: 3000`, `answer.py` `NOT_FOUND`; abstain 4 / 4, false abstain 0 / 20 (REPORT-hw2 §5) |
+| 4 | Testset ≥ 20 with expected answers | 3 | `evals/testset.jsonl`: 24 items incl. 4 no-answer, 3 similar-document and 3 outdated-version traps, each `verified_by` Petro; `evals/labels/testset_review*.md` |
+| 4 | Deterministic + calibrated judge + faithfulness | 4 | `evals/scorers.py`, `evals/judge.py`, `evals/labels/calibration.jsonl` (17 hand labels), `evals/results/calibration.json` (88 % / κ 0.77, 100 % / κ 1.00); REPORT-hw2 §6 |
+| 4 | Evals in CI | 3 | `.github/workflows/evals.yml`, `make eval-ci`, `config/eval_thresholds.yaml`; REPORT-hw2 §7 (green and red runs) |
+| — | README, one-command launch, keys not in code | 2 | README "Stage 2: RAG (HW 2)" (`make rag`), `.env.example` only, CI key as a repository secret |
+
+### What must be in the repository
+
+| Item | Evidence |
+|---|---|
+| code of ingestion, indexing, RAG, evals | `src/rag/ingest/`, `src/rag/index.py`, `search.py`, `answer.py`, `llm.py`, `evals/` |
+| `data/`: corpus or download script + manifest | `scripts/download_rag_corpus.py` (`make rag-data`), `data/rag/manifest.csv`, `chunks.jsonl`, `ingest_manifest.json` |
+| `prompts/` with versions and changelog | `prompts/rag_v1.txt`, `rag_v2.txt`, `judge_*_v1.txt`, `prompts/CHANGELOG.md` |
+| `evals/`: testset, scoring, run results | `evals/testset.jsonl`, `scorers.py`, `judge.py`, `evals/results/*.json` |
+| `.github/workflows/` with the eval run | `.github/workflows/evals.yml` |
+| report: metrics, error analysis, conclusions | `REPORT-hw2.md` (§4–§7 metrics, §8 five errors, §10 next steps) |
+| README: project, how to run, chunking justification | `README.md` "Stage 2: RAG (HW 2)", "Why this chunking" |
+| technical: Python 3.12, keys in `.env`, cost per 1,000 | `pyproject.toml`, `.env.example`, REPORT-hw2 §9 ($0.65 per 1,000 questions) |

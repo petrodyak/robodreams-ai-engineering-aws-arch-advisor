@@ -1,5 +1,5 @@
 # Every target runs inside the uv-managed .venv (`uv run` syncs it first if needed).
-.PHONY: install data text rag-data ingest index retrieval-candidates retrieval-eval ask eval-estimate eval eval-sweep judge-estimate score calibration-sheet calibrate run estimate runs-md metrics schema gold-drafts gold-check check
+.PHONY: install data text rag-data ingest index retrieval-candidates retrieval-eval ask eval-estimate eval eval-sweep judge-estimate score calibration-sheet calibrate eval-ci rag run estimate runs-md metrics schema gold-drafts gold-check check
 
 # One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`,
 # `make run MODEL=qwen2.5-7b`, `make run SAMPLING=t05 GOLD=1` (Golden Set only), or
@@ -76,6 +76,15 @@ calibration-sheet:
 
 calibrate:
 	uv run python -m evals.run calibrate
+
+# HW 2 CI gate (spec §8, the GitHub workflow runs it): recall@5 of hybrid_rerank, cached answers and
+# verdicts, score, config/eval_thresholds.yaml -> evals/results/ci/; exit 1 on a broken threshold, a stale
+# cache (no ANTHROPIC_API_KEY and a miss) or more than 30 new calls
+eval-ci:
+	uv run python -m evals.run ci
+
+# HW 2 in one command (D6): corpus download, ingestion, retrieval eval, the cached answer run, score
+rag: rag-data ingest retrieval-eval eval score
 
 # extract all 30 documents -> results/runs/jsonl/<run_id>.jsonl (resumable)
 # + a readable mirror results/runs/md/<run_id>.md, rewritten after every record

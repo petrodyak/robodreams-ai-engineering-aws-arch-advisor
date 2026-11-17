@@ -1,0 +1,68 @@
+# HW 2 evals in CI (spec §8, ADR-0008): the gates of `make check`, then `make eval-ci` against the
+# thresholds of config/eval_thresholds.yaml. Answers and judge verdicts are replayed from
+# evals/cache/ (in Git); a miss calls Claude with the ANTHROPIC_API_KEY repository secret, at most
+# 30 new calls per run. Without the secret (a fork PR) a miss fails with "cache is stale".
+# CI never commits: the results of the run are uploaded as an artifact.
+name: evals
+
+# Every commit of a pull request runs once, on the merge of the branch into main (Petro, 17.11:
+# push on every branch ran each PR commit twice). The push on main runs after a merge and saves
+# .cache/ under main, the one scope every pull request can restore from.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: evals-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    # a cold run embeds 2,869 chunks on the runner's CPU (no .cache/ yet); warm runs take minutes
+    timeout-minutes: 45
+    env:
+      PYTHONUNBUFFERED: "1"  # progress lines reach the log as they happen
+    steps:
+      - uses: actions/checkout@v7
+
+      # setup-uv publishes no major-version tag; pinned to the v10.3.3 commit, as its README shows
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+
+      - run: uv sync --locked
+
+      # fastembed models (~150 MB) and the embedding cache: restored when the chunks and the
+      # retrieval config are unchanged; a partial match still restores the models. Restore and
+      # save are separate steps, so a red run still saves what it embedded (the post step of
+      # actions/cache saves only after a green job).
+      - id: rag-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: .cache/
+          key: rag-${{ runner.os }}-${{ hashFiles('config/rag.yaml', 'data/rag/chunks.jsonl') }}
+          restore-keys: rag-${{ runner.os }}-
+
+      - name: make check (ruff + pytest)
+        run: make check
+
+      - name: make eval-ci (retrieval, cached answers and verdicts, thresholds)
+        run: make eval-ci
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - uses: actions/cache/save@v6
+        if: always() && steps.rag-cache.outputs.cache-hit != 'true'
+        with:
+          path: .cache/
+          key: ${{ steps.rag-cache.outputs.cache-primary-key }}
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: eval-results
+          path: evals/results/ci/
+          if-no-files-found: warn
