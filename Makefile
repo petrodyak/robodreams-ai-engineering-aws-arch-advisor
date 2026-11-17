@@ -77,8 +77,8 @@ calibration-sheet:
 calibrate:
 	uv run python -m evals.run calibrate
 
-# HW 2 CI gate (spec §8, the GitHub workflow runs it): retrieval eval, cached answers and verdicts,
-# score, config/eval_thresholds.yaml -> evals/results/ci/; exit 1 on a broken threshold, a stale
+# HW 2 CI gate (spec §8, the GitHub workflow runs it): recall@5 of hybrid_rerank, cached answers and
+# verdicts, score, config/eval_thresholds.yaml -> evals/results/ci/; exit 1 on a broken threshold, a stale
 # cache (no ANTHROPIC_API_KEY and a miss) or more than 30 new calls
 eval-ci:
 	uv run python -m evals.run ci

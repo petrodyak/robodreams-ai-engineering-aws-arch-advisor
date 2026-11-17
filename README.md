@@ -1,6 +1,7 @@
 # AWS Quotas & Architecture Advisor
 
 Course project for the AI Engineering course (RobotDreams).
+Reports: HW 1 (extraction) [`REPORT.md`](REPORT.md) · HW 2 (RAG) [`REPORT-hw2.md`](REPORT-hw2.md).
 
 **Problem.** AWS best practices and service limits are spread across thousands of
 documentation pages. An architect reviewing a design has to read them by hand.
@@ -14,7 +15,7 @@ Well-Architected lenses for retrieval.
 | Stage | What the system does | Status |
 |---|---|---|
 | 1. Extraction | Extracts endpoint and quota tables from per-service PDFs; compares a paid model vs a local model against a gold set | HW 1 done — [`REPORT.md`](REPORT.md) |
-| 2. RAG | Answers architecture questions with citations to document and page | — |
+| 2. RAG | Answers architecture questions with a citation to a document and section for every claim, or "I don't know" | HW 2 done — [`REPORT-hw2.md`](REPORT-hw2.md) |
 | 3. Agent | Reviews a described architecture against best practices and limits | — |
 | 4. Service | API with auth, logging, monitoring and per-request cost | — |
 
@@ -25,6 +26,8 @@ data/source/   original AWS General Reference PDF (git-ignored, ~25 MB)
 data/pool/     100 per-service PDFs cut from it (git-ignored) + manifest.csv, profile.csv (committed)
 data/raw/      working subset: 30 PDFs (git-ignored) + extracted *.txt + manifest.csv (committed)
 data/gold/     ground-truth quotas/endpoints for 10 of the 30, JSON (committed)
+data/rag/      HW 2 corpus: manifest.csv, chunks.jsonl, chunks_fixed.jsonl, ingest_manifest.json
+               (committed); raw/ — the 34 downloaded PDF + HTML documents (git-ignored)
 ```
 
 ## Why this is not just table parsing
@@ -77,7 +80,8 @@ from `uv.lock`; `make data` runs steps 2–3 and `make text` runs step 4.
 
 Copy `.env.example` to `.env` (git-ignored) and fill it in. Stage 1 needs `ANTHROPIC_API_KEY`
 (paid model) and a local Ollama (`OLLAMA_HOST`). `OPENROUTER_API_KEY` is optional: it serves
-the course exercises only and no stage-1 step reads it (see `docs/adr/0004`).
+the course exercises only and no stage-1 step reads it (see `docs/adr/0004`). Stage 2 needs only
+`ANTHROPIC_API_KEY`; in CI the same name is a GitHub repository secret. No key is in the code.
 
 ## Stage 1: run the extraction
 
@@ -149,7 +153,99 @@ hostnames, tables across page breaks); temperature 0.5 changed nothing for Claud
 hurt qwen. The production choice is Claude; the conditions under which it would flip are in
 the report.
 
-## Known limits
+## Stage 2: RAG (HW 2)
+
+**Problem.** An architect asks "how should we do X on AWS?" and needs an answer they can check:
+every claim backed by a named section of an AWS document, and "I don't know" when the documents do
+not say. The corpus is 34 public documents: the Well-Architected Framework (current and the archived
+2020 edition), its six pillars, four lenses (PDF), and 22 Prescriptive Guidance, Athena, S3 Tables
+and Glue pages on data lakes, Iceberg, Glue and Redshift (HTML).
+
+```bash
+make install            # .venv from uv.lock
+make rag                # all of HW 2: download, ingest, retrieval eval, the answer run, score
+make ask Q="How should I set the RPO for a backup strategy?"   # one cited answer (one Claude call)
+make eval-ci            # what CI runs: recall@5 + cached answers and verdicts + thresholds
+make check              # ruff + pytest
+```
+
+`make rag` is `rag-data ingest retrieval-eval eval score`, each target also runs alone:
+
+| Target | What it does | Cost |
+|---|---|---|
+| `make rag-data` | downloads the 34 documents of `data/rag/manifest.csv` into `data/rag/raw/`, checks each one's hash | $0 |
+| `make ingest` | extraction with structure, cleaning, dedup, both chunk sets, `ingest_manifest.json` | $0 |
+| `make retrieval-eval` | recall@5 / recall@10 / MRR of 5 search configurations → `evals/results/retrieval.json` | $0 (local models) |
+| `make eval` | the 24 testset questions through RAG → `evals/results/<run_id>.jsonl` | $0 from the cache; ≈ $0.016 for a fresh run |
+| `make score` | deterministic scorers + the two judges → `evals/results/<run_id>.json` | $0 from the cache; ≈ $0.21 for fresh verdicts |
+
+The answers and the judge verdicts are cached in `evals/cache/` (committed), so a clean clone replays
+them for free; only a changed prompt, model or context makes a new paid call. The first run downloads
+the fastembed models (~150 MB) into `.cache/`.
+
+**How it works.**
+
+- **Search.** Hybrid: BM25 + vector search (`BAAI/bge-small-en-v1.5`, Qdrant in memory), fused by
+  RRF, then a cross-encoder reranker, with `doc_type` and date filters.
+- **Answer.** Claude Haiku 5.5 sees the top 5 chunks within a 3,000-token budget and answers in
+  claims, each citing `[S1]`…. The code checks every label and drops a claim with no valid source.
+- **Evals.**
+  - A 24-item testset checked by hand: single-source questions, multi-source questions, similar
+    documents, outdated editions, and questions not in the corpus.
+  - Deterministic scorers.
+  - Two Claude Sonnet 5.5 judges (correctness, faithfulness), calibrated on 17 hand-labelled answers.
+  - `.github/workflows/evals.yml` runs them on every push and pull request against
+    `config/eval_thresholds.yaml`.
+- **Prompts.** Versioned in `prompts/rag_v*.txt` and `prompts/judge_*.txt` with
+  `prompts/CHANGELOG.md`.
+
+**Result** (prompt v2, k = 5):
+
+| Measure | Value |
+|---|---|
+| retrieval recall@5 | 1.00 |
+| judge pass rate | 0.80 |
+| faithfulness | 0.99 |
+| right "I don't know" | 4 / 4 |
+| false "I don't know" | 0 / 20 |
+| cost | $0.65 per 1,000 questions |
+
+Tables, calibration and error analysis: [`REPORT-hw2.md`](REPORT-hw2.md).
+
+### Why this chunking
+
+Decided in [ADR-0007](docs/adr/0007-structure-aware-chunking.md), measured in `REPORT-hw2.md` §3.
+
+- **Chunks follow the documents' own sections.** These are the PDF outline and the HTML
+  `h1`–`h4` headings, with `REL09-BP01`-style ids as the fallback. Whole paragraphs are packed into
+  a chunk. A long section is split at paragraphs, then lines, sentences and tokens. A short section
+  is merged with its sibling, but never across a best-practice boundary.
+- **Why sections.** The Well-Architected documents are built from best practices of a few hundred
+  words each. One chunk ≈ one best practice ≈ what an answer should cite: the statement and its
+  implementation guidance stay together, and every chunk has a section to name in the citation.
+- **Why 250–450 tokens, hard maximum 480.** The embedding model reads at most 512 tokens, and the
+  Contextual Header (`<title> > <Section Path>`, embedded and indexed with the text) takes some of
+  them.
+- **No overlap.** Sections are natural boundaries, and overlap would copy text across best
+  practices.
+- **Compared with fixed size.** The baseline is the lesson's fixed 400-token windows with 60 tokens
+  of overlap, on the same text.
+  - Structure chunks start mid-sentence 24 times against 137 and cut 29 tables against 72.
+  - The fixed windows cut best practices in half: `wa-reliability#f0034` ends in the middle of a
+    sentence, and `#f0146` cuts a best practice off before its risk level.
+  - With vector search only, the windows reach a relevant passage in the top 5 slightly more often
+    (0.80 vs 0.70), helped by their overlap, but rank it lower (MRR 0.58 vs 0.64).
+  - With hybrid search and reranking, the structure chunks put every relevant section in the top 5.
+
+### Reproduce the corpus
+
+`data/rag/raw/` is not in Git, because the documents are large and AWS hosts them. Running
+`make rag-data` downloads them from the URLs in `data/rag/manifest.csv` and checks each one's
+`sha256` against the hash of its cleaned text. AWS regenerates its PDFs every few days, so the bytes
+change while the text does not. The committed `chunks.jsonl` is the version every result was
+measured on.
+
+## Known limits (stage 1)
 
 - **Standard quota tables only.** Quota rows are extracted only from a table with exactly the
   columns Name, Default, Adjustable, Description; any other layout is classified as
