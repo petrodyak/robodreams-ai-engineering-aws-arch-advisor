@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from evals.answers import run_id, run_items, summarize, sweep_budget
+from evals.answers import load_run, run_id, run_items, summarize, sweep_budget
 from evals.testset import TestItem
 from src.rag.config import load_config
 from src.rag.index import Index
@@ -87,3 +87,23 @@ def test_run_id_and_sweep_budget():
     )
     assert sweep_budget(3, 3000) == 3000  # the default budget already holds 3 chunks
     assert sweep_budget(8, 3000) == 8 * 480  # 8 chunks of the hard maximum
+
+
+def test_load_run_checks_the_file_and_its_items(tmp_path):
+    from tests.test_evals_scorers import item
+
+    items = [item("one01"), item("one02")]
+    path = tmp_path / "r.jsonl"
+
+    with pytest.raises(SystemExit, match="does not exist"):
+        load_run(path, items)
+
+    path.write_text(json.dumps({"id": "one01"}) + "\n", encoding="utf-8")
+    with pytest.raises(SystemExit, match="one02"):
+        load_run(path, items)
+
+    path.write_text(
+        "".join(json.dumps({"id": i}) + "\n" for i in ("one02", "one01")),
+        encoding="utf-8",
+    )
+    assert [r["id"] for r in load_run(path, items)] == ["one02", "one01"]

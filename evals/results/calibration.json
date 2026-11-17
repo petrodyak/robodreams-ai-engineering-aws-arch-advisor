@@ -1,0 +1,24 @@
+{
+  "correctness": {
+    "n": 17,
+    "agreement": 0.8823529411764706,
+    "kappa": 0.7671232876712328
+  },
+  "faithfulness": {
+    "n": 17,
+    "agreement": 1.0,
+    "kappa": 1.0
+  },
+  "disagreements": {
+    "correctness": [
+      "old02@claude-haiku-5-5__v1__medium__k5",
+      "old03@claude-haiku-5-5__v1__medium__k5"
+    ],
+    "faithfulness": []
+  },
+  "runs": [
+    "claude-haiku-5-5__v1__medium__k3",
+    "claude-haiku-5-5__v1__medium__k5"
+  ],
+  "new_judge_calls": 0
+}

@@ -1,0 +1,27 @@
+{
+  "correctness": {
+    "n": 17,
+    "agreement": 0.8235294117647058,
+    "kappa": 0.6530612244897959
+  },
+  "faithfulness": {
+    "n": 17,
+    "agreement": 0.9411764705882353,
+    "kappa": 0.767123287671233
+  },
+  "disagreements": {
+    "correctness": [
+      "many03@claude-haiku-5-5__v1__medium__k5",
+      "old02@claude-haiku-5-5__v1__medium__k5",
+      "old03@claude-haiku-5-5__v1__medium__k5"
+    ],
+    "faithfulness": [
+      "sim01@claude-haiku-5-5__v1__medium__k3"
+    ]
+  },
+  "runs": [
+    "claude-haiku-5-5__v1__medium__k3",
+    "claude-haiku-5-5__v1__medium__k5"
+  ],
+  "new_judge_calls": 34
+}

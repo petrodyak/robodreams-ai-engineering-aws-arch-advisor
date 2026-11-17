@@ -107,3 +107,42 @@ Baseline, adapted from the lesson 8 v2 rules (spec §6, §9):
 
 Lesson 8's "a status instead of a value is an answer" rule is not carried over: this corpus has
 no such case yet. The code, not the prompt, removes a claim whose labels are all unknown.
+
+## rag v2 — 2026-11-17
+
+One change, rule 5, for F22 (a question outside the corpus got an answer). v1 said "`found =
+false` only when no source says anything that answers the question; a partial answer is an
+answer", so the model answered the Athena price question with "billed by the data scanned" and
+the Google Kubernetes Engine question with Amazon EKS advice. v2 sets `found = false` when the
+sources do not answer the question that was asked, and names the two cases: a specific value
+(price, quota, limit, number) that no source states, and a product, platform or provider that no
+source covers ("guidance for a different service is not an answer"). A partial answer about the
+same subject is still an answer. Rules 1–4 and 6 are unchanged, so the effect is this rule's.
+
+Measured at k = 5 on the 24-item testset, judges calibrated on 17 hand labels:
+
+| prompt | retr | ctx | ctx share | correct | cited | faith | abstain | f.abst | tokens in / out | $/1000 | items failed (scorers or judge) |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| v1 | 1.00 | 1.00 | 0.78 | 0.75 | 1.00 | 0.97 | 0.50 | 0.00 | 3,780 / 607 | 0.68 | one02, many03, many04, sim02, old02, old03, none02, none04 |
+| **v2** | 1.00 | 1.00 | 0.78 | **0.80** | 1.00 | **0.99** | **1.00** | 0.00 | 3,863 / 528 | 0.65 | one02, many03, many04, old03 |
+
+Columns:
+
+- **retr** / **ctx**: a relevant chunk is in the hits / in the context;
+- **ctx share**: the share of the labelled chunks in the context;
+- **correct**: the correctness judge's pass rate over the 20 answerable items;
+- **cited**: an expected source is cited;
+- **faith**: the faithfulness judge's share of supported claims;
+- **abstain** / **f.abst**: right refusals on the 4 no-answer items / refusals on the 20 answerable
+  ones (false abstain);
+- **tokens in / out**: average tokens per answer;
+- **$/1000**: the cost of 1,000 answers;
+- **items failed**: the testset items that the deterministic scorers or the correctness judge failed.
+
+All four no-answer items now refuse and no answerable item does (false abstain stays 0.00), so
+the stricter rule cost nothing in this testset. old02 and sim02 also pass in v2, but not because
+of rule 5: the new answers left out a true detail of the 2020 edition that the judge had called a
+contradiction (old02, F24) and wrote "ephemeral storage" instead of "ephemeral data" (sim02). The
+four left are not prompt failures: many03 and many04 lose the chunk of their second part at
+retrieval (ctx share, F23), old03 is a judge error (F24), and one02 leaves out what happens to
+expired snapshots, which the question does not ask. The config switches to v2.

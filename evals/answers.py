@@ -7,6 +7,10 @@ The summary needs no judge (that is step 19): it counts what code can check.
 - the cost, from `usage` of every call (a cached call reports what it cost when it was made).
 """
 
+import json
+import sys
+from pathlib import Path
+
 from evals.testset import TestItem
 from src.rag.answer import answer
 from src.rag.config import RagConfig
@@ -17,6 +21,17 @@ MAX_CHUNK_TOKENS = 480  # the hard maximum of a structure chunk (spec §4)
 
 def run_id(model: str, prompt_version: str, effort: str, k: int) -> str:
     return f"{model}__{prompt_version}__{effort}__k{k}"
+
+
+def load_run(path: Path, items: list[TestItem]) -> list[dict]:
+    """The rows of an answer run, or a clear exit when the file or a testset item is missing."""
+    if not path.exists():
+        sys.exit(f"{path} does not exist: run make eval first")
+    rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    missing = {it.id for it in items} - {r["id"] for r in rows}
+    if missing:
+        sys.exit(f"{path} has no answer for {sorted(missing)}: run make eval first")
+    return rows
 
 
 def sweep_budget(k: int, default_budget: int) -> int:
