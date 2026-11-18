@@ -51,4 +51,5 @@ section, and a section is what the retriever should return whole.
 - A chunk can be larger than a short question needs; the context budget (3,000 tokens) holds about
   6–8 chunks, which is why k is measured at 3 / 5 / 8.
 - Token counts are an approximation of the embedding tokenizer; the 480 maximum leaves a margin for
-  the difference.
+  the difference. Measured later (F30): the margin is not enough for 152 of the 2,869 index texts
+  (5.3 %), which are 513–580 WordPiece tokens, so the end of those chunks is not embedded.

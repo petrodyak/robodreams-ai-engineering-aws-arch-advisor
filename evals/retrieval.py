@@ -1,6 +1,10 @@
 """Retrieval metrics (spec §5), adapted from the lesson-7 `evaluate`.
 
-- recall@k: 1 when a relevant chunk is in the top k, else 0; averaged over the questions.
+- recall@k: 1 when a relevant chunk is in the top k, else 0; averaged over the questions. It is a
+  hit rate: one relevant chunk is enough, however many the question has.
+- relevant_share@k: the share of a question's relevant chunks that are in the top k; averaged. It
+  is what recall@k hides (F29): a question in two parts can have one of its chunks in the top 5
+  and still miss the other.
 - MRR: 1 / rank of the first relevant chunk in the top 10 (0 when none), averaged.
 
 Fixed-size chunks have their own ids, so Petro's labels (structure chunk ids) are mapped to them by
@@ -22,6 +26,10 @@ FIXED_OVERLAP = 0.5
 
 def recall_at(ranked_ids: list[str], relevant: set[str], k: int) -> float:
     return 1.0 if set(ranked_ids[:k]) & relevant else 0.0
+
+
+def relevant_share(ranked_ids: list[str], relevant: set[str], k: int) -> float:
+    return len(set(ranked_ids[:k]) & relevant) / len(relevant)
 
 
 def reciprocal_rank(ranked_ids: list[str], relevant: set[str]) -> float:
@@ -58,8 +66,9 @@ def evaluate_retrieval(
     *,
     query_of: Callable[[TestItem], str] = lambda it: it.question,
 ) -> dict:
-    """recall@5, recall@10, MRR, the missed item ids (nothing relevant in the top 10), ms/query."""
-    r5, r10, rr, misses, elapsed = [], [], [], [], 0.0
+    """recall@5, recall@10, relevant_share@5, relevant_share@10, MRR, the missed item ids (nothing
+    relevant in the top 10), ms/query."""
+    r5, r10, s5, s10, rr, misses, elapsed = [], [], [], [], [], [], 0.0
     for it in items:
         relevant = relevant_of(it)
         if not relevant:
@@ -69,6 +78,8 @@ def evaluate_retrieval(
         elapsed += time.perf_counter() - start
         r5.append(recall_at(ranked, relevant, 5))
         r10.append(recall_at(ranked, relevant, 10))
+        s5.append(relevant_share(ranked, relevant, 5))
+        s10.append(relevant_share(ranked, relevant, 10))
         rr.append(reciprocal_rank(ranked, relevant))
         if not r10[-1]:
             misses.append(it.id)
@@ -77,6 +88,8 @@ def evaluate_retrieval(
         "questions": n,
         "recall@5": sum(r5) / n,
         "recall@10": sum(r10) / n,
+        "relevant_share@5": sum(s5) / n,
+        "relevant_share@10": sum(s10) / n,
         "mrr": sum(rr) / n,
         "misses": misses,
         "ms": round(elapsed / n * 1000, 1),

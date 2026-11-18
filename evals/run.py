@@ -122,6 +122,10 @@ def retrieval(config_path: Path = Path("config/rag.yaml")) -> dict:
             run(fixed_index, "vector"), items, lambda it: fixed_relevant[it.id]
         )
     }
+    # the fixed windows' labels come from text overlap (several windows per labelled chunk), so
+    # the share of them in the top k is not comparable with the structure rows and is not reported
+    for key in ("relevant_share@5", "relevant_share@10"):
+        del rows["vector (fixed chunks)"][key]
     for mode in ["vector", "bm25", "hybrid", "hybrid_rerank"]:
         rows[mode] = evaluate_retrieval(run(index, mode), items, structure_labels)
 
@@ -142,13 +146,14 @@ def retrieval(config_path: Path = Path("config/rag.yaml")) -> dict:
         f"{len(items)} labelled items | {len(structure)} chunks | {len(fixed)} fixed chunks"
     )
     print(
-        f"\n{'config':<24}{'recall@5':>10}{'recall@10':>11}{'MRR':>7}{'ms/q':>8}   misses"
+        f"\n{'config':<24}{'recall@5':>10}{'recall@10':>11}{'share@5':>9}{'MRR':>7}{'ms/q':>8}   misses"
     )
     for name, r in rows.items():
         misses = " ".join(r["misses"]) or "-"
+        share = f"{r['relevant_share@5']:.2f}" if "relevant_share@5" in r else "-"
         print(
             f"{name:<24}{r['recall@5']:>10.2f}{r['recall@10']:>11.2f}"
-            f"{r['mrr']:>7.2f}{r['ms']:>8.0f}   {misses}"
+            f"{share:>9}{r['mrr']:>7.2f}{r['ms']:>8.0f}   {misses}"
         )
     print(f"\nwritten {RESULTS}")
     return result

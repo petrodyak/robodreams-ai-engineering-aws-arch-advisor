@@ -86,7 +86,9 @@ The decision and its reasons are in ADR-0007 and, condensed, in the README. In s
 the documents' own sections, a target of 250–450 tokens with a hard maximum of 480, no overlap, and a Contextual
 Header (`<title> > <Section Path>`) that is embedded and indexed but not shown to the answer model.
 One Well-Architected best practice ≈ one chunk ≈ what a citation should point to; the embedding model
-reads at most 512 tokens.
+reads at most 512 tokens. The sizes are counted with `cl100k_base`; the model counts WordPiece
+tokens, which are more: 152 of the 2,869 index texts (header + chunk, 5.3 %) are above 512, up to
+580, so the end of those chunks is not in the vector, only in BM25 (F30).
 
 The baseline is the lesson's fixed window, 400 tokens with 60 tokens of overlap, built from the same
 cleaned text (`chunks_fixed.jsonl`).
@@ -120,7 +122,8 @@ relevant text in the top 5 more often (0.80 vs 0.70) but rank it lower (MRR 0.58
 comparison is in the windows' favour: a window counts as relevant when it shares ≥ 50 % of its
 shingles with any relevant chunk, and its 60-token overlap gives every passage two chances. The
 structure chunks win where it matters for this system: in the hybrid + rerank configuration that
-answers questions, every relevant section is in the top 5, and the answer can cite a named section.
+answers questions, every question has at least one relevant chunk in the top 5, and the answer can
+cite a named section.
 
 ## 4. Index and search
 
@@ -136,19 +139,24 @@ answers questions, every relevant section is in the top 5, and the answer can ci
   nothing return `[]`, and the answer is then "I don't know" without a model call.
 
 Retrieval eval (`make retrieval-eval`, `evals/results/retrieval.json`), the 20 answerable items with
-their relevant chunks labelled by Petro (55 chunk ids, none from the archived edition):
+their relevant chunks labelled by Petro (57 labels, 54 distinct chunks, none from the archived
+edition). `recall@k` is a hit rate: 1 when at least one relevant chunk is in the top k. `share@5` is
+the share of a question's relevant chunks that are in the top 5, averaged over the questions:
 
-| Configuration | recall@5 | recall@10 | MRR | ms / query | missed in the top 10 |
-|---|---|---|---|---|---|
-| vector, fixed chunks | 0.80 | 0.95 | 0.58 | 215 | sim01 |
-| vector | 0.70 | 0.95 | 0.64 | 130 | sim01 |
-| BM25 | 0.85 | 0.90 | 0.81 | 6 | one09, old02 |
-| hybrid (RRF) | 0.85 | 0.95 | 0.74 | 137 | old02 |
-| **hybrid + rerank** | **1.00** | **1.00** | **0.81** | 450 | — |
+| Configuration | recall@5 | recall@10 | share@5 | MRR | ms / query | missed in the top 10 |
+|---|---|---|---|---|---|---|
+| vector, fixed chunks | 0.80 | 0.95 | — | 0.58 | 131 | sim01 |
+| vector | 0.70 | 0.95 | 0.57 | 0.64 | 128 | sim01 |
+| BM25 | 0.85 | 0.90 | 0.62 | 0.81 | 6 | one09, old02 |
+| hybrid (RRF) | 0.85 | 0.95 | 0.64 | 0.74 | 134 | old02 |
+| **hybrid + rerank** | **1.00** | **1.00** | **0.78** | **0.81** | 471 | — |
 
 Hybrid + rerank is the configuration the answers use. Each search alone misses a different item
-(vector misses the reworded `sim01`, BM25 misses `one09` and `old02`), and the reranker lifts all 20
-into the top 5. The first measurement (step 17, before Petro reworded the six traps in his own words)
+(vector misses the reworded `sim01`, BM25 misses `one09` and `old02`), and the reranker lifts a
+relevant chunk of all 20 into the top 5. It does not lift every relevant chunk: `share@5` is 0.78,
+the same gap the answer eval shows as `context_share` (F23, two-part questions). The fixed-chunk
+row has no `share@5`, because its labels come from text overlap and several windows match one
+labelled chunk. The first measurement (step 17, before Petro reworded the six traps in his own words)
 was vector 0.85 / hybrid 0.95 / hybrid + rerank 1.00: the reworded traps share fewer words with the
 documents, which costs vector and hybrid search, not the reranked hybrid.
 

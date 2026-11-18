@@ -15,46 +15,54 @@
       "misses": [
         "sim01"
       ],
-      "ms": 215.0
+      "ms": 131.3
     },
     "vector": {
       "questions": 20,
       "recall@5": 0.7,
       "recall@10": 0.95,
+      "relevant_share@5": 0.5683333333333334,
+      "relevant_share@10": 0.7983333333333333,
       "mrr": 0.6425595238095239,
       "misses": [
         "sim01"
       ],
-      "ms": 129.9
+      "ms": 128.4
     },
     "bm25": {
       "questions": 20,
       "recall@5": 0.85,
       "recall@10": 0.9,
+      "relevant_share@5": 0.6241666666666666,
+      "relevant_share@10": 0.72,
       "mrr": 0.8083333333333333,
       "misses": [
         "one09",
         "old02"
       ],
-      "ms": 5.7
+      "ms": 6.0
     },
     "hybrid": {
       "questions": 20,
       "recall@5": 0.85,
       "recall@10": 0.95,
+      "relevant_share@5": 0.6425,
+      "relevant_share@10": 0.7633333333333334,
       "mrr": 0.7404166666666667,
       "misses": [
         "old02"
       ],
-      "ms": 136.6
+      "ms": 133.8
     },
     "hybrid_rerank": {
       "questions": 20,
       "recall@5": 1.0,
       "recall@10": 1.0,
+      "relevant_share@5": 0.7816666666666666,
+      "relevant_share@10": 0.8775000000000001,
       "mrr": 0.8141666666666667,
       "misses": [],
-      "ms": 449.7
+      "ms": 471.4
     }
   }
 }

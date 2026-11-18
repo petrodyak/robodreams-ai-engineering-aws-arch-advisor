@@ -240,10 +240,14 @@ Decided in [ADR-0007](docs/adr/0007-structure-aware-chunking.md), measured in `R
     sentence, and `#f0146` cuts a best practice off before its risk level.
   - With vector search only, the windows reach a relevant passage in the top 5 slightly more often
     (0.80 vs 0.70), helped by their overlap, but rank it lower (MRR 0.58 vs 0.64).
-  - With hybrid search and reranking, the structure chunks put every relevant section in the top 5.
+  - With hybrid search and reranking, every question has at least one relevant structure chunk in
+    the top 5 (recall@5 1.00), and 0.78 of all its relevant chunks are there.
 - **Known limits.** Tables are kept as tables only from HTML: `pypdf` returns a PDF table as plain
   lines. 70 of the 2,869 chunks (text before a document's first heading) have no section, so their
-  citation names only the document. 11 chunks are a heading line alone (F28).
+  citation names only the document. 11 chunks are a heading line alone (F28). Sizes are counted
+  with `cl100k_base`, while the embedding model counts WordPiece tokens: 152 chunks (5.3 %) are
+  above its 512 with their header, up to 580, so the end of those is not in the vector (BM25 reads
+  all of it; F30).
 
 ### Reproduce the corpus
 
