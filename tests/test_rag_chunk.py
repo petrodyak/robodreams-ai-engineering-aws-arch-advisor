@@ -164,3 +164,10 @@ def test_stats_count_mid_sentence():
     assert stats["chunks"] == len(chunks)
     assert stats["starts_mid_sentence"] >= 1
     assert stats["max_tokens"] <= 100
+    # F27: the "|" count was link titles, not tables, so no table figure is reported
+    assert set(stats) == {
+        "chunks",
+        "starts_mid_sentence",
+        "avg_tokens",
+        "max_tokens",
+    }

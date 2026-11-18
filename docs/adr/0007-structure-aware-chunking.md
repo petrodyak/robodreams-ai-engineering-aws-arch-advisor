@@ -13,12 +13,14 @@ section, and a section is what the retriever should return whole.
 
 ## Decision
 
-- **Structure-aware.** Chunks are cut on section boundaries (the PDF outline, or the HTML `h1`–`h4`
-  headings; heading patterns when a PDF has no outline). Whole paragraphs are packed up to the limit.
+- **Structure-aware.** Chunks are cut on section boundaries (the PDF outline, or the HTML `h2`–`h4`
+  headings, `h1` being the document title; heading patterns when a PDF has no outline). Whole paragraphs are packed up to the limit.
   A section that is too long is split at paragraphs, then lines, then sentences, then tokens. A
   section that is too short is merged with the next sibling under the same parent, and the merged
   chunk's Section Path is that parent.
-- **Size: 250–450 tokens, hard maximum 480** (tiktoken `cl100k_base`). Three reasons:
+- **Size: a target of 250–450 tokens, hard maximum 480** (tiktoken `cl100k_base`). 250 is where
+  merging stops, not a floor: a short section with no sibling under the same parent stays short
+  (measured on the corpus: median 278 tokens, 41 % of the chunks below 250). Three reasons:
   1. the embedding model (`BAAI/bge-small-en-v1.5`) reads at most 512 tokens, and the Contextual
      Header uses some of them;
   2. one Well-Architected best practice is typically a few hundred words, so one chunk ≈ one best

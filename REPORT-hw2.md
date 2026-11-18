@@ -60,8 +60,9 @@ enter the retrieval eval.
 Ingestion (`src/rag/ingest/`, `make ingest`):
 
 - **Extraction with structure.** A PDF gets its sections from its outline (titles are searched in the
-  text, because deep outline entries point to wrong pages). HTML gets them from `h1`–`h4`, with tables
-  kept as markdown rows. Every chunk carries its Section Path, for example
+  text, because deep outline entries point to wrong pages). HTML gets them from `h2`–`h4` (`h1` is
+  the document title), with tables kept as markdown rows; a PDF table comes out of `pypdf` as plain
+  lines and is not rebuilt. Every chunk carries its Section Path, for example
   `Failure management > REL09-BP01 …`.
 - **Cleaning.** Repeated headers and footers (a line on more than 50 % of the pages), page numbers,
   hyphenation, NFKC, zero-width characters, line unwrapping; cover pages and tables of contents are
@@ -82,7 +83,7 @@ Glue guides.
 ## 3. Chunking: structure-aware vs fixed size
 
 The decision and its reasons are in ADR-0007 and, condensed, in the README. In short: chunks follow
-the documents' own sections, 250–450 tokens with a hard maximum of 480, no overlap, and a Contextual
+the documents' own sections, a target of 250–450 tokens with a hard maximum of 480, no overlap, and a Contextual
 Header (`<title> > <Section Path>`) that is embedded and indexed but not shown to the answer model.
 One Well-Architected best practice ≈ one chunk ≈ what a citation should point to; the embedding model
 reads at most 512 tokens.
@@ -95,8 +96,15 @@ cleaned text (`chunks_fixed.jsonl`).
 | chunks | 2,869 | 3,102 |
 | tokens per chunk, avg / max | 270 / 480 | 398 / 400 |
 | chunks that start mid-sentence | **24** | 137 |
-| tables cut across two chunks | **29** | 72 |
-| a section to cite | always | no (a window spans sections) |
+| tokens per chunk, median / share below 250 | 278 / 41 % | 400 / 1 % |
+| a section to cite | 2,799 of 2,869 | no (a window spans sections) |
+
+250 tokens is where merging stops, not a floor: a short section with no sibling under the same
+parent stays short, so 41 % of the structure chunks are below it. The 70 chunks without a section
+are the text before a document's first heading; their citation names only the document. An earlier
+version of this table also counted "tables cut across two chunks" (29 against 72). That count is
+removed (F27): it matched any line with a `|`, which in the PDFs is a link title such as
+"… | AWS Big Data Blog", not a table.
 
 Two windows that cut a best practice in half (`chunks_fixed.jsonl`):
 
@@ -355,6 +363,10 @@ an eval cost: they run once per change, and their verdicts are cached.
 - **Cross-machine determinism.** The cache key holds the context text, so a different ranking on the
   CI runner (float differences in the embeddings or the reranker) would be a cache miss and a paid
   call. Section 7 records what the first CI runs showed.
+- **Heading-only chunks and PDF tables (F28).** 11 structure chunks are a heading line alone
+  (`wa-operational-excellence#0172` is just "Implementation guidance"), because the merge rule
+  joins a short section only to a following one under the same parent. PDF tables are flat text.
+  Fixing either changes `chunks.jsonl`, so it needs new relevant-chunk labels and new paid runs.
 - **The corpus is a snapshot (F25).** AWS updates its documents. `chunks.jsonl` and the manifest's
   text hashes record the version used (downloaded 14.11.2026). On 16.11.2026 AWS published a new
   edition of the Well-Architected Framework and edited one paragraph of the Cost Optimization

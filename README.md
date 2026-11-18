@@ -220,25 +220,30 @@ Tables, calibration and error analysis: [`REPORT-hw2.md`](REPORT-hw2.md).
 Decided in [ADR-0007](docs/adr/0007-structure-aware-chunking.md), measured in `REPORT-hw2.md` §3.
 
 - **Chunks follow the documents' own sections.** These are the PDF outline and the HTML
-  `h1`–`h4` headings, with `REL09-BP01`-style ids as the fallback. Whole paragraphs are packed into
+  `h2`–`h4` headings (`h1` is the document title), with `REL09-BP01`-style ids as the fallback. Whole paragraphs are packed into
   a chunk. A long section is split at paragraphs, then lines, sentences and tokens. A short section
   is merged with its sibling, but never across a best-practice boundary.
 - **Why sections.** The Well-Architected documents are built from best practices of a few hundred
   words each. One chunk ≈ one best practice ≈ what an answer should cite: the statement and its
   implementation guidance stay together, and every chunk has a section to name in the citation.
-- **Why 250–450 tokens, hard maximum 480.** The embedding model reads at most 512 tokens, and the
-  Contextual Header (`<title> > <Section Path>`, embedded and indexed with the text) takes some of
-  them.
+- **Why a target of 250–450 tokens, hard maximum 480.** The embedding model reads at most 512
+  tokens, and the Contextual Header (`<title> > <Section Path>`, embedded and indexed with the
+  text) takes some of them. 250 is where merging stops, not a floor: a short section with no
+  sibling under the same parent stays short. The median chunk is 278 tokens, and 41 % are below
+  250.
 - **No overlap.** Sections are natural boundaries, and overlap would copy text across best
   practices.
 - **Compared with fixed size.** The baseline is the lesson's fixed 400-token windows with 60 tokens
   of overlap, on the same text.
-  - Structure chunks start mid-sentence 24 times against 137 and cut 29 tables against 72.
+  - Structure chunks start mid-sentence 24 times against 137.
   - The fixed windows cut best practices in half: `wa-reliability#f0034` ends in the middle of a
     sentence, and `#f0146` cuts a best practice off before its risk level.
   - With vector search only, the windows reach a relevant passage in the top 5 slightly more often
     (0.80 vs 0.70), helped by their overlap, but rank it lower (MRR 0.58 vs 0.64).
   - With hybrid search and reranking, the structure chunks put every relevant section in the top 5.
+- **Known limits.** Tables are kept as tables only from HTML: `pypdf` returns a PDF table as plain
+  lines. 70 of the 2,869 chunks (text before a document's first heading) have no section, so their
+  citation names only the document. 11 chunks are a heading line alone (F28).
 
 ### Reproduce the corpus
 
