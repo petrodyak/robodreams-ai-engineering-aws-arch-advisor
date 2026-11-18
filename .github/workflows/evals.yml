@@ -49,13 +49,22 @@ jobs:
       - name: make check (ruff + pytest)
         run: make check
 
-      - name: make eval-ci (retrieval, cached answers and verdicts, thresholds)
+      - id: eval
+        name: make eval-ci (retrieval, cached answers and verdicts, thresholds)
         run: make eval-ci
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
+      # Saved only after eval-ci ran to the end, green or red: by then every chunk is embedded.
+      # A cancelled, timed-out or skipped eval-ci leaves the models without embeddings.json, and
+      # a cache key, once saved, is never saved again, so every later run would embed anew (F26).
+      # always() keeps a red run in; the outcome check keeps a cancelled one out.
       - uses: actions/cache/save@v6
-        if: always() && steps.rag-cache.outputs.cache-hit != 'true'
+        if: >-
+          always()
+          && (steps.eval.outcome == 'success' || steps.eval.outcome == 'failure')
+          && steps.rag-cache.outputs.cache-hit != 'true'
+          && hashFiles('.cache/embeddings.json') != ''
         with:
           path: .cache/
           key: ${{ steps.rag-cache.outputs.cache-primary-key }}

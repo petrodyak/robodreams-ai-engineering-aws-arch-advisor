@@ -272,7 +272,9 @@ Mac, so the run made 0 new calls.
 **The cost of a cold run** is time, not money. GitHub caches are per branch: a branch reads its own
 caches and those of `main`. That is why the workflow runs on pushes to `main` and on pull requests
 only: the run on `main` after a merge saves the cache that every later pull request restores. Until
-then a run embeds the chunks again (~27 min). A warm run takes about 3 minutes in all: [44149747967](https://github.com/petrodyak/robodreams-ai-engineering-aws-arch-advisor/actions/runs/44149747967), green, 0 new calls.
+then a run embeds the chunks again (~27 min). A warm run takes about 3 minutes in all: [44149747967](https://github.com/petrodyak/robodreams-ai-engineering-aws-arch-advisor/actions/runs/44149747967), green, 0 new calls. The runs of 17–18.11 after the merges took ~13 min although the restore
+reported a hit: a cancelled run had saved the models without the embeddings under `main`, and a saved key
+is never saved again (F26). Patch 20.3 saves the cache only after a finished `make eval-ci`.
 
 ## 8. Error analysis
 
