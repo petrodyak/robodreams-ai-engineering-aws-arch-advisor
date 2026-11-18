@@ -237,6 +237,7 @@ Numbering continues from HW 1 (F1–F20 are in `Implementation_steps.md`).
 | F22 | Rule 5 of `rag_v1` ("a partial answer is an answer") lets a question outside the corpus pass: "How do I configure the Horizontal Pod Autoscaler in Google Kubernetes Engine?" got `found = true`, EKS advice from REL07-BP03, and a last claim saying the sources do not cover GKE, with citations | 18 | 19: prompt v2 rule 5 names the two cases (a value no source states, a product no source covers); abstain 0.50 → 1.00, false abstain stays 0.00 | closed (step 19) |
 | F23 | A question in two parts can lose the chunk of its second part at retrieval: many03 (Redshift tables) has it at k = 8 but not at k = 5, many04 (Glue: Parquet, `push_down_predicate`) not even at k = 8. `retrieved` / `in_context` count one relevant chunk and stay 1.00; the new diagnostic `context_share` is 0.78 | 19 | | open (stage 3: the agent can split a question into its parts; REPORT names it) |
 | F24 | The correctness judge sees the reference answer, not the sources, so a true detail the reference does not hold reads as a contradiction: old02 (v1, the 2020 Security area) and old03 ("down from eight", the October 2023 revision). Agreement 88 % is above the 80 % bar, so no judge v2 | 19 | | open (REPORT names it; a judge v2 could pass the cited sources too) |
+| F25 | The source moved: on 16.11.2026 AWS published a new Well-Architected Framework edition ("Last updated: November 16, 2026", 1,355 sections against 1,320) and edited one paragraph of the Cost Optimization pillar (export types). A clean clone's `make rag` stopped at `rag-data` on these 2 of 34 text hashes; the previous edition has no stable URL. From the committed chunks, `make retrieval-eval eval score` reproduced every committed number with no key and 0 new calls (4 min 49 s) | 20 (pre-submission check on a clean clone) | patch 20.2: `make rag` runs from the committed chunks, `make rag-rebuild` downloads and ingests first (Petro, option A; D6 amended) | closed (patch 20.2); a move to the new edition is a stage-3 decision |
 
 ## 7. Risks
 
@@ -267,6 +268,7 @@ From spec §11:
 | 17.11 | Step 20: thresholds set from the v2 baseline (Petro "ok" on the plan); the cost guard of 30 counts answers and verdicts of a CI run together; Petro added the `ANTHROPIC_API_KEY` repository secret and allowed commit + push of this branch while away (PR and merge stay his) |
 | 17.11 | CI triggers: `push` on `main` + `pull_request` instead of `push` on every branch + `pull_request` (Petro, option B). Spec §8 says "push and pull_request"; the brief's "on every push or pull request" still holds. Each PR commit now runs once, on the merge into `main`, and the run on `main` after a merge saves the `.cache/` that every PR can restore (a branch's own cache is not visible to its PR) |
 | 17.11 | Row 20 and the secret prerequisite closed by their own patch PR (Petro): step 20 is the last step, so no later step PR would flip them as D9 expects |
+| 17.11 | D6 amended (Petro, option A, F25): `make rag` = `retrieval-eval eval score` from the committed chunks; `make rag-rebuild` = `rag-data ingest rag`. A rebuild on AWS's new Framework edition was rejected: new hashes, new labels and new paid runs three days before the deadline |
 
 ## 9. Pre-submission check (step 20)
 
@@ -288,7 +290,7 @@ From spec §11:
 | 4 | Testset ≥ 20 with expected answers | 3 | `evals/testset.jsonl`: 24 items incl. 4 no-answer, 3 similar-document and 3 outdated-version traps, each `verified_by` Petro; `evals/labels/testset_review*.md` |
 | 4 | Deterministic + calibrated judge + faithfulness | 4 | `evals/scorers.py`, `evals/judge.py`, `evals/labels/calibration.jsonl` (17 hand labels), `evals/results/calibration.json` (88 % / κ 0.77, 100 % / κ 1.00); REPORT-hw2 §6 |
 | 4 | Evals in CI | 3 | `.github/workflows/evals.yml`, `make eval-ci`, `config/eval_thresholds.yaml`; REPORT-hw2 §7 (green and red runs) |
-| — | README, one-command launch, keys not in code | 2 | README "Stage 2: RAG (HW 2)" (`make rag`), `.env.example` only, CI key as a repository secret |
+| — | README, one-command launch, keys not in code | 2 | README "Stage 2: RAG (HW 2)" (`make rag`, from the committed chunks, checked on a clean clone; `make rag-rebuild` from the source), `.env.example` only, CI key as a repository secret |
 
 ### What must be in the repository
 
@@ -302,3 +304,8 @@ From spec §11:
 | report: metrics, error analysis, conclusions | `REPORT-hw2.md` (§4–§7 metrics, §8 five errors, §10 next steps) |
 | README: project, how to run, chunking justification | `README.md` "Stage 2: RAG (HW 2)", "Why this chunking" |
 | technical: Python 3.12, keys in `.env`, cost per 1,000 | `pyproject.toml`, `.env.example`, REPORT-hw2 §9 ($0.65 per 1,000 questions) |
+
+**Clean-clone check (17.11, after PR #41).** The public repository cloned into an empty folder, no
+`.env`, no key: `make install` ok; `make rag` as it was then stopped at `rag-data` (F25); `make
+retrieval-eval eval score` reproduced every committed number with 0 new calls, only the timings
+(`ms`) and `new_calls` of the summary differ. Patch 20.2 makes that the `make rag` path.

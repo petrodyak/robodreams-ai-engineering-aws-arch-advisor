@@ -163,13 +163,16 @@ and Glue pages on data lakes, Iceberg, Glue and Redshift (HTML).
 
 ```bash
 make install            # .venv from uv.lock
-make rag                # all of HW 2: download, ingest, retrieval eval, the answer run, score
+make rag                # HW 2 from the committed chunks: retrieval eval, the answer run, score ($0)
 make ask Q="How should I set the RPO for a backup strategy?"   # one cited answer (one Claude call)
 make eval-ci            # what CI runs: recall@5 + cached answers and verdicts + thresholds
 make check              # ruff + pytest
 ```
 
-`make rag` is `rag-data ingest retrieval-eval eval score`, each target also runs alone:
+`make rag` is `retrieval-eval eval score`. It starts from the committed `data/rag/chunks.jsonl`,
+the version every result was measured on, so a clean clone reproduces the report's numbers with no
+key. `make rag-rebuild` (`rag-data ingest rag`) rebuilds from the source documents first; see
+"Reproduce the corpus" for why it can fail. Each target also runs alone:
 
 | Target | What it does | Cost |
 |---|---|---|
@@ -242,8 +245,16 @@ Decided in [ADR-0007](docs/adr/0007-structure-aware-chunking.md), measured in `R
 `data/rag/raw/` is not in Git, because the documents are large and AWS hosts them. Running
 `make rag-data` downloads them from the URLs in `data/rag/manifest.csv` and checks each one's
 `sha256` against the hash of its cleaned text. AWS regenerates its PDFs every few days, so the bytes
-change while the text does not. The committed `chunks.jsonl` is the version every result was
-measured on.
+change while the text does not (F21). The committed `chunks.jsonl` is the version every result was
+measured on (documents downloaded 14.11.2026).
+
+**The source has moved since (F25).** On 16.11.2026 AWS published a new edition of the
+Well-Architected Framework and edited one paragraph of the Cost Optimization pillar. `make rag-data`
+now reports a hash mismatch for these 2 of the 34 documents and stops: the check keeps a changed
+document from silently becoming a different corpus. AWS does not keep the previous edition at a
+stable URL. That is why `make rag` starts from the committed chunks, and why `make rag-rebuild` is
+a separate command. A rebuild on the new edition would need new hashes, new relevant-chunk labels and
+a new paid answer and judge run.
 
 ## Known limits (stage 1)
 

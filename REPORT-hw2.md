@@ -353,8 +353,13 @@ an eval cost: they run once per change, and their verdicts are cached.
 - **Cross-machine determinism.** The cache key holds the context text, so a different ranking on the
   CI runner (float differences in the embeddings or the reranker) would be a cache miss and a paid
   call. Section 7 records what the first CI runs showed.
-- **The corpus is a snapshot.** AWS updates its documents. `chunks.jsonl` and the manifest's text
-  hashes record the version used; a later `make rag-data` can fail on a changed document (F21).
+- **The corpus is a snapshot (F25).** AWS updates its documents. `chunks.jsonl` and the manifest's
+  text hashes record the version used (downloaded 14.11.2026). On 16.11.2026 AWS published a new
+  edition of the Well-Architected Framework and edited one paragraph of the Cost Optimization
+  pillar, so `make rag-data` now stops on 2 of the 34 hashes. `make rag` therefore runs from the
+  committed chunks and reproduces every number of this report with no key (checked on a clean clone:
+  0 new calls). `make rag-rebuild` downloads and ingests first. Moving to the new edition is a new
+  measurement: new hashes, new relevant-chunk labels, new answer and judge runs.
 
 ## What was adapted from the lessons
 

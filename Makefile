@@ -1,5 +1,5 @@
 # Every target runs inside the uv-managed .venv (`uv run` syncs it first if needed).
-.PHONY: install data text rag-data ingest index retrieval-candidates retrieval-eval ask eval-estimate eval eval-sweep judge-estimate score calibration-sheet calibrate eval-ci rag run estimate runs-md metrics schema gold-drafts gold-check check
+.PHONY: install data text rag-data ingest index retrieval-candidates retrieval-eval ask eval-estimate eval eval-sweep judge-estimate score calibration-sheet calibrate eval-ci rag rag-rebuild run estimate runs-md metrics schema gold-drafts gold-check check
 
 # One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`,
 # `make run MODEL=qwen2.5-7b`, `make run SAMPLING=t05 GOLD=1` (Golden Set only), or
@@ -83,8 +83,14 @@ calibrate:
 eval-ci:
 	uv run python -m evals.run ci
 
-# HW 2 in one command (D6): corpus download, ingestion, retrieval eval, the cached answer run, score
-rag: rag-data ingest retrieval-eval eval score
+# HW 2 in one command (D6, amended 17.11 for F25): from the committed chunks.jsonl, the version every
+# result was measured on: retrieval eval, the cached answer run, score. $0 and no key on a clean clone
+rag: retrieval-eval eval score
+
+# HW 2 rebuilt from the source documents: download, ingestion, then `make rag`. AWS updates its
+# documents (a new Well-Architected Framework edition on 16.11.2026), so rag-data can fail on a
+# changed document's hash, and a new chunks.jsonl makes cache misses (paid calls, F25)
+rag-rebuild: rag-data ingest rag
 
 # extract all 30 documents -> results/runs/jsonl/<run_id>.jsonl (resumable)
 # + a readable mirror results/runs/md/<run_id>.md, rewritten after every record
