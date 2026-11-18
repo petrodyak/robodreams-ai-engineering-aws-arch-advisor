@@ -7,6 +7,7 @@ from evals.retrieval import (
     recall_at,
     reciprocal_rank,
     relevant_fixed_ids,
+    relevant_share,
 )
 from evals.testset import TestItem
 from tests.rag_search_fixtures import chunk
@@ -24,6 +25,14 @@ def test_recall_and_mrr():
     assert recall_at(ranked, relevant, 2) == 1
     assert reciprocal_rank(ranked, relevant) == 0.5
     assert reciprocal_rank(ranked, {"z"}) == 0.0
+
+
+def test_relevant_share_counts_every_relevant_chunk():
+    """recall@k is satisfied by one relevant chunk; the share is not (F29)."""
+    ranked, relevant = ["a", "x", "y", "b"], {"a", "b", "c"}
+    assert recall_at(ranked, relevant, 2) == 1
+    assert relevant_share(ranked, relevant, 2) == pytest.approx(1 / 3)
+    assert relevant_share(ranked, relevant, 4) == pytest.approx(2 / 3)
 
 
 def _fixed(chunk_id: str, text: str):
@@ -73,6 +82,8 @@ def test_evaluate_retrieval():
     )  # fmt: skip
     assert r["recall@5"] == pytest.approx(1 / 3)  # only q1 within 5
     assert r["recall@10"] == pytest.approx(2 / 3)  # q2 at rank 6
+    assert r["relevant_share@5"] == pytest.approx(1 / 3)  # one relevant chunk each
+    assert r["relevant_share@10"] == pytest.approx(2 / 3)
     assert r["mrr"] == pytest.approx((1 / 2 + 1 / 6 + 0) / 3)
     assert r["misses"] == ["q3"]
     assert r["questions"] == 3
