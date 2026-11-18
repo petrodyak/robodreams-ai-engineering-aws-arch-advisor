@@ -129,7 +129,7 @@ Not a stage-1 Part, which is a piece of a chapter sent to the extraction model.
 _Avoid_: passage, segment, Part
 
 **Chunking Strategy**:
-How a Corpus Document is cut into Chunks: `structure` (on section boundaries, 250–450 tokens, no
+How a Corpus Document is cut into Chunks: `structure` (on section boundaries, a target of 250–450 tokens, no
 overlap, ADR-0007) or `fixed` (400-token windows with a 60-token overlap, the measured baseline).
 _Avoid_: splitter, chunker settings
 

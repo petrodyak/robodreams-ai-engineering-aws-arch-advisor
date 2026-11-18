@@ -285,14 +285,12 @@
     "structure": {
       "chunks": 2869,
       "starts_mid_sentence": 24,
-      "cut_tables": 29,
       "avg_tokens": 270,
       "max_tokens": 480
     },
     "fixed": {
       "chunks": 3102,
       "starts_mid_sentence": 137,
-      "cut_tables": 72,
       "avg_tokens": 398,
       "max_tokens": 400
     }

@@ -216,21 +216,17 @@ def chunk_fixed(
 
 
 def chunk_stats(chunks: list[ChunkRecord]) -> dict:
-    """How often a chunk starts mid-sentence or cuts a table row, and the chunk sizes (lesson 6)."""
+    """How often a chunk starts mid-sentence, and the chunk sizes (lesson 6).
+
+    The lesson's "cut tables" count is not kept (F27): it counted any line with a "|" that is not
+    a whole table row, and in this corpus those are link titles ("... | AWS Big Data Blog"), not
+    tables. PDF tables reach the chunker as plain lines, so there is nothing to count them by.
+    """
     mid = sum(1 for c in chunks if c.text[:1].islower())
-    cut_tables = sum(
-        1
-        for c in chunks
-        if any(
-            "|" in line and not (line.startswith("|") and line.endswith("|"))
-            for line in c.text.strip().split("\n")
-        )
-    )
     sizes = [c.n_tokens for c in chunks] or [0]
     return {
         "chunks": len(chunks),
         "starts_mid_sentence": mid,
-        "cut_tables": cut_tables,
         "avg_tokens": round(sum(sizes) / len(sizes)),
         "max_tokens": max(sizes),
     }

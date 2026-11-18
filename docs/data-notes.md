@@ -105,6 +105,12 @@ What the 34 documents of `data/rag/manifest.csv` look like to the ingestion code
   best practices in its appendix. 1,057 chunks are exact duplicates; each stays in the pillar.
 - **PDF tables come out as narrow columns.** pypdf extracts table cells as short wrapped lines, which is
   most of the 24 structure chunks that "start mid-sentence". Not fixed: it is extraction noise.
+  So tables are kept as tables (`| a | b |` rows) only from HTML: 10 chunks. The lesson's
+  "cut tables" count was dropped from `chunk_stats` (F27): it matched any line with a `|`, and in
+  the PDFs that is a link title ("… | AWS Big Data Blog"), not a table.
+- **Chunks without a section, and heading-only chunks.** 70 chunks have an empty `section_path`
+  (35 HTML, 35 PDF): the text before a document's first heading. 11 chunks are a heading line alone
+  (F28, open).
 - **HTML.** The article is `#main-col-body`; `<awsdocs-view>` wraps the whole page, so `awsdocs-*`
   tags are dropped only inside the article (language banner, copyright, "Did this page help you?").
 
