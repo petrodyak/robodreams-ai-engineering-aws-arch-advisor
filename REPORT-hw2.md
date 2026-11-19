@@ -41,7 +41,7 @@ enter the retrieval eval.
 | Chunking | structure-aware, 2,869 chunks (avg 270, max 480 tokens) vs fixed 400 / 60: 3,102 windows |
 | Retrieval | hybrid + rerank: recall@5 **1.00**, MRR 0.81 on 20 labelled questions (vector only: 0.70 / 0.64) |
 | Answers (prompt v2, k = 5) | judge pass **0.80**, faithfulness **0.99**, right "I don't know" **4 / 4**, false "I don't know" **0 / 20**, an expected source cited **20 / 20** |
-| Judges | agree with Petro's 17 hand labels: correctness 88 % (κ 0.77), faithfulness 100 % (κ 1.00) |
+| Judges | agree with Petro's 17 hand labels on his first pass: correctness 82 % (κ 0.65), faithfulness 94 % (κ 0.77); after he re-read the 4 disagreements: 88 % (κ 0.77) and 100 % (κ 1.00) |
 | Cost | **$0.65 per 1,000 questions** (Claude Haiku 5.5; embeddings and reranking run locally, $0) |
 | CI | `make eval-ci` in GitHub Actions: 6 thresholds, answers and verdicts replayed from `evals/cache/` |
 
@@ -166,13 +166,19 @@ documents, which costs vector and hybrid search, not the reranked hybrid.
 
 - **Context.** The top k = 5 hits in rank order, labelled `[S1]…[S5]`, each with its title and
   Section Path, within a budget of 3,000 tokens. A block that does not fit is skipped, never cut.
+  On this testset the budget never binds: five chunks are at most 5 × 480 = 2,400 tokens, the
+  contexts are 1,096–2,020 tokens, and in none of the 96 saved answers (4 runs × 24 items) did the
+  budget skip a hit. What limits the context is k; the budget is a guard, covered by a unit test.
+  It counts chunk text only: with about 1,600 tokens of context a request is about 3,900 input
+  tokens (system prompt, schema, block headers and the question are the rest).
 - **Answer.** Claude Haiku 5.5 (effort `medium`, no sampling parameters) returns structured output:
   `found` and a list of claims, each with its source labels.
 - **Checks in code.** Unknown labels are dropped, and a claim left with no valid label is removed.
   Each label is resolved to its document, section and page, so a citation names a real source.
 - **"I don't know".** With no hits, or `found = false`, the answer is
   "The documents available to me do not answer this question." When there are no hits, no call is
-  made.
+  made. The search has no relevance cut-off and returns k hits for any question, so for a question
+  outside the corpus the refusal rests on rule 5 of the prompt (section 10).
 
 The k sweep (prompt v1, 24 items, `evals/results/*__k{3,5,8}.summary.json`):
 
@@ -237,6 +243,13 @@ missed something. The other 2 (old02, old03) stay judge errors (F24, section 8).
 80 % bar set in the spec, so the judge prompt stays v1. Every judge number in this report comes from
 these calibrated judges.
 
+How to read the two columns. The raw column is the independent measurement: the labels were made
+before the judges ran. The re-check looked only at the disagreements, and a re-check of
+disagreements can only raise agreement, so the second column is an upper reading. The conclusion
+holds on the raw one: 82 % is above the bar. The faithfulness figures rest on few positive cases:
+of the 17 answers only 3 have a claim its sources do not support (2 in the first pass), so its κ
+says little about how well the judge catches an unsupported claim.
+
 ## 7. Evals in CI
 
 `.github/workflows/evals.yml` runs on every pull request (on the merge of the branch into `main`) and
@@ -259,6 +272,9 @@ The cache key is the model, the effort, and the sha256 of the system prompt, the
 - More than 30 new calls in one run (answers and verdicts together) fail it before the 31st call.
   The worst case is about $0.2 per run.
 - CI never commits.
+- A green run with 0 new calls checks the search live (recall@5 on the runner) and that the
+  committed answers and verdicts still belong to the same prompt, context and model. It measures
+  answer quality anew only when one of those changed, which is when the misses become calls.
 
 **Thresholds** (`config/eval_thresholds.yaml`): the v2 baseline minus a margin of 0.05, rounded down
 to 0.05. On 20 answerable items one item is 0.05, so each threshold allows at most one more failed
@@ -363,6 +379,11 @@ an eval cost: they run once per change, and their verdicts are cached.
 
 - **Small testset.** 24 items, so one item moves a rate by 0.05 (0.25 on `none`). The thresholds
   allow exactly one more failure. A larger testset would make them less coarse.
+- **No held-out questions (F32).** Rule 5 of prompt v2 was written for none02 and none04, and the
+  4 / 4 right "I don't know" is measured on the same four `none` items; the thresholds come from
+  that run too. The search returns k hits for any question, with no relevance cut-off, so the
+  refusal is the prompt's alone. Next: 8–10 `none` questions that were not seen while the prompt
+  was edited, and a second signal for the stage-3 agent (for example the reranker score).
 - **Two-part questions (F23).** Retrieval returns one search's top 5. Query decomposition belongs to
   the stage-3 agent, which calls `search` once per part.
 - **Correctness judge (F24).** It reads the reference, not the sources. A judge v2 could also read
