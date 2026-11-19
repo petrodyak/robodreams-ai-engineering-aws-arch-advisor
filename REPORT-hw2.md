@@ -40,7 +40,7 @@ enter the retrieval eval.
 | Corpus | 34 public AWS documents, 12 PDF + 22 HTML, 1.05 M tokens, 1,057 duplicate chunks removed |
 | Chunking | structure-aware, 2,869 chunks (avg 270, max 480 tokens) vs fixed 400 / 60: 3,102 windows |
 | Retrieval | hybrid + rerank: recall@5 **1.00**, MRR 0.81 on 20 labelled questions (vector only: 0.70 / 0.64) |
-| Answers (prompt v2, k = 5) | judge pass **0.80**, faithfulness **0.99**, right "I don't know" **4 / 4**, false "I don't know" **0 / 20**, an expected source cited **20 / 20** |
+| Answers (prompt v2, k = 5) | judge pass **0.80**, faithfulness **0.99**, right "I don't know" **4 / 4** (held-out check: **9 / 10**), false "I don't know" **0 / 20**, an expected source cited **20 / 20** |
 | Judges | agree with Petro's 17 hand labels on his first pass: correctness 82 % (κ 0.65), faithfulness 94 % (κ 0.77); after he re-read the 4 disagreements: 88 % (κ 0.77) and 100 % (κ 1.00) |
 | Cost | **$0.65 per 1,000 questions** (Claude Haiku 5.5; embeddings and reranking run locally, $0) |
 | CI | `make eval-ci` in GitHub Actions: 6 thresholds, answers and verdicts replayed from `evals/cache/` |
@@ -203,6 +203,34 @@ specific value asked for, or no source covers the product asked about. Measured 
 
 The stricter rule cost no false "I don't know" on the 20 answerable items. v2 is the configured
 prompt.
+
+**Held-out check of "I don't know" (patch 20.7, F32).** The 4 / 4 above is measured on the items
+rule 5 was written on (none02, none04), so it is not independent evidence. `evals/testset_heldout.jsonl`
+holds 10 more no-answer questions, written on 19.11 after prompt v2 and the thresholds were fixed.
+Each was checked against `chunks.jsonl` and the top 5 of `hybrid_rerank`: the corpus names the
+topic and does not hold the answer. Three ask for a value (held01–held03), three for another
+platform (held04–held06: Snowflake, Azure, BigQuery), and four for an AWS service or tool the
+corpus only names (held07–held10), a case rule 5 does not spell out. `make eval-heldout`, prompt
+v2, k = 5, checked by code (`found == false`), no judge:
+
+| set | questions | right "I don't know" | answered instead |
+|---|---|---|---|
+| testset `none` (the prompt was written on two of them) | 4 | 4 / 4 | — |
+| held-out | 10 | **9 / 10** | held10 |
+
+- Expected: held10 "How do I schedule an Apache Airflow DAG in Amazon MWAA to start an AWS Glue
+  job?" → "I don't know"; the corpus names Amazon MWAA as an external scheduler and gives no steps.
+- Got: three cited claims: MWAA orchestrates workflows as DAGs, an external scheduler such as MWAA
+  can run job workflows, and AWS Glue has its own workflows. Each is in its source, and none says
+  how to schedule a DAG.
+- Why: the last sentence of rule 5 ("when the sources answer part of the question about the same
+  subject, that part is an answer") lets a related statement about the right service pass as a
+  partial answer to a "how do I" question. This is the v1 failure of none04 again, one level
+  narrower: the product is covered, the task is not.
+
+The prompt and the thresholds were not edited on this result, and the held-out set is not part of
+the CI gate, so the 24-item numbers of this report are unchanged. With 10 questions one item is
+0.10, so 9 / 10 says "mostly holds", not a rate.
 
 ## 6. Evals: testset, scorers, judges
 
@@ -370,7 +398,8 @@ The traps worked as designed:
 | one answer, k = 5, prompt v2: avg 3,863 input / 528 output tokens | Claude Haiku 5.5 | **$0.65 per 1,000 questions** |
 | scoring one run of 24 items: 40 judge calls (all verdicts) | Claude Sonnet 5.5 | $0.21 (≈ $8.9 per 1,000 scored questions; eval only) |
 | a CI run with a warm cache | — | $0 |
-| HW 2 in total, all paid runs to step 19 | | $0.61 of the $5 budget |
+| the 10 held-out answers (patch 20.7), no judge | Claude Haiku 5.5 | $0.005 |
+| HW 2 in total, all paid runs to patch 20.7 | | $0.61 of the $5 budget |
 
 The cost per 1,000 questions is the answer cost, the one a user of the system pays. The judges are
 an eval cost: they run once per change, and their verdicts are cached.
@@ -379,11 +408,13 @@ an eval cost: they run once per change, and their verdicts are cached.
 
 - **Small testset.** 24 items, so one item moves a rate by 0.05 (0.25 on `none`). The thresholds
   allow exactly one more failure. A larger testset would make them less coarse.
-- **No held-out questions (F32).** Rule 5 of prompt v2 was written for none02 and none04, and the
-  4 / 4 right "I don't know" is measured on the same four `none` items; the thresholds come from
-  that run too. The search returns k hits for any question, with no relevance cut-off, so the
-  refusal is the prompt's alone. Next: 8–10 `none` questions that were not seen while the prompt
-  was edited, and a second signal for the stage-3 agent (for example the reranker score).
+- **"I don't know" rests on the prompt alone (F32).** The held-out check (§5) gave 9 / 10, and
+  the one miss (held10) is a related statement passing as an answer to a "how do I" question.
+  The search returns k hits for any question, with no relevance cut-off, so the refusal is the
+  prompt's alone. The CI threshold still comes from the four `none` items. Next, for the stage-3
+  agent: a second signal (for example the reranker score), a rule 5 that separates "the service
+  is covered" from "the task is covered", measured on new questions, and the held-out set in the
+  gate.
 - **Two-part questions (F23).** Retrieval returns one search's top 5. Query decomposition belongs to
   the stage-3 agent, which calls `search` once per part.
 - **Correctness judge (F24).** It reads the reference, not the sources. A judge v2 could also read

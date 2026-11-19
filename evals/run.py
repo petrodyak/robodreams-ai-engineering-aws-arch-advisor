@@ -10,6 +10,9 @@
 - `judge-estimate` (step 19): the judges' input tokens over the latest run, from count_tokens.
 - `score` (step 19): scorers + judges over the latest run -> evals/results/<run_id>.json.
 - `calibrate` (step 19): the judges on Petro's hand labels -> evals/results/calibration.json.
+- `heldout` (`make eval-heldout`, patch 20.7, F32): the held-out no-answer questions of
+  evals/testset_heldout.jsonl through `answer`, behind their own cache -> evals/results/heldout__*.
+  Not part of the CI gate: the questions were written after prompt v2 and the thresholds.
 - `ci` (`make eval-ci`, step 20, spec §8): recall@5 of hybrid_rerank, the answers and the verdicts
   behind the caches, the score, and the thresholds of config/eval_thresholds.yaml -> evals/results/ci/
   (not in Git: the workflow uploads it). Exit 1 on a broken threshold, a stale cache or the cost
@@ -33,7 +36,8 @@ from evals.cache import (
 from evals.calibration import load_calibration
 from evals.judge import JUDGE_MAX_TOKENS
 from evals.retrieval import evaluate_retrieval, relevant_fixed_ids
-from evals.score import CostMeter, calibrate, score_run
+from evals.score import CostMeter, _records, calibrate, score_run
+from evals.scorers import abstain_correct
 from evals.testset import TestItem, load_testset
 from evals.thresholds import check, load_thresholds
 from src.rag.config import load_config
@@ -58,6 +62,9 @@ JUDGE_OUTPUT_GUESS = 600
 # 24 items), above the CI guard of 30 (spec §8), which applies to `make eval-ci` in step 20.
 LOCAL_JUDGE_MAX_MISSES = 100
 DEPTH = 10  # recall@10 and MRR read the top 10
+HELDOUT = Path("evals/testset_heldout.jsonl")
+# Its own cache file: the CI gate replays answers.jsonl only, so held-out answers never touch it.
+HELDOUT_CACHE = Path("evals/cache/heldout_answers.jsonl")
 CI_DIR = RESULTS_DIR / "ci"  # gitignored; uploaded as the workflow artifact
 
 # The config of this run: config/rag.yaml, with `--prompt` applied (set by main()).
@@ -459,6 +466,65 @@ def ci_run(
     return 0
 
 
+def heldout_run(
+    items: list[TestItem],
+    index: Index,
+    llm,
+    cfg,
+    *,
+    cache_path: Path = HELDOUT_CACHE,
+    out_dir: Path = RESULTS_DIR,
+) -> dict:
+    """The held-out no-answer questions through `answer` (F32).
+
+    The four `none` items of the testset are the ones rule 5 of prompt v2 was written on, so their
+    4 / 4 says little. These questions were written after the prompt and the thresholds were fixed
+    and neither is edited on their result. A correct answer is a refusal, which code checks
+    (`abstain_correct`): no judge is called.
+    """
+    answerable = [it.id for it in items if it.answerable]
+    if answerable:
+        sys.exit(f"{HELDOUT} holds no-answer items only, not {answerable}")
+    rid = run_id(llm.model, cfg.prompt_version, llm.effort, cfg.k)
+    cache = EvalCache(cache_path, live=True)
+    rows = run_items(
+        items,
+        index,
+        CachedLLM(llm, cache),
+        cfg,
+        k=cfg.k,
+        budget=sweep_budget(cfg.k, cfg.context_budget),
+    )
+    recs = _records(rows)
+    answered = [it.id for it in items if not abstain_correct(it, recs[it.id])]
+    summary = {
+        "run_id": rid,
+        "items": len(items),
+        "abstained": len(items) - len(answered),
+        "abstain_accuracy": (len(items) - len(answered)) / len(items),
+        "answered_ids": answered,
+        "new_calls": cache.misses,
+        "cost_usd": sum(r["cost_usd"] for r in rows),
+    }
+    out_dir.mkdir(parents=True, exist_ok=True)
+    lines = "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows)
+    (out_dir / f"heldout__{rid}.jsonl").write_text(lines, encoding="utf-8")
+    (out_dir / f"heldout__{rid}.json").write_text(
+        json.dumps(summary, indent=2) + "\n", encoding="utf-8"
+    )
+    return summary
+
+
+def heldout() -> None:
+    cfg, _, index, llm = _answer_setup()
+    s = heldout_run(load_testset(HELDOUT), index, llm, cfg)
+    print(
+        f'heldout {s["run_id"]}: right "I don\'t know" {s["abstained"]}/{s["items"]}, '
+        f"answered instead: {' '.join(s['answered_ids']) or '-'}, "
+        f"new calls {s['new_calls']}, ${s['cost_usd']:.4f}"
+    )
+
+
 def ci_recall(items: list[TestItem], index: Index, cfg) -> float:
     """recall@5 of hybrid_rerank over the labelled items, on the index the answers use.
 
@@ -505,6 +571,7 @@ COMMANDS = (
     "judge-estimate",
     "score",
     "calibrate",
+    "heldout",
     "ci",
 )
 
@@ -534,6 +601,7 @@ def main() -> None:
         "judge-estimate": judge_estimate,
         "score": score,
         "calibrate": calibrate_judges,
+        "heldout": heldout,
         "ci": ci,
     }
     what, _CFG = parse_args()

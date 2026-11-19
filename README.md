@@ -181,6 +181,7 @@ key. `make rag-rebuild` (`rag-data ingest rag`) rebuilds from the source documen
 | `make retrieval-eval` | recall@5 / recall@10 / MRR of 5 search configurations → `evals/results/retrieval.json` | $0 (local models) |
 | `make eval` | the 24 testset questions through RAG → `evals/results/<run_id>.jsonl` | $0 from the cache; ≈ $0.016 for a fresh run |
 | `make score` | deterministic scorers + the two judges → `evals/results/<run_id>.json` | $0 from the cache; ≈ $0.21 for fresh verdicts |
+| `make eval-heldout` | the 10 held-out no-answer questions of `evals/testset_heldout.jsonl` → `evals/results/heldout__<run_id>.json` (not in the CI gate) | $0 from the cache; ≈ $0.005 for a fresh run |
 
 The answers and the judge verdicts are cached in `evals/cache/` (committed), so a clean clone replays
 them for free; only a changed prompt, model or context makes a new paid call. The first run downloads
@@ -210,6 +211,7 @@ the fastembed models (~150 MB) into `.cache/`.
 | judge pass rate | 0.80 |
 | faithfulness | 0.99 |
 | right "I don't know" | 4 / 4 |
+| right "I don't know" on 10 held-out questions written after the prompt | 9 / 10 |
 | false "I don't know" | 0 / 20 |
 | cost | $0.65 per 1,000 questions |
 

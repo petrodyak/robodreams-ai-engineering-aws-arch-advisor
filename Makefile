@@ -77,6 +77,11 @@ calibration-sheet:
 calibrate:
 	uv run python -m evals.run calibrate
 
+# HW 2 held-out "I don't know" check (patch 20.7, F32): 10 no-answer questions written after prompt v2
+# -> evals/results/heldout__*; cached like `make eval` ($0 on a clean clone), not part of the CI gate
+eval-heldout:
+	uv run python -m evals.run heldout $(if $(RAG_PROMPT),--prompt $(RAG_PROMPT))
+
 # HW 2 CI gate (spec §8, the GitHub workflow runs it): recall@5 of hybrid_rerank, cached answers and
 # verdicts, score, config/eval_thresholds.yaml -> evals/results/ci/; exit 1 on a broken threshold, a stale
 # cache (no ANTHROPIC_API_KEY and a miss) or more than 30 new calls

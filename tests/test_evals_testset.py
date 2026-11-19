@@ -11,6 +11,7 @@ from src.rag.index import load_chunks
 
 TESTSET = Path("evals/testset.jsonl")
 CHUNKS = Path("data/rag/chunks.jsonl")
+HELDOUT = Path("evals/testset_heldout.jsonl")
 
 
 def test_testset_items_valid():
@@ -69,3 +70,14 @@ def test_testset_composition():
             assert set(it.relevant_chunk_ids) <= chunk_ids, it.id
             assert it.expected_sources, it.id
         assert it.verified_by and it.verified_on, it.id
+
+
+def test_heldout_items_are_no_answer_and_new():
+    """The held-out set (F32): no-answer questions only, none of them shared with the testset."""
+    held = load_testset(HELDOUT)
+    main = load_testset(TESTSET)
+    assert len(held) == 10
+    assert all(it.kind == "no_answer" and not it.relevant_chunk_ids for it in held)
+    assert all(it.verified_by for it in held)
+    assert not {it.id for it in held} & {it.id for it in main}
+    assert not {it.question for it in held} & {it.question for it in main}
