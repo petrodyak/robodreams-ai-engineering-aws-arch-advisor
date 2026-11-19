@@ -1,0 +1,11 @@
+{
+  "run_id": "claude-haiku-5-5__v2__medium__k5",
+  "items": 10,
+  "abstained": 9,
+  "abstain_accuracy": 0.9,
+  "answered_ids": [
+    "held10"
+  ],
+  "new_calls": 10,
+  "cost_usd": 0.0050174
+}
