@@ -97,6 +97,11 @@ def answer_not_contains(run: TaskRun, check: dict) -> bool:
     return not any(term.lower() in text for term in check["terms"])
 
 
+def answer_regex(run: TaskRun, check: dict) -> bool:
+    """The answer matches `pattern` (e.g. the eu-central-1 quota and its number in one sentence)."""
+    return re.search(check["pattern"], _answer(run, check)) is not None
+
+
 def answer_in_english(run: TaskRun, check: dict) -> bool:
     return not CYRILLIC.search("\n".join(run.answers))
 
@@ -112,6 +117,7 @@ CHECKS: dict[str, Callable[[TaskRun, dict], bool]] = {
     "stop": stop,
     "answer_contains": answer_contains,
     "answer_not_contains": answer_not_contains,
+    "answer_regex": answer_regex,
     "answer_in_english": answer_in_english,
 }
 

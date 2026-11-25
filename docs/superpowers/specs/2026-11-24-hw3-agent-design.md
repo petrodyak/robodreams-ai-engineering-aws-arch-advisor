@@ -286,6 +286,8 @@ call, local and MCP, that replaces the real response:
 | `schema` | `get_service_quota` rows come back with `default` renamed to `value` | the client validates every MCP response with Pydantic; the error goes to the trace and to the model as `is_error`; no silent `None` reaches the answer |
 | `duplicate` | `record_finding` commits, then the connection "drops" | `record_finding` is never retried automatically; if the model calls it again, the `UNIQUE` key answers `already recorded`; the registry holds one row |
 
+*(Amended 25.11)* A real timeout (a read-only tool that runs past `tool_timeout_s` in its worker thread) is reported as unavailable after one attempt and is not retried: the abandoned thread may still be running, so a retry would start a second copy. The injected `timeout` is retried like a 503, because nothing runs behind it.
+
 A fault can be limited to one tool (`FAULTS=503:search_corpus`). The faults in effect are written to the
 trace. The wrapper's retries are attempts of one tool call: the trace counts them (`attempts`),
 `max_repeats` does not *(amended 25.11)*.

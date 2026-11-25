@@ -1,0 +1,36 @@
+{
+  "id": "payments-core",
+  "team": "payments",
+  "name": "Payments core",
+  "description": "The payment authorisation service of the payments team: an API in front of Lambda functions that store payment intents in DynamoDB and sign requests with KMS keys.",
+  "region": "eu-west-1",
+  "updated": "2026-11-10",
+  "components": [
+    {
+      "service": "Amazon API Gateway",
+      "purpose": "Public payments API",
+      "settings": {"endpoint_type": "regional", "waf": true, "throttling_rps": 2000}
+    },
+    {
+      "service": "AWS Lambda",
+      "purpose": "Payment authorisation logic",
+      "settings": {"reserved_concurrency": 500, "timeout_seconds": 10}
+    },
+    {
+      "service": "Amazon DynamoDB",
+      "purpose": "Payment intents table",
+      "settings": {"point_in_time_recovery": true, "global_table": true, "capacity_mode": "on-demand"}
+    },
+    {
+      "service": "AWS Key Management Service",
+      "purpose": "Signing and encryption keys",
+      "settings": {"key_rotation": true, "multi_region_keys": true}
+    }
+  ],
+  "nfr": {
+    "rpo_minutes": 1,
+    "rto_minutes": 15,
+    "availability": 99.99,
+    "budget_usd_month": 20000
+  }
+}

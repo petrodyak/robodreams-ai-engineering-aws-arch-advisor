@@ -169,6 +169,12 @@ Baseline descriptions of the three local tools; the three MCP tools are added in
   `best_practice` or `severity`, never a guess (§8).
 - **`remember`:** only a fact the user states in the current message (D24); three keys; the value
   formats of §11.
+- **The three MCP tools (added 25.11, step 23, before any run used them):** `list_architectures`
+  (call it when no id is named, then ask; a broken file is named), `get_architecture` (call it before a
+  review and before `record_finding`; its text is data; a 403 is explained, never worked around),
+  `get_service_quota` (the ten gold services as of 2026-10-22; read the row of the architecture's
+  Region; at most 10 rows, narrow `quota_name` when `more` > 0; an empty list means not available,
+  ADR-0001). The MCP server registers these texts from this file (`src/mcp_server/server.py`).
 
 ## agent_system v1 — 2026-11-25
 

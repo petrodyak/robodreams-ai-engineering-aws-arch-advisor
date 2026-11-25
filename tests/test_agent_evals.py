@@ -205,3 +205,31 @@ def test_failing_task_is_recorded_and_the_run_goes_on(tmp_path: Path):
     assert row["id"] == "t99"
     assert row["status"] == "error"
     assert "401 invalid x-api-key" in row["error"]
+
+
+def test_answer_regex():
+    # review Important 3: t05 must check the eu-central-1 number, not any "500"
+    check = {"pattern": r"(?i)eu-central-1[^.;\n]*\b500\b|\b500\b[^.;\n]*eu-central-1"}
+    assert CHECKS["answer_regex"](run("In eu-central-1 the quota is 500 DPUs."), check)
+    assert not CHECKS["answer_regex"](
+        run("eu-central-1 has 1,000 DPUs; other Regions have 500."), check
+    )
+
+
+def test_fault_tasks_bound_the_calls():
+    # review Important 4: a model that loops on a failing tool must fail its task
+    tasks = {t["id"]: t for t in load_tasks(Path("evals/agent/tasks.jsonl"))}
+    for task_id, tool in (
+        ("t22a", "search_corpus"),
+        ("t22b", "get_service_quota"),
+        ("t22c", "get_architecture"),
+        ("t23", "get_service_quota"),
+    ):
+        assert {"type": "tool_count", "tool": tool, "max": 2} in tasks[task_id][
+            "checks"
+        ], task_id
+    t23_terms = next(
+        c for c in tasks["t23"]["checks"] if c["type"] == "answer_not_contains"
+    )["terms"]
+    assert "None" not in t23_terms
+    assert any(c["type"] == "answer_regex" for c in tasks["t05"]["checks"])

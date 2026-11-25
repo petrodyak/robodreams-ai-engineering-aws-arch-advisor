@@ -121,3 +121,19 @@ def test_apply_faults_wraps_only_matching_tools():
     assert ok.faults == []
     assert search.calls == 0
     assert quota.calls == 1
+
+
+def test_owner_faults_tag_only_their_tool():
+    # first MCP fault run (25.11): `duplicate` was tagged on every tool's calls in the trace
+    search, record = Spy(), Spy()
+    registry = {
+        "search_corpus": ToolEntry(fn=search, args_model=NoArgs, read_only=True),
+        "record_finding": ToolEntry(fn=record, args_model=NoArgs, read_only=False),
+        "get_service_quota": ToolEntry(fn=Spy(), args_model=NoArgs, read_only=True),
+    }
+    wrapped = apply_faults(
+        registry, parse_faults("duplicate,schema"), sleep=lambda _: None
+    )
+    assert execute("search_corpus", {}, wrapped, timeout=1.0).faults == []
+    assert execute("record_finding", {}, wrapped, timeout=1.0).faults == ["duplicate"]
+    assert execute("get_service_quota", {}, wrapped, timeout=1.0).faults == ["schema"]

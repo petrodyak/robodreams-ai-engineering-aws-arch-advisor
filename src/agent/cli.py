@@ -114,7 +114,7 @@ def run_chat(
     return 0
 
 
-def _build_session(args: argparse.Namespace, out: TextIO):
+def _build_session(args: argparse.Namespace, out: TextIO, mcp: Any):
     from dotenv import load_dotenv
 
     from src.agent.config import load_agent_config
@@ -145,6 +145,7 @@ def _build_session(args: argparse.Namespace, out: TextIO):
         confirm=confirm,
         faults=parse_faults(args.faults or os.environ.get("FAULTS", "")),
         rag_cfg=rag_cfg,
+        mcp=mcp,
     )
 
 
@@ -186,12 +187,23 @@ def main(argv: list[str] | None = None) -> int:
     out = sys.stdout
     if args.findings or args.resolve is not None:
         return _findings(args.resolve, out)
-    session = _build_session(args, out)
-    if args.ask:
-        print_result(session.ask(args.ask), out)
-        session.close()
-        return 0
-    return run_chat(session, sys.stdin, out)
+    from src.agent.mcp_client import McpTools
+
+    team = os.environ.get("TEAM", "data-platform")
+    try:
+        mcp = McpTools(team).__enter__()
+    except RuntimeError as error:  # one clear line, not a traceback (Review Focus 2)
+        sys.stderr.write(f"{error}\n")
+        return 1
+    try:
+        session = _build_session(args, out, mcp)
+        if args.ask:
+            print_result(session.ask(args.ask), out)
+            session.close()
+            return 0
+        return run_chat(session, sys.stdin, out)
+    finally:
+        mcp.__exit__(None, None, None)
 
 
 if __name__ == "__main__":

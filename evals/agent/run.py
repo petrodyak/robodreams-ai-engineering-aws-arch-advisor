@@ -13,6 +13,7 @@ import argparse
 import json
 import time
 from collections.abc import Callable
+from contextlib import ExitStack
 from dataclasses import asdict
 from datetime import date, datetime
 from pathlib import Path
@@ -21,6 +22,7 @@ from typing import Any
 from evals.agent.checks import TaskRun, TaskScore, score_task
 from src.agent.config import AgentConfig, load_agent_config
 from src.agent.faults import parse_faults
+from src.agent.mcp_client import McpTools
 from src.agent.session import AgentSession, system_blocks
 from src.agent.store import Store
 from src.agent.tracing import Tracer, make_langfuse
@@ -162,7 +164,12 @@ def task_row(
 
 
 def _session_factory(
-    cfg: AgentConfig, llm: Any, index: Any, rag_cfg: Any, run_id: str | None = None
+    cfg: AgentConfig,
+    llm: Any,
+    index: Any,
+    rag_cfg: Any,
+    run_id: str | None = None,
+    mcp_for: Callable[[str], Any] = lambda _team: None,
 ):
     def make(
         task: dict, store: Store, tracer: Tracer, confirm: ScriptedConfirm
@@ -182,6 +189,7 @@ def _session_factory(
             # the backoff of injected faults never waits in an eval (§7)
             sleep=lambda _: None,
             run_id=run_id,
+            mcp=mcp_for(task.get("team", "data-platform")),
         )
 
     return make
@@ -239,7 +247,20 @@ def main(argv: list[str] | None = None) -> int:
     llm = ToolUseLLM(cfg.model, cfg.effort, cfg.max_tokens_per_call)
     rag_cfg = load_config()
     index = build_agent_index(rag_cfg, overlay=False)
-    make = _session_factory(cfg, llm, index, rag_cfg)
+    with ExitStack() as stack:
+        servers: dict[str, McpTools] = {}
+
+        def mcp_for(team: str) -> McpTools:
+            """One MCP server per team, started on first use and closed at the end of the run."""
+            if team not in servers:
+                servers[team] = stack.enter_context(McpTools(team))
+            return servers[team]
+
+        return _run(args, cfg, llm, index, rag_cfg, tasks, mcp_for)
+
+
+def _run(args, cfg, llm, index, rag_cfg, tasks, mcp_for) -> int:
+    make = _session_factory(cfg, llm, index, rag_cfg, mcp_for=mcp_for)
 
     if args.estimate:
         probe = make(
@@ -253,7 +274,9 @@ def main(argv: list[str] | None = None) -> int:
 
     run_dir = next_run_dir(RESULTS, datetime.now().date(), cfg.prompt_version)
     run_dir.mkdir(parents=True)
-    make = _session_factory(cfg, llm, index, rag_cfg, run_id=run_dir.name)
+    make = _session_factory(
+        cfg, llm, index, rag_cfg, run_id=run_dir.name, mcp_for=mcp_for
+    )
     langfuse = make_langfuse()
     rows = []
     for task in tasks:

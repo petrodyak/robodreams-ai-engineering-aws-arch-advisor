@@ -1,5 +1,5 @@
 # Every target runs inside the uv-managed .venv (`uv run` syncs it first if needed).
-.PHONY: install data text rag-data ingest index retrieval-candidates retrieval-eval ask eval-estimate eval eval-sweep judge-estimate score calibration-sheet calibrate eval-ci rag rag-rebuild run estimate runs-md metrics schema gold-drafts gold-check check agent agent-ask agent-eval agent-estimate findings findings-resolve langfuse-check
+.PHONY: install data text rag-data ingest index retrieval-candidates retrieval-eval ask eval-estimate eval eval-sweep judge-estimate score calibration-sheet calibrate eval-ci rag rag-rebuild run estimate runs-md metrics schema gold-drafts gold-check check agent agent-ask agent-eval agent-estimate findings findings-resolve langfuse-check mcp-inspect
 
 # One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`,
 # `make run MODEL=qwen2.5-7b`, `make run SAMPLING=t05 GOLD=1` (Golden Set only), or
@@ -114,9 +114,11 @@ metrics:
 estimate:
 	uv run python main.py $(RUN_ARGS) --estimate
 
-# the JSON Schema both models receive -> docs/service-document.schema.json
+# the JSON Schema both models receive -> docs/service-document.schema.json, and the HW 3
+# architecture schema -> architectures/architecture.schema.json
 schema:
 	uv run python -m scripts.export_schema
+	uv run python -m scripts.export_architecture_schema
 
 # Golden Set (data/gold/README.md): drafts from claude__v1__t0 (never overwrites a file),
 # then the list of endpoint rows to check by hand against the PDF
@@ -146,6 +148,11 @@ findings:
 
 findings-resolve:
 	uv run python -m src.agent.cli --resolve $(ID)
+
+# the MCP server alone, over the agent's own stdio client (spec D15): its tools, or one call,
+# e.g. `make mcp-inspect TOOL=get_architecture ARGS='{"architecture_id": "payments-core"}'`
+mcp-inspect:
+	uv run python -m scripts.mcp_inspect --team $(or $(TEAM),data-platform) $(if $(TOOL),--tool $(TOOL)) $(if $(ARGS),--args '$(ARGS)')
 
 # Langfuse keys and region (.env): one test trace, no Claude call ($0); prints the trace URL
 langfuse-check:

@@ -1,0 +1,64 @@
+{
+  "id": "lakehouse-iceberg",
+  "team": "data-platform",
+  "name": "Lakehouse on Apache Iceberg",
+  "description": "The analytics lakehouse of the data platform: source extracts land in a raw layer, nightly Glue jobs build silver and gold Iceberg tables in S3 Tables, analysts and BI dashboards query them with Athena, and Lake Formation controls who sees which tables and columns.",
+  "region": "eu-central-1",
+  "updated": "2026-11-20",
+  "components": [
+    {
+      "service": "Amazon S3 Tables",
+      "purpose": "Iceberg tables of the raw, silver and gold layers in one table bucket",
+      "settings": {
+        "table_bucket": "lakehouse-prod",
+        "tables": 140,
+        "backup": "none",
+        "cross_region_replication": false,
+        "encryption": "SSE-S3",
+        "compaction": "enabled",
+        "snapshot_expiration_days": 7,
+        "raw_layer_retention": "none"
+      }
+    },
+    {
+      "service": "AWS Glue",
+      "purpose": "Nightly Spark ETL jobs from the raw layer to silver and gold, and the Data Catalog",
+      "settings": {
+        "concurrent_jobs": 30,
+        "dpus_per_job": 20,
+        "worker_type": "G.1X",
+        "schedule": "02:00 UTC, all jobs at once",
+        "max_retries": 0,
+        "job_timeout_minutes": 2880,
+        "failure_alerts": false
+      }
+    },
+    {
+      "service": "Amazon Athena",
+      "purpose": "Ad hoc and BI queries on the gold tables",
+      "settings": {
+        "engine_version": 3,
+        "workgroup": "analysts",
+        "bytes_scanned_cutoff_per_query": "none",
+        "query_results_encrypted": false,
+        "monthly_queries": 60000
+      }
+    },
+    {
+      "service": "AWS Lake Formation",
+      "purpose": "Table, column and row permissions on the catalog with LF-tags",
+      "settings": {
+        "permission_model": "LF-tags",
+        "data_lake_admins": 6,
+        "iam_allowed_principals_on_new_tables": false,
+        "cross_account_sharing": false
+      }
+    }
+  ],
+  "nfr": {
+    "rpo_minutes": 1440,
+    "rto_minutes": 480,
+    "availability": 99.5,
+    "budget_usd_month": 8000
+  }
+}

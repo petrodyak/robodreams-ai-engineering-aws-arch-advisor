@@ -248,3 +248,21 @@ def test_summary_length_checked_in_code(summary):
     outcome = record(ctx, summary=summary)
     assert outcome.is_error
     assert store.findings() == []
+
+
+def test_normalize_bp_strips_brackets_and_quotes():
+    # step 22 review, minor 13
+    assert normalize_bp("[REL09-BP01]") == "REL09-BP01"
+    assert normalize_bp('"rel09-bp01"') == "REL09-BP01"
+    assert normalize_bp("(SEC08-BP02).") == "SEC08-BP02"
+
+
+def test_read_only_never_updates_an_open_row():
+    # step 22 review, minor 8: read_only never writes, not even the hash of an open row
+    ctx, store, _ = context(autonomy="auto")
+    record(ctx)
+    ctx.autonomy = "read_only"
+    ctx.arch_hashes["lakehouse-iceberg"] = "hash-2"
+    outcome = record(ctx)
+    assert outcome.text.startswith("already open")
+    assert store.findings()[0].architecture_hash == "hash-1"

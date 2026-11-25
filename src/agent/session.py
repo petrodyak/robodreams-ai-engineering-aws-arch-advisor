@@ -66,7 +66,9 @@ class AgentSession:
         self.team = team
         self.confirm = confirm
         self.faults = faults or []
-        self.mcp = mcp  # Task 23.3
+        self.mcp = (
+            mcp  # McpTools (src/agent/mcp_client.py), or None for local tools only
+        )
         self.rag_cfg = rag_cfg or load_config()
         self.supersedes = supersedes or {}
         self.sleep = sleep
@@ -117,11 +119,20 @@ class AgentSession:
             ),
             "record_finding": make_record_finding(self.findings_ctx),
         }
-        self.registry = apply_faults(local, self.faults, sleep=self.sleep)
         self.tools = [
             tool_spec(name, entry.args_model, self.descriptions)
-            for name, entry in self.registry.items()
+            for name, entry in local.items()
         ]
+        if self.mcp is not None:  # the three registry tools of the MCP server (step 23)
+            local.update(
+                self.mcp.entries(
+                    self.faults,
+                    arch_hashes=self.arch_hashes,
+                    timeout=self.cfg.limits.tool_timeout_s,
+                )
+            )
+            self.tools += self.mcp.specs()
+        self.registry = apply_faults(local, self.faults, sleep=self.sleep)
 
     def _messages(self, question: str) -> list[dict]:
         """This session's earlier questions and answers as text, then the question (§11)."""
