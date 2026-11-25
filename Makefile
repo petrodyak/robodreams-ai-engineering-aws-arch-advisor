@@ -1,5 +1,5 @@
 # Every target runs inside the uv-managed .venv (`uv run` syncs it first if needed).
-.PHONY: install data text rag-data ingest index retrieval-candidates retrieval-eval ask eval-estimate eval eval-sweep judge-estimate score calibration-sheet calibrate eval-ci rag rag-rebuild run estimate runs-md metrics schema gold-drafts gold-check check
+.PHONY: install data text rag-data ingest index retrieval-candidates retrieval-eval ask eval-estimate eval eval-sweep judge-estimate score calibration-sheet calibrate eval-ci rag rag-rebuild run estimate runs-md metrics schema gold-drafts gold-check check agent agent-ask agent-eval agent-estimate findings findings-resolve langfuse-check
 
 # One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`,
 # `make run MODEL=qwen2.5-7b`, `make run SAMPLING=t05 GOLD=1` (Golden Set only), or
@@ -125,6 +125,31 @@ gold-drafts:
 
 gold-check:
 	uv run python -m scripts.check_gold --set $(SET)
+
+# HW 3 agent (spec §3, §13). The chat; one question with every [y/N] answered no; the task set
+# (e.g. `make agent-eval ARGS="--tasks t19,t22a"`) and its cost estimate first (free count_tokens);
+# the findings registry (var/agent.db) and marking one finding resolved.
+agent:
+	uv run python -m src.agent.cli $(if $(FAULTS),--faults $(FAULTS))
+
+agent-ask:
+	uv run python -m src.agent.cli --yes-never --ask "$(Q)"
+
+agent-eval:
+	uv run python -m evals.agent.run $(ARGS)
+
+agent-estimate:
+	uv run python -m evals.agent.run --estimate $(ARGS)
+
+findings:
+	uv run python -m src.agent.cli --findings
+
+findings-resolve:
+	uv run python -m src.agent.cli --resolve $(ID)
+
+# Langfuse keys and region (.env): one test trace, no Claude call ($0); prints the trace URL
+langfuse-check:
+	uv run python -m src.agent.tracing --check
 
 # pre-commit gates (docs/GIT_RULES.md §1): all three always run, exit non-zero if any failed;
 # `schema` first, so a schema.py change always lands in the documented schema file

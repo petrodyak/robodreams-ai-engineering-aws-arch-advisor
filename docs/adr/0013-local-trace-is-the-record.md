@@ -16,7 +16,7 @@ traces in Langfuse too, and made it a mandatory deliverable on 25.11 (spec D16).
   (tokens, $, latency), the tool calls (arguments, result truncated to 500 characters, error, attempts,
   faults), the critic verdicts, the retrieved chunk ids, the stop reason and the totals. Eval runs write
   it next to their results; the checks read only this file.
-- **Langfuse, the mirror** (cloud, Python SDK v4; keys `LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`,
+- **Langfuse, the mirror** (cloud, Python SDK 5.2 — the spec planned v4, the calls are the same; keys `LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`,
   `LANGFUSE_BASE_URL` in `.env`): one trace per request grouped by session id, a generation per Claude
   call, a span per tool call (MCP ones included), stop reason, faults, prompt version and run id as
   metadata and tags, `/up` / `/down` and each eval task's pass / fail as scores.
