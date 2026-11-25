@@ -34,6 +34,9 @@ RESULTS = Path("evals/agent/results")
 EST_CALLS = 4
 EST_GROWTH_TOKENS = 1_500
 EST_OUTPUT_TOKENS = 1_500
+REVIEW_FACTOR = (
+    2.5  # a measured six-pillar review against the question estimate (step 22)
+)
 
 
 def load_tasks(path: Path = TASKS) -> list[dict]:
@@ -57,10 +60,15 @@ class ScriptedConfirm:
     def __init__(self) -> None:
         self.answers: list[bool] = []
         self.asked = 0
+        self.yes = (
+            0  # the questions answered yes: the only writes with permission (review I5)
+        )
 
     def __call__(self, _prompt: str, _args: dict) -> bool:
         self.asked += 1
-        return self.answers.pop(0) if self.answers else False
+        answer = self.answers.pop(0) if self.answers else False
+        self.yes += answer
+        return answer
 
 
 def task_config(cfg: AgentConfig, task: dict) -> AgentConfig:
@@ -87,6 +95,115 @@ def run_command(session: Any, command: str) -> str:
     raise ValueError(f"unknown task command {command!r}")
 
 
+TOOL_CHECKS = (
+    "tools_called",
+    "tools_not_called",
+    "tool_count",
+    "distinct_args",
+    "arg_contains",
+)
+MCP_TOOLS = ("list_architectures", "get_architecture", "get_service_quota")
+
+
+def _rate(values: list[float]) -> dict:
+    return {
+        "mean": round(sum(values) / len(values), 4) if values else None,
+        "min": round(min(values), 4) if values else None,
+        "max": round(max(values), 4) if values else None,
+    }
+
+
+def aggregate(runs: list[list[dict]]) -> dict:
+    """Metrics over one or more runs of the task set (lesson 11 `aggregate`, spec §13).
+
+    The pass rate leaves `invalid` tasks out of the denominator (the thing they test did not happen).
+    `unconfirmed_actions` counts findings written beyond the [y/N] questions asked (target 0).
+    """
+    rates = []
+    for rows in runs:
+        valid = [r for r in rows if r["status"] != "invalid"]
+        rates.append(
+            sum(r["status"] == "passed" for r in valid) / len(valid) if valid else 0.0
+        )
+    rows = [r for run in runs for r in run]
+    valid = [r for r in rows if r["status"] != "invalid"]
+    # "the share of tasks with the required tools called": over the tasks that require tools (their
+    # `tools_called` checks), MCP ones separately; an error row is not a pass (review I4)
+    required = [r for r in valid if r.get("required") and r["status"] != "error"]
+    tools_ok = [
+        r.get("status") == "passed" or "tools_called" not in r.get("failed", [])
+        for r in required
+    ]
+    mcp = [
+        ok
+        for r, ok in zip(required, tools_ok, strict=True)
+        if set(r["required"]) & set(MCP_TOOLS)
+    ]
+    ignoring_tools = []  # for the ablations: a pass if only tool checks failed (review I7)
+    for run_rows in runs:
+        v = [r for r in run_rows if r["status"] != "invalid"]
+        ok = [
+            r["status"] == "passed" or set(r.get("failed", [])) <= set(TOOL_CHECKS)
+            for r in v
+        ]
+        ignoring_tools.append(sum(ok) / len(ok) if ok else 0.0)
+    stops: dict[str, int] = {}
+    for r in rows:
+        for s in r.get("stops", []):
+            stops[s] = stops.get(s, 0) + 1
+    n = len(rows) or 1
+    return {
+        "runs": len(runs),
+        "pass_rate": _rate(rates),
+        "tools_ok": round(sum(tools_ok) / len(tools_ok), 4) if tools_ok else None,
+        "tools_ok_mcp": round(sum(mcp) / len(mcp), 4) if mcp else None,
+        "pass_rate_ignoring_tool_checks": _rate(ignoring_tools),
+        "unconfirmed_actions": sum(
+            max(0, r.get("writes", 0) - r.get("confirmed_yes", r.get("confirms", 0)))
+            for r in rows
+        ),
+        "steps_per_task": round(sum(r["steps"] for r in rows) / n, 2),
+        "usd_per_task": round(sum(r["usd"] for r in rows) / n, 6),
+        "seconds_per_task": round(sum(r["seconds"] for r in rows) / n, 1),
+        "usd": round(sum(r["usd"] for r in rows), 6),
+        "stops": stops,
+        "invalid": sum(r["status"] == "invalid" for r in rows),
+        "errors": sum(r["status"] == "error" for r in rows),
+    }
+
+
+def stability(runs: list[list[dict]]) -> dict[str, float]:
+    """The share of runs in which each task passed (lesson 9 / 11 `stability`)."""
+    ids = [r["id"] for r in runs[0]]
+    if any([r["id"] for r in run] != ids for run in runs):
+        raise ValueError("stability needs runs of the same tasks (review M4)")
+    return {
+        tid: sum(r["status"] == "passed" for run in runs for r in run if r["id"] == tid)
+        / len(runs)
+        for tid in ids
+    }
+
+
+def write_metrics(run_dirs: list[Path]) -> int:
+    """`--aggregate`: metrics and stability over several runs, written next to the first run."""
+    runs = [
+        json.loads((d / "summary.json").read_text(encoding="utf-8"))["tasks"]
+        for d in run_dirs
+    ]
+    out = {
+        "runs": [d.name for d in run_dirs],
+        "metrics": aggregate(runs),
+        "stability": stability(runs),
+    }
+    target = run_dirs[0].parent / f"metrics-{'+'.join(d.name for d in run_dirs)}.json"
+    target.write_text(
+        json.dumps(out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    print(json.dumps(out["metrics"], indent=2))
+    print(f"wrote {target}")
+    return 0
+
+
 def send_task_score(tracer: Tracer, traces: list[dict], score: TaskScore) -> None:
     """Each task's pass / fail as a Langfuse score on every trace it made (spec §12)."""
     comment = score.status + (f": {', '.join(score.failed)}" if score.failed else "")
@@ -107,22 +224,25 @@ def run_task(
     tracer = Tracer(trace_path, langfuse=langfuse)
     confirm = ScriptedConfirm()
     session = make_session(task, store, tracer, confirm)
-    answers, results = [], []
+    answers, results, command_outputs = [], [], []
     for i, script in enumerate(task["sessions"]):
         if i > 0:
             session.new()
         for step in script:
             if "command" in step:
-                run_command(session, step["command"])
+                command_outputs.append(run_command(session, step["command"]))
                 continue
             confirm.answers = list(step.get("confirm", []))
             result = session.ask(step["user"])
             answers.append(result.answer)
             results.append(result)
     session.close()
-    traces = [
-        json.loads(line) for line in trace_path.read_text(encoding="utf-8").splitlines()
-    ]
+    lines = (
+        trace_path.read_text(encoding="utf-8").splitlines()
+        if trace_path.exists()
+        else []
+    )
+    traces = [json.loads(line) for line in lines]
     run = TaskRun(
         task_id=task["id"],
         answers=answers,
@@ -130,6 +250,9 @@ def run_task(
         traces=traces,
         findings=store.findings(),
         confirms_asked=confirm.asked,
+        facts=store.facts(),
+        command_outputs=command_outputs,
+        confirmed_yes=confirm.yes,
     )
     return run, tracer
 
@@ -164,9 +287,45 @@ def task_row(
             "tools": [c["name"] for t in traces for c in t.get("tool_calls", [])],
             "answers": [],
         }
-    score = score_task(run, task)
+    try:
+        score = score_task(run, task)
+    except Exception as error:  # noqa: BLE001 - a broken check must not lose the run (review I6)
+        return {
+            "id": task["id"],
+            "kind": task["kind"],
+            "status": "error",
+            "failed": [],
+            "error": f"check failed: {type(error).__name__}: {error}",
+            "stops": [r.stop for r in run.results],
+            "steps": sum(t["totals"].get("steps", 0) for t in run.traces),
+            "usd": round(sum(t["totals"].get("usd", 0.0) for t in run.traces), 6),
+            "seconds": round(time.perf_counter() - started, 1),
+            "tools": [c["name"] for c in run.tool_calls()],
+            "answers": run.answers,
+        }
     send_task_score(tracer, run.traces, score)
+    # a write is a recorded or reopened finding, or one committed before a dropped connection
+    writes = sum(
+        1
+        for c in run.tool_calls()
+        if c["name"] == "record_finding"
+        and (
+            (c.get("data") or {}).get("status") in ("recorded", "reopened")
+            or c.get("result", "").startswith("ERROR: connection lost after the write")
+        )
+    )
     return {
+        "writes": writes,
+        "confirms": run.confirms_asked,
+        "confirmed_yes": run.confirmed_yes,
+        "required": sorted(
+            {
+                t
+                for c in task["checks"]
+                if c["type"] == "tools_called"
+                for t in c["tools"]
+            }
+        ),
         "id": task["id"],
         "kind": task["kind"],
         **asdict(score),
@@ -187,6 +346,7 @@ def _session_factory(
     run_id: str | None = None,
     mcp_for: Callable[[str], Any] = lambda _team: None,
     run_dir: Path | None = None,
+    ablation: str | None = None,
 ):
     def make(
         task: dict, store: Store, tracer: Tracer, confirm: ScriptedConfirm
@@ -207,6 +367,7 @@ def _session_factory(
             # an eval's /down rows stay in its run directory, never in the repo's file (review I1)
             candidates_path=(run_dir or Path(".")) / "feedback_candidates.jsonl",
             mcp=mcp_for(task.get("team", "data-platform")),
+            ablation=ablation,
         )
 
     return make
@@ -227,7 +388,13 @@ def estimate(
                 system, tools, [{"role": "user", "content": step["user"]}]
             )
             calls_in = sum(first + i * EST_GROWTH_TOKENS for i in range(EST_CALLS))
-            cost += (calls_in * price_in + EST_OUTPUT_TOKENS * price_out) / 1_000_000
+            # a review sends six pillar searches: measured about 2.5x a question (step 22)
+            factor = REVIEW_FACTOR if step["user"].lower().startswith("review") else 1.0
+            cost += (
+                factor
+                * (calls_in * price_in + EST_OUTPUT_TOKENS * price_out)
+                / 1_000_000
+            )
         print(f"  {task['id']:6s} {len(turns)} turn(s)  ≈ ${cost:.4f}")
         total += cost
     print(f"estimate for {len(tasks)} task(s): ≈ ${total:.4f}")
@@ -246,11 +413,23 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument(
         "--estimate", action="store_true", help="print the cost estimate, run nothing"
     )
-    p.add_argument("--fixed-rag", action="store_true", help="ablation (Task 25.2)")
-    p.add_argument("--no-memory", action="store_true", help="ablation (Task 25.2)")
+    p.add_argument(
+        "--fixed-rag", action="store_true", help="ablation: one search, no search tool"
+    )
+    p.add_argument(
+        "--no-memory", action="store_true", help="ablation: no memory block, no history"
+    )
+    p.add_argument(
+        "--aggregate", nargs="+", metavar="RUN_DIR", help="metrics over these run dirs"
+    )
     args = p.parse_args(argv)
-    if args.fixed_rag or args.no_memory:
-        raise SystemExit("not yet: the ablations arrive in Task 25.2")
+    if args.aggregate:
+        return write_metrics([Path(d) for d in args.aggregate])
+    if args.fixed_rag and args.no_memory:
+        raise SystemExit("one ablation at a time")
+    args.ablation = (
+        "fixed_rag" if args.fixed_rag else "no_memory" if args.no_memory else None
+    )
 
     load_dotenv()  # ANTHROPIC_API_KEY
     cfg = load_agent_config()
@@ -290,10 +469,20 @@ def _run(args, cfg, llm, index, rag_cfg, tasks, mcp_for) -> int:
         estimate(tasks, cfg, llm, lambda: probe.tools)
         return 0
 
-    run_dir = next_run_dir(RESULTS, datetime.now().date(), cfg.prompt_version)
+    label = cfg.prompt_version + (
+        f"-{args.ablation.replace('_', '-')}" if args.ablation else ""
+    )
+    run_dir = next_run_dir(RESULTS, datetime.now().date(), label)
     run_dir.mkdir(parents=True)
     make = _session_factory(
-        cfg, llm, index, rag_cfg, run_id=run_dir.name, mcp_for=mcp_for, run_dir=run_dir
+        cfg,
+        llm,
+        index,
+        rag_cfg,
+        run_id=run_dir.name,
+        mcp_for=mcp_for,
+        run_dir=run_dir,
+        ablation=args.ablation,
     )
     langfuse = make_langfuse()
     rows = []
@@ -316,6 +505,10 @@ def _run(args, cfg, llm, index, rag_cfg, tasks, mcp_for) -> int:
         "errors": sum(r["status"] == "error" for r in rows),
         "total": len(rows),
         "usd": round(sum(r["usd"] for r in rows), 6),
+        "ablation": args.ablation,
+        "max_tokens_per_call": cfg.max_tokens_per_call,  # review M8: v3-run2 had 4000, run3 8000
+        "limits": cfg.limits.model_dump(),
+        "metrics": aggregate([rows]),
     }
     (run_dir / "summary.json").write_text(
         json.dumps(summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"

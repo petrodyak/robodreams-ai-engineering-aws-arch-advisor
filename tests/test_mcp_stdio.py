@@ -69,3 +69,15 @@ def test_server_without_team_fails_with_one_line():
     with pytest.raises(RuntimeError) as error, McpTools("nobody"):
         pass
     assert str(error.value).startswith("MCP server did not start:")
+
+
+def test_mcp_inspect_bad_team_is_one_line(capsys):
+    # step 23 review minor 4: a bad TEAM gives one line, not a traceback
+    import asyncio
+
+    from scripts.mcp_inspect import inspect
+
+    assert asyncio.run(inspect("nobody", None, {})) == 1
+    err = capsys.readouterr().err
+    assert err.startswith("MCP server did not start:")
+    assert "Traceback" not in err

@@ -14,6 +14,9 @@ def test_load_agent_config_values():
     cfg = load_agent_config()
     assert cfg.model == "claude-haiku-5-5"
     assert cfg.effort == "medium"
+    assert (
+        cfg.max_tokens_per_call == 8000
+    )  # a six-pillar review with thinking was cut at 4000 (F33)
     assert cfg.today == date(2026, 11, 24)
     assert cfg.autonomy == "confirm"
     assert cfg.k == 5

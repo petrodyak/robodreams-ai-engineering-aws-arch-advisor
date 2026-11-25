@@ -439,3 +439,128 @@ def test_overlay_ids_are_not_known_best_practices(tmp_path: Path):
     )
     assert "ZZZ01-BP99" not in s.known_bp
     assert "REL09-BP01" in s.known_bp
+
+
+def test_fixed_rag_has_no_search_tool(tmp_path: Path):
+    # Task 25.2 ablation: one search with the raw question before the loop, no search tool
+    llm = FakeLLM(turn("Back up all data [S1]."))
+    s = AgentSession(
+        CFG,
+        llm=llm,
+        index=Index(CHUNKS, embed_fn=fake_embed, rerank_fn=fake_rerank),
+        store=Store(":memory:"),
+        tracer=Tracer(tmp_path / "t.jsonl"),
+        team="data-platform",
+        confirm=lambda *_: False,
+        sleep=lambda _: None,
+        ablation="fixed_rag",
+    )
+    s.ask("back up all data")
+    request = llm.requests[0]
+    assert "search_corpus" not in [t["name"] for t in request["tools"]]
+    assert "<document" in request["messages"][-1]["content"]
+
+
+def test_no_memory_sends_only_the_question(tmp_path: Path):
+    store = Store(":memory:")
+    store.set_fact("region", "eu-central-1")
+    llm = FakeLLM(turn("first"), turn("second"))
+    s = AgentSession(
+        CFG,
+        llm=llm,
+        index=Index(CHUNKS, embed_fn=fake_embed, rerank_fn=fake_rerank),
+        store=store,
+        tracer=Tracer(tmp_path / "t.jsonl"),
+        team="data-platform",
+        confirm=lambda *_: False,
+        sleep=lambda _: None,
+        ablation="no_memory",
+    )
+    s.ask("one")
+    s.ask("two")
+    assert llm.requests[1]["messages"] == [{"role": "user", "content": "two"}]
+
+
+def test_reject_validates_the_id(tmp_path: Path):
+    # step 24 review M3
+    s = session(FakeLLM(turn("a")), tmp_path)
+    s.arch_hashes["lakehouse-iceberg"] = "h"
+    s.last_arch = "lakehouse-iceberg"
+    assert s.reject("REL9-BP1", "x").startswith(
+        "not a Well-Architected best-practice id"
+    )
+    assert s.store.rejections("lakehouse-iceberg", "h") == []
+
+
+def test_rejection_reaches_the_history_meta(tmp_path: Path):
+    # step 24 review M1: the history summary names what was rejected
+    s = session(FakeLLM(turn("a"), turn("b")), tmp_path)
+    s.arch_hashes["lakehouse-iceberg"] = "h"
+    s.last_arch = "lakehouse-iceberg"
+    s.reject("REL09-BP01", "copied nightly")
+    s.ask("next")
+    assert s.store.history(s.session_id)[-1].meta["rejected"] == ["REL09-BP01"]
+
+
+def test_only_an_unavailable_service_excuses_not_covered():
+    # step 24 review M7: an argument error is not a reason to leave pillars "not covered"
+    from src.agent.loop import CallRecord
+    from src.agent.session import service_stopped
+    from src.agent.tools import ToolOutcome
+
+    def call(text):
+        return CallRecord(
+            step=1,
+            name="get_architecture",
+            input={},
+            outcome=ToolOutcome(text=text, is_error=True),
+            ms=1,
+        )
+
+    assert service_stopped(
+        [call("ERROR: service unavailable (429) after 3 attempts; tell the user")]
+    )
+    assert service_stopped([call("ERROR: MCP server unavailable")])
+    assert not service_stopped([call("ERROR: severity is missing: ask the user")])
+
+
+def test_fixed_rag_search_is_traced(tmp_path: Path):
+    # review I7: the ablation's one search must reach the trace (labels, retrieved chunks)
+    llm = FakeLLM(turn("Back up all data [S1]."))
+    s = AgentSession(
+        CFG,
+        llm=llm,
+        index=Index(CHUNKS, embed_fn=fake_embed, rerank_fn=fake_rerank),
+        store=Store(":memory:"),
+        tracer=Tracer(tmp_path / "t.jsonl"),
+        team="data-platform",
+        confirm=lambda *_: False,
+        sleep=lambda _: None,
+        ablation="fixed_rag",
+    )
+    s.ask("back up all data")
+    line = json.loads(
+        (tmp_path / "t.jsonl").read_text(encoding="utf-8").splitlines()[-1]
+    )
+    assert line["retrieved_chunk_ids"]
+    assert line["tool_calls"][0]["name"] == "search_corpus"
+
+
+def test_schema_fault_excuses_not_covered():
+    # review M5
+    from src.agent.loop import CallRecord
+    from src.agent.session import service_stopped
+    from src.agent.tools import ToolOutcome
+
+    text = "ERROR: the quota service returned an unexpected format (quotas.0.default); do not use its numbers"
+    assert service_stopped(
+        [
+            CallRecord(
+                step=1,
+                name="get_service_quota",
+                input={},
+                outcome=ToolOutcome(text=text, is_error=True),
+                ms=1,
+            )
+        ]
+    )

@@ -21,12 +21,13 @@ from src.agent.context import build_messages, episode_text, make_remember, memor
 from src.agent.critic import critic
 from src.agent.faults import Fault, apply_faults
 from src.agent.findings import (
+    BP_PATTERN,
     Confirm,
     FindingContext,
     make_record_finding,
     normalize_bp,
 )
-from src.agent.loop import TurnResult, run_turn
+from src.agent.loop import CallRecord, TurnResult, run_turn
 from src.agent.search_tool import (
     OVERLAY_DOC,
     SearchArgs,
@@ -41,6 +42,19 @@ from src.rag.config import RagConfig, load_config
 from src.rag.index import Index
 
 PROMPTS_DIR = Path("prompts")
+
+
+def service_stopped(calls: list) -> bool:
+    """A tool's service was unavailable or its budget used up: the only reasons a review may leave a
+    pillar "not covered" (D25; step 24 review M7). An argument error is not one of them."""
+    reasons = (
+        "ERROR: service unavailable",
+        "ERROR: MCP server unavailable",
+        "budget for this tool is used up",
+        "ERROR: the quota service returned an unexpected format",  # the schema fault (review M5)
+        "ERROR: the registry service returned an unexpected format",
+    )
+    return any(c.outcome.is_error and c.outcome.text.startswith(reasons) for c in calls)
 
 
 def rejection_note(rows: list[dict]) -> str:
@@ -79,6 +93,7 @@ class AgentSession:
         on_tool: Callable[[Any], None] = lambda _: None,
         run_id: str | None = None,
         candidates_path: Path = Path("evals/agent/feedback_candidates.jsonl"),
+        ablation: str | None = None,  # "fixed_rag" or "no_memory" (spec §13, Task 25.2)
         today_fn: Callable[[], date] = date.today,
     ):
         self.cfg = cfg
@@ -100,6 +115,9 @@ class AgentSession:
         self.on_tool = on_tool
         self.run_id = run_id
         self.candidates_path = candidates_path
+        if ablation not in (None, "fixed_rag", "no_memory"):
+            raise ValueError(f"unknown ablation {ablation!r}")
+        self.ablation = ablation
         self.last_trace_id: str | None = None
         self.last_result: TurnResult | None = None
         self.last_question = ""
@@ -114,6 +132,12 @@ class AgentSession:
         self.system = system_blocks(cfg, team)
         self.descriptions = load_descriptions(cfg.tools_version)
         self._question = ""  # the user's message of the current turn (D24)
+        self._fixed_context = (
+            ""  # --fixed-rag: the chunks of the one search of this request
+        )
+        self._rejected_now: list[
+            str
+        ] = []  # /reject since the last answer, for its meta
         store.purge_sessions(today_fn())
         self._start()
 
@@ -164,6 +188,8 @@ class AgentSession:
                 self.store, self.cfg.autonomy, lambda: self._question
             ),
         }
+        if self.ablation == "fixed_rag":  # the search is not the model's decision (§13)
+            local.pop("search_corpus")
         self.tools = [
             tool_spec(name, entry.args_model, self.descriptions)
             for name, entry in local.items()
@@ -182,6 +208,12 @@ class AgentSession:
 
     def _messages(self, question: str) -> list[dict]:
         """memory block → summary of the dropped history → recent history → question (§6.1, §11)."""
+        if self.ablation == "no_memory":  # no memory block and no history (§13)
+            return [{"role": "user", "content": question}]
+        if (
+            self._fixed_context
+        ):  # --fixed-rag: the one search's chunks before the question (§13)
+            question = f"{self._fixed_context}\n\n{question}"
         memory = memory_block(self.store.facts(), self.rules(), self.store.episodes())
         history = self.store.history(self.session_id)
         return build_messages(memory, history, question, self.cfg.history_budget_tokens)
@@ -202,6 +234,10 @@ class AgentSession:
     ) -> dict | None:
         rows = self.store.rejections(architecture_id, architecture_hash)
         return next((r for r in rows if r["best_practice"] == bp), None)
+
+    def _take_rejected(self) -> list[str]:
+        taken, self._rejected_now = self._rejected_now, []
+        return taken
 
     def rejected_bp(self) -> set[str]:
         """Best practices rejected for the versions of the architectures read in this session."""
@@ -259,6 +295,11 @@ class AgentSession:
         if self.last_arch is None or self.last_arch not in self.arch_hashes:
             return "review an architecture first"
         best_practice = normalize_bp(bp)
+        if (
+            not BP_PATTERN.fullmatch(best_practice)
+            or best_practice not in self.known_bp
+        ):
+            return f"not a Well-Architected best-practice id of the corpus: {bp} (e.g. REL09-BP01)"
         arch, arch_hash = self.last_arch, self.arch_hashes[self.last_arch]
         self.store.add_rejection(
             arch, best_practice, reason, arch_hash, self.today_fn()
@@ -268,6 +309,7 @@ class AgentSession:
             self.store.resolve_finding(
                 open_row.id, self.today_fn()
             )  # the reason is in the rejection
+        self._rejected_now.append(best_practice)  # for the history summary (§11)
         return f"noted: {best_practice} will not be raised again for this version of {arch}"
 
     def forget(self, key: str) -> bool:
@@ -277,7 +319,6 @@ class AgentSession:
     def ask(self, question: str) -> TurnResult:
         self._question = question  # what `remember` checks a value against (D24)
         self.search_tool.new_request()
-        messages = self._messages(question)
         meta = {
             "model": self.cfg.model,
             "run_id": self.run_id,
@@ -294,6 +335,26 @@ class AgentSession:
                     self.on_tool(data["record"])
                 elif kind == "critic":
                     trace.critic(data["problems"])
+
+            self._fixed_context = ""
+            if self.ablation == "fixed_rag":
+                # one search with the raw question, before the loop, traced like a tool call so
+                # the trace keeps its labels and retrieved chunks (step 25 review, I7)
+                args = SearchArgs(
+                    query=question[:200], doc_types=None, published_from=None
+                )
+                outcome = self.search_tool.label(self.search_tool.search(args))
+                trace.tool_call(
+                    CallRecord(
+                        step=0,
+                        name="search_corpus",
+                        input=args.model_dump(mode="json"),
+                        outcome=outcome,
+                        ms=0,
+                    )
+                )
+                self._fixed_context = outcome.text
+            messages = self._messages(question)
 
             # the texts a number may come from (spec §10, check 3): this request's tool results,
             # the history and the question (the string messages), the memory block, the system prompt
@@ -321,7 +382,7 @@ class AgentSession:
                     + texts
                     + [self.system[0]["text"]],
                     rejected_bp=self.rejected_bp(),
-                    tools_failed=any(c.outcome.is_error for c in state.calls),
+                    tools_failed=service_stopped(state.calls),
                 )
 
             result = run_turn(
@@ -357,6 +418,7 @@ class AgentSession:
                         if c.name == "get_architecture" and not c.outcome.is_error
                     }
                 ),
+                "rejected": self._take_rejected(),
                 "recorded": [
                     normalize_bp(c.input.get("best_practice") or "")
                     for c in result.state.calls
