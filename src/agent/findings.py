@@ -109,6 +109,8 @@ class FindingContext:
     ]  # superseded editions and the adversarial overlay (Task 24.2)
     today: date
     faults: list[Fault] = field(default_factory=list)
+    # a rejection of (architecture, hash, best practice), or None (Task 24.4, spec §6.1)
+    rejected: Callable[[str, str, str], dict | None] = lambda *_: None
 
 
 def _not_done(text: str) -> ToolOutcome:
@@ -152,6 +154,12 @@ def make_record_finding(ctx: FindingContext) -> ToolEntry:
         arch_hash = ctx.arch_hashes.get(args.architecture_id)
         if arch_hash is None:
             return _not_done("read the architecture with get_architecture first")
+
+        rejection = ctx.rejected(args.architecture_id, arch_hash, bp)
+        if rejection is not None:
+            return _not_done(
+                f"rejected by the user on {rejection['created_at']}: {rejection['reason']}"
+            )
 
         existing = ctx.store.find_finding(args.architecture_id, bp)
         if existing is not None and existing.status == "open":

@@ -30,9 +30,14 @@ def console_confirm(stream_in: TextIO = sys.stdin, out: TextIO = sys.stdout):
         out.flush()
         try:
             answer = stream_in.readline()
-        except (EOFError, KeyboardInterrupt):
+        except EOFError:
             out.write("\n")
             return False
+        except (
+            KeyboardInterrupt
+        ):  # nothing is written, and the chat ends cleanly (Review Focus 5)
+            out.write("\n")
+            raise
         return answer.strip().lower() in ("y", "yes")
 
     return confirm
@@ -106,6 +111,20 @@ def run_chat(
         if name == "new":
             session.new()
             out.write(f"new session {session.session_id}\n")
+        elif name == "forget":
+            key = command[1]
+            done = session.forget(key) if key else False
+            out.write(f"forgot {key}\n" if done else f"no fact {key!r} to forget\n")
+        elif name == "up":
+            out.write(session.feedback_up() + "\n")
+        elif name == "down":
+            out.write(session.feedback_down(command[1]) + "\n")
+        elif name == "reject":
+            bp, _, reason = command[1].partition(" ")
+            if not bp or not reason.strip():
+                out.write("usage: /reject <best practice id> <reason>\n")
+            else:
+                out.write(session.reject(bp, reason.strip()) + "\n")
         elif name in COMMANDS:
             out.write(f"/{name}: {LATER}\n")
         else:
@@ -138,7 +157,8 @@ def _build_session(args: argparse.Namespace, out: TextIO, mcp: Any):
     return AgentSession(
         cfg,
         llm=ToolUseLLM(cfg.model, cfg.effort, cfg.max_tokens_per_call),
-        index=build_agent_index(rag_cfg, overlay=False),
+        # off in the chat by default, so a real review never retrieves the planted chunk (§10)
+        index=build_agent_index(rag_cfg, overlay=args.overlay),
         store=store,
         tracer=tracer,
         team=team,
@@ -175,6 +195,16 @@ def _findings(resolve: int | None, out: TextIO) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    try:
+        return _main(argv)
+    except (
+        KeyboardInterrupt
+    ):  # Ctrl-C while the MCP server starts or during --ask: no traceback
+        sys.stderr.write("\ninterrupted\n")
+        return 130
+
+
+def _main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--ask", help="one question, then exit (make agent-ask Q=…)")
     p.add_argument("--yes-never", action="store_true", help="answer no to every [y/N]")
@@ -183,6 +213,11 @@ def main(argv: list[str] | None = None) -> int:
         "--findings", action="store_true", help="print the findings registry"
     )
     p.add_argument("--resolve", type=int, help="mark one finding resolved")
+    p.add_argument(
+        "--overlay",
+        action="store_true",
+        help="add the adversarial chunk (OVERLAY=adversarial)",
+    )
     args = p.parse_args(argv)
     out = sys.stdout
     if args.findings or args.resolve is not None:

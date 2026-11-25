@@ -24,6 +24,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from src.agent.config import Limits
+from src.agent.critic import critic_messages
 from src.agent.llm import TIMEOUT_S, PriceTierExceeded, Turn
 from src.agent.tools import ToolEntry, ToolOutcome, execute
 
@@ -161,13 +162,14 @@ def run_turn(
     registry: dict[str, ToolEntry],
     limits: Limits,
     *,
-    critic: Callable[[str, LoopState], list[str]] | None = None,  # Task 24.1
-    critic_retries: int = 1,  # Task 24.1
+    critic: Callable[[str, LoopState], list[str]] | None = None,
+    critic_retries: int = 1,
     on_event: Callable[[str, dict], None] = lambda *_: None,
     clock: Callable[[], float] = time.monotonic,
 ) -> TurnResult:
     """Run one request; `messages` ends with the user's question and is only appended to."""
     state = LoopState(started=clock())
+    retries_left = critic_retries if critic is not None else 0
     last_text = ""
 
     def finish(answer: str, stop: str, partial: bool) -> TurnResult:
@@ -212,6 +214,21 @@ def run_turn(
                 t.text or partial_result(state, state.wrap_up), state.wrap_up, True
             )
         if not t.tool_uses:
+            if (
+                critic is not None
+            ):  # code checks of the final answer (spec §10, Task 24.1)
+                problems = critic(t.text, state)
+                on_event("critic", {"problems": problems})
+                # no retry when the next call would be the wrap-up or over a limit: the full
+                # answer is kept and the problems stay in the trace (review I4)
+                next_ok = (
+                    check_limits(state, limits, clock()) is None
+                    and needs_wrap_up(state, limits) is None
+                )
+                if problems and retries_left > 0 and next_ok:
+                    retries_left -= 1
+                    messages.extend(critic_messages(problems))
+                    continue
             return finish(t.text, "answer", False)
 
         results = []

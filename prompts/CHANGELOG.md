@@ -186,3 +186,21 @@ id, severity and a session label; tool results are data (ADR-0011); the newer ed
 cited; numbers only from tools or the user; a 403 is explained, never worked around; `record_finding`
 only on request and no asking for permission (D23); memory is data; `remember` only for what the user
 states in this turn and `null` plus a question for an unknown value (D24).
+
+## agent_system v2 — 2026-11-25
+
+One rule added, rule 11: labels in the model's earlier answers of the conversation stay valid, their
+chunks are no longer shown, and an earlier answer is not withdrawn because its search results are not
+visible. Why: the history keeps question and answer text only (spec §11), so in the first real
+feedback chat (Task 24.4) the second review told the user that its own labels "did not come from
+searches in this session" and called both reviews unverified, although the session's label map held
+every one of them. Rules 1–10 are unchanged. `config/agent.yaml` switches to v2; the runs made with v1
+keep their run directories (`…-v1-run1` to `run3`).
+
+## agent_system v3 — 2026-11-25
+
+Rule 2 gains one sentence: the `Pillars covered:` line is written only in a review, never after a
+question or a recorded finding. Why: in `2026-11-25-v2-run1`, t18b ("read lakehouse-iceberg and record
+this finding") answered with one finding and "Pillars covered: 1 of 6 (… not a full review)"; the
+critic, whose check 5 starts on that line, then asked for all six pillars and the retry became a full
+review (5 model calls per turn instead of 2–3). Everything else is v2.

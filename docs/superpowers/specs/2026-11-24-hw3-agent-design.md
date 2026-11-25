@@ -412,6 +412,13 @@ trace. The wrapper's retries are attempts of one tool call: the trace counts the
      has a citation: on a finding of that pillar, or next to its "no gap found" (D25)
      *(amended 25.11)*.
 
+  *(Amended 25.11, after the first run of the step 24 tasks)* Check 4 looks at the heads of `Finding`
+  lines only: an answer that names the rejected id to explain why it is left out does not raise it
+  (the earlier text match made the model drop a whole pillar on its retry, t29). Check 5 starts on the
+  `Pillars covered:` line only, which rule 2 asks every review to end with: one `Finding` line in an
+  answer to "record this finding" is not a review (the earlier trigger pushed t18b into a full review,
+  10 model calls instead of 3).
+
   A failed check goes back as a system message, in the form of §6 *(amended 25.11)*, for one more try (`critic_retries: 1`); the second answer
   is shown either way and the failure stays in the trace.
 - **Retrieved text is data.** Chunks reach the model inside `<document>` tags, with a system rule that

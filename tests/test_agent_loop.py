@@ -330,3 +330,73 @@ def test_price_tier_exceeded_is_counted_and_stops():
     assert result.partial is True
     assert result.state.steps == 1
     assert result.state.usd == 0.07
+
+
+def test_loop_critic_retry_once():
+    seen: list[list[str]] = []
+
+    def critic(answer: str, _state) -> list[str]:
+        return ["label [S9] is not a label of this session"] if "[S9]" in answer else []
+
+    def on_event(kind: str, data: dict) -> None:
+        if kind == "critic":
+            seen.append(data["problems"])
+
+    llm = FakeLLM(turn("Back up [S9]."), turn("Still [S9]."), turn("never"))
+    msgs = [{"role": "user", "content": "question"}]
+    result = run_turn(
+        llm,
+        SYSTEM,
+        TOOLS,
+        msgs,
+        registry(),
+        LIMITS,
+        critic=critic,
+        critic_retries=1,
+        on_event=on_event,
+    )
+    assert len(llm.requests) == 2
+    retry = llm.requests[1]["messages"]
+    assert [m["role"] for m in retry[-3:]] == ["assistant", "user", "system"]
+    assert (
+        result.answer == "Still [S9]."
+    )  # the second answer is shown even if it fails again
+    assert result.stop == "answer"
+    assert len(seen) == 2
+
+
+def test_loop_clean_answer_no_retry():
+    llm = FakeLLM(turn("Fine [S1]."))
+    result = run_turn(
+        llm,
+        SYSTEM,
+        TOOLS,
+        [{"role": "user", "content": "q"}],
+        registry(),
+        LIMITS,
+        critic=lambda *_: [],
+        critic_retries=1,
+    )
+    assert len(llm.requests) == 1
+    assert result.answer == "Fine [S1]."
+
+
+def test_no_critic_retry_when_the_next_call_is_wrap_up():
+    # review I4: a retry queued right before the wrap-up or a limit would throw away a full answer
+    script = [
+        turn(tool_uses=[("search_corpus", {"query": f"q{i}"})]) for i in range(10)
+    ]
+    llm = FakeLLM(*script, turn("Answer with [S9]."), turn("never"))
+    result = run_turn(
+        llm,
+        SYSTEM,
+        TOOLS,
+        [{"role": "user", "content": "q"}],
+        registry(),
+        LIMITS,
+        critic=lambda answer, _s: ["bad label"] if "[S9]" in answer else [],
+        critic_retries=1,
+    )
+    assert len(llm.requests) == 11
+    assert result.answer == "Answer with [S9]."
+    assert result.stop == "answer"

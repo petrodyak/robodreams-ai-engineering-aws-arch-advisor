@@ -214,7 +214,12 @@ class McpTools:
         return future.result(timeout + 5)
 
     def entries(
-        self, faults: list[Fault], *, arch_hashes: dict[str, str], timeout: float = 10.0
+        self,
+        faults: list[Fault],
+        *,
+        arch_hashes: dict[str, str],
+        timeout: float = 10.0,
+        on_architecture: Callable[[str, str], str] | None = None,
     ) -> dict[str, ToolEntry]:
         """One read-only ToolEntry per server tool: the call in the worker, validation on the main thread."""
         entries = {}
@@ -230,7 +235,12 @@ class McpTools:
                 args_model=args_model,
                 read_only=True,
                 finish=self._finisher(
-                    t.name, response_model, label, schema_fault, arch_hashes
+                    t.name,
+                    response_model,
+                    label,
+                    schema_fault,
+                    arch_hashes,
+                    on_architecture,
                 ),
             )
         return entries
@@ -256,6 +266,7 @@ class McpTools:
         label: str,
         schema_fault: bool,
         arch_hashes: dict[str, str],
+        on_architecture: Callable[[str, str], str] | None = None,
     ) -> Callable[[Any], ToolOutcome]:
         def finish(called: Any) -> ToolOutcome:
             if isinstance(called, ToolOutcome):
@@ -312,8 +323,17 @@ class McpTools:
                         is_error=True,
                     )
                 arch_hashes[data["id"]] = canonical_hash(data)
+                text = json.dumps(data, ensure_ascii=False)
+                # the agent code (not the server) attaches the rejections valid for this version (§6.1)
+                note = (
+                    on_architecture(data["id"], arch_hashes[data["id"]])
+                    if on_architecture
+                    else ""
+                )
+                if note:
+                    text += "\n\n" + note
                 return ToolOutcome(
-                    text=json.dumps(data, ensure_ascii=False),
+                    text=text,
                     is_error=False,
                     data={
                         "architecture_id": data["id"],

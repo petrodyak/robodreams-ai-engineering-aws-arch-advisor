@@ -12,7 +12,7 @@ today: 2026-11-24
 autonomy: confirm
 
 # versioned texts (prompts/agent_system_<v>.txt, prompts/agent_tools_<v>.json)
-prompt_version: v1
+prompt_version: v3
 tools_version: v1
 
 # search (spec §10): chunks per search; the relevance band threshold is measured in Task 22.4

@@ -13,6 +13,7 @@
   a threshold was measured (spec §10, Task 22.4 Step 5).
 """
 
+import json
 import re
 from datetime import date
 from html import escape
@@ -30,6 +31,10 @@ from src.rag.search import Filters, Hit, search
 
 CHUNKS_PATH = Path("data/rag/chunks.jsonl")
 OVERLAY_PATH = Path("data/agent/adversarial_chunks.jsonl")
+SUPERSEDES_PATH = Path("data/agent/supersedes.json")
+OVERLAY_DOC = "agent-overlay-adversarial"  # the planted chunk's doc_id; never a finding's source (§8)
+# any <document or </document inside a chunk's own text, in any case (ADR-0011)
+_TAG = re.compile(r"<(/?)(document)", flags=re.IGNORECASE)
 NOTHING_FOUND = (
     "no documents matched; try another query or say the corpus does not cover it"
 )
@@ -46,6 +51,39 @@ class SearchArgs(BaseModel):
     published_from: date | None = None
 
 
+def load_overlay(path: Path = OVERLAY_PATH) -> list[ChunkRecord]:
+    """The planted chunks of the adversarial overlay: complete ChunkRecords of `OVERLAY_DOC` (§10)."""
+    chunks = load_chunks(path)
+    stray = [c.chunk_id for c in chunks if c.doc_id != OVERLAY_DOC]
+    if stray:
+        raise ValueError(
+            f"overlay chunks must have doc_id {OVERLAY_DOC!r}: {', '.join(stray)}"
+        )
+    return chunks
+
+
+def load_supersedes(path: Path = SUPERSEDES_PATH) -> dict[str, str]:
+    """`{older doc_id: newer doc_id}`: real edition metadata, always on (§10)."""
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def edition_note(
+    chunk: ChunkRecord, supersedes: dict[str, str], published_by_doc: dict[str, date]
+) -> str | None:
+    """`older edition (2020-07-01), superseded by wa-framework (2024-11-06)`, or None (§10).
+
+    Only a chunk of a superseded document gets a note: two different documents with different
+    `published` dates are not a conflict.
+    """
+    newer = supersedes.get(chunk.doc_id)
+    if newer is None:
+        return None
+    note = f"older edition ({chunk.published.isoformat()}), superseded by {newer}"
+    if newer in published_by_doc:
+        note += f" ({published_by_doc[newer].isoformat()})"
+    return note
+
+
 def build_agent_index(
     rag_cfg: RagConfig,
     *,
@@ -60,7 +98,7 @@ def build_agent_index(
     if overlay:
         if not overlay_path.exists():
             raise FileNotFoundError(f"overlay is on but {overlay_path} does not exist")
-        chunks += load_chunks(overlay_path)
+        chunks += load_overlay(overlay_path)
     return Index(
         chunks,
         embed_fn=embed_fn or default_embed_fn(rag_cfg.embed_model),
@@ -170,13 +208,10 @@ class SearchTool:
         if band is not None:
             attrs.append(f'relevance="{band}"')
         attrs.append(f'score="{hit.score:.2f}"')
-        newer = self.supersedes.get(c.doc_id)
-        if newer is not None:
-            note = f"older edition ({c.published.isoformat()}), superseded by {newer}"
-            if newer in self._published:
-                note += f" ({self._published[newer].isoformat()})"
+        note = edition_note(c, self.supersedes, self._published)
+        if note is not None:
             attrs.append(f'edition="{_attr(note)}"')
         if c.chunk_id in self._sent:
             return f"<document {' '.join(attrs)}>(already shown above in this request)</document>"
-        text = c.text.replace("</document", "&lt;/document")
+        text = _TAG.sub(r"&lt;\1\2", c.text)
         return f"<document {' '.join(attrs)}>\n{text}\n</document>"
