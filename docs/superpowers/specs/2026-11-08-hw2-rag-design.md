@@ -4,6 +4,12 @@ Status: **approved by Petro (09.11)**: decisions D1–D9 and the whole spec. Dea
 (`CLAUDE.md`, "Course project"). The assignment text is in the chat of 08.11; step 14 saves it as
 `docs/hw2-brief.md`, the same way `docs/hw1-brief.md` holds HW 1.
 
+**Closed (note added 25.11).** Steps 14–20 and their patches are merged (the last one is PR #47); the
+numbers are in `REPORT-hw2.md`. This spec is now a record: it is corrected where it disagrees with the
+code, not extended. Five findings stay open in `docs/hw2-implementation-steps.md` and are inherited by
+stage 3: F32 is taken up by the HW 3 spec (`2026-11-24-hw3-agent-design.md`, §10) and F23 by its
+two-part tasks (§13); F28 and F30 are out of its scope (§18 there); F24 is not touched by HW 3.
+
 **Terms.** *Well-Architected* is short for the **AWS Well-Architected Framework** and its documents: the
 Framework itself, its six pillars and its lenses. No acronym is used for it: "WA" is unclear, and
 "AWS WAF" is the AWS Web Application Firewall, a different service that the corpus itself describes
@@ -106,7 +112,9 @@ document's cleaned text, the same value as `doc_hash` in `chunks.jsonl`, not of 
 rebuilds its PDFs and pages every few days around the same text (amended 14.11, finding F21).
 
 **Affects stage 3:** the agent reads `data/rag/chunks.jsonl` and the search API in section 5. Their field
-names are fixed by this spec.
+names are fixed by this spec. The chunk record refuses extra fields (`ChunkRecord`, `extra="forbid"`) and
+knows four `doc_type`s, so metadata that only the agent needs (superseded editions, planted chunks) lives
+outside `chunks.jsonl`, in an overlay under `data/agent/` (amended 25.11).
 
 ## 4. Ingestion (step 16)
 
@@ -202,7 +210,8 @@ Adapts the lesson-7 `search.py` and lesson-8 `retrieval.py`.
 - **Filters:** `doc_type` (in / not in) and `published >= date`. They are applied as Qdrant payload filters
   and to BM25 by post-filtering. Example use: "answer only from pillars", "only editions after 2023".
 - **API** (`src/rag/search.py`), which stage 3 will call as a tool:
-  `search(query, k=5, mode="hybrid_rerank", filters=None) -> list[Hit]`.
+  `search(index, query, k=5, mode="hybrid_rerank", filters=None, *, candidates=20, rrf_k=60) -> list[Hit]`
+  (amended 25.11 to the signature in the code: the index is passed in, it is not a module global).
 
 **Retrieval eval:** the 20 answerable questions of the testset (section 7), each with the `chunk_id`s
 that answer it, marked by Petro. The brief asks for 10–15; one labelled set serves both evals, so there

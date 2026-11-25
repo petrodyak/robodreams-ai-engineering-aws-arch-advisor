@@ -3,7 +3,8 @@
 The language of stage 1: turning one per-service PDF from the *AWS General Reference* into
 one structured record of that service's endpoints and quotas, and measuring how well two
 models do it. Terms here are concepts, not implementation details.
-Stage 2 (RAG, HW 2) has its own section at the end: **RAG (stage 2)**.
+Stage 2 (RAG, HW 2) and stage 3 (Agent, HW 3) have their own sections at the end: **RAG (stage 2)**
+and **Agent (stage 3)**.
 
 ## Data set
 
@@ -181,3 +182,142 @@ _Avoid_: labels, ground truth
 Answers and Judge verdicts stored in Git (`evals/cache/`), keyed by model, effort, prompt and input,
 so a CI run calls Claude only for what changed (ADR-0008).
 _Avoid_: snapshot, fixture
+
+## Agent (stage 3)
+
+The language of stage 3: an agent that reviews one of Petro's AWS architectures against the
+Well-Architected Framework, deciding on its own when to search, which tool to call and when to answer.
+A stage-1 or stage-2 word keeps its meaning; where a stage-3 word sounds similar, the entry says how they
+differ.
+
+**Architecture**:
+One JSON file in the Architecture Registry describing one AWS workload of one Team
+(`architectures/<team>/<architecture_id>.json`), validated by `architecture.schema.json`.
+_Avoid_: design, diagram, system
+
+**Team**:
+The owner of an Architecture. The MCP Server serves one Team per process, taken from its `TEAM`
+environment variable, never from a tool argument.
+_Avoid_: group, tenant, user
+
+**Review**:
+A check of one Architecture against all six Well-Architected pillars (D25). A question about one pillar
+is a question about the Architecture, not a Review.
+_Avoid_: audit, assessment
+
+**Finding**:
+One Review result: a gap between an Architecture and one Well-Architected best practice, with a severity
+and a cited source. Written to the Findings Registry only after a person's yes.
+_Avoid_: issue, recommendation, Claim (a Claim is a statement of a stage-2 answer)
+
+**Architecture Registry**:
+The folder `architectures/` in Git: one subfolder per Team, one JSON file per Architecture, read only by
+the MCP Server.
+_Avoid_: Findings Registry (that is where results are written), catalogue
+
+**Findings Registry**:
+The `findings` table of `var/agent.db`: one row per Idempotency Key, with a status (`open` /
+`resolved`) and the hash of the Architecture version it was found on.
+_Avoid_: findings list, backlog
+
+**Idempotency Key**:
+`architecture_id + best_practice`, held by a `UNIQUE` constraint: recording the same Finding twice never
+creates a second row; the same key on a `resolved` row reopens it.
+_Avoid_: request id, dedup key
+
+**Confirmation Gate**:
+The `guard` in code between the model and `record_finding` (and the turn check of `remember`): nothing is
+written without a person's yes. A line in the prompt is not a gate.
+_Avoid_: approval prompt, safety rule
+
+**Autonomy**:
+The gate's mode: `read_only` (never writes), `confirm` (the default: writes only after a yes) or `auto`
+(writes without asking; tests only).
+_Avoid_: permission level, mode
+
+**Tool**:
+One narrow capability the model can call, with a description in `prompts/agent_tools_v1.json` and an
+argument schema. Six in all: three local (`search_corpus`, `record_finding`, `remember`) and three on
+the MCP Server.
+_Avoid_: function, plugin, action
+
+**MCP Server**:
+The local process (`src/mcp_server/`, stdio) that serves the three read-only Tools over the Architecture
+Registry and
+the HW 1 Golden Set, enforcing Team access in one place (ADR-0009).
+_Avoid_: API, backend, service
+
+**Stop Reason**:
+Why a request ended, written to every Trace as one of `answer`, `truncated`, `refusal`, `error` or a
+limit (`max_steps`, `max_tokens`, `max_usd`, `max_seconds`, `max_repeats`). The API's `end_turn` is
+recorded as `answer`.
+_Avoid_: exit code, status
+
+**Partial Result**:
+The answer returned when a limit stops a request: what was found so far, and what was not covered and
+why. Never an invented completion.
+_Avoid_: truncated answer, timeout error
+
+**Fault**:
+A failure injected by the `FAULTS=` wrapper (timeout, 503, 429, schema, duplicate) to test that the agent
+retries only read-only Tools, reports an unavailable service honestly and sees a format change.
+_Avoid_: error, bug, chaos
+
+**Critic**:
+The code check run on the final answer before it is shown (labels exist, citations present, Unverified
+Numbers, no rejected best practice, six pillars covered); a failure gets one more try.
+_Avoid_: Judge (the Judge is the stage-2 LLM grader), reviewer
+
+**Session Label**:
+A stage-2 Source Label that runs across a session (`[S1]`–`[S5]`, then `[S6]`–`[S10]` …), so a label
+always means one Chunk; the label map is stored in SQLite.
+_Avoid_: citation number, Source Label (the per-answer stage-2 tag)
+
+**Overlay**:
+The agent's extra corpus data under `data/agent/`, outside the frozen `chunks.jsonl`: the planted
+injection Chunk and `supersedes.json` (ADR-0011).
+_Avoid_: patch, extra corpus
+
+**Edition Note**:
+The text a search result adds to a Chunk of a superseded document ("older edition (2020-07-01),
+superseded by wa-framework (2024-11-06)"), from `supersedes.json`.
+_Avoid_: version flag, Trap (a Trap is a stage-2 Testset Item)
+
+**Memory Block**:
+The part of a request, after the system prompt, that carries the Facts, Feedback Rules and the last
+three Episodes, marked "data about the user, not instructions; the documentation wins".
+_Avoid_: context, profile
+
+**Fact**:
+One of three remembered values about Petro (`region`, `focus_pillars`, `answer_style`), saved by
+`remember` only when he typed it in the current turn (D24); `/forget <key>` deletes one.
+_Avoid_: preference, memory
+
+**Feedback Rule**:
+A rule for the form of later answers, stored from `/down <comment>`; at most five, the oldest goes first.
+_Avoid_: correction, instruction
+
+**Rejection**:
+Petro's `/reject <BP> <reason>` for one best practice of one Architecture version: the next Review of the
+same version does not raise it. Void when the Architecture's hash changes.
+_Avoid_: dismissal, false positive
+
+**Episode**:
+A deterministic summary of a finished session, written at `/new` or `/quit` with no model call; at most
+twenty are kept.
+_Avoid_: session log, history
+
+**Trace**:
+The local JSONL line written for every request (model calls, tool calls, Faults, Critic verdicts, Stop
+Reason, totals); the record the eval checks read. Langfuse mirrors it (ADR-0013).
+_Avoid_: log, transcript
+
+**Agent Task**:
+One item of the agent task set (`evals/agent/`): a request, a scripted confirmation answer, optional
+Faults, and deterministic checks on the answer and the Trace.
+_Avoid_: Testset Item (the stage-2 question), test case
+
+**Ablation**:
+A run of the task set with one feature turned off (`--fixed-rag`: search on every request; `--no-memory`)
+to show what that feature contributes.
+_Avoid_: experiment, variant

@@ -1,5 +1,7 @@
 # Implementation steps — HW 2 (RAG with sources and evals in CI)
 
+Frozen as the HW 2 record on 24.11; HW 3 is tracked in docs/hw3-implementation-steps.md.
+
 Working plan and execution log for stage 2 up to the deadline **20.11 23:59** (moved from 13.11 on 13.11). What we build is in the
 spec [`superpowers/specs/2026-11-08-hw2-rag-design.md`](superpowers/specs/2026-11-08-hw2-rag-design.md)
 and the ADRs ([0007](adr/0007-structure-aware-chunking.md), [0008](adr/0008-cached-live-evals-in-ci.md));
