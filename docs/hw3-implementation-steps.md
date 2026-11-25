@@ -67,8 +67,8 @@ Apply to every step and are not repeated in the steps:
 
 | # | Step | Branch | Who / Petro's time | Points (HW criterion) | By | Status |
 |---|---|---|---|---|---|---|
-| 21 | Housekeeping: brief, this file, spec + plan in Git, ADR-0009–0013, CLAUDE.md, GLOSSARY, `.env.example`, `.gitignore`, `docs/coding-agent-memory.md` | `step-21-hw3-setup` | review ~20 min; Langfuse keys ~10 min | 4: instructions in the repo (part of 3 + 3) | 25.11 | 🔄 PR #48 |
-| 22 | Agent core: loop, limits, local trace, `search_corpus`, `record_finding` with guard and idempotency, SQLite store, faults wrapper, minimal eval runner, first fault run, Langfuse sink | `step-22-agent-core` | review ~1 h | 1: tools (3), control (4), faults (4) | 27.11 | ⬜ |
+| 21 | Housekeeping: brief, this file, spec + plan in Git, ADR-0009–0013, CLAUDE.md, GLOSSARY, `.env.example`, `.gitignore`, `docs/coding-agent-memory.md` | `step-21-hw3-setup` | review ~20 min; Langfuse keys ~10 min | 4: instructions in the repo (part of 3 + 3) | 25.11 | ✅ PR #48 |
+| 22 | Agent core: loop, limits, local trace, `search_corpus`, `record_finding` with guard and idempotency, SQLite store, faults wrapper, minimal eval runner, first fault run, Langfuse sink | `step-22-agent-core` | review ~1 h | 1: tools (3), control (4), faults (4) | 27.11 | 🔄 PR #49 |
 | 23 | MCP server: registry, quotas, client, 403; first fault run of the MCP faults | `step-23-mcp` | review ~30 min; architectures ~30 min | 2: MCP server (4), permissions (3), why MCP (1) | 28.11 | ⬜ |
 | 24 | Critic, overlay (injection, editions), memory, feedback, history summary | `step-24-rag-memory` | review ~45 min | 3: retrieval as a decision, injection, versions (5), memory (3), feedback (3) | 29.11 | ⬜ |
 | 25 | Task set, checks, runner metrics, `lint`, ablations | `step-25-tasks` | check the tasks ~1 h; "ok" on the estimate | task set and report (2, part) | 30.11 | ⬜ |
@@ -252,11 +252,11 @@ What the coding agent generated and what had to be corrected; the source of `REF
 | Date | Step | What was generated | What had to be corrected | Commit |
 |---|---|---|---|---|
 | 25.11 | 21 | GLOSSARY entry "Stop Reason" | named the API's `end_turn` as a trace value; the spec's trace values are `answer`, `truncated`, `refusal`, `error` and the limit names. Found by the independent review before the commit | PR #48 (b0c57fc) |
-| 25.11 | 22 | Task 22.5 `execute` (tools.py) | the tool's own `faults` were overwritten by the wrapper's empty list, so a `duplicate` fault applied by `record_finding` was missing from the trace; caught by `test_duplicate_fault_one_row`, fixed by merging the two lists | step 22 PR |
-| 25.11 | 22 | Task 22.9 Langfuse client setup | each Claude call appeared twice in Langfuse (our generation plus the Anthropic SDK's own OpenTelemetry span), doubling the cost shown; seen in the first traced request, fixed with `should_export_span=is_langfuse_span` and a test | step 22 PR |
-| 25.11 | 22 | the plan's first fault run (t16–t19, t22a) | t16–t18 cannot pass before step 23: `record_finding` needs the architecture hash from `get_architecture`; the run was cut to t10, t19, t22a and the rest moved to step 23 | step 22 PR |
-| 25.11 | 22 | the whole step, independent review before the commit | 6 Important findings fixed with a failing test each: t19 passed without reaching the gate (precondition added); a failed request or Ctrl-C crashed the chat; one failing task lost the eval summary; the frozen `today` was used as a wall clock (purge, finding dates); architecture reads survived `/new`; a failed request lost its cost; plus unvalidated task overrides | step 22 PR |
-| 25.11 | 22 | CLI tool line `[S21]–[S17]` | a range "first–last" is wrong when a search re-uses an earlier label; `format_labels` collapses runs (written before its test, a TDD slip) | step 22 PR |
+| 25.11 | 22 | Task 22.5 `execute` (tools.py) | the tool's own `faults` were overwritten by the wrapper's empty list, so a `duplicate` fault applied by `record_finding` was missing from the trace; caught by `test_duplicate_fault_one_row`, fixed by merging the two lists | PR #49 (f8566f6) |
+| 25.11 | 22 | Task 22.9 Langfuse client setup | each Claude call appeared twice in Langfuse (our generation plus the Anthropic SDK's own OpenTelemetry span), doubling the cost shown; seen in the first traced request, fixed with `should_export_span=is_langfuse_span` and a test | PR #49 (f8566f6) |
+| 25.11 | 22 | the plan's first fault run (t16–t19, t22a) | t16–t18 cannot pass before step 23: `record_finding` needs the architecture hash from `get_architecture`; the run was cut to t10, t19, t22a and the rest moved to step 23 | PR #49 (f8566f6) |
+| 25.11 | 22 | the whole step, independent review before the commit | 6 Important findings fixed with a failing test each: t19 passed without reaching the gate (precondition added); a failed request or Ctrl-C crashed the chat; one failing task lost the eval summary; the frozen `today` was used as a wall clock (purge, finding dates); architecture reads survived `/new`; a failed request lost its cost; plus unvalidated task overrides | PR #49 (f8566f6) |
+| 25.11 | 22 | CLI tool line `[S21]–[S17]` | a range "first–last" is wrong when a search re-uses an earlier label; `format_labels` collapses runs (written before its test, a TDD slip) | PR #49 (f8566f6) |
 
 ## 10. Pre-submission check (step 26)
 
