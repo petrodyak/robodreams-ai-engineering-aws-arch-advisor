@@ -67,7 +67,7 @@ Apply to every step and are not repeated in the steps:
 
 | # | Step | Branch | Who / Petro's time | Points (HW criterion) | By | Status |
 |---|---|---|---|---|---|---|
-| 21 | Housekeeping: brief, this file, spec + plan in Git, ADR-0009–0013, CLAUDE.md, GLOSSARY, `.env.example`, `.gitignore`, `docs/coding-agent-memory.md` | `step-21-hw3-setup` | review ~20 min; Langfuse keys ~10 min | 4: instructions in the repo (part of 3 + 3) | 25.11 | ⬜ |
+| 21 | Housekeeping: brief, this file, spec + plan in Git, ADR-0009–0013, CLAUDE.md, GLOSSARY, `.env.example`, `.gitignore`, `docs/coding-agent-memory.md` | `step-21-hw3-setup` | review ~20 min; Langfuse keys ~10 min | 4: instructions in the repo (part of 3 + 3) | 25.11 | 🔄 PR #48 |
 | 22 | Agent core: loop, limits, local trace, `search_corpus`, `record_finding` with guard and idempotency, SQLite store, faults wrapper, minimal eval runner, first fault run, Langfuse sink | `step-22-agent-core` | review ~1 h | 1: tools (3), control (4), faults (4) | 27.11 | ⬜ |
 | 23 | MCP server: registry, quotas, client, 403; first fault run of the MCP faults | `step-23-mcp` | review ~30 min; architectures ~30 min | 2: MCP server (4), permissions (3), why MCP (1) | 28.11 | ⬜ |
 | 24 | Critic, overlay (injection, editions), memory, feedback, history summary | `step-24-rag-memory` | review ~45 min | 3: retrieval as a decision, injection, versions (5), memory (3), feedback (3) | 29.11 | ⬜ |
@@ -210,7 +210,7 @@ What the coding agent generated and what had to be corrected; the source of `REF
 
 | Date | Step | What was generated | What had to be corrected | Commit |
 |---|---|---|---|---|
-| 25.11 | 21 | GLOSSARY entry "Stop Reason" | named the API's `end_turn` as a trace value; the spec's trace values are `answer`, `truncated`, `refusal`, `error` and the limit names. Found by the independent review before the commit | step 21 PR |
+| 25.11 | 21 | GLOSSARY entry "Stop Reason" | named the API's `end_turn` as a trace value; the spec's trace values are `answer`, `truncated`, `refusal`, `error` and the limit names. Found by the independent review before the commit | PR #48 (b0c57fc) |
 
 ## 10. Pre-submission check (step 26)
 
