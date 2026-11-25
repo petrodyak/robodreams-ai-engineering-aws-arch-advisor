@@ -39,6 +39,14 @@ TRACE_KEYS = (
 )
 
 
+def _clip(text: str) -> str:
+    """At most RESULT_CHARS: the head and the end, so a note appended to a result stays visible."""
+    if len(text) <= RESULT_CHARS:
+        return text
+    tail = 140
+    return text[: RESULT_CHARS - tail - 3] + " … " + text[-tail:]
+
+
 def _model_call(t: Turn) -> dict:
     return {
         "stop_reason": t.stop_reason,
@@ -59,7 +67,7 @@ def _tool_call(r: CallRecord) -> dict:
         "step": r.step,
         "name": r.name,
         "input": r.input,
-        "result": r.outcome.text[:RESULT_CHARS],
+        "result": _clip(r.outcome.text),
         "is_error": r.outcome.is_error,
         "attempts": r.outcome.attempts,
         "faults": r.outcome.faults,

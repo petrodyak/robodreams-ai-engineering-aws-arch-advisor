@@ -300,8 +300,49 @@ merge). The task-level detail (interfaces, tests) is in the plan file.
   prompts and tool descriptions in `make check`; the ablations.
 - **Files:** `evals/agent/`, `Makefile` (`agent-ablations`), tests.
 - **Done when:** `make check` green; Petro has checked the tasks and said "ok" to the estimate.
-- **Open:** —
-- **Done:** —
+- **Open:** Petro checks the tasks (`evals/agent/TASKS.md`, ~1 h). Petro's "ok" on ≈ $0.85 for step 26 (3 final runs + 2 ablations), 25.11.
+- **Task set (Task 25.1, 25.11):** 34 tasks, every id of spec §13 (t22 as t22a–c, plus t18b), all five
+  fault kinds. New check types: `gold_quota` / `gold_absent` (the number is read from `data/gold/` for
+  the Region, never typed into a task; t05, t06, t22b, t23, t27), `pillars_cited` (D25), `budget_stop`
+  (t24, with `limits: {max_steps: 5}`), `asks_user` (t14, t15), `critic_clean`, `unverified_empty`,
+  `arg_contains`, `distinct_args` (t08, t09: one search per part), `no_fact` (t25: the planted region
+  never reaches the facts) and `commands_ok` (a refused `/reject` or `resolve` makes t18b, t29 or t30
+  `invalid`, not `failed`). `evals/agent/TASKS.md` is the readable table, generated and checked by a
+  test.
+- **Full run on prompt v3 (Task 25.2, 25.11; `…-v3-run2`, estimate $0.17, actual $0.0701):** 29 / 34,
+  1 invalid. `metrics-2026-11-25-v3-run2.json` (with the metric definitions of that day): pass rate 0.879
+  of the valid tasks, 0 unconfirmed actions, 2.9 model calls, $0.0021 and 10.6 s per task. Its
+  `tools_ok` of 1.0 counted "no failed tool check", which the step 25 review showed to over-state the
+  spec's metric; `tools_ok` now counts the tasks with required tools (their `tools_called` checks),
+  MCP ones by the required tools, not by what was called.
+  - **t01, t02, t24 and the first review turn of t29 stopped as `truncated` (F33):** a six-pillar review with thinking passed the
+    per-call `max_tokens` of 4000; `max_tokens_per_call` is now 8000 (only the generated tokens are
+    paid).
+  - **t13 was a correct answer failed by its check:** "the documentation I searched does not give …";
+    the no-answer phrase lists gained "does not give", "can't give" and others.
+  - **t26 was `invalid`:** the model searched "… six pillars" in `framework` documents only and found
+    the new edition alone. The question was tuned once, as spec §17 allows: "… Check every edition
+    in the documentation."
+  - `…-v3-run3` (the five tasks after the fixes): 5 / 5, $0.0358. t29 was not re-run: its precondition
+    passed on a cut review in run2.
+  - **Independent review of step 25 (25.11):** 0 Critical, 8 Important, 9 Minor. Fixed with a failing
+    test first, none needing a paid run:
+    - `critic_clean` / `unverified_empty` passed when the critic never ran (truncated answers);
+    - t07, t22b, t23 allowed an invented number other than the gold one (new `no_numbers`), and t23
+      had no case-sensitive "None" check;
+    - t24 passed on the word "limit", and `budget_stop` counted `max_repeats` / `max_seconds`;
+    - `tools_ok` / `tools_ok_mcp` were measured on the tools called, not the tools required;
+    - `unconfirmed_actions` compared writes with questions asked, not with "yes" answers;
+    - a check that raises made the run lose its summary, and lint did not run the checks;
+    - the `--fixed-rag` search was not traced;
+    - t29 could pass without reaching the rejection gate (precondition added).
+
+    The stricter checks apply from the next run; runs 2 and 3 keep their scores as they were.
+- **Done:** `evals/agent/lint.py` in `make check`, `aggregate` / `stability` and `--aggregate`, the
+  ablations `--fixed-rag` / `--no-memory` and `make agent-ablations`, the estimate weighting reviews 2.5×,
+  the trace keeping a result's end, `/reject` validating the id, `rejected` in the turn meta, the
+  critic's "not covered" excuse limited to an unavailable service, `make mcp-inspect` failing in one
+  line.
 
 ### Step 26 — Runs and reports
 
@@ -325,13 +366,15 @@ merge). The task-level detail (interfaces, tests) is in the plan file.
 | first run of the step 24 tasks (t18b, t25–t31, prompt v1) | 24 | yes | $0.044 | $0.0394 |
 | re-runs after the critic fix and prompts v2 / v3 (t18b, t29) | 24 | yes | ≈ $0.04 | $0.0338 |
 | two real feedback chats for the README (v1, then v3) | 24 | yes | ≈ $0.03 each | $0.0479 |
+| full run of the 34 tasks on v3 | 25 | yes | $0.17 | $0.0701 |
+| re-run of t01, t02, t13, t24, t26 after F33 and the check fixes | 25 | yes | ≈ $0.03 | $0.0358 |
 | 3 final runs of the full task set | 26 | yes | ≈ $0.15 each at the upper end | |
 | 2 ablations (`--fixed-rag`, `--no-memory`) | 25–26 | yes (`--no-memory` may be cut) | ≈ $0.15 each | |
 | development and manual checks | 22–26 | as needed | ≈ $1.5 | |
 
 **API budget:** $10 for the whole of HW 3 (D19); the spec estimates **$2.5–3** in total (§16, re-measured
 with `count_tokens` before step 25). Per 1,000 requests ≈ $3 for questions and ≈ $7–15 for full reviews,
-capped at $50 by `max_usd = 0.05`. Spent so far: $0.141 (step 22: $0.0104; step 23: $0.0094; step 24: $0.1212).
+capped at $50 by `max_usd = 0.05`. Spent so far: $0.247 (step 22: $0.0104; step 23: $0.0094; step 24: $0.1212; step 25: $0.1059).
 
 ## 6. Deferred findings
 
@@ -342,6 +385,7 @@ HW 2 judge) is not touched by HW 3.
 
 | # | Finding | Found in | Closed in | Status |
 |---|---|---|---|---|
+| F33 | `max_tokens_per_call: 4000` (sized in step 22 on a review with 2.1 k output tokens) cut the six-pillar reviews of t01, t02 and t24 in the first full run: `stop = truncated`, half a finding shown | 25 (first full run, `…-v3-run2`) | 25: 8000; `…-v3-run3` 5 / 5 | closed |
 
 ## 7. Risks
 
@@ -368,6 +412,7 @@ From spec §17:
 | 25.11 | `make langfuse-check` added to Task 22.9: one test trace, no Claude call, $0, to verify the keys and the region before the first traced request (Petro) |
 | 25.11 | Temporary stacked branches while HW 2 is under the lecturer's review (Petro): nothing is merged into `main` for 1–3 days; afterwards the open PRs are merged in order and the normal rules apply again |
 | 25.11 | Plan executed inline in one session (Petro: "Native"), with one independent code review per step before its commit |
+| 25.11 | Task 25.2: one full run of the 34 tasks before step 26 (Petro's "ok" on the step 25 plan) found F33 and two check defects; t26's question tuned once (spec §17) |
 | 25.11 | Task 23.1: the lakehouse quota gap is the Glue task-DPU quota (600 against 500 in eu-central-1), not concurrent job runs (gold quota 2,000); `Architecture` gains `region` and `description` (builder fields, §20) |
 | 25.11 | Task 22.9: `uv add langfuse` resolved 5.2.0, not the v4 of the spec; the calls are the same (spec §12 amended). The client exports only its own spans: the Anthropic SDK's OpenTelemetry span doubled every generation |
 | 25.11 | Task 22.8: the first fault run of step 22 is t10, t19 and t22a; t16–t18 need `get_architecture` (the architecture hash of a finding) and run first in step 23. The §6 limits stay after the measured review (3 calls, $0.0069) |
@@ -385,6 +430,8 @@ What the coding agent generated and what had to be corrected; the source of `REF
 | 25.11 | 22 | the whole step, independent review before the commit | 6 Important findings fixed with a failing test each: t19 passed without reaching the gate (precondition added); a failed request or Ctrl-C crashed the chat; one failing task lost the eval summary; the frozen `today` was used as a wall clock (purge, finding dates); architecture reads survived `/new`; a failed request lost its cost; plus unvalidated task overrides | PR #49 (f8566f6) |
 | 25.11 | 23 | Task 23.3 MCP client and its unit fakes | the fakes returned `structured_content`, but mcp 2.3 sends a `-> dict` result as JSON text only; the stdio integration test caught it, the client now parses the text | PR #50 (0a7ef18) |
 | 25.11 | 23 | Task 22.3 `apply_faults`, seen in the first MCP fault run | `duplicate` was tagged on every tool's calls, which would have made the fault table wrong; owner-applied faults now tag their own tool only | PR #50 (0a7ef18) |
+| 25.11 | 25 | `max_tokens_per_call` of Task 22.1 | sized on one measured review; the full run's reviews passed it and were cut (F33) | step 25 PR |
+| 25.11 | 25 | t13's no-answer phrase list | too narrow again ("does not give"), as t19 in step 23: phrase checks need the wording of real answers | step 25 PR |
 | 25.11 | 24 | critic checks 4 and 5 (Task 24.1) | check 4 flagged a rejected id named in an explanation, check 5 treated one `Finding` line as a review; both seen in the first run of the step 24 tasks (t29, t18b) and narrowed | PR #51 (99a659a) |
 | 25.11 | 24 | the history design of Task 24.3 with prompt v1 | the model disowned its own earlier labels because the history keeps answer text only; found in the first real chat, fixed by prompt v2 rule 11 | PR #51 (99a659a) |
 | 25.11 | 24 | prompt v2 rule 2 | the model wrote `Pillars covered: 1 of 6` after one recorded finding, which started the critic's review check; v3 says the line belongs to a review only | PR #51 (99a659a) |

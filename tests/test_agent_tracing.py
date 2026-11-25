@@ -304,3 +304,20 @@ def test_failed_request_keeps_the_cost_of_its_calls(tmp_path: Path):
     assert line["totals"]["steps"] == 2
     assert line["totals"]["usd"] == pytest.approx(0.005)
     assert line["totals"]["tokens"] == 2200
+
+
+def test_tool_result_keeps_its_end(tmp_path: Path):
+    # step 24: a note appended at the end of a long result (rejections) was cut from the trace
+    record = _search_record()
+    record.outcome = record.outcome.model_copy(
+        update={
+            "text": "x" * 2000 + " Rejected by the user for this version: REL09-BP01"
+        }
+    )
+    path = tmp_path / "t.jsonl"
+    with Tracer(path).request(1, "q", META) as t:
+        t.tool_call(record)
+        t.end(_result())
+    result = _lines(path)[0]["tool_calls"][0]["result"]
+    assert len(result) <= 500
+    assert result.endswith("REL09-BP01")

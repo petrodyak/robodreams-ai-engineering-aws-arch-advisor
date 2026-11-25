@@ -13,35 +13,39 @@ The MCP Inspector (`npx @modelcontextprotocol/inspector`) needs Node.js, which t
 import argparse
 import asyncio
 import json
-import os
 import sys
 from pathlib import Path
 
-from mcp import Client, StdioServerParameters
+from mcp import Client
+
+from src.agent.mcp_client import _describe, server_params
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 async def inspect(team: str, tool: str | None, args: dict) -> int:
-    params = StdioServerParameters(
-        command=sys.executable,
-        args=["-m", "src.mcp_server"],
-        env={"TEAM": team, "PATH": os.environ.get("PATH", "")},
-        cwd=str(ROOT),
-    )
-    async with Client(params) as client:
-        if tool is None:
-            for t in (await client.list_tools()).tools:
-                read_only = t.annotations.read_only_hint if t.annotations else None
-                print(f"{t.name}  (read_only_hint={read_only})")
-                print(f"  {t.description}")
-                print(f"  input: {json.dumps(t.input_schema.get('properties', {}))}\n")
-            return 0
-        result = await client.call_tool(tool, args)
-        print(f"is_error: {result.is_error}")
-        for item in result.content:
-            print(getattr(item, "text", item))
-        return 0  # an is_error result is a normal answer of the tool, shown above
+    # the agent's own launch parameters (TEAM and PATH only), so what you see is what the agent gets
+    try:
+        async with Client(server_params(team)) as client:
+            return await _show(client, tool, args)
+    except Exception as error:  # noqa: BLE001 - one line for a server that did not start (Review Focus 2)
+        sys.stderr.write(f"MCP server did not start: {_describe(error)}\n")
+        return 1
+
+
+async def _show(client, tool: str | None, args: dict) -> int:
+    if tool is None:
+        for t in (await client.list_tools()).tools:
+            read_only = t.annotations.read_only_hint if t.annotations else None
+            print(f"{t.name}  (read_only_hint={read_only})")
+            print(f"  {t.description}")
+            print(f"  input: {json.dumps(t.input_schema.get('properties', {}))}\n")
+        return 0
+    result = await client.call_tool(tool, args)
+    print(f"is_error: {result.is_error}")
+    for item in result.content:
+        print(getattr(item, "text", item))
+    return 0  # an is_error result is a normal answer of the tool, shown above
 
 
 def main() -> int:

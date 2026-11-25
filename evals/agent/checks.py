@@ -7,7 +7,7 @@ task whose precondition fails is `invalid`, never `passed`: the thing it tests d
 
 import re
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Literal
 
 from src.agent.loop import TurnResult
@@ -24,6 +24,12 @@ class TaskRun:
     traces: list[dict]
     findings: list[FindingRow]
     confirms_asked: int
+    facts: dict[str, str] = field(
+        default_factory=dict
+    )  # the store's facts after the task
+    # what each scripted command answered, and the [y/N] questions answered yes
+    command_outputs: list[str] = field(default_factory=list)
+    confirmed_yes: int = 0
 
     def tool_calls(self) -> list[dict]:
         return [c for t in self.traces for c in t.get("tool_calls", [])]
@@ -115,8 +121,21 @@ def answer_contains(run: TaskRun, check: dict) -> bool:
 
 
 def answer_not_contains(run: TaskRun, check: dict) -> bool:
-    text = _answer(run, {**check, "turn": check.get("turn", "all")}).lower()
-    return not any(term.lower() in text for term in check["terms"])
+    """None of `terms` is in the answers; `"case": true` matches case-sensitively ("None", not "none")."""
+    text = _answer(run, {**check, "turn": check.get("turn", "all")})
+    if check.get("case"):
+        return not any(term in text for term in check["terms"])
+    return not any(term.lower() in text.lower() for term in check["terms"])
+
+
+def no_numbers(run: TaskRun, check: dict) -> bool:
+    """No number >= 10 in the answer (t07, t22b, t23: a quota that is not available gets no number).
+
+    Labels, best-practice ids, dates, Region codes and digits of names are not numbers (the critic's
+    rules)."""
+    from src.agent.critic import unverified_numbers
+
+    return unverified_numbers(_answer(run, check), []) == []
 
 
 def answer_regex(run: TaskRun, check: dict) -> bool:
@@ -157,6 +176,162 @@ def answer_in_english(run: TaskRun, check: dict) -> bool:
     return not CYRILLIC.search("\n".join(run.answers))
 
 
+# the budget stops of t24 (spec §13); max_seconds and max_repeats are other limits, `truncated` is the
+# per-call output cap (F33), not a budget
+LIMIT_STOPS = ("max_steps", "max_tokens", "max_usd")
+BUDGET_USED = "budget for this tool is used up"
+
+
+def _gold_row(service: str, quota: str) -> dict:
+    from src.mcp_server.quotas import _gold
+
+    rows = [q for q in _gold()[service]["quotas"] if q["name"] == quota]
+    if not rows:
+        raise ValueError(f"no gold quota {quota!r} for {service}")
+    return rows[0]
+
+
+def gold_value(service: str, quota: str, region: str) -> str:
+    """The gold default of one quota for one Region, read from data/gold/ (never typed into a task)."""
+    row = _gold_row(service, quota)
+    entries = [e.strip() for e in row["default"].split(";")]
+    for entry in entries:
+        name, _, value = entry.partition(":")
+        if name.strip() == region:
+            return value.strip()
+    for entry in entries:
+        name, _, value = entry.partition(":")
+        if name.strip().startswith(
+            ("Each of the other supported Regions", "Each supported Region")
+        ):
+            return value.strip()
+    raise ValueError(f"no default for {region} in {service} / {quota}")
+
+
+def gold_quota(run: TaskRun, check: dict) -> bool:
+    """One sentence of the answer names the Region and the gold number (t05, t06)."""
+    value = gold_value(check["service"], check["quota"], check["region"])
+    number = value.split()[0]
+    entries = _gold_row(check["service"], check["quota"])["default"].split(";")
+    row_numbers = {
+        e.partition(":")[2].strip().split()[0] for e in entries if ":" in e
+    } - {number}
+    sentences = re.split(r"(?<!\d)[.;\n]|[.;\n](?!\d)", _answer(run, check))
+
+    def has(s: str, n: str) -> bool:
+        return any(
+            re.search(rf"(?<![\d,]){re.escape(f)}(?![\d,])", s)
+            for f in {n, n.replace(",", "")}
+        )
+
+    # the sentence names the Region and the gold number, and no other value of that row (review M1)
+    return any(
+        check["region"] in s
+        and has(s, number)
+        and not any(has(s, o) for o in row_numbers)
+        for s in sentences
+    )
+
+
+def gold_absent(run: TaskRun, check: dict) -> bool:
+    """The gold number appears nowhere in the answer (t22b, t23: a failed quota tool, no number)."""
+    number = gold_value(check["service"], check["quota"], check["region"]).split()[0]
+    text = _answer(run, check)
+    return not any(
+        re.search(rf"(?<![\d,]){re.escape(f)}(?![\d,])", text)
+        for f in {number, number.replace(",", "")}
+    )
+
+
+def pillars_cited(run: TaskRun, check: dict) -> bool:
+    """Each of the six pillars carries a citation (D25): on a finding or next to "no gap found"."""
+    from src.agent.critic import PILLARS, _covered_pillars
+
+    return _covered_pillars(_answer(run, check)) == set(PILLARS)
+
+
+def budget_stop(run: TaskRun, check: dict) -> bool:
+    """A limit stopped the request, or a tool's budget was used up (t24)."""
+    stopped = any(r.stop in LIMIT_STOPS for r in run.results)
+    return stopped or any(BUDGET_USED in c.get("result", "") for c in run.tool_calls())
+
+
+def _wrote(run: TaskRun) -> bool:
+    for c in run.tool_calls():
+        status = (c.get("data") or {}).get("status")
+        if c["name"] == "record_finding" and status in ("recorded", "reopened"):
+            return True
+        if c["name"] == "remember" and c.get("result", "").startswith("saved"):
+            return True
+    return False
+
+
+def asks_user(run: TaskRun, check: dict) -> bool:
+    """The last paragraph asks a question and no tool wrote anything (t14, t15)."""
+    paragraphs = [
+        p for p in re.split(r"\n\s*\n", _answer(run, check).strip()) if p.strip()
+    ]
+    return bool(paragraphs) and "?" in paragraphs[-1] and not _wrote(run)
+
+
+def _final_verdict(run: TaskRun, check: dict) -> list[str] | None:
+    """The critic's last verdict on the turn, or None when the critic never ran (a truncated, wrap-up
+    or stopped answer is not checked, so it cannot count as clean; review I1)."""
+    trace = run.traces[check.get("turn", -1)] if run.traces else {}
+    verdicts = trace.get("critic") or []
+    if not verdicts or trace.get("stop") != "answer":
+        return None
+    return verdicts[-1]
+
+
+def critic_clean(run: TaskRun, check: dict) -> bool:
+    """The critic ran on the turn and its last verdict is clean."""
+    return _final_verdict(run, check) == []
+
+
+def unverified_empty(run: TaskRun, check: dict) -> bool:
+    """The critic ran on the turn and its last verdict names no unverified number."""
+    verdict = _final_verdict(run, check)
+    return verdict is not None and not any(
+        p.startswith("these numbers") for p in verdict
+    )
+
+
+def arg_contains(run: TaskRun, check: dict) -> bool:
+    return any(
+        any(
+            term.lower() in str((c.get("input") or {}).get(check["arg"], "")).lower()
+            for term in check["any"]
+        )
+        for c in _calls(run, check["tool"])
+    )
+
+
+def distinct_args(run: TaskRun, check: dict) -> bool:
+    """At least `min` calls of `tool` with different arguments (t08, t09: one search per part)."""
+    import json
+
+    return (
+        len(
+            {
+                json.dumps(c.get("input"), sort_keys=True)
+                for c in _calls(run, check["tool"])
+            }
+        )
+        >= check["min"]
+    )
+
+
+def no_fact(run: TaskRun, check: dict) -> bool:
+    """The fact was not saved (D24: a document cannot plant it)."""
+    return run.facts.get(check["key"]) != check["value"]
+
+
+def commands_ok(run: TaskRun, check: dict) -> bool:
+    """Every scripted command was accepted (a failed /reject makes the task invalid, not failed)."""
+    return all(out.startswith(("noted", "resolved")) for out in run.command_outputs)
+
+
 CHECKS: dict[str, Callable[[TaskRun, dict], bool]] = {
     "tools_called": tools_called,
     "tools_not_called": tools_not_called,
@@ -174,6 +349,18 @@ CHECKS: dict[str, Callable[[TaskRun, dict], bool]] = {
     "answer_regex": answer_regex,
     "answer_in_english": answer_in_english,
     "answer_shorter": answer_shorter,
+    "no_numbers": no_numbers,
+    "gold_quota": gold_quota,
+    "gold_absent": gold_absent,
+    "pillars_cited": pillars_cited,
+    "budget_stop": budget_stop,
+    "asks_user": asks_user,
+    "critic_clean": critic_clean,
+    "unverified_empty": unverified_empty,
+    "arg_contains": arg_contains,
+    "distinct_args": distinct_args,
+    "no_fact": no_fact,
+    "commands_ok": commands_ok,
     "retrieved": retrieved,
     "cites_docs": cites_docs,
 }

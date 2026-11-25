@@ -3,7 +3,8 @@
 # model (D19): no temperature / top_p / top_k is sent, and no assistant prefill
 model: claude-haiku-5-5
 effort: medium
-max_tokens_per_call: 4000   # per model call; a response cut here ends the request as `truncated`
+max_tokens_per_call: 8000   # per model call; a cut response ends the request as `truncated`;
+                            # 4000 cut six-pillar reviews with thinking (F33, 25.11)
 
 # frozen date (spec §10): "which edition is current" has one answer in the evals
 today: 2026-11-24

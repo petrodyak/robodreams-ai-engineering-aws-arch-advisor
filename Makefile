@@ -1,5 +1,5 @@
 # Every target runs inside the uv-managed .venv (`uv run` syncs it first if needed).
-.PHONY: install data text rag-data ingest index retrieval-candidates retrieval-eval ask eval-estimate eval eval-sweep judge-estimate score calibration-sheet calibrate eval-ci rag rag-rebuild run estimate runs-md metrics schema gold-drafts gold-check check agent agent-ask agent-eval agent-estimate findings findings-resolve langfuse-check mcp-inspect
+.PHONY: install data text rag-data ingest index retrieval-candidates retrieval-eval ask eval-estimate eval eval-sweep judge-estimate score calibration-sheet calibrate eval-ci rag rag-rebuild run estimate runs-md metrics schema gold-drafts gold-check check agent agent-ask agent-eval agent-estimate findings findings-resolve langfuse-check mcp-inspect agent-ablations
 
 # One Run = model × prompt version × sampling; override, e.g. `make run SAMPLING=t05`,
 # `make run MODEL=qwen2.5-7b`, `make run SAMPLING=t05 GOLD=1` (Golden Set only), or
@@ -143,6 +143,11 @@ agent-eval:
 agent-estimate:
 	uv run python -m evals.agent.run --estimate $(ARGS)
 
+# the two ablations of spec §13: one search with the raw question and no search tool; no memory
+agent-ablations:
+	uv run python -m evals.agent.run --fixed-rag $(ARGS)
+	uv run python -m evals.agent.run --no-memory $(ARGS)
+
 findings:
 	uv run python -m src.agent.cli --findings
 
@@ -165,4 +170,5 @@ check: schema
 	uv run ruff check . || status=1; \
 	uv run ruff format --check . || status=1; \
 	uv run pytest || status=1; \
+	uv run python -m evals.agent.lint || status=1; \
 	exit $$status
