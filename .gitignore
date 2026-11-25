@@ -11,6 +11,8 @@ data/rag/raw/
 .cache/
 # `make eval-ci` output: uploaded as the workflow artifact, never committed
 evals/results/ci/
+# HW 3 agent state (SQLite: sessions, memory, findings) and chat traces; local to each machine
+var/
 # superpowers plan-execution workspace (local ledger, not project history)
 .superpowers/
 # python
