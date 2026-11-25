@@ -70,8 +70,8 @@ Apply to every step and are not repeated in the steps:
 | 21 | Housekeeping: brief, this file, spec + plan in Git, ADR-0009–0013, CLAUDE.md, GLOSSARY, `.env.example`, `.gitignore`, `docs/coding-agent-memory.md` | `step-21-hw3-setup` | review ~20 min; Langfuse keys ~10 min | 4: instructions in the repo (part of 3 + 3) | 25.11 | ✅ PR #48 |
 | 22 | Agent core: loop, limits, local trace, `search_corpus`, `record_finding` with guard and idempotency, SQLite store, faults wrapper, minimal eval runner, first fault run, Langfuse sink | `step-22-agent-core` | review ~1 h | 1: tools (3), control (4), faults (4) | 27.11 | ✅ PR #49 |
 | 23 | MCP server: registry, quotas, client, 403; first fault run of the MCP faults | `step-23-mcp` | review ~30 min; architectures ~30 min | 2: MCP server (4), permissions (3), why MCP (1) | 28.11 | ✅ PR #50 |
-| 24 | Critic, overlay (injection, editions), memory, feedback, history summary | `step-24-rag-memory` | review ~45 min | 3: retrieval as a decision, injection, versions (5), memory (3), feedback (3) | 29.11 | 🔄 PR #51 |
-| 25 | Task set, checks, runner metrics, `lint`, ablations | `step-25-tasks` | check the tasks ~1 h; "ok" on the estimate | task set and report (2, part) | 30.11 | ⬜ |
+| 24 | Critic, overlay (injection, editions), memory, feedback, history summary | `step-24-rag-memory` | review ~45 min | 3: retrieval as a decision, injection, versions (5), memory (3), feedback (3) | 29.11 | ✅ PR #51 |
+| 25 | Task set, checks, runner metrics, `lint`, ablations | `step-25-tasks` | check the tasks ~1 h; "ok" on the estimate | task set and report (2, part) | 30.11 | 🔄 PR #52 |
 | 26 | 3 final runs, `REPORT-hw3.md`, `REPORT.md` pointer, README, `REFLECTION.md`, pre-submission check | `step-26-report` | `REFLECTION.md` conclusions ~1 h | task set and report (2), reflection (3 + 3), repository (2) | 01.12 | ⬜ |
 
 02.12 is the buffer. If time runs short, the cut order of spec §16 applies; never cut: Langfuse (D16), the
@@ -430,8 +430,8 @@ What the coding agent generated and what had to be corrected; the source of `REF
 | 25.11 | 22 | the whole step, independent review before the commit | 6 Important findings fixed with a failing test each: t19 passed without reaching the gate (precondition added); a failed request or Ctrl-C crashed the chat; one failing task lost the eval summary; the frozen `today` was used as a wall clock (purge, finding dates); architecture reads survived `/new`; a failed request lost its cost; plus unvalidated task overrides | PR #49 (f8566f6) |
 | 25.11 | 23 | Task 23.3 MCP client and its unit fakes | the fakes returned `structured_content`, but mcp 2.3 sends a `-> dict` result as JSON text only; the stdio integration test caught it, the client now parses the text | PR #50 (0a7ef18) |
 | 25.11 | 23 | Task 22.3 `apply_faults`, seen in the first MCP fault run | `duplicate` was tagged on every tool's calls, which would have made the fault table wrong; owner-applied faults now tag their own tool only | PR #50 (0a7ef18) |
-| 25.11 | 25 | `max_tokens_per_call` of Task 22.1 | sized on one measured review; the full run's reviews passed it and were cut (F33) | step 25 PR |
-| 25.11 | 25 | t13's no-answer phrase list | too narrow again ("does not give"), as t19 in step 23: phrase checks need the wording of real answers | step 25 PR |
+| 25.11 | 25 | `max_tokens_per_call` of Task 22.1 | sized on one measured review; the full run's reviews passed it and were cut (F33) | PR #52 (e9fa9c1) |
+| 25.11 | 25 | t13's no-answer phrase list | too narrow again ("does not give"), as t19 in step 23: phrase checks need the wording of real answers | PR #52 (e9fa9c1) |
 | 25.11 | 24 | critic checks 4 and 5 (Task 24.1) | check 4 flagged a rejected id named in an explanation, check 5 treated one `Finding` line as a review; both seen in the first run of the step 24 tasks (t29, t18b) and narrowed | PR #51 (99a659a) |
 | 25.11 | 24 | the history design of Task 24.3 with prompt v1 | the model disowned its own earlier labels because the history keeps answer text only; found in the first real chat, fixed by prompt v2 rule 11 | PR #51 (99a659a) |
 | 25.11 | 24 | prompt v2 rule 2 | the model wrote `Pillars covered: 1 of 6` after one recorded finding, which started the critic's review check; v3 says the line belongs to a review only | PR #51 (99a659a) |
