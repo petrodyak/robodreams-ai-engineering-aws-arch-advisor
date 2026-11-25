@@ -25,3 +25,5 @@ __pycache__/
 .vscode/
 # claude.ai project context (CLAUDE.md is the in-repo source of truth)
 Context.md
+# agent eval runs: the per-task SQLite stores are scratch; summary.json and traces are kept
+evals/agent/results/*/db/

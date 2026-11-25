@@ -1,0 +1,66 @@
+{
+  "prompt_version": "v1",
+  "tools_version": "v1",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "tasks": [
+    {
+      "id": "t10",
+      "kind": "no_tool",
+      "status": "passed",
+      "failed": [],
+      "stops": [
+        "answer"
+      ],
+      "steps": 1,
+      "usd": 0.000492,
+      "seconds": 8.1,
+      "tools": [],
+      "answers": [
+        "Hello! I'm an AWS architecture reviewer for the data-platform team. I can help you with:\n\n- **Reviewing an architecture** against the six Well-Architected pillars: Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization and Sustainability. Each finding gets a severity, a pillar, a best-practice ID and a citation to the AWS documentation I searched.\n- **Answering questions** about a specific architecture or about one pillar, such as \"how does our lakehouse handle backup?\" or \"what are the security gaps?\"\n- **Checking service quotas** for the AWS services your architectures use.\n- **Recording findings** to the findings registry, but only when you ask me to, and each record needs your confirmation first.\n\nTo start a review, tell me which architecture to look at, or ask me to list the team's architectures."
+      ]
+    },
+    {
+      "id": "t19",
+      "kind": "read_only",
+      "status": "passed",
+      "failed": [],
+      "stops": [
+        "answer"
+      ],
+      "steps": 3,
+      "usd": 0.001335,
+      "seconds": 7.0,
+      "tools": [
+        "search_corpus",
+        "record_finding"
+      ],
+      "answers": [
+        "The finding was not recorded. The registry answered: \"NOT DONE: read the architecture with get_architecture first.\"\n\nI can't do that step here. My tools in this session are only the documentation search and the findings recorder, so I can't read the lakehouse-iceberg architecture. Once the architecture has been read in a session that has that tool, the finding can be recorded again. The finding itself is ready:\n\nFinding 1 [high · Reliability · REL09-BP01] The S3 data lake in lakehouse-iceberg has no backup. REL09-BP01 asks to identify and back up all data that needs backup, or reproduce it from sources, and to confirm that recovery meets the RTO. [S4]"
+      ]
+    },
+    {
+      "id": "t22a",
+      "kind": "fault_503",
+      "status": "passed",
+      "failed": [],
+      "stops": [
+        "answer"
+      ],
+      "steps": 3,
+      "usd": 0.000396,
+      "seconds": 4.5,
+      "tools": [
+        "search_corpus",
+        "search_corpus"
+      ],
+      "answers": [
+        "I could not answer this from the documentation. The corpus search failed twice with \"service unavailable (503)\", so I have no retrieved Reliability pillar text to cite.\n\nI have not stated any backup recommendation from memory. Once the search service is back, I can look up the Reliability pillar guidance on backing up workload data and answer with citations. Tell me when you want me to try again."
+      ]
+    }
+  ],
+  "passed": 3,
+  "invalid": 0,
+  "total": 3,
+  "usd": 0.002223
+}

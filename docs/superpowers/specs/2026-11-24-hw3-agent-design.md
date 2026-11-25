@@ -55,7 +55,7 @@ Numbering continues from the HW 2 spec (D1–D9).
 | D13 | **Side effect:** `record_finding` writes a finding to the findings registry, only after a human yes checked in code; idempotency key **`architecture_id + best_practice`**. A finding has a **status** (`open` / `resolved`) and the hash of the architecture version it was found on: the same key on a `resolved` finding **reopens** that row instead of creating a duplicate (one problem, one row with its history). **Amended 25.11:** `pillar` is not a tool argument, the code derives it from the id's prefix (ADR-0002) | ✅ Petro, 24.11; status added by Petro after the builder check, 24.11; amended 25.11 |
 | D14 | **State in SQLite** (`var/agent.db`, stdlib `sqlite3`): sessions, messages, facts, feedback rules, rejections, episodes, findings. Idempotency is a `UNIQUE` constraint | ✅ Petro, 24.11 |
 | D15 | **MCP transport stdio:** the agent starts the server as a subprocess with `TEAM` in its environment; `make mcp-inspect` starts it alone for manual debugging. HTTP transport is stage 4 | ✅ Petro, 24.11 |
-| D16 | **Tracing in Langfuse** (cloud, Python SDK v4) on top of a local JSONL trace; the local trace is the record the eval checks read; without Langfuse keys tracing is a no-op. **Amended 25.11: Langfuse is a mandatory deliverable**, never cut for time: the three final runs are traced in Langfuse and `REPORT-hw3.md` links the traces. The no-op without keys stays for tests, CI, a clean clone and an outage only | ✅ Petro, 24.11; mandatory by Petro, 25.11 |
+| D16 | **Tracing in Langfuse** (cloud, Python SDK v4; 5.2 in use, amended 25.11) on top of a local JSONL trace; the local trace is the record the eval checks read; without Langfuse keys tracing is a no-op. **Amended 25.11: Langfuse is a mandatory deliverable**, never cut for time: the three final runs are traced in Langfuse and `REPORT-hw3.md` links the traces. The no-op without keys stays for tests, CI, a clean clone and an outage only | ✅ Petro, 24.11; mandatory by Petro, 25.11 |
 | D17 | **English only:** tasks, prompts, tool descriptions, requests in the evals and every agent answer, also when a question arrives in another language | ✅ Petro, 24.11 |
 | D18 | **Own agent loop** on the Messages API (manual tool-use loop, lesson 11 as the base); no LangGraph, no Tool Runner, no Managed Agents, no Claude Agent SDK | ✅ Petro, 24.11 (plan) |
 | D19 | **Model** `claude-haiku-5-5`, `effort` in `config/agent.yaml` (start `medium`), no `temperature` / `top_p` / `top_k` (as D4). **HW 3 API budget $10**, estimated before every paid run; runs under $1 go without asking | ✅ Petro, 24.11 |
@@ -495,7 +495,10 @@ All in `var/agent.db` (not in Git; eval runs use a fresh database per task):
   stop reason, faults, prompt version and run id as metadata and tags; `/up` / `/down` as scores on the
   trace they rate; in eval runs, each task's pass / fail as a score. The exact SDK calls are checked in
   the v4 documentation before code (`get_client`, `start_as_current_observation`, scores, session
-  propagation, `flush`). `make langfuse-check` verifies the keys with one test trace and no Claude call
+  propagation, `flush`). *(Amended 25.11)* `uv add langfuse` resolved **5.2.0**; the calls were checked
+  against its signatures and the current docs, and are the same. Langfuse 5.2 also exports the
+  Anthropic SDK's own OpenTelemetry span of each call, which doubled every generation and its cost, so
+  the client exports only Langfuse's own spans (`should_export_span=is_langfuse_span`). `make langfuse-check` verifies the keys with one test trace and no Claude call
   before the first traced request *(added 25.11)*.
 - Missing keys or an unreachable Langfuse never fail a request or a test: tracing degrades to the local
   trace and logs one warning. *(Amended 25.11)* This fallback is for tests, CI, a clean clone and an

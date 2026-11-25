@@ -1,0 +1,45 @@
+# HW 3 agent settings (spec §6, §10, §11, D19). Read by src/agent/config.py; every field is required.
+
+# model (D19): no temperature / top_p / top_k is sent, and no assistant prefill
+model: claude-haiku-5-5
+effort: medium
+max_tokens_per_call: 4000   # per model call; a response cut here ends the request as `truncated`
+
+# frozen date (spec §10): "which edition is current" has one answer in the evals
+today: 2026-11-24
+
+# side effects (spec §8): read_only never writes, confirm writes after a yes, auto is for tests only
+autonomy: confirm
+
+# versioned texts (prompts/agent_system_<v>.txt, prompts/agent_tools_<v>.json)
+prompt_version: v1
+tools_version: v1
+
+# search (spec §10): chunks per search; the relevance band threshold is measured in Task 22.4
+k: 5
+relevance_threshold: 3.6     # top-1 reranker logit; measured 25.11 (evals/agent/relevance_band.py)
+quota_max_rows: 10          # get_service_quota returns at most this many rows
+
+# critic (spec §10): one more try after a failed check
+critic_retries: 1
+
+# short-term memory (spec §11): history kept from the newest pair back while it fits
+history_budget_tokens: 6000
+
+# state and traces (spec §11, §12), not in Git
+db_path: var/agent.db
+traces_dir: var/traces
+
+# limits per request (spec §6, amended 25.11): sized for a six-pillar review (D25); estimates,
+# re-measured after the first fault run of step 22
+limits:
+  max_steps: 12             # model calls per request
+  max_tokens: 200000        # input + output, cache-read and cache-write tokens included
+  max_usd: 0.05
+  max_seconds: 240          # time waiting for a [y/N] answer does not count
+  tool_timeout_s: 10        # per tool call; the call fails, the loop goes on
+  max_repeats: 2            # same tool, same parsed arguments
+  max_calls_per_tool:
+    search_corpus: 8
+    get_architecture: 3
+    get_service_quota: 4

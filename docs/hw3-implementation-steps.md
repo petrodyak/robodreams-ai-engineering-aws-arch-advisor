@@ -57,7 +57,7 @@ Apply to every step and are not repeated in the steps:
 | What | Who | Needed before step | Status |
 |---|---|---|---|
 | `.env` with `ANTHROPIC_API_KEY` (same key as HW 1 and HW 2) | Petro | 22 | ✅ (HW 1) |
-| Langfuse account, project and keys (`LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, `LANGFUSE_BASE_URL`) in `.env`, ~10 min; verified with `make langfuse-check` in Task 22.9 | Petro | 22 | ⬜ |
+| Langfuse account, project and keys (`LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, `LANGFUSE_BASE_URL`) in `.env`, ~10 min; verified with `make langfuse-check` in Task 22.9 | Petro | 22 | ✅ 25.11 (keys in `.env`; `make langfuse-check` accepted them, EU region) |
 | Read the checkpoint feedback of lesson 14 (26.11) against the spec | Petro | 23 | ⬜ |
 | Check the architectures in the registry are realistic, ~30 min | Petro | 23 | ⬜ |
 | Check the task set, ~1 h; "ok" on the estimate of the final runs | Petro | 25 | ⬜ |
@@ -67,8 +67,8 @@ Apply to every step and are not repeated in the steps:
 
 | # | Step | Branch | Who / Petro's time | Points (HW criterion) | By | Status |
 |---|---|---|---|---|---|---|
-| 21 | Housekeeping: brief, this file, spec + plan in Git, ADR-0009–0013, CLAUDE.md, GLOSSARY, `.env.example`, `.gitignore`, `docs/coding-agent-memory.md` | `step-21-hw3-setup` | review ~20 min; Langfuse keys ~10 min | 4: instructions in the repo (part of 3 + 3) | 25.11 | 🔄 PR #48 |
-| 22 | Agent core: loop, limits, local trace, `search_corpus`, `record_finding` with guard and idempotency, SQLite store, faults wrapper, minimal eval runner, first fault run, Langfuse sink | `step-22-agent-core` | review ~1 h | 1: tools (3), control (4), faults (4) | 27.11 | ⬜ |
+| 21 | Housekeeping: brief, this file, spec + plan in Git, ADR-0009–0013, CLAUDE.md, GLOSSARY, `.env.example`, `.gitignore`, `docs/coding-agent-memory.md` | `step-21-hw3-setup` | review ~20 min; Langfuse keys ~10 min | 4: instructions in the repo (part of 3 + 3) | 25.11 | ✅ PR #48 |
+| 22 | Agent core: loop, limits, local trace, `search_corpus`, `record_finding` with guard and idempotency, SQLite store, faults wrapper, minimal eval runner, first fault run, Langfuse sink | `step-22-agent-core` | review ~1 h | 1: tools (3), control (4), faults (4) | 27.11 | 🔄 PR #49 |
 | 23 | MCP server: registry, quotas, client, 403; first fault run of the MCP faults | `step-23-mcp` | review ~30 min; architectures ~30 min | 2: MCP server (4), permissions (3), why MCP (1) | 28.11 | ⬜ |
 | 24 | Critic, overlay (injection, editions), memory, feedback, history summary | `step-24-rag-memory` | review ~45 min | 3: retrieval as a decision, injection, versions (5), memory (3), feedback (3) | 29.11 | ⬜ |
 | 25 | Task set, checks, runner metrics, `lint`, ablations | `step-25-tasks` | check the tasks ~1 h; "ok" on the estimate | task set and report (2, part) | 30.11 | ⬜ |
@@ -110,7 +110,44 @@ merge). The task-level detail (interfaces, tests) is in the plan file.
 - **Done when:** `make check` green; the first fault run shows retries only for read-only tools and an
   honest "unavailable"; Petro sees a request's trace in Langfuse.
 - **Open:** limits re-measured after the first run (spec §6).
-- **Done:** —
+- **Relevance band (Task 22.4, 25.11; `uv run python -m evals.agent.relevance_band`, local, $0).** Top-1
+  reranker score (`hybrid_rerank`, uncalibrated logit) of the 20 answerable questions of
+  `evals/testset.jsonl` against the 14 `no_answer` ones (4 there + 10 held-out):
+  - answerable: −1.10 (sim03), 1.88 (old01), then 3.81–9.13, median 5.41;
+  - no_answer: −5.10 to 0.58 for 9 of them, then 2.45 (held09), 2.59 (none01), 3.48 (none04),
+    4.52 (held10), 7.89 (held05).
+
+  The best cut, 3.64, leaves 4 of 34 on the wrong side (sim03 and old01 below it, held10 and held05
+  above it). `relevance_threshold: 3.6` is set: the band is a hint in the tool result, not a gate, and
+  the description says only that all-`low` results *probably* mean no answer. The cut is fitted on the
+  same 34 questions, so its 88 % is optimistic; the report says so (F32 asked for a second signal).
+- **First fault run (Task 22.8, 25.11; `evals/agent/results/2026-11-25-v1-run1/`, estimate $0.008,
+  actual $0.0022):** the run scored 3 / 3, but only t10 (no tool) and t22a (`503` on `search_corpus`)
+  are real passes. t22a: each search took 3 attempts (2 retries) and the answer says the search is
+  unavailable, with no recommendation from memory. t19 (`read_only`) "passed" without reaching the gate:
+  `record_finding` refused earlier, with "read the architecture with get_architecture first", because
+  `get_architecture` arrives in step 23. The final review caught it; t19 now has a precondition (the
+  result says "recording is switched off"), so it scores `invalid` until step 23, and its first real
+  run is there, together with t16–t18 (which write a finding). The run directory is kept as it is.
+- **Prompt cache (measured):** the tools + system prefix is 2,636 tokens; the first call of a run writes
+  it (`cache_write_tokens` 2,636) and every later call reads it (`cache_read_tokens` 2,636), so it is
+  above Haiku 5.5's 512-token minimum.
+- **One full review (Task 22.8 Step 5b, 25.11):** a described data-lake architecture (no MCP yet):
+  3 model calls; the six pillar searches came in **one step**, then two more searches; 46.5 k input,
+  4.4 k output, 7.9 k cache-read tokens; **$0.0069**; 27 s (the three calls 3.5 s, 7.5 s, 10.3 s; each
+  search ≈ 0.7 s). Six findings, every pillar cited, `Pillars covered: 6 of 6`. The limits of §6 stay:
+  the review used 29 % of `max_tokens`, 14 % of `max_usd`, 3 of 12 steps and 11 % of `max_seconds`;
+  they are the ceiling for a model that searches one call at a time. The history inside a request is
+  not cached (no breakpoint on `messages`): calls 2 and 3 re-send 19.6 k and 26.7 k uncached tokens; a
+  third breakpoint would cut that, at $0.007 per review it is not worth a change now.
+- **Done:** `src/agent/` config, store (all §11 tables), llm (strict tools, prompt cache, no sampling
+  parameters), tools + faults (`FAULTS=`, retries for read-only tools only), `search_corpus` (session
+  labels, `<document>` tags, relevance band 3.6), `record_finding` (checks in the §8 order, the gate in
+  code, idempotency), loop (limits, wrap-up, partial result from the trace), tracing (local JSONL +
+  Langfuse 5.2 sink), session, CLI; `prompts/agent_system_v1.txt`, `agent_tools_v1.json`; `evals/agent/`
+  runner, checks, 3 tasks; make targets `agent`, `agent-ask`, `agent-eval`, `agent-estimate`,
+  `findings`, `findings-resolve`, `langfuse-check`. First fault run: t10 and t22a pass (t19 invalid until step 23), one review $0.0069, Langfuse
+  traces read back from its API. `make check`: 516 passed (393 before the step).
 
 ### Step 23 — MCP server
 
@@ -157,7 +194,9 @@ merge). The task-level detail (interfaces, tests) is in the plan file.
 
 | Run id | Step | Required | Cost estimate | Actual |
 |---|---|---|---|---|
-| first fault run (`t16,t17,t18,t19,t22a`) | 22 | yes | < $0.1 (stated before the run) | |
+| first fault run (`t10,t19,t22a`; t16–t18 moved to 23) | 22 | yes | $0.0082 (`make agent-estimate`) | $0.0022 |
+| one full review measured (Task 22.8 Step 5b) | 22 | yes | ≈ $0.01–0.02 | $0.0069 |
+| two `make agent-ask` questions with Langfuse on (Task 22.9) | 22 | yes | ≈ $0.002 | $0.0013 |
 | first fault run of the MCP faults | 23 | yes | < $0.1 | |
 | critic `system` message check (one call) | 24 | yes | < $0.01 | |
 | 3 final runs of the full task set | 26 | yes | ≈ $0.15 each at the upper end | |
@@ -166,7 +205,7 @@ merge). The task-level detail (interfaces, tests) is in the plan file.
 
 **API budget:** $10 for the whole of HW 3 (D19); the spec estimates **$2.5–3** in total (§16, re-measured
 with `count_tokens` before step 25). Per 1,000 requests ≈ $3 for questions and ≈ $7–15 for full reviews,
-capped at $50 by `max_usd = 0.05`. Spent so far: $0.
+capped at $50 by `max_usd = 0.05`. Spent so far: $0.0104 (step 22).
 
 ## 6. Deferred findings
 
@@ -203,6 +242,8 @@ From spec §17:
 | 25.11 | `make langfuse-check` added to Task 22.9: one test trace, no Claude call, $0, to verify the keys and the region before the first traced request (Petro) |
 | 25.11 | Temporary stacked branches while HW 2 is under the lecturer's review (Petro): nothing is merged into `main` for 1–3 days; afterwards the open PRs are merged in order and the normal rules apply again |
 | 25.11 | Plan executed inline in one session (Petro: "Native"), with one independent code review per step before its commit |
+| 25.11 | Task 22.9: `uv add langfuse` resolved 5.2.0, not the v4 of the spec; the calls are the same (spec §12 amended). The client exports only its own spans: the Anthropic SDK's OpenTelemetry span doubled every generation |
+| 25.11 | Task 22.8: the first fault run of step 22 is t10, t19 and t22a; t16–t18 need `get_architecture` (the architecture hash of a finding) and run first in step 23. The §6 limits stay after the measured review (3 calls, $0.0069) |
 
 ## 9. AI-first log
 
@@ -211,6 +252,11 @@ What the coding agent generated and what had to be corrected; the source of `REF
 | Date | Step | What was generated | What had to be corrected | Commit |
 |---|---|---|---|---|
 | 25.11 | 21 | GLOSSARY entry "Stop Reason" | named the API's `end_turn` as a trace value; the spec's trace values are `answer`, `truncated`, `refusal`, `error` and the limit names. Found by the independent review before the commit | PR #48 (b0c57fc) |
+| 25.11 | 22 | Task 22.5 `execute` (tools.py) | the tool's own `faults` were overwritten by the wrapper's empty list, so a `duplicate` fault applied by `record_finding` was missing from the trace; caught by `test_duplicate_fault_one_row`, fixed by merging the two lists | PR #49 (f8566f6) |
+| 25.11 | 22 | Task 22.9 Langfuse client setup | each Claude call appeared twice in Langfuse (our generation plus the Anthropic SDK's own OpenTelemetry span), doubling the cost shown; seen in the first traced request, fixed with `should_export_span=is_langfuse_span` and a test | PR #49 (f8566f6) |
+| 25.11 | 22 | the plan's first fault run (t16–t19, t22a) | t16–t18 cannot pass before step 23: `record_finding` needs the architecture hash from `get_architecture`; the run was cut to t10, t19, t22a and the rest moved to step 23 | PR #49 (f8566f6) |
+| 25.11 | 22 | the whole step, independent review before the commit | 6 Important findings fixed with a failing test each: t19 passed without reaching the gate (precondition added); a failed request or Ctrl-C crashed the chat; one failing task lost the eval summary; the frozen `today` was used as a wall clock (purge, finding dates); architecture reads survived `/new`; a failed request lost its cost; plus unvalidated task overrides | PR #49 (f8566f6) |
+| 25.11 | 22 | CLI tool line `[S21]–[S17]` | a range "first–last" is wrong when a search re-uses an earlier label; `format_labels` collapses runs (written before its test, a TDD slip) | PR #49 (f8566f6) |
 
 ## 10. Pre-submission check (step 26)
 
