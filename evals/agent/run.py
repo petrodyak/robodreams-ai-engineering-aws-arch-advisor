@@ -72,6 +72,21 @@ def task_config(cfg: AgentConfig, task: dict) -> AgentConfig:
     )
 
 
+def run_command(session: Any, command: str) -> str:
+    """A scripted chat command between two questions of a task (spec §13, t18b / t29 / t30)."""
+    if command.startswith("resolve "):  # `make findings-resolve` for one best practice
+        return session.resolve(command.removeprefix("resolve ").strip())
+    name, _, rest = command.removeprefix("/").partition(" ")
+    if name == "up":
+        return session.feedback_up()
+    if name == "down":
+        return session.feedback_down(rest.strip())
+    if name == "reject":
+        bp, _, reason = rest.strip().partition(" ")
+        return session.reject(bp, reason.strip())
+    raise ValueError(f"unknown task command {command!r}")
+
+
 def send_task_score(tracer: Tracer, traces: list[dict], score: TaskScore) -> None:
     """Each task's pass / fail as a Langfuse score on every trace it made (spec §12)."""
     comment = score.status + (f": {', '.join(score.failed)}" if score.failed else "")
@@ -98,7 +113,8 @@ def run_task(
             session.new()
         for step in script:
             if "command" in step:
-                raise NotImplementedError(f"{task['id']}: commands arrive in step 24")
+                run_command(session, step["command"])
+                continue
             confirm.answers = list(step.get("confirm", []))
             result = session.ask(step["user"])
             answers.append(result.answer)
@@ -170,12 +186,11 @@ def _session_factory(
     rag_cfg: Any,
     run_id: str | None = None,
     mcp_for: Callable[[str], Any] = lambda _team: None,
+    run_dir: Path | None = None,
 ):
     def make(
         task: dict, store: Store, tracer: Tracer, confirm: ScriptedConfirm
     ) -> AgentSession:
-        if task.get("overlay"):
-            raise NotImplementedError(f"{task['id']}: the overlay arrives in step 24")
         return AgentSession(
             task_config(cfg, task),
             llm=llm,
@@ -189,6 +204,8 @@ def _session_factory(
             # the backoff of injected faults never waits in an eval (§7)
             sleep=lambda _: None,
             run_id=run_id,
+            # an eval's /down rows stay in its run directory, never in the repo's file (review I1)
+            candidates_path=(run_dir or Path(".")) / "feedback_candidates.jsonl",
             mcp=mcp_for(task.get("team", "data-platform")),
         )
 
@@ -246,7 +263,8 @@ def main(argv: list[str] | None = None) -> int:
             raise SystemExit(f"unknown task ids: {', '.join(sorted(missing))}")
     llm = ToolUseLLM(cfg.model, cfg.effort, cfg.max_tokens_per_call)
     rag_cfg = load_config()
-    index = build_agent_index(rag_cfg, overlay=False)
+    # the injection chunk is in every eval task, the brief's "corpus with problems" (spec §10)
+    index = build_agent_index(rag_cfg, overlay=True)
     with ExitStack() as stack:
         servers: dict[str, McpTools] = {}
 
@@ -275,7 +293,7 @@ def _run(args, cfg, llm, index, rag_cfg, tasks, mcp_for) -> int:
     run_dir = next_run_dir(RESULTS, datetime.now().date(), cfg.prompt_version)
     run_dir.mkdir(parents=True)
     make = _session_factory(
-        cfg, llm, index, rag_cfg, run_id=run_dir.name, mcp_for=mcp_for
+        cfg, llm, index, rag_cfg, run_id=run_dir.name, mcp_for=mcp_for, run_dir=run_dir
     )
     langfuse = make_langfuse()
     rows = []

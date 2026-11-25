@@ -267,6 +267,70 @@ stable URL. That is why `make rag` starts from the committed chunks, and why `ma
 a separate command. A rebuild on the new edition would need new hashes, new relevant-chunk labels and
 a new paid answer and judge run.
 
+## Stage 3: Agent (HW 3) — draft
+
+*Draft written in step 24; step 26 completes this section (tools, how to run the agent and the MCP
+server, why MCP, memory).* The design is in
+[`docs/superpowers/specs/2026-11-24-hw3-agent-design.md`](docs/superpowers/specs/2026-11-24-hw3-agent-design.md).
+
+### How feedback changes the next answer
+
+From one real chat (25.11, prompt v3, `claude-haiku-5-5`, a scratch database; excerpts, tool lines
+shortened).
+
+**`/reject`: a rejected finding is not raised again for the same version of the architecture.** The
+first review raises the missing backup:
+
+```
+> Review lakehouse-iceberg
+  get_architecture(lakehouse-iceberg) → {"id": "lakehouse-iceberg", …}
+  search_corpus × 6, one per pillar, in one step → [S1]–[S30]
+Finding 1 [high · Reliability · REL09-BP01] No backup is configured for the S3 Tables (backup: none,
+cross-region replication: false), and the raw layer has no retention. …
+…
+Pillars covered: 6 of 6 (…)
+> /reject REL09-BP01 the table bucket is copied to a second account every night
+noted: REL09-BP01 will not be raised again for this version of lakehouse-iceberg
+> Review lakehouse-iceberg again
+  get_architecture(lakehouse-iceberg) → {"id": "lakehouse-iceberg", "team": "data-platform", "name"…
+Finding 1 [high · Operational Excellence · OPS10-BP02] Glue failure alerts are off and max_retries is 0, …
+…
+Finding 5 [medium · Reliability · REL13-BP02] All data sits in one Region with no cross-Region copy. …
+Pillars covered: 6 of 6 (…)
+```
+
+The rejection is stored with the hash of the architecture JSON (without its `updated` field). The
+agent's code appends `Rejected by the user for this version: REL09-BP01 (<reason>)` to the end of the
+`get_architecture` result, which the tool line above cuts short
+(`tests/test_agent_feedback.py::test_rejection_attached_to_architecture` pins it); the model is not
+trusted to remember it. `record_finding` for the rejected best practice answers `NOT DONE: rejected by the user on <date>:
+<reason>` without asking, and the critic sends back an answer that raises it as a `Finding` line. A
+changed architecture gets a new hash, and the rejection no longer applies. A rejection holds for its
+best-practice id only: in the second review above the single-Region exposure is still raised, under
+REL13-BP02.
+
+**`/down`: a comment becomes a rule for the form of later answers.**
+
+```
+> What does REL10-BP01 ask for?
+REL10-BP01 "Deploy the workload to multiple locations" asks you to distribute workload data and
+resources across multiple Availability Zones or, where necessary, across AWS Regions [S53]. The goal is
+… [five sentences and a paragraph about lakehouse-iceberg]
+> /down much shorter: at most three sentences
+noted: later answers follow: much shorter: at most three sentences
+> What does REL11-BP01 ask for?
+REL11-BP01 "Monitor all components of the workload to detect failures" asks you to continually monitor
+the workload's health so that failures or degradations are seen as soon as they occur, and to track
+KPIs tied to business value [S61]. Monitoring must cover all layers of the stack, … [S57][S61].
+Monitoring systems should also run in a separate Region and account [S60].
+```
+
+The rule (at most 5, no duplicates) goes into the memory block of every later request, marked as
+data about the user. `/down` also records a score of 0 for the rated answer (Langfuse) and appends the
+question, the answer and the comment to `evals/agent/feedback_candidates.jsonl`, from which new eval
+tasks can be written. The eval task t30 checks the effect: the answer after `/down` is at most 60 % as
+long as the rated one.
+
 ## Known limits (stage 1)
 
 - **Standard quota tables only.** Quota rows are extracted only from a table with exactly the

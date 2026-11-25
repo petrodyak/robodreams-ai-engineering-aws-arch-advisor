@@ -132,7 +132,7 @@ gold-check:
 # (e.g. `make agent-eval ARGS="--tasks t19,t22a"`) and its cost estimate first (free count_tokens);
 # the findings registry (var/agent.db) and marking one finding resolved.
 agent:
-	uv run python -m src.agent.cli $(if $(FAULTS),--faults $(FAULTS))
+	uv run python -m src.agent.cli $(if $(FAULTS),--faults $(FAULTS)) $(if $(filter adversarial,$(OVERLAY)),--overlay)
 
 agent-ask:
 	uv run python -m src.agent.cli --yes-never --ask "$(Q)"

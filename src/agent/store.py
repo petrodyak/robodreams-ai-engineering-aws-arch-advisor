@@ -19,6 +19,8 @@ from pydantic import BaseModel
 
 Role = Literal["user", "assistant"]
 FindingStatus = Literal["open", "resolved"]
+MAX_EPISODES = 20  # session summaries kept (spec §11)
+MAX_RULES = 5  # feedback rules kept; the oldest goes first (spec §11)
 
 DDL = """
 CREATE TABLE IF NOT EXISTS sessions (
@@ -215,10 +217,110 @@ class Store:
                 "INSERT INTO episodes (session_id, text, created_at) VALUES (?, ?, ?)",
                 (session_id, text, created),
             )
+            # at most MAX_EPISODES are kept; the oldest goes first (spec §11)
+            self._conn.execute(
+                "DELETE FROM episodes WHERE id NOT IN "
+                "(SELECT id FROM episodes ORDER BY id DESC LIMIT ?)",
+                (MAX_EPISODES,),
+            )
 
     def episodes(self) -> list[str]:
         rows = self._conn.execute("SELECT text FROM episodes ORDER BY id").fetchall()
         return [r["text"] for r in rows]
+
+    # facts about the user (spec §11, D24): three keys, a new value replaces the old one -------------
+
+    def set_fact(self, key: str, value: str, now: datetime | None = None) -> str | None:
+        """Save `key=value`; return the value it replaced, if any."""
+        with self._conn:
+            row = self._conn.execute(
+                "SELECT value FROM facts WHERE key = ?", (key,)
+            ).fetchone()
+            self._conn.execute(
+                "INSERT INTO facts (key, value, updated_at) VALUES (?, ?, ?) "
+                "ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at",
+                (key, value, (now or datetime.now()).isoformat(timespec="seconds")),
+            )
+        return row["value"] if row else None
+
+    def facts(self) -> dict[str, str]:
+        rows = self._conn.execute(
+            "SELECT key, value FROM facts ORDER BY key"
+        ).fetchall()
+        return {r["key"]: r["value"] for r in rows}
+
+    # feedback (spec §11): rules, rejections, scores ------------------------------------------
+
+    def add_rule(self, rule: str) -> None:
+        """A rule for the form of later answers, from `/down <comment>`: no duplicates, at most 5."""
+        with self._conn:
+            self._conn.execute(
+                "INSERT OR IGNORE INTO feedback_rules (rule, created_at) VALUES (?, ?)",
+                (rule, datetime.now().isoformat()),
+            )
+            self._conn.execute(
+                "DELETE FROM feedback_rules WHERE id NOT IN "
+                "(SELECT id FROM feedback_rules ORDER BY id DESC LIMIT ?)",
+                (MAX_RULES,),
+            )
+
+    def rules(self) -> list[str]:
+        rows = self._conn.execute(
+            "SELECT rule FROM feedback_rules ORDER BY id"
+        ).fetchall()
+        return [r["rule"] for r in rows]
+
+    def add_rejection(
+        self,
+        architecture_id: str,
+        best_practice: str,
+        reason: str,
+        architecture_hash: str,
+        on: date,
+    ) -> None:
+        """`/reject`: valid for this version of the architecture only (its hash)."""
+        with self._conn:
+            self._conn.execute(
+                "INSERT INTO rejections (architecture_id, best_practice, reason, architecture_hash, "
+                "created_at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(architecture_id, best_practice, "
+                "architecture_hash) DO UPDATE SET reason = excluded.reason, created_at = excluded.created_at",
+                (
+                    architecture_id,
+                    best_practice,
+                    reason,
+                    architecture_hash,
+                    on.isoformat(),
+                ),
+            )
+
+    def rejections(self, architecture_id: str, architecture_hash: str) -> list[dict]:
+        rows = self._conn.execute(
+            "SELECT best_practice, reason, created_at FROM rejections "
+            "WHERE architecture_id = ? AND architecture_hash = ? ORDER BY id",
+            (architecture_id, architecture_hash),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def add_score(
+        self, session_id: int, trace_id: str, value: int, comment: str
+    ) -> None:
+        with self._conn:
+            self._conn.execute(
+                "INSERT INTO scores (session_id, trace_id, value, comment, created_at) "
+                "VALUES (?, ?, ?, ?, ?)",
+                (session_id, trace_id, value, comment, datetime.now().isoformat()),
+            )
+
+    def scores(self) -> list[dict]:
+        rows = self._conn.execute(
+            "SELECT trace_id, value, comment FROM scores ORDER BY id"
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def delete_fact(self, key: str) -> bool:
+        with self._conn:
+            cur = self._conn.execute("DELETE FROM facts WHERE key = ?", (key,))
+        return cur.rowcount == 1
 
     # findings registry (D13, ADR-0010) ---------------------------------------------------------
 

@@ -34,6 +34,8 @@ class FakeSession:
         self.asked: list[str] = []
         self.closed = False
         self.renewed = 0
+        self.forgotten: list[str] = []
+        self.feedback: list[tuple] = []
 
     def ask(self, question: str) -> TurnResult:
         self.asked.append(question)
@@ -47,6 +49,22 @@ class FakeSession:
 
     def new(self):
         self.renewed += 1
+
+    def forget(self, key: str) -> bool:
+        self.forgotten.append(key)
+        return True
+
+    def feedback_up(self) -> str:
+        self.feedback.append(("up",))
+        return "noted"
+
+    def feedback_down(self, comment: str) -> str:
+        self.feedback.append(("down", comment))
+        return "noted"
+
+    def reject(self, bp: str, reason: str) -> str:
+        self.feedback.append(("reject", bp, reason))
+        return "noted"
 
     def close(self):
         self.closed = True
@@ -70,7 +88,9 @@ def test_cli_commands_parsed():
     out = io.StringIO()
     script = "/up\n/down x\n/reject REL01-BP01 raised\n/forget region\n/new\n/quit\n"
     assert run_chat(s, io.StringIO(script), out) == 0
-    assert out.getvalue().count(LATER) == 4
+    assert LATER not in out.getvalue()  # every command works since Task 24.4
+    assert s.forgotten == ["region"]
+    assert s.feedback == [("up",), ("down", "x"), ("reject", "REL01-BP01", "raised")]
     assert s.renewed == 1
     assert s.asked == []
     assert s.closed
@@ -111,3 +131,15 @@ def test_cli_ctrl_c_during_request_ends_cleanly():
     assert run_chat(s, io.StringIO("first\nsecond\n"), out) == 0
     assert s.asked == ["first"]
     assert s.closed
+
+
+def test_ctrl_c_at_confirm_ends_the_chat():
+    # step 22 review, minor 11: Ctrl-C at [y/N] writes nothing and ends the chat cleanly
+    import pytest
+
+    class Interrupt(io.StringIO):
+        def readline(self, *_args):
+            raise KeyboardInterrupt
+
+    with pytest.raises(KeyboardInterrupt):
+        console_confirm(Interrupt(), io.StringIO())("Record?", {})

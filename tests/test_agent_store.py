@@ -103,3 +103,31 @@ def test_purge_keeps_findings_and_episodes():
     assert store.label_map(new) == {"S1": "doc#0001"}
     assert len(store.findings()) == 1
     assert store.episodes() == ["Reviewed lakehouse-iceberg."]
+
+
+def test_facts_set_replace_delete():
+    store = Store(":memory:")
+    assert store.set_fact("region", "eu-central-1") is None
+    assert store.set_fact("region", "eu-west-1") == "eu-central-1"
+    assert store.facts() == {"region": "eu-west-1"}
+    assert store.delete_fact("region") is True
+    assert store.facts() == {}
+
+
+def test_episodes_capped_at_20():
+    store = Store(":memory:")
+    sid = store.new_session("data-platform")
+    for i in range(1, 22):
+        store.add_episode(sid, f"Session {i}")
+    episodes = store.episodes()
+    assert len(episodes) == 20
+    assert episodes[0] == "Session 2"
+    assert episodes[-1] == "Session 21"
+
+
+def test_fact_survives_new_session():
+    store = Store(":memory:")
+    store.new_session("data-platform")
+    store.set_fact("answer_style", "short")
+    store.new_session("data-platform")
+    assert store.facts() == {"answer_style": "short"}

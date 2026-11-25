@@ -79,6 +79,28 @@ def findings_count(run: TaskRun, check: dict) -> bool:
     return len(run.findings) == check["equals"]
 
 
+def finding_field(run: TaskRun, check: dict) -> bool:
+    """The registry row of `bp` has `field == equals` (t18b: reopened_count)."""
+    rows = [f for f in run.findings if f.best_practice == check["bp"]]
+    return len(rows) == 1 and getattr(rows[0], check["field"]) == check["equals"]
+
+
+def no_finding(run: TaskRun, check: dict) -> bool:
+    """No registry row for `bp` (t29: a rejected best practice is never recorded)."""
+    return not any(f.best_practice == check["bp"] for f in run.findings)
+
+
+def no_finding_line(run: TaskRun, check: dict) -> bool:
+    """No line of the answer is a `Finding` line naming `bp` (t29), checked line by line, apart from
+    the critic's regex, so the eval does not share its blind spots (review I3)."""
+    head = re.compile(r"^\W*finding\s*\d+", re.IGNORECASE)
+    bp = check["bp"].lower()
+    return not any(
+        head.search(line) and bp in line.lower()
+        for line in _answer(run, check).splitlines()
+    )
+
+
 def confirms_asked(run: TaskRun, check: dict) -> bool:
     return run.confirms_asked == check["equals"]
 
@@ -102,6 +124,35 @@ def answer_regex(run: TaskRun, check: dict) -> bool:
     return re.search(check["pattern"], _answer(run, check)) is not None
 
 
+def retrieved(run: TaskRun, check: dict) -> bool:
+    """Every chunk of `chunks` came back from a search (the precondition of t25 / t26)."""
+    got = {c for t in run.traces for c in t.get("retrieved_chunk_ids", [])}
+    return all(chunk in got for chunk in check["chunks"])
+
+
+def cites_docs(run: TaskRun, check: dict) -> bool:
+    """The answer cites a label of each document in `docs` (labels mapped through the trace)."""
+    from src.agent.critic import labels_in
+
+    label_map = {
+        label: chunk
+        for c in run.tool_calls()
+        for label, chunk in ((c.get("data") or {}).get("labels") or {}).items()
+    }
+    cited = {
+        label_map[x].split("#")[0]
+        for x in labels_in(_answer(run, check))
+        if x in label_map
+    }
+    return all(doc in cited for doc in check["docs"])
+
+
+def answer_shorter(run: TaskRun, check: dict) -> bool:
+    """The answer of turn `then` is at most `ratio` as long as the answer of turn `first` (t30)."""
+    first, then = run.answers[check["first"]], run.answers[check["then"]]
+    return len(then) <= check["ratio"] * len(first)
+
+
 def answer_in_english(run: TaskRun, check: dict) -> bool:
     return not CYRILLIC.search("\n".join(run.answers))
 
@@ -113,12 +164,18 @@ CHECKS: dict[str, Callable[[TaskRun, dict], bool]] = {
     "max_attempts": max_attempts,
     "tool_result_contains": tool_result_contains,
     "findings_count": findings_count,
+    "finding_field": finding_field,
+    "no_finding": no_finding,
+    "no_finding_line": no_finding_line,
     "confirms_asked": confirms_asked,
     "stop": stop,
     "answer_contains": answer_contains,
     "answer_not_contains": answer_not_contains,
     "answer_regex": answer_regex,
     "answer_in_english": answer_in_english,
+    "answer_shorter": answer_shorter,
+    "retrieved": retrieved,
+    "cites_docs": cites_docs,
 }
 
 
