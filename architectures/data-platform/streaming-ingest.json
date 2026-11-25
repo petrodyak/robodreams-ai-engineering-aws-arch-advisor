@@ -1,0 +1,69 @@
+{
+  "id": "streaming-ingest",
+  "team": "data-platform",
+  "name": "Clickstream ingestion",
+  "description": "Web and mobile clickstream events arrive in Kinesis Data Streams, a Lambda consumer enriches them and writes sessions to Aurora PostgreSQL for the product team and events to OpenSearch for search and dashboards; records that fail go to an SQS dead-letter queue.",
+  "region": "eu-central-1",
+  "updated": "2026-11-18",
+  "components": [
+    {
+      "service": "Amazon Kinesis Data Streams",
+      "purpose": "Event stream from the web and mobile apps",
+      "settings": {
+        "capacity_mode": "provisioned",
+        "shards": 4,
+        "expected_peak_mb_per_second": 6,
+        "retention_hours": 24,
+        "encryption": "KMS",
+        "enhanced_fan_out": false
+      }
+    },
+    {
+      "service": "AWS Lambda",
+      "purpose": "Consumer that enriches events and writes them to Aurora and OpenSearch",
+      "settings": {
+        "batch_size": 100,
+        "on_failure_destination": "SQS dead-letter queue",
+        "reserved_concurrency": "none",
+        "timeout_seconds": 60
+      }
+    },
+    {
+      "service": "Amazon Simple Queue Service",
+      "purpose": "Dead-letter queue for events the consumer could not write",
+      "settings": {
+        "message_retention_days": 4,
+        "redrive": "manual",
+        "age_alarm": false
+      }
+    },
+    {
+      "service": "Amazon Aurora",
+      "purpose": "PostgreSQL sessions database read by the product team",
+      "settings": {
+        "engine": "aurora-postgresql",
+        "writer_instances": 1,
+        "reader_replicas": 0,
+        "backup_retention_days": 1,
+        "encryption": "KMS"
+      }
+    },
+    {
+      "service": "Amazon OpenSearch Service",
+      "purpose": "Event search and dashboards",
+      "settings": {
+        "data_nodes": 3,
+        "availability_zones": 1,
+        "dedicated_master_nodes": 0,
+        "index_retention_days": 90,
+        "ultrawarm": false
+      }
+    }
+  ],
+  "nfr": {
+    "rpo_minutes": 15,
+    "rto_minutes": 60,
+    "availability": 99.9,
+    "budget_usd_month": 5000
+  }
+}

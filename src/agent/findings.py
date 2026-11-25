@@ -57,8 +57,16 @@ class RecordFindingArgs(BaseModel):
 
 
 def normalize_bp(raw: str) -> str:
-    """` rel09-bp01. ` → `REL09-BP01`: trimmed, trailing punctuation off, upper case."""
-    return raw.strip().rstrip(".,;:!?").strip().upper()
+    """` rel09-bp01. `, `[REL09-BP01]`, `"rel09-bp01"` → `REL09-BP01`: trimmed, punctuation, brackets
+    and quotes off, upper case."""
+    return (
+        raw.strip()
+        .strip("[](){}\"'`")
+        .rstrip(".,;:!?")
+        .strip("[](){}\"'`")
+        .strip()
+        .upper()
+    )
 
 
 def pillar_of(best_practice: str) -> str:
@@ -147,7 +155,8 @@ def make_record_finding(ctx: FindingContext) -> ToolEntry:
 
         existing = ctx.store.find_finding(args.architecture_id, bp)
         if existing is not None and existing.status == "open":
-            if existing.architecture_hash != arch_hash:
+            # an open row follows the version it was seen on again, but read_only never writes
+            if existing.architecture_hash != arch_hash and ctx.autonomy != "read_only":
                 ctx.store.insert_or_reopen_finding(
                     existing.model_copy(update={"architecture_hash": arch_hash})
                 )

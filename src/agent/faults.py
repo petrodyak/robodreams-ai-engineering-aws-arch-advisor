@@ -36,6 +36,8 @@ FaultKind = Literal["timeout", "503", "429", "schema", "duplicate"]
 KINDS: tuple[str, ...] = ("timeout", "503", "429", "schema", "duplicate")
 INJECTED = ("timeout", "503", "429")
 BACKOFF_S = (0.5, 1.0)  # one value per retry: 2 retries, 3 attempts in all
+# the faults applied by their owner touch only that tool, so only that tool's calls carry them
+OWNERS = {"schema": "get_service_quota", "duplicate": "record_finding"}
 
 
 class Fault(BaseModel):
@@ -112,7 +114,7 @@ def apply_faults(
     """Wrap every tool: injected faults first, then the retry layer (which also covers real 503s)."""
     wrapped = {}
     for name, entry in registry.items():
-        mine = faults_for(name, faults)
+        mine = [f for f in faults_for(name, faults) if OWNERS.get(f.kind, name) == name]
         for fault in mine:
             if fault.kind in INJECTED:
                 entry = inject(fault.kind, entry)

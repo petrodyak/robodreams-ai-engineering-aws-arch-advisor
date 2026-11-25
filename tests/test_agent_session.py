@@ -170,3 +170,72 @@ def test_architecture_reads_do_not_survive_new(tmp_path: Path):
     s.findings_ctx.arch_hashes["lakehouse-iceberg"] = "hash-1"
     s.new()
     assert s.findings_ctx.arch_hashes == {}
+
+
+def test_mcp_tools_registered_and_record_after_read(tmp_path: Path):
+    # step 23: with the MCP tools, record_finding works once the architecture was read (t16 in code)
+    from src.agent.mcp_client import McpTools
+    from tests.test_agent_mcp_client import FakeClient
+
+    llm = FakeLLM(
+        turn(
+            tool_uses=[("get_architecture", {"architecture_id": "lakehouse-iceberg"})]
+        ),
+        turn(
+            tool_uses=[
+                (
+                    "search_corpus",
+                    {
+                        "query": "back up all data",
+                        "doc_types": None,
+                        "published_from": None,
+                    },
+                )
+            ]
+        ),
+        turn(
+            tool_uses=[
+                (
+                    "record_finding",
+                    {
+                        "architecture_id": "lakehouse-iceberg",
+                        "best_practice": "REL09-BP01",
+                        "severity": "high",
+                        "summary": "The S3 Tables bucket has no backup.",
+                        "source": "[S1]",
+                    },
+                )
+            ]
+        ),
+        turn("Recorded finding 1."),
+    )
+    store = Store(":memory:")
+    asked: list[str] = []
+    with McpTools("data-platform", client_factory=lambda _p: FakeClient()) as mcp:
+        s = AgentSession(
+            CFG,
+            llm=llm,
+            index=Index(CHUNKS, embed_fn=fake_embed, rerank_fn=fake_rerank),
+            store=store,
+            tracer=Tracer(tmp_path / "trace.jsonl"),
+            team="data-platform",
+            confirm=lambda prompt, _args: asked.append(prompt) or True,
+            sleep=lambda _: None,
+            mcp=mcp,
+        )
+        result = s.ask(
+            "Read lakehouse-iceberg and record REL09-BP01 as high: no backup."
+        )
+    names = [t["name"] for t in llm.requests[0]["tools"]]
+    assert names == [
+        "search_corpus",
+        "record_finding",
+        "list_architectures",
+        "get_architecture",
+        "get_service_quota",
+    ]
+    assert result.stop == "answer"
+    assert len(asked) == 1
+    [row] = store.findings()
+    assert row.best_practice == "REL09-BP01"
+    assert row.architecture_hash == s.arch_hashes["lakehouse-iceberg"]

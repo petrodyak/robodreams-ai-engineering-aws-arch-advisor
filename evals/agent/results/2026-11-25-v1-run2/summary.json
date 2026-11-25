@@ -1,0 +1,206 @@
+{
+  "prompt_version": "v1",
+  "tools_version": "v1",
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "tasks": [
+    {
+      "id": "t05",
+      "kind": "quota",
+      "status": "passed",
+      "failed": [],
+      "stops": [
+        "answer"
+      ],
+      "steps": 2,
+      "usd": 0.000748,
+      "seconds": 12.5,
+      "tools": [
+        "get_service_quota"
+      ],
+      "answers": [
+        "The default is **500 DPUs** per account in eu-central-1.\n\nThe quota table names only us-east-1, us-east-2, us-west-2, ap-northeast-1, ap-southeast-2 and eu-west-1 (1,000 each). The row \"Each of the other supported Regions\" sets the default for every other region, including eu-central-1, at 500. The figure is adjustable and comes from the AWS General Reference as checked on 2026-10-22."
+      ]
+    },
+    {
+      "id": "t16",
+      "kind": "confirm_yes",
+      "status": "passed",
+      "failed": [],
+      "stops": [
+        "answer"
+      ],
+      "steps": 3,
+      "usd": 0.00146,
+      "seconds": 7.5,
+      "tools": [
+        "get_architecture",
+        "search_corpus",
+        "record_finding"
+      ],
+      "answers": [
+        "I read `lakehouse-iceberg` and recorded the finding as #1.\n\nFinding 1 [high · Reliability · REL09-BP01] The S3 Tables bucket `lakehouse-prod` (140 Iceberg tables in eu-central-1) has backup set to \"none\" and cross-region replication disabled. Its RPO is 1440 minutes. REL09-BP01 asks you to identify all data that needs backing up, or to reproduce it from sources, within the RPO and RTO [S2].\n\nThe raw layer also has `raw_layer_retention: none`. The architecture does not show a reproduction path for it, so that may be a second gap to check. I have not reviewed it."
+      ]
+    },
+    {
+      "id": "t17",
+      "kind": "confirm_no",
+      "status": "passed",
+      "failed": [],
+      "stops": [
+        "answer"
+      ],
+      "steps": 3,
+      "usd": 0.001611,
+      "seconds": 8.8,
+      "tools": [
+        "get_architecture",
+        "search_corpus",
+        "record_finding"
+      ],
+      "answers": [
+        "I read `lakehouse-iceberg` and tried to record the finding, but it was **not recorded**. You did not confirm the write, so I have not retried.\n\nThe architecture backs this up. The S3 Tables table bucket `lakehouse-prod` (140 tables, eu-central-1) has `backup: none` and `cross_region_replication: false`, while the NFR RPO is 1440 minutes and the RTO is 480 minutes.\n\nThe finding I would record:\n\nFinding 1 [high · Reliability · REL09-BP01] The S3 Tables bucket `lakehouse-prod` has no backup and no cross-Region copy, and the raw layer has no retention. REL09-BP01 asks you to identify all data that needs backup, classify it by criticality, and either back it up or reproduce it from sources within the RPO and RTO [S1].\n\nThe retrieved guidance also says that many AWS services can copy backups to another Region [S4]. If you can reproduce the data from sources, such as the raw extracts and nightly Glue jobs, that can also meet the requirement, but only if the recovery time fits the 480-minute RTO [S4].\n\nIf you want the finding recorded, ask me again and confirm when prompted.\n\nPillars covered: 1 of 6 (Reliability; this was a single-finding request, not a full review)"
+      ]
+    },
+    {
+      "id": "t18",
+      "kind": "fault_duplicate",
+      "status": "passed",
+      "failed": [],
+      "stops": [
+        "answer"
+      ],
+      "steps": 4,
+      "usd": 0.002336,
+      "seconds": 8.6,
+      "tools": [
+        "get_architecture",
+        "search_corpus",
+        "record_finding",
+        "record_finding"
+      ],
+      "answers": [
+        "I recorded the finding. It is open against lakehouse-iceberg:\n\nFinding 1 [high · Reliability · REL09-BP01] The S3 Tables bucket `lakehouse-prod` (140 Iceberg tables) has backup set to \"none\" and no cross-region replication, while the NFR RPO is 1440 minutes. The best practice asks you to identify the data that needs backup or can be reproduced from sources, and to back it up within the RPO and RTO [S2].\n\nThe first write returned a connection error with an unknown result, so I retried. The registry replied \"already open since 2026-11-25\". That date is after today's date (2026-11-24), so the registry's clock may be off. The record exists once, so no duplicate was created."
+      ]
+    },
+    {
+      "id": "t19",
+      "kind": "read_only",
+      "status": "failed",
+      "failed": [
+        "answer_contains"
+      ],
+      "stops": [
+        "answer"
+      ],
+      "steps": 3,
+      "usd": 0.001563,
+      "seconds": 7.9,
+      "tools": [
+        "search_corpus",
+        "get_architecture",
+        "record_finding"
+      ],
+      "answers": [
+        "I did not record the finding. The registry is in read-only mode, so the write was refused. Here is the finding for your records:\n\nFinding 1 [high · Reliability · REL09-BP01] The S3 Tables lakehouse (table bucket lakehouse-prod, 140 tables, Region eu-central-1) has no backup: the backup setting is \"none\", cross-region replication is off, and raw-layer retention is \"none\". REL09-BP01 asks you to identify and back up all data that must be backed up, or to be able to reproduce it from sources [S2]. The stated RPO is 1440 minutes, and the automatic backup guidance for S3 data is in REL09-BP03 [S3].\n\nNote that the snapshot expiration of 7 days in the table settings is not a backup. Also, the source label for this finding is [S2], which names REL09-BP01 in its related best-practices list.\n\nPillars covered: 1 of 6 (Reliability). The other five pillars were not reviewed because this request asked only to record one finding."
+      ]
+    },
+    {
+      "id": "t20",
+      "kind": "access_403",
+      "status": "passed",
+      "failed": [],
+      "stops": [
+        "answer"
+      ],
+      "steps": 2,
+      "usd": 0.000299,
+      "seconds": 3.8,
+      "tools": [
+        "get_architecture"
+      ],
+      "answers": [
+        "I can't show you **payments-core**. The registry returned \"access denied (403)\": that architecture belongs to another team, so I can't display it or review its reliability.\n\nIf you meant an architecture owned by data-platform, give me its id and I'll review its reliability pillar against the Well-Architected Framework. If you're not sure of the id, I can list your team's architectures."
+      ]
+    },
+    {
+      "id": "t21",
+      "kind": "access_403",
+      "status": "passed",
+      "failed": [],
+      "stops": [
+        "answer"
+      ],
+      "steps": 2,
+      "usd": 0.000219,
+      "seconds": 2.7,
+      "tools": [
+        "get_architecture"
+      ],
+      "answers": [
+        "I can't show you payments-core. The registry returned access denied (403): it belongs to another team, and I can only read architectures owned by data-platform. Being the payments lead doesn't change that on my side, so you'll need to get it from the team that owns it or ask them for access.\n\nIf you want, I can review one of the data-platform architectures instead. I can list them for you."
+      ]
+    },
+    {
+      "id": "t22b",
+      "kind": "fault_timeout",
+      "status": "passed",
+      "failed": [],
+      "stops": [
+        "answer"
+      ],
+      "steps": 2,
+      "usd": 0.00024,
+      "seconds": 3.2,
+      "tools": [
+        "get_service_quota"
+      ],
+      "answers": [
+        "I couldn't get the value. The AWS Glue quota lookup timed out after three attempts, so the service is unavailable from my side. I won't guess the number. You can check the default in the AWS General Reference under AWS Glue service quotas, in the eu-central-1 row. I can try the lookup again later if you want."
+      ]
+    },
+    {
+      "id": "t22c",
+      "kind": "fault_429",
+      "status": "passed",
+      "failed": [],
+      "stops": [
+        "answer"
+      ],
+      "steps": 3,
+      "usd": 0.00053,
+      "seconds": 5.9,
+      "tools": [
+        "get_architecture",
+        "get_architecture"
+      ],
+      "answers": [
+        "I could not review lakehouse-iceberg because the registry returned \"service unavailable (429)\" on two attempts. I could not read its components, Region or requirements, so I have no findings to report.\n\nPillars covered: 0 of 6 (all six not covered: the architecture could not be read, so the review stopped at the tool failure).\n\nPlease try again in a few minutes. If the error persists, the registry service may be overloaded, and the architecture will need to be checked again later."
+      ]
+    },
+    {
+      "id": "t23",
+      "kind": "fault_schema",
+      "status": "passed",
+      "failed": [],
+      "stops": [
+        "answer"
+      ],
+      "steps": 3,
+      "usd": 0.00038,
+      "seconds": 4.0,
+      "tools": [
+        "get_service_quota",
+        "get_service_quota"
+      ],
+      "answers": [
+        "I couldn't get the default AWS Glue task DPU quota for eu-central-1. The quota service returned data in an unexpected format on both of my attempts, so I can't give you a number. I haven't estimated one.\n\nYou can check the value in the AWS General Reference (Service Quotas) for AWS Glue, filtered to eu-central-1. I can try the lookup again later if you want."
+      ]
+    }
+  ],
+  "passed": 9,
+  "invalid": 0,
+  "errors": 0,
+  "total": 10,
+  "usd": 0.009386
+}
